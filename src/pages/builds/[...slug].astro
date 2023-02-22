@@ -1,0 +1,31 @@
+---
+import "@discretize/gw2-ui-new/dist/default_style.css";
+import "@discretize/typeface-menomonia";
+
+import { components } from "../../components/components";
+
+export async function getStaticPaths() {
+  const builds = await Astro.glob(
+    `../../../discretize-guides/builds/**/*/index.mdx`
+  );
+
+  const cleanPaths = builds.map((build) => ({
+    ...build,
+    file: build.file
+      .split("discretize-guides/builds/")[1]
+      .replace("/index.mdx", ""),
+  }));
+
+  return cleanPaths.map((build) => ({
+    params: {
+      slug: build.file,
+    },
+    props: {
+      build,
+    },
+  }));
+}
+const { Content, frontmatter } = Astro.props.build;
+---
+
+<Content components={components} />

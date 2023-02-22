@@ -1,6 +1,10 @@
 ---
+import "beercss/dist/cdn/beer.min.css";
+import "material-dynamic-colors";
+import NavBar from "../components/NavBar.astro";
+
 export interface Props {
-	title: string;
+  title: string;
 }
 
 const { title } = Astro.props;
@@ -8,28 +12,128 @@ const { title } = Astro.props;
 
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body class="dark">
+    <NavBar />
+
+    <main class="main">
+      <slot />
+    </main>
+  </body>
 </html>
+
 <style is:global>
-	:root {
-		--accent: 124, 58, 237;
-		--accent-gradient: linear-gradient(45deg, rgb(var(--accent)), #da62c4 30%, white 60%);
-	}
-	html {
-		font-family: system-ui, sans-serif;
-		background-color: #F6F6F6;
-	}
-	code {
-		font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-			Bitstream Vera Sans Mono, Courier New, monospace;
-	}
+  ul {
+    padding-left: 40px;
+  }
+
+  .main {
+    padding: 1rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  body {
+    line-height: 1.5;
+    font-size: 1.15rem;
+  }
+
+  body.dark {
+    --primary: #00cccc;
+    --primary-dark: #009a9b;
+    --primary-light: #64ffff;
+    --on-primary: #ffffff;
+    --primary-container: #64ffff;
+    --on-primary-container: #2f3a3f;
+    --secondary: #b24d2c;
+    --on-secondary: #ffffff;
+    --secondary-container: #ff8b66;
+    --on-secondary-container: #5a3d2f;
+    --tertiary: #7d5260;
+    --on-tertiary: #ffffff;
+    --tertiary-container: #ffd8e4;
+    --on-tertiary-container: #370b1e;
+    --error: #b3261e;
+    --on-error: #ffffff;
+    --error-container: #f9dedc;
+    --on-error-container: #370b1e;
+    --background: #2f3136;
+    --on-background: #ddd;
+    --surface: #26292e;
+    --on-surface: #ddd;
+    --surface-variant: #e7e0ec;
+    --on-surface-variant: #49454e;
+    --inverse-surface: #2a2c31;
+    --inverse-on-surface: #f4eff4;
+    --outline: #79747e;
+    --body: #2f3136;
+    --active: rgba(0, 0, 0, 0.1);
+    --overlay: rgba(0, 0, 0, 0.5);
+    --elevate1: 0 2rem 2rem 0 rgba(0, 0, 0, 0.14),
+      0 1rem 5rem 0 rgba(0, 0, 0, 0.12), 0 3rem 1rem -2rem rgba(0, 0, 0, 0.2);
+    --elevate2: 0 6rem 10rem 0 rgba(0, 0, 0, 0.14),
+      0 1rem 18rem 0 rgba(0, 0, 0, 0.12), 0 3rem 5rem -1rem rgba(0, 0, 0, 0.3);
+    --elevate3: 0 10rem 16rem 0 rgba(0, 0, 0, 0.14),
+      0 1rem 31rem 0 rgba(0, 0, 0, 0.12), 0 3rem 9rem 0rem rgba(0, 0, 0, 0.4);
+    --size: 16px;
+    --font: "Roboto Flex", "Roboto", sans-serif, system-ui, "Segoe UI", "Oxygen",
+      "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+      "Helvetica", "Arial";
+    --speed1: 0.1s;
+    --speed2: 0.2s;
+    --speed3: 0.3s;
+    --speed4: 0.4s;
+  }
+
+  body.light {
+    --primary: #00cccc;
+    --primary-dark: #009a9b;
+    --primary-light: #64ffff;
+    --on-primary: #ffffff;
+    --primary-container: #64ffff;
+    --on-primary-container: #009a9b;
+    --secondary: #ff6e40;
+    --on-secondary: #ffffff;
+    --secondary-container: #ff8b66;
+    --on-secondary-container: #b24d2c;
+    --tertiary: #7d5260;
+    --on-tertiary: #ffffff;
+    --tertiary-container: #ffd8e4;
+    --on-tertiary-container: #370b1e;
+    --error: #b3261e;
+    --on-error: #ffffff;
+    --error-container: #f9dedc;
+    --on-error-container: #370b1e;
+    --background: #ffffff;
+    --on-background: #1c1b1f;
+    --surface: #f5f5f5;
+    --on-surface: #1c1b1f;
+    --surface-variant: #e7e0ec;
+    --on-surface-variant: #49454e;
+    --inverse-surface: #313033;
+    --inverse-on-surface: #f4eff4;
+    --outline: #79747e;
+    --active: rgba(0, 0, 0, 0.1);
+    --overlay: rgba(0, 0, 0, 0.5);
+    --elevate1: 0 2rem 2rem 0 rgba(0, 0, 0, 0.14),
+      0 1rem 5rem 0 rgba(0, 0, 0, 0.12), 0 3rem 1rem -2rem rgba(0, 0, 0, 0.2);
+    --elevate2: 0 6rem 10rem 0 rgba(0, 0, 0, 0.14),
+      0 1rem 18rem 0 rgba(0, 0, 0, 0.12), 0 3rem 5rem -1rem rgba(0, 0, 0, 0.3);
+    --elevate3: 0 10rem 16rem 0 rgba(0, 0, 0, 0.14),
+      0 1rem 31rem 0 rgba(0, 0, 0, 0.12), 0 3rem 9rem 0rem rgba(0, 0, 0, 0.4);
+    --size: 16px;
+    --font: "Roboto Flex", "Roboto", sans-serif, system-ui, "Segoe UI", "Oxygen",
+      "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+      "Helvetica", "Arial";
+    --speed1: 0.1s;
+    --speed2: 0.2s;
+    --speed3: 0.3s;
+    --speed4: 0.4s;
+  }
 </style>
