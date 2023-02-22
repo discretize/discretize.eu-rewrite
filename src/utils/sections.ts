@@ -1,5 +1,5 @@
 function getSections(): string[] {
-  return ["Discretize", "Meta", "Offmeta"];
+  return ["Discretize LFG", "Other", "Archive"];
 }
 
 export { getSections };

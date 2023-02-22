@@ -38,14 +38,20 @@ const { name } = Astro.props;
   });
 </script>
 
-<a class="chip" id="button">{name}</a>
-<div class={`dropdown no-wrap`} id="dropdown">
-  <slot />
+<div>
+  <a id="button" class="chip">
+    <span>{name}</span>
+  </a>
+  <div class={`dropdown no-wrap`} id="dropdown">
+    <slot />
+  </div>
 </div>
-
 <style is:global>
   .darken {
     opacity: 0.5;
     transition: all 0.7s ease;
+  }
+  .dropdown {
+    margin-left: 0.5rem;
   }
 </style>

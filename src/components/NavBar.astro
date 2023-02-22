@@ -4,6 +4,8 @@ import discord from "../icons/discord.svg";
 import Discretize from "../icons/discretize.astro";
 import NavHoverMenu from "./NavHoverMenu.astro";
 import { Profession, Specialization } from "@gw2-ui/components";
+import NavBuilds from "./NavBuilds.astro";
+import NavBuilds2 from "./NavBuilds2.astro";
 
 async function getBuilds() {
   // load markdown files and return the frontmatter
@@ -12,11 +14,20 @@ async function getBuilds() {
   const navigationData = builds.map((build) => ({
     title: build.frontmatter.title,
     rating: build.frontmatter.rating,
+    profession: build.frontmatter.profession,
     specialization: build.frontmatter.specialization,
     url: build.url.replace("discretize-guides", "").replace("/index.mdx", ""),
   }));
 
-  return navigationData;
+  const data = {};
+  navigationData.forEach((build) => {
+    if (!data[build.profession]) {
+      data[build.profession] = [];
+    }
+    data[build.profession].push(build);
+  });
+
+  return data;
 }
 
 const builds = await getBuilds();
@@ -50,34 +61,7 @@ const builds = await getBuilds();
 
 <nav class="nav">
   <div class="buttonArea row">
-    <NavHoverMenu name="Builds">
-      <div class="buildHoverArea">
-        {
-          getSections().map((section) => (
-            <div>
-              <div class="hoverSectionHeader">{section}</div>
-              <ul>
-                {builds
-                  .filter((build) => build.rating === section)
-                  .map((build) => (
-                    <li>
-                      <a href={build.url}>
-                        <Profession
-                          disableText
-                          client:load
-                          name={build.specialization}
-                          style={{ marginRight: "0.5rem" }}
-                        />{" "}
-                        {build.title}
-                      </a>
-                    </li>
-                  ))}
-              </ul>
-            </div>
-          ))
-        }
-      </div>
-    </NavHoverMenu>
+    <NavBuilds2 builds={builds} />
     <a class="chip">Guides</a>
     <a class="chip">Fractals</a>
 
@@ -116,40 +100,12 @@ const builds = await getBuilds();
     padding-bottom: 0.7rem;
     width: 100%;
   }
-  .buildHoverArea {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
-    padding: 2rem;
-    gap: 4rem;
-    border-top: 1px solid var(--primary);
-    border-radius: 0;
-  }
-  .buildHoverArea ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  .buildHoverArea li {
-    margin-bottom: 0.7rem;
-    font-size: 1rem;
-    color: var(--on-primary);
-    font-weight: 300;
-  }
-  .buildHoverArea li:hover {
-    color: var(--primary-dark);
-  }
+
   .discordIcon {
     width: 2rem;
     height: 2rem;
   }
   .discretizeLogo {
     height: 3rem;
-  }
-  .hoverSectionHeader {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
   }
 </style>

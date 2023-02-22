@@ -1,0 +1,41 @@
+---
+import { Profession } from "@gw2-ui/components";
+
+const { builds } = Astro.props;
+---
+
+<script></script>
+
+{
+  Object.keys(builds).map((profession) => (
+    <div class="item">
+      <div class="wave buttonProfession row no-margin">
+        <Profession name={profession} client:load disableLink />
+        <div class="max" />
+        <i>chevron_right</i>
+      </div>
+      <div class="submenu">
+        {builds[profession].map((build) => (
+          <div class="buttonProfession ">
+            <div>{build.title}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  ))
+}
+
+<style>
+  .buttonProfession {
+    padding: 0.6rem;
+    font-size: 1rem;
+    font-weight: 400;
+  }
+  .item {
+    display: flex;
+  }
+  .submenu {
+    display: flex;
+    flex-direction: column;
+  }
+</style>

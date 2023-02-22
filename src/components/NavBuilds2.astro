@@ -1,0 +1,115 @@
+---
+import { Profession } from "@gw2-ui/components";
+
+const { builds } = Astro.props;
+---
+
+<ul class="nested-dropdowns">
+  <li>
+    <div class="nested-dropdowns__item chip buttonMenu">
+      Builds
+      <div class="nested-dropdowns__arrow"><i>expand_more</i></div>
+    </div>
+    <ul>
+      {
+        Object.keys(builds).map((profession) => (
+          <li>
+            <div class="nested-dropdowns__item wave buttonProfession row no-margin">
+              <Profession
+                name={profession}
+                client:load
+                disableLink
+                style={{ whiteSpace: "nowrap" }}
+              />
+              <div class="max" />
+              <div class="nested-dropdowns__arrow">
+                <i>chevron_right</i>
+              </div>
+            </div>
+
+            <ul>
+              {builds[profession].map((build) => (
+                <li>
+                  <a href={build.url}>
+                    <div class="nested-dropdowns__item buttonProfession wave row no-margin">
+                      <Profession
+                        name={build.specialization}
+                        client:load
+                        disableLink
+                        disableText
+                        style={{ whiteSpace: "nowrap" }}
+                      />
+
+                      {build.title}
+                    </div>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))
+      }
+    </ul>
+  </li>
+</ul>
+
+<style>
+  .buttonMenu {
+    margin: 0;
+  }
+  .buttonProfession {
+    padding: 0.6rem;
+    font-size: 1rem;
+    font-weight: 400;
+  }
+  .nested-dropdowns {
+    /* Border */
+    display: flex;
+
+    /* Reset list styles */
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nested-dropdowns li {
+    cursor: pointer;
+
+    /* Used to position the sub nested-dropdowns */
+    position: relative;
+  }
+
+  /* The sub nested-dropdowns */
+  .nested-dropdowns ul {
+    /* Hidden by default */
+    display: none;
+
+    /* Absolute position */
+    left: 0;
+    position: absolute;
+    top: 100%;
+
+    /* Reset styles */
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    background-color: var(--background);
+  }
+
+  /* The second level sub nested-dropdowns */
+  .nested-dropdowns ul ul {
+    left: 100%;
+    position: absolute;
+    top: 0;
+  }
+
+  /* Change background color of list item when being hovered */
+  .nested-dropdowns li:hover {
+  }
+
+  /* Show the direct sub nested-dropdowns when hovering the list item */
+  .nested-dropdowns li:hover > ul {
+    display: block;
+  }
+</style>
