@@ -4,3 +4,6 @@
 [submodule "discretize-ui"]
 	path = discretize-ui
 	url = https://github.com/discretize/discretize-ui
+[submodule "gw2-api-extended"]
+	path = gw2-api-extended
+	url = https://github.com/discretize/gw2-api-extended.git

@@ -1,0 +1,45 @@
+---
+interface Props {
+  text?: string;
+  disableContent?: boolean;
+}
+
+const { text, disableContent = false } = Astro.props;
+---
+
+<div class="root">
+  <div class="divider"></div>
+  {
+    !disableContent ? (
+      <div class="content">
+        <slot>{text}</slot>
+      </div>
+    ) : undefined
+  }
+  <div class="divider"></div>
+</div>
+
+<style>
+  .root {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+  .divider {
+    height: 1px;
+    background-color: var(--rdc-color-border);
+    flex-grow: 1;
+  }
+  .content {
+    font-family: Raleway;
+    margin-left: 16px;
+    margin-right: 16px;
+    font-weight: 400;
+    color: inherit;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    line-height: 1.35417em;
+  }
+</style>

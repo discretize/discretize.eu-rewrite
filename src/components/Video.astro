@@ -1,0 +1,19 @@
+---
+import { YouTube } from "@astro-community/astro-embed-youtube";
+
+const { youtube } = Astro.props;
+---
+
+<YouTube
+  id={youtube}
+  poster="/hero_twilight-oasis.jpg"
+  playlabel="test"
+  class="youtube"
+/>
+
+<style is:global>
+  lite-youtube > .lty-playbtn {
+    min-width: 1.5rem !important;
+    width: unset;
+  }
+</style>

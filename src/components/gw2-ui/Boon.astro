@@ -1,5 +1,11 @@
 ---
 import Boon from "@gw2-ui/components/Boon/Boon";
+import { getSizeStyle } from "src/utils/styles";
 ---
 
-<Boon {...Astro.props} client:idle />
+<Boon
+  {...Astro.props}
+  client:idle
+  className="nowrap"
+  style={getSizeStyle(Astro.props)}
+/>

@@ -1,22 +1,34 @@
+import Card from "./Card.astro";
+import Grid from "./Grid.astro";
+import GridItem from "./GridItem.astro";
+import Attribute from "./gw2-ui/Attribute.astro";
 import Boon from "./gw2-ui/Boon.astro";
+import CommonEffect from "./gw2-ui/CommonEffect.astro";
+import Condition from "./gw2-ui/Condition.astro";
+import ControlEffect from "./gw2-ui/ControlEffect.astro";
+import Profession from "./gw2-ui/Profession.astro";
 import Skill from "./gw2-ui/Skill.astro";
 import Trait from "./gw2-ui/Trait.astro";
+import hr from "./hr.astro";
+import TextDivider from "./TextDivider.astro";
+import Video from "./Video.astro";
 
 export const components = {
+  hr,
   Advanced: () => undefined,
-  Attribute: () => undefined,
+  Attribute,
   Beginner: () => undefined,
   BuildLink: () => undefined,
   Boon,
-  Card: () => undefined,
+  Card,
   Character: () => undefined,
   CharacterWithAr: () => undefined,
-  Condition: () => undefined,
-  Control: () => undefined,
-  Divider: () => undefined,
-  Effect: () => undefined,
-  Grid: () => undefined,
-  GridItem: () => undefined,
+  Condition,
+  Control: ControlEffect,
+  Divider: TextDivider,
+  Effect: CommonEffect,
+  Grid,
+  GridItem,
   Information: () => undefined,
   Instability: () => undefined,
   Item: () => undefined,
@@ -24,13 +36,13 @@ export const components = {
   Skill,
   Skills: () => undefined,
   SpecialActionKey: () => undefined,
-  Specialization: () => undefined,
+  Specialization: Profession,
   Tab: () => undefined,
   Tabs: () => undefined,
   Trait,
   Traits: () => undefined,
   Uncategorized: () => undefined,
-  Video: () => undefined,
+  Video,
   Warning: () => undefined,
   Weapons: () => undefined,
 };

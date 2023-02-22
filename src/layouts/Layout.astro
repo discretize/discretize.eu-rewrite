@@ -31,8 +31,27 @@ const { title, disablePadding = false } = Astro.props;
 </html>
 
 <style is:global>
-  ul {
+  ul,
+  ol {
     padding-left: 40px;
+    margin: 0px 0px 16px;
+  }
+  ul > li,
+  ol > li {
+    margin-top: 0.5rem;
+  }
+
+  table {
+    font-size: inherit;
+  }
+
+  .nowrap {
+    white-space: nowrap;
+  }
+
+  table td,
+  table th {
+    width: unset;
   }
 
   .main {

@@ -1,0 +1,32 @@
+---
+const { xs, sm, md, lg, xl } = Astro.props;
+
+function parseSafeInt(value) {
+  const parsed = parseInt(value, 10);
+  if (isNaN(parsed)) {
+    return 0;
+  }
+  return parsed;
+}
+
+let classNames = "";
+if (typeof xs !== "undefined") {
+  classNames += ` s${xs}`;
+}
+if (typeof sm !== "undefined" || typeof md !== "undefined") {
+  const sm_i = parseSafeInt(sm);
+  const md_i = parseSafeInt(md);
+
+  classNames += ` m${Math.max(sm_i, md_i)}`;
+}
+if (typeof lg !== "undefined" || typeof xl !== "undefined") {
+  const lg_i = parseSafeInt(lg);
+  const xl_i = parseSafeInt(xl);
+
+  classNames += ` l${Math.max(lg_i, xl_i)}`;
+}
+---
+
+<div class={classNames.trim()}>
+  <slot />
+</div>

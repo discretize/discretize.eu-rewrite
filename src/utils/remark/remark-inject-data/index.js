@@ -1,7 +1,7 @@
 import { visit } from "unist-util-visit";
-import items from "./mapping/items.json";
-import skills from "./mapping/skills.json";
-import traits from "./mapping/traits.json";
+//import items from "../../../../gw2-api-extended/data/api-extended/items.json";
+import skills from "../../../../gw2-api-extended/data/api-extended/skills.json";
+import traits from "../../../../gw2-api-extended/data/api-extended/traits.json";
 import { valueToEstree } from "estree-util-value-to-estree";
 
 function attrToProps(attr) {

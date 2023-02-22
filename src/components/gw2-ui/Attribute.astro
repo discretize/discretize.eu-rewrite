@@ -1,0 +1,11 @@
+---
+import Attribute from "@gw2-ui/components/Attribute/Attribute";
+import { getSizeStyle } from "src/utils/styles";
+---
+
+<Attribute
+  {...Astro.props}
+  client:idle
+  className="nowrap"
+  style={getSizeStyle(Astro.props)}
+/>

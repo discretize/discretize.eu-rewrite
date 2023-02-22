@@ -1,0 +1,11 @@
+---
+import Condition from "@gw2-ui/components/Condition/Condition";
+import { getSizeStyle } from "src/utils/styles";
+---
+
+<Condition
+  {...Astro.props}
+  client:idle
+  className="nowrap"
+  style={getSizeStyle(Astro.props)}
+/>

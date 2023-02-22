@@ -1,0 +1,11 @@
+---
+import ControlEffect from "@gw2-ui/components/ControlEffect/ControlEffect";
+import { getSizeStyle } from "src/utils/styles";
+---
+
+<ControlEffect
+  {...Astro.props}
+  client:idle
+  className="nowrap"
+  style={getSizeStyle(Astro.props)}
+/>

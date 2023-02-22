@@ -1,0 +1,11 @@
+---
+import Profession from "@gw2-ui/components/Profession/Profession";
+import { getSizeStyle } from "src/utils/styles";
+---
+
+<Profession
+  {...Astro.props}
+  client:idle
+  className="nowrap"
+  style={getSizeStyle(Astro.props)}
+/>

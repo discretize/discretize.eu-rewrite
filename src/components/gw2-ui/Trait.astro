@@ -1,5 +1,11 @@
 ---
 import TraitInternal from "@gw2-ui/components/Trait/TraitInternal";
+import { getSizeStyle } from "src/utils/styles";
 ---
 
-<TraitInternal {...Astro.props} client:idle />
+<TraitInternal
+  {...Astro.props}
+  client:idle
+  className="nowrap"
+  style={getSizeStyle(Astro.props)}
+/>

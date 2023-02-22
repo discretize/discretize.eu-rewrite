@@ -1,5 +1,11 @@
 ---
 import SkillInternal from "@gw2-ui/components/Skill/SkillInternal";
+import { getSizeStyle } from "src/utils/styles";
 ---
 
-<SkillInternal {...Astro.props} client:idle />
+<SkillInternal
+  {...Astro.props}
+  client:idle
+  className="nowrap"
+  style={getSizeStyle(Astro.props)}
+/>
