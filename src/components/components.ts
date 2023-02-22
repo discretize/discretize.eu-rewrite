@@ -12,6 +12,8 @@ import Trait from "./gw2-ui/Trait.astro";
 import hr from "./hr.astro";
 import TextDivider from "./TextDivider.astro";
 import Video from "./Video.astro";
+import MistlockInstability from "./gw2-ui/MistlockInstability.astro";
+import Traits from "./gw2-ui/Traits.astro";
 
 export const components = {
   hr,
@@ -30,7 +32,7 @@ export const components = {
   Grid,
   GridItem,
   Information: () => undefined,
-  Instability: () => undefined,
+  Instability: MistlockInstability,
   Item: () => undefined,
   Label: () => undefined,
   Skill,
@@ -40,7 +42,7 @@ export const components = {
   Tab: () => undefined,
   Tabs: () => undefined,
   Trait,
-  Traits: () => undefined,
+  Traits,
   Uncategorized: () => undefined,
   Video,
   Warning: () => undefined,

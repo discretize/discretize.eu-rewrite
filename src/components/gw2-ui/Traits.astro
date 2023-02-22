@@ -1,0 +1,58 @@
+---
+import { TraitLine } from "@gw2-ui/components";
+
+const {
+  traits1Id,
+  traits1,
+  traits1SelectedIds,
+  traits2Id,
+  traits2,
+  traits2SelectedIds,
+  traits3Id,
+  traits3,
+  traits3SelectedIds,
+} = Astro.props;
+
+const traits1Selected = traits1SelectedIds
+  ?.split(",")
+  .map((id) => parseInt(id, 10));
+
+const traits2Selected = traits2SelectedIds
+  ?.split(",")
+  .map((id) => parseInt(id, 10));
+
+const traits3Selected = traits3SelectedIds
+  ?.split(",")
+  .map((id) => parseInt(id, 10));
+---
+
+{traits1}
+{
+  traits1Id && (
+    <TraitLine
+      client:visible
+      id={traits1Id}
+      defaultSelected={traits1Selected}
+    />
+  )
+}
+{traits2}
+{
+  traits2Id && (
+    <TraitLine
+      client:visible
+      id={traits2Id}
+      defaultSelected={traits2Selected}
+    />
+  )
+}
+{traits3}
+{
+  traits3Id && (
+    <TraitLine
+      client:visible
+      id={traits3Id}
+      defaultSelected={traits3Selected}
+    />
+  )
+}

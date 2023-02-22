@@ -1,0 +1,11 @@
+---
+import MistlockInstability from "@gw2-ui/components/MistlockInstability/MistlockInstability";
+import { getSizeStyle } from "src/utils/styles";
+---
+
+<MistlockInstability
+  {...Astro.props}
+  client:idle
+  className="nowrap"
+  style={getSizeStyle(Astro.props)}
+/>
