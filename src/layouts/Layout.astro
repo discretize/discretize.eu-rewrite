@@ -133,4 +133,9 @@ const { title } = Astro.props;
     --speed3: 0.3s;
     --speed4: 0.4s;
   }
+
+  body:has(.nested-dropdowns li:hover) > .main {
+    opacity: 0.5;
+    transition: all 0.7s ease;
+  }
 </style>

@@ -95,6 +95,8 @@ const { builds } = Astro.props;
     padding: 0;
 
     background-color: var(--background);
+
+    box-shadow: var(--elevate2);
   }
 
   /* The second level sub nested-dropdowns */
@@ -111,5 +113,16 @@ const { builds } = Astro.props;
   /* Show the direct sub nested-dropdowns when hovering the list item */
   .nested-dropdowns li:hover > ul {
     display: block;
+  }
+  .nested-dropdowns li:hover ~ .main {
+    opacity: 0.5;
+    transition: all 0.7s ease;
+  }
+</style>
+
+<style is:global>
+  body:has(> .nested-dropdowns li) .main {
+    opacity: 0.5;
+    transition: all 0.7s ease;
   }
 </style>
