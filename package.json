@@ -2,7 +2,7 @@
   "name": "discretize.eu",
   "type": "module",
   "version": "0.0.1",
-  "license": "All rights reserverd",
+  "license": "AGPL-3.0-only",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -23,7 +23,8 @@
     "estree-util-value-to-estree": "^2.1.0",
     "material-dynamic-colors": "^0.1.5",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "typeface-raleway": "^1.1.13"
   },
   "devDependencies": {
     "axios": "^1.3.3"

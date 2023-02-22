@@ -1,0 +1,51 @@
+---
+const { name } = Astro.props;
+---
+
+<script>
+  const button = document.querySelector("#button");
+  const dropdown = document.querySelector("#dropdown");
+
+  function onOpen() {
+    dropdown.classList.add("active");
+    document.querySelector(".main").classList.add("darken");
+  }
+
+  function onClose() {
+    dropdown.classList.remove("active");
+    document.querySelector(".main").classList.remove("darken");
+  }
+
+  let hoverOverMenu = false;
+  // add hover event
+  button.addEventListener("mouseover", onOpen);
+  button.addEventListener("mouseleave", () => {
+    // delay action to allow for hover over menu
+    setTimeout(() => {
+      if (!hoverOverMenu) {
+        onClose();
+      }
+    }, 100);
+  });
+
+  dropdown.addEventListener("mouseover", () => {
+    hoverOverMenu = true;
+  });
+  // remove hover event
+  dropdown.addEventListener("mouseleave", () => {
+    onClose();
+    hoverOverMenu = false;
+  });
+</script>
+
+<a class="chip" id="button">{name}</a>
+<div class={`dropdown no-wrap`} id="dropdown">
+  <slot />
+</div>
+
+<style is:global>
+  .darken {
+    opacity: 0.5;
+    transition: all 0.7s ease;
+  }
+</style>

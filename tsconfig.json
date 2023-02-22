@@ -2,6 +2,11 @@
   "extends": "astro/tsconfigs/base",
   "compilerOptions": {
     "jsx": "react-jsx",
-    "jsxImportSource": "preact"
+    "jsxImportSource": "preact",
+    "baseUrl": ".",
+    "paths": {
+      "@md-guides/*": ["discretize-guides/*"],
+      "@gw2-ui/*": ["discretize-ui/gw2-ui/src/*"]
+    }
   }
 }

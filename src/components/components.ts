@@ -3,6 +3,9 @@ import Skill from "./gw2-ui/Skill.astro";
 import Trait from "./gw2-ui/Trait.astro";
 
 export const components = {
+  Advanced: () => undefined,
+  Beginner: () => undefined,
+  BuildLink: () => undefined,
   Boon,
   Card: () => undefined,
   Character: () => undefined,
@@ -16,6 +19,8 @@ export const components = {
   Skill,
   Skills: () => undefined,
   Specialization: () => undefined,
+  Tab: () => undefined,
+  Tabs: () => undefined,
   Trait,
   Traits: () => undefined,
   Uncategorized: () => undefined,
