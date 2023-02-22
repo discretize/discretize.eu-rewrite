@@ -1,0 +1,31 @@
+---
+import "@discretize/gw2-ui-new/dist/default_style.css";
+import "@discretize/typeface-menomonia";
+
+import { components } from "../../components/components";
+
+export async function getStaticPaths() {
+  const guides = await Astro.glob(
+    `../../../discretize-guides/guides/**/*/index.mdx`
+  );
+
+  const cleanPaths = guides.map((guide) => ({
+    ...guide,
+    file: guide.file
+      .split("discretize-guides/guides/")[1]
+      .replace("/index.mdx", ""),
+  }));
+
+  return cleanPaths.map((guide) => ({
+    params: {
+      slug: guide.file,
+    },
+    props: {
+      guide,
+    },
+  }));
+}
+const { Content } = Astro.props.guide;
+---
+
+<Content components={components} />

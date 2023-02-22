@@ -1,0 +1,85 @@
+---
+const { content, title, slug } = Astro.props;
+---
+
+<ul class="nested-dropdowns">
+  <li>
+    <a href={slug} class="nested-dropdowns__item chip buttonMenu">
+      {title}
+      <div class="nested-dropdowns__arrow"><i>arrow_drop_down</i></div>
+    </a>
+    <ul>
+      {
+        content.map((entry) => (
+          <li>
+            <a
+              href={entry.url}
+              class="nested-dropdowns__item wave buttonProfession row no-margin"
+            >
+              {entry.title}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </li>
+</ul>
+
+<style>
+  .buttonMenu {
+    margin: 0;
+  }
+  .buttonProfession {
+    padding: 0.6rem;
+    font-size: 1rem;
+    font-weight: 400;
+  }
+  .nested-dropdowns {
+    /* Border */
+    display: flex;
+
+    /* Reset list styles */
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nested-dropdowns li {
+    cursor: pointer;
+
+    /* Used to position the sub nested-dropdowns */
+    position: relative;
+  }
+
+  /* The sub nested-dropdowns */
+  .nested-dropdowns ul {
+    /* Hidden by default */
+    display: none;
+
+    /* Absolute position */
+    left: 0;
+    position: absolute;
+    top: 100%;
+
+    /* Reset styles */
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    background-color: var(--background);
+
+    box-shadow: var(--elevate2);
+  }
+
+  /* Show the direct sub nested-dropdowns when hovering the list item */
+  .nested-dropdowns li:hover > ul {
+    display: block;
+  }
+</style>
+
+<style is:global>
+  body:has(> .nested-dropdowns li) .main {
+    opacity: 0.5;
+    transition: all 0.7s ease;
+  }
+</style>

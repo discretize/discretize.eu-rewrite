@@ -12,12 +12,16 @@ function parseSafeInt(value) {
 let classNames = "";
 if (typeof xs !== "undefined") {
   classNames += ` s${xs}`;
+} else {
+  classNames += " s12";
 }
 if (typeof sm !== "undefined" || typeof md !== "undefined") {
   const sm_i = parseSafeInt(sm);
   const md_i = parseSafeInt(md);
 
   classNames += ` m${Math.max(sm_i, md_i)}`;
+} else {
+  classNames += " m6";
 }
 if (typeof lg !== "undefined" || typeof xl !== "undefined") {
   const lg_i = parseSafeInt(lg);

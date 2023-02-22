@@ -4,38 +4,121 @@ import { Profession } from "@gw2-ui/components";
 const { builds } = Astro.props;
 ---
 
-<script></script>
+<ul class="nested-dropdowns">
+  <li>
+    <a href="/builds" class="nested-dropdowns__item chip buttonMenu">
+      Builds
+      <div class="nested-dropdowns__arrow"><i>arrow_drop_down</i></div>
+    </a>
+    <ul>
+      {
+        Object.keys(builds).map((profession) => (
+          <li>
+            <div class="nested-dropdowns__item wave buttonProfession row no-margin">
+              <Profession
+                name={profession}
+                client:load
+                disableLink
+                style={{ whiteSpace: "nowrap" }}
+              />
+              <div class="max" />
+              <div class="nested-dropdowns__arrow">
+                <i>chevron_right</i>
+              </div>
+            </div>
 
-{
-  Object.keys(builds).map((profession) => (
-    <div class="item">
-      <div class="wave buttonProfession row no-margin">
-        <Profession name={profession} client:load disableLink />
-        <div class="max" />
-        <i>chevron_right</i>
-      </div>
-      <div class="submenu">
-        {builds[profession].map((build) => (
-          <div class="buttonProfession ">
-            <div>{build.title}</div>
-          </div>
-        ))}
-      </div>
-    </div>
-  ))
-}
+            <ul>
+              {builds[profession].map((build) => (
+                <li>
+                  <a href={build.url}>
+                    <div class="nested-dropdowns__item buttonProfession wave row no-margin">
+                      <Profession
+                        name={build.specialization}
+                        client:load
+                        disableLink
+                        disableText
+                        style={{ whiteSpace: "nowrap" }}
+                      />
+
+                      {build.title}
+                    </div>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))
+      }
+    </ul>
+  </li>
+</ul>
 
 <style>
+  .buttonMenu {
+    margin: 0;
+  }
   .buttonProfession {
     padding: 0.6rem;
     font-size: 1rem;
     font-weight: 400;
   }
-  .item {
+  .nested-dropdowns {
+    /* Border */
     display: flex;
+
+    /* Reset list styles */
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
   }
-  .submenu {
-    display: flex;
-    flex-direction: column;
+
+  .nested-dropdowns li {
+    cursor: pointer;
+
+    /* Used to position the sub nested-dropdowns */
+    position: relative;
+  }
+
+  /* The sub nested-dropdowns */
+  .nested-dropdowns ul {
+    /* Hidden by default */
+    display: none;
+
+    /* Absolute position */
+    left: 0;
+    position: absolute;
+    top: 100%;
+
+    /* Reset styles */
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    background-color: var(--background);
+
+    box-shadow: var(--elevate2);
+  }
+
+  /* The second level sub nested-dropdowns */
+  .nested-dropdowns ul ul {
+    left: 100%;
+    position: absolute;
+    top: 0;
+  }
+
+  /* Change background color of list item when being hovered */
+  .nested-dropdowns li:hover {
+  }
+
+  /* Show the direct sub nested-dropdowns when hovering the list item */
+  .nested-dropdowns li:hover > ul {
+    display: block;
+  }
+</style>
+
+<style is:global>
+  body:has(> .nested-dropdowns li) .main {
+    opacity: 0.5;
+    transition: all 0.7s ease;
   }
 </style>

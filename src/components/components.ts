@@ -14,6 +14,8 @@ import TextDivider from "./TextDivider.astro";
 import Video from "./Video.astro";
 import MistlockInstability from "./gw2-ui/MistlockInstability.astro";
 import Traits from "./gw2-ui/Traits.astro";
+import Information from "./Information.astro";
+import Warning from "./Warning.astro";
 
 export const components = {
   hr,
@@ -22,16 +24,18 @@ export const components = {
   Beginner: () => undefined,
   BuildLink: () => undefined,
   Boon,
+  Boss: () => undefined,
   Card,
   Character: () => undefined,
   CharacterWithAr: () => undefined,
+  Composition: () => undefined,
   Condition,
   Control: ControlEffect,
   Divider: TextDivider,
   Effect: CommonEffect,
   Grid,
   GridItem,
-  Information: () => undefined,
+  Information,
   Instability: MistlockInstability,
   Item: () => undefined,
   Label: () => undefined,
@@ -45,6 +49,6 @@ export const components = {
   Traits,
   Uncategorized: () => undefined,
   Video,
-  Warning: () => undefined,
+  Warning,
   Weapons: () => undefined,
 };

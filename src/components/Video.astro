@@ -1,7 +1,7 @@
 ---
 import { YouTube } from "@astro-community/astro-embed-youtube";
 
-const { youtube } = Astro.props;
+const { youtube, caption } = Astro.props;
 ---
 
 <YouTube
@@ -10,6 +10,7 @@ const { youtube } = Astro.props;
   playlabel="test"
   class="youtube"
 />
+{caption && <sub>{caption}</sub>}
 
 <style is:global>
   lite-youtube > .lty-playbtn {

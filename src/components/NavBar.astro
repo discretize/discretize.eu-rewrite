@@ -1,7 +1,8 @@
 ---
 import discord from "../icons/discord.svg";
 import Discretize from "../icons/discretize.astro";
-import NavBuilds2 from "./NavBuilds2.astro";
+import NavBuilds from "./NavBuilds.astro";
+import NavDropdown from "./NavDropdown.astro";
 
 async function getBuilds() {
   // load markdown files and return the frontmatter
@@ -25,19 +26,44 @@ async function getBuilds() {
 
   return data;
 }
+
+async function getGuides() {
+  // load markdown files and return the frontmatter
+  const guides = await Astro.glob("../../discretize-guides/guides/**/*.mdx");
+
+  const navigationData = guides.map((guide) => ({
+    title: guide.frontmatter.title,
+    url: guide.url.replace("discretize-guides", "").replace("/index.mdx", ""),
+  }));
+
+  return navigationData;
+}
+
 const builds = await getBuilds();
+const guides = await getGuides();
 ---
 
 <script>
-  const darkModeButton = document.querySelector("#darkmodeSwitch input");
+  const darkModeButton = document.querySelector<HTMLInputElement>(
+    "#darkmodeSwitch input"
+  );
 
+  const currentTheme = localStorage.getItem("theme");
+  if (currentTheme === "light") {
+    document.body.classList.remove("dark");
+    document.body.classList.add("light");
+
+    darkModeButton.checked = true;
+  }
   darkModeButton.addEventListener("click", () => {
     if (document.body.classList.contains("dark")) {
       document.body.classList.remove("dark");
       document.body.classList.add("light");
+      localStorage.setItem("theme", "light");
     } else {
       document.body.classList.remove("light");
       document.body.classList.add("dark");
+      localStorage.setItem("theme", "dark");
     }
   });
 </script>
@@ -56,8 +82,10 @@ const builds = await getBuilds();
 
 <nav class="nav">
   <div class="buttonArea row">
-    <NavBuilds2 builds={builds} />
-    <a class="chip">Guides</a>
+    <NavBuilds builds={builds} />
+
+    <NavDropdown title="Guides" content={guides} slug="/guides" />
+
     <a class="chip">Fractals</a>
 
     <a class="chip">Augmentation Calculator</a>

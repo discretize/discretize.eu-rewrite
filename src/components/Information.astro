@@ -1,0 +1,19 @@
+---
+const { icon = "information" } = Astro.props;
+---
+
+<article>
+  <div class="row">
+    <i class="icon">{icon}</i>
+    <div class="max">
+      <p><slot /></p>
+    </div>
+  </div>
+</article>
+
+<style>
+  .icon {
+    font-size: 3rem;
+    width: 3rem;
+  }
+</style>
