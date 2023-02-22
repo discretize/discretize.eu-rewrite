@@ -1,5 +1,5 @@
 ---
-import BuildFrontmatter from "../components/frontmatter/BuildFrontmatter.astro";
+import GuideFrontmatter from "src/components/frontmatter/GuideFrontmatter.astro";
 import Layout from "./Layout.astro";
 
 export interface Props {
@@ -10,6 +10,6 @@ const { title } = Astro.props.frontmatter;
 ---
 
 <Layout title={title}>
-  <BuildFrontmatter />
+  <GuideFrontmatter />
   <slot />
 </Layout>

@@ -24,6 +24,7 @@
     "beercss": "^3.0.8",
     "estree-util-value-to-estree": "^2.1.0",
     "material-dynamic-colors": "^0.1.5",
+    "nanostores": "^0.7.4",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "sharp": "^0.31.3",

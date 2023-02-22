@@ -1,0 +1,17 @@
+<script>
+  import { isBeginner } from "src/state/beginner";
+
+  const advanced = document.querySelectorAll<HTMLDivElement>(".advanced");
+
+  isBeginner.subscribe((value) => {
+    if (!value) {
+      advanced.forEach((entry) => (entry.style.display = "block"));
+    } else {
+      advanced.forEach((entry) => (entry.style.display = "none"));
+    }
+  });
+</script>
+
+<div class="advanced">
+  <slot />
+</div>

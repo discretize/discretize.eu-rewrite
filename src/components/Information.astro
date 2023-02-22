@@ -2,7 +2,7 @@
 const { icon = "information" } = Astro.props;
 ---
 
-<article>
+<article class="information">
   <div class="row">
     <i class="icon">{icon}</i>
     <div class="max">
@@ -15,5 +15,8 @@ const { icon = "information" } = Astro.props;
   .icon {
     font-size: 3rem;
     width: 3rem;
+  }
+  .information {
+    margin-bottom: 2rem;
   }
 </style>

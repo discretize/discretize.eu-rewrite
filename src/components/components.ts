@@ -16,12 +16,14 @@ import MistlockInstability from "./gw2-ui/MistlockInstability.astro";
 import Traits from "./gw2-ui/Traits.astro";
 import Information from "./Information.astro";
 import Warning from "./Warning.astro";
+import Beginner from "./Beginner.astro";
+import Advanced from "./Advanced.astro";
 
 export const components = {
   hr,
-  Advanced: () => undefined,
+  Advanced,
   Attribute,
-  Beginner: () => undefined,
+  Beginner,
   BuildLink: () => undefined,
   Boon,
   Boss: () => undefined,

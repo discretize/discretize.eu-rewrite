@@ -1,4 +1,22 @@
 ---
 ---
 
+<script>
+  // get nanostore
+  import { isBeginner } from "../../state/beginner";
+
+  document
+    .querySelector<HTMLInputElement>("#switchBeginner")
+    .addEventListener("change", (e: InputEvent) => {
+      isBeginner.set(!e.target.checked);
+    });
+</script>
+
+Beginner
+<label class="switch">
+  <input type="checkbox" id="switchBeginner" />
+  <span></span>
+</label>
+Advanced
+
 <h1>I am a build frontmatter yey</h1>

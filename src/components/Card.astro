@@ -8,8 +8,12 @@ export interface Props {
 const { title } = Astro.props;
 ---
 
-<article>
+<article class="card">
   <h5>{title}</h5>
   <slot />
 </article>
-<style></style>
+<style>
+  .card {
+    margin-bottom: 1rem;
+  }
+</style>
