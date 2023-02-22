@@ -9,6 +9,9 @@ import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
 
 // https://astro.build/config
+import image from "@astrojs/image";
+
+// https://astro.build/config
 export default defineConfig({
   // vite: {
   //   ssr: {
@@ -18,11 +21,13 @@ export default defineConfig({
 
   integrations: [
     react(),
-
     mdx({
       remarkPlugins: [mdxgw2ui, mdxInjectData],
       gfm: true,
       extendMarkdownConfig: {},
+    }),
+    image({
+      serviceEntryPoint: "@astrojs/image/sharp",
     }),
   ],
 });
