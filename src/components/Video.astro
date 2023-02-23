@@ -1,6 +1,11 @@
 ---
 import { YouTube } from "@astro-community/astro-embed-youtube";
 
+interface Props {
+  youtube: string;
+  caption?: string;
+}
+
 const { youtube, caption } = Astro.props;
 ---
 

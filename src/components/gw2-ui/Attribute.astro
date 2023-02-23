@@ -1,6 +1,12 @@
 ---
 import Attribute from "@gw2-ui/components/Attribute/Attribute";
+import type { AttributeTypes } from "@gw2-ui/data/attributes";
 import { getSizeStyle } from "src/utils/styles";
+import type { GenericGw2Component } from "src/utils/types";
+
+interface Props extends GenericGw2Component {
+  name: AttributeTypes;
+}
 ---
 
 <Attribute

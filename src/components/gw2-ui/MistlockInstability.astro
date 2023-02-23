@@ -1,6 +1,12 @@
 ---
 import MistlockInstability from "@gw2-ui/components/MistlockInstability/MistlockInstability";
+import type { MistlockInstabilityTypes } from "@gw2-ui/data/mistlockInstabilities";
 import { getSizeStyle } from "src/utils/styles";
+import type { GenericGw2Component } from "src/utils/types";
+
+interface Props extends GenericGw2Component {
+  name: MistlockInstabilityTypes;
+}
 ---
 
 <MistlockInstability

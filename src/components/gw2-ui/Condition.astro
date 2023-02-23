@@ -1,6 +1,12 @@
 ---
 import Condition from "@gw2-ui/components/Condition/Condition";
+import type { ConditionTypes } from "@gw2-ui/data/conditions";
 import { getSizeStyle } from "src/utils/styles";
+import { GenericGw2Component } from "src/utils/types";
+
+interface Props extends GenericGw2Component {
+  name: ConditionTypes;
+}
 ---
 
 <Condition

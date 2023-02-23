@@ -1,6 +1,12 @@
 ---
 import CommonEffect from "@gw2-ui/components/CommonEffect/CommonEffect";
+import type { CommonEffectTypes } from "@gw2-ui/data/commonEffects";
 import { getSizeStyle } from "src/utils/styles";
+import type { GenericGw2Component } from "src/utils/types";
+
+interface Props extends GenericGw2Component {
+  name: CommonEffectTypes;
+}
 ---
 
 <CommonEffect

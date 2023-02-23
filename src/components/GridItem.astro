@@ -1,4 +1,12 @@
 ---
+interface Props {
+  xs?: string;
+  sm?: string;
+  md?: string;
+  lg?: string;
+  xl?: string;
+}
+
 const { xs, sm, md, lg, xl } = Astro.props;
 
 function parseSafeInt(value) {

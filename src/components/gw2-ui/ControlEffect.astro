@@ -1,6 +1,12 @@
 ---
 import ControlEffect from "@gw2-ui/components/ControlEffect/ControlEffect";
+import type { ControlEffectTypes } from "@gw2-ui/data/controlEffects";
 import { getSizeStyle } from "src/utils/styles";
+import type { GenericGw2Component } from "src/utils/types";
+
+interface Props extends GenericGw2Component {
+  name: ControlEffectTypes;
+}
 ---
 
 <ControlEffect

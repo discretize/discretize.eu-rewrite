@@ -1,6 +1,12 @@
 ---
 import TraitInternal from "@gw2-ui/components/Trait/TraitInternal";
+import type GW2ApiTrait from "@gw2-ui/gw2api/types/traits/trait";
 import { getSizeStyle } from "src/utils/styles";
+import type { GenericGw2Component } from "src/utils/types";
+
+interface Props extends GenericGw2Component {
+  data: GW2ApiTrait;
+}
 ---
 
 <TraitInternal

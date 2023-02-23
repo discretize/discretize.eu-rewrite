@@ -1,6 +1,13 @@
 ---
 import ItemInternal from "@gw2-ui/components/Item/ItemInternal";
+import type GW2ApiItem from "@gw2-ui/gw2api/types/items/item";
 import { getSizeStyle } from "src/utils/styles";
+import type { GenericGw2Component } from "src/utils/types";
+
+interface Props extends GenericGw2Component {
+  dataItem: GW2ApiItem;
+  dataUpgrades: [GW2ApiItem, number][];
+}
 ---
 
 <ItemInternal

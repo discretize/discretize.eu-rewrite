@@ -1,6 +1,12 @@
 ---
 import Profession from "@gw2-ui/components/Profession/Profession";
+import type { EliteSpecTypes, ProfessionTypes } from "@gw2-ui/data/professions";
 import { getSizeStyle } from "src/utils/styles";
+import type { GenericGw2Component } from "src/utils/types";
+
+interface Props extends GenericGw2Component {
+  name: EliteSpecTypes | ProfessionTypes;
+}
 ---
 
 <Profession
