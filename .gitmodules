@@ -7,3 +7,6 @@
 [submodule "gw2-api-extended"]
 	path = gw2-api-extended
 	url = https://github.com/discretize/gw2-api-extended.git
+[submodule "discretize-gear-optimizer"]
+	path = discretize-gear-optimizer
+	url = https://github.com/discretize/discretize-gear-optimizer

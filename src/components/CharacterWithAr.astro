@@ -1,0 +1,64 @@
+---
+import "discretize-ui/react-discretize-components/src/styles/defaultTheme.css";
+const id = Math.random().toString(16).slice(2);
+const { characters } = Astro.props;
+---
+
+<script define:vars={{ characters, id }}>
+  function attachEvents() {
+    // attach event listeners to buttons
+    characters.forEach((title) => {
+      const button = document.querySelector(
+        `[id='${id}'] [id='button_${title.toLowerCase().replaceAll(" ", "-")}']`
+      );
+      button.addEventListener("click", () => {
+        // hide all characters
+        const characters_dom = document.querySelectorAll(
+          `[id='${id}'] .character`
+        );
+        characters_dom.forEach((character) => {
+          character.style.display = "none";
+        });
+
+        // show the selected character
+        const character = document.querySelector(
+          `[id='${id}'] [id='${title.toLowerCase().replaceAll(" ", "-")}']`
+        );
+        character.style.display = "block";
+      });
+    });
+  }
+
+  window.onload = attachEvents;
+</script>
+
+<div id={id}>
+  <div class="character-nav">
+    {
+      characters.map((title) => (
+        <button
+          class="border round primary-border primary-text medium"
+          id={`button_${title.toLowerCase().replaceAll(" ", "-")}`}
+        >
+          {title}
+        </button>
+      ))
+    }
+  </div>
+
+  <section class="character-with-ar">
+    <slot />
+  </section>
+</div>
+
+<style>
+  :global(.character:first-of-type) {
+    display: block;
+  }
+  .character-nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-bottom: 1rem;
+  }
+</style>

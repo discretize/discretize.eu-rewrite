@@ -6,7 +6,8 @@
     "baseUrl": ".",
     "paths": {
       "@md-guides/*": ["discretize-guides/*"],
-      "@gw2-ui/*": ["discretize-ui/gw2-ui/src/*"]
+      "@gw2-ui/*": ["discretize-ui/gw2-ui/src/*"],
+      "@discretize/gw2-ui-new": ["discretize-ui/gw2-ui/src/index"]
     }
   }
 }

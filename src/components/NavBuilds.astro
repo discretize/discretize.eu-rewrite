@@ -24,7 +24,7 @@ const { builds } = Astro.props;
     </a>
     <ul>
       {
-        (Object.keys(builds) as Array<ProfessionTypes>).map((profession) => (
+        Object.keys(builds).map((profession) => (
           <li>
             <div class="nested-dropdowns__item wave buttonProfession row no-margin">
               <Profession

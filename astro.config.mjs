@@ -1,6 +1,7 @@
 import { defineConfig } from "astro/config";
 import mdxgw2ui from "./src/utils/remark/remark-mdx-gw2ui/index";
 import mdxInjectData from "./src/utils/remark/remark-inject-data/index";
+import remarkInjectCharacterUi from "./src/utils/remark/remark-inject-character-ui";
 
 // https://astro.build/config
 import mdx from "@astrojs/mdx";
@@ -10,6 +11,7 @@ import react from "@astrojs/react";
 
 // https://astro.build/config
 import image from "@astrojs/image";
+import yaml from "@rollup/plugin-yaml";
 
 // https://astro.build/config
 export default defineConfig({
@@ -18,11 +20,13 @@ export default defineConfig({
   //     noExternal: ["@floating-ui/react-dom"],
   //   },
   // },
-
+  vite: {
+    plugins: [yaml()],
+  },
   integrations: [
     react(),
     mdx({
-      remarkPlugins: [mdxgw2ui, mdxInjectData],
+      remarkPlugins: [mdxgw2ui, mdxInjectData, remarkInjectCharacterUi],
       gfm: true,
       extendMarkdownConfig: {},
     }),

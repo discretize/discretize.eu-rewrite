@@ -1,0 +1,21 @@
+---
+import { Character } from "discretize-ui/react-discretize-components/src";
+import Switch from "./Switch";
+
+const { title, gear } = Astro.props;
+const parsedGear = JSON.parse(gear);
+---
+
+<div
+  class={`character`}
+  id={title.toLowerCase().replaceAll(" ", "-")}
+  data-title={title}
+>
+  <Character {...parsedGear} client:visible disableSwitch />
+</div>
+
+<style>
+  .character {
+    display: none;
+  }
+</style>
