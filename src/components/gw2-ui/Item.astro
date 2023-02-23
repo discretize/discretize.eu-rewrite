@@ -1,0 +1,11 @@
+---
+import ItemInternal from "@gw2-ui/components/Item/ItemInternal";
+import { getSizeStyle } from "src/utils/styles";
+---
+
+<ItemInternal
+  {...Astro.props}
+  client:idle
+  className="nowrap"
+  style={getSizeStyle(Astro.props)}
+/>

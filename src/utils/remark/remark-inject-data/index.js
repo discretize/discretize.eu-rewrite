@@ -3,6 +3,13 @@ import { visit } from "unist-util-visit";
 import skills from "../../../../gw2-api-extended/data/api-extended/skills.json";
 import traits from "../../../../gw2-api-extended/data/api-extended/traits.json";
 import { valueToEstree } from "estree-util-value-to-estree";
+import fs from "fs";
+
+// for some reason we cant import this or else we run out of memory
+// I suspect some kind of abnormality of how mdx handles remark plugins and imports
+const items = JSON.parse(
+  fs.readFileSync("./gw2-api-extended/data/api-extended/items.json", "utf-8")
+);
 
 function attrToProps(attr) {
   const props = {};
@@ -18,13 +25,24 @@ function resolve(array, attr) {
   return array.filter((item) => item.id == attr.id)[0];
 }
 
+//const items = [];
+
 const COMPONENTS = [
   {
     type: "Skill",
+    prop_name: "data",
     resolve_methods: [(attr) => resolve(skills, attr)],
   },
-  { type: "Trait", resolve_methods: [(attr) => resolve(traits, attr)] },
-  //{ type: "Item", resolve_methods: [(attr) => resolve("Item", attr)] },
+  {
+    type: "Trait",
+    prop_name: "data",
+    resolve_methods: [(attr) => resolve(traits, attr)],
+  },
+  {
+    type: "Item",
+    prop_name: "dataItem",
+    resolve_methods: [(attr) => resolve(items, attr)],
+  },
 ];
 
 export default () => {
@@ -60,7 +78,8 @@ export default () => {
           ...node.attributes,
           {
             type: "mdxJsxAttribute",
-            name: "data",
+            name: COMPONENTS.find((comp) => comp.type === componentType)
+              .prop_name,
             value: {
               type: "mdxJsxAttributeValueExpression",
               value: JSON.stringify(value),

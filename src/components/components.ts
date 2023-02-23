@@ -18,6 +18,7 @@ import Information from "./Information.astro";
 import Warning from "./Warning.astro";
 import Beginner from "./Beginner.astro";
 import Advanced from "./Advanced.astro";
+import Item from "./gw2-ui/Item.astro";
 
 export const components = {
   hr,
@@ -39,7 +40,7 @@ export const components = {
   GridItem,
   Information,
   Instability: MistlockInstability,
-  Item: () => undefined,
+  Item,
   Label: () => undefined,
   Skill,
   Skills: () => undefined,
