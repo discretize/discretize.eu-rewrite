@@ -1,7 +1,7 @@
 import { visit } from "unist-util-visit";
-//import items from "../../../../gw2-api-extended/data/api-extended/items.json";
-import skills from "../../../../gw2-api-extended/data/api-extended/skills.json";
-import traits from "../../../../gw2-api-extended/data/api-extended/traits.json";
+// import items from "../../../../gw2-api-extended/data/api-extended/items.json";
+// import skills from "../../../../gw2-api-extended/data/api-extended/skills.json";
+// import traits from "../../../../gw2-api-extended/data/api-extended/traits.json";
 import { valueToEstree } from "estree-util-value-to-estree";
 import fs from "fs";
 
@@ -9,6 +9,13 @@ import fs from "fs";
 // I suspect some kind of abnormality of how mdx handles remark plugins and imports
 const items = JSON.parse(
   fs.readFileSync("./gw2-api-extended/data/api-extended/items.json", "utf-8")
+);
+const skills = JSON.parse(
+  fs.readFileSync("./gw2-api-extended/data/api-extended/skills.json", "utf-8")
+);
+
+const traits = JSON.parse(
+  fs.readFileSync("./gw2-api-extended/data/api-extended/traits.json", "utf-8")
 );
 
 function attrToProps(attr) {

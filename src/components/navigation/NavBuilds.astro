@@ -1,6 +1,7 @@
 ---
 import { Profession } from "@gw2-ui/components";
 import type { EliteSpecTypes, ProfessionTypes } from "@gw2-ui/data/professions";
+import NavButton from "./NavButton.astro";
 
 interface Props {
   builds: Record<
@@ -18,15 +19,15 @@ const { builds } = Astro.props;
 
 <ul class="nested-dropdowns">
   <li>
-    <a href="/builds" class="nested-dropdowns__item chip buttonMenu">
+    <NavButton href="/builds" class="buttonMenu">
       Builds
-      <div class="nested-dropdowns__arrow"><i>arrow_drop_down</i></div>
-    </a>
+      <i>arrow_drop_down</i>
+    </NavButton>
     <ul>
       {
         Object.keys(builds).map((profession) => (
           <li>
-            <div class="nested-dropdowns__item wave buttonProfession row no-margin">
+            <div class="wave buttonProfession row no-margin">
               <Profession
                 name={profession}
                 client:load
@@ -34,16 +35,14 @@ const { builds } = Astro.props;
                 style={{ whiteSpace: "nowrap" }}
               />
               <div class="max" />
-              <div class="nested-dropdowns__arrow">
-                <i>chevron_right</i>
-              </div>
+              <i>chevron_right</i>
             </div>
 
             <ul>
               {builds[profession].map((build) => (
                 <li>
                   <a href={build.url}>
-                    <div class="nested-dropdowns__item buttonProfession wave row no-margin">
+                    <div class="buttonProfession wave row no-margin">
                       <Profession
                         name={build.specialization}
                         client:load

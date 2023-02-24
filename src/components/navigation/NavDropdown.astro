@@ -1,4 +1,6 @@
 ---
+import NavButton from "./NavButton.astro";
+
 interface Props {
   content: {
     title: string;
@@ -13,18 +15,15 @@ const { content, title, slug } = Astro.props;
 
 <ul class="nested-dropdowns">
   <li>
-    <a href={slug} class="nested-dropdowns__item chip buttonMenu">
+    <NavButton href={slug} className="buttonMenu">
       {title}
-      <div class="nested-dropdowns__arrow"><i>arrow_drop_down</i></div>
-    </a>
+      <i>arrow_drop_down</i>
+    </NavButton>
     <ul>
       {
         content.map((entry) => (
           <li>
-            <a
-              href={entry.url}
-              class="nested-dropdowns__item wave buttonProfession row no-margin"
-            >
+            <a href={entry.url} class="wave buttonProfession row no-margin">
               {entry.title}
             </a>
           </li>

@@ -55,9 +55,14 @@ const { title, disablePadding = false } = Astro.props;
   }
 
   .main {
-    padding: 1rem;
+    padding: 0rem;
     max-width: 1400px;
     margin: 0 auto;
+  }
+  @media (max-width: 1400px) {
+    .main {
+      padding: 1rem;
+    }
   }
 
   body {
