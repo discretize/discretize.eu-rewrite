@@ -10,3 +10,4 @@
 [submodule "discretize-gear-optimizer"]
 	path = discretize-gear-optimizer
 	url = https://github.com/discretize/discretize-gear-optimizer
+	branch = extract-core-method-two
