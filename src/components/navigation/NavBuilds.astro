@@ -19,10 +19,7 @@ const { builds } = Astro.props;
 
 <ul class="nested-dropdowns">
   <li>
-    <NavButton href="/builds" class="buttonMenu">
-      Builds
-      <i>arrow_drop_down</i>
-    </NavButton>
+    <NavButton href="/builds" class="buttonMenu">Builds</NavButton>
     <ul>
       {
         Object.keys(builds).map((profession) => (

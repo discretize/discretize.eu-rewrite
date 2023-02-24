@@ -22,6 +22,11 @@ export default defineConfig({
   // },
   vite: {
     plugins: [yaml()],
+    // build: {
+    //   rollupOptions: {
+    //     external: ["@reduxjs/toolkit"],
+    //   },
+    // },
   },
   integrations: [
     react(),

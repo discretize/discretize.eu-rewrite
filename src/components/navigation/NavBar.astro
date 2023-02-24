@@ -46,11 +46,13 @@ const builds = await getBuilds();
 const guides = await getGuides();
 ---
 
-<div class="topArea row">
-  <a href="/"><Discretize className="discretizeLogo" /></a>
-  <div class="max"></div>
+<div class="topArea">
+  <div class="topButtonArea row">
+    <a href="/"><Discretize className="discretizeLogo" /></a>
+    <div class="max"></div>
 
-  <DarkModeSwitch />
+    <DarkModeSwitch />
+  </div>
 </div>
 <nav class="nav">
   <div class="lowerArea">
@@ -74,19 +76,22 @@ const guides = await getGuides();
     margin-top: 0 !important;
     top: 0px;
 
-    background-color: #2a2c31;
+    background-color: var(--surface);
     z-index: 10;
     margin-bottom: 0.5rem;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 15%);
   }
   .topArea {
-    background-color: #2f3136;
+    background-color: var(--surface-variant);
+  }
+  .topButtonArea {
     max-height: 4rem;
     padding: 2rem 0rem;
     max-width: 1400px;
     margin: 0 auto;
   }
   @media (max-width: 1400px) {
-    .topArea {
+    .topButtonArea {
       padding: 2rem 1rem;
     }
   }
