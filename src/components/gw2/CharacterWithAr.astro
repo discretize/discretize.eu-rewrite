@@ -2,63 +2,45 @@
 import "discretize-ui/react-discretize-components/src/styles/defaultTheme.css";
 const id = Math.random().toString(16).slice(2);
 const { characters } = Astro.props;
+
+// enrich data with escaped ids
+characters.forEach((title, index) => {
+  characters[index] = {
+    title,
+    id: `#page_${title
+      .toLowerCase()
+      .replaceAll(" ", "")
+      .replaceAll(/\/|[^a-zA-Z0-9]+/gm, "")}`,
+  };
+});
 ---
 
-<script define:vars={{ characters, id }}>
-  function attachEvents() {
-    // attach event listeners to buttons
-    characters.forEach((title) => {
-      const button = document.querySelector(
-        `[id='${id}'] [id='button_${title.toLowerCase().replaceAll(" ", "-")}']`
-      );
-      button.addEventListener("click", () => {
-        // hide all characters
-        const characters_dom = document.querySelectorAll(
-          `[id='${id}'] .character`
-        );
-        characters_dom.forEach((character) => {
-          character.style.display = "none";
-        });
-
-        // show the selected character
-        const character = document.querySelector(
-          `[id='${id}'] [id='${title.toLowerCase().replaceAll(" ", "-")}']`
-        );
-        character.style.display = "block";
-      });
-    });
+<script define:vars={{ id }}>
+  function setActiveTab() {
+    const pages = document.querySelectorAll(`[id='${id}'] .page`);
+    pages[0].classList.add("active");
   }
-
-  window.onload = attachEvents;
+  document.addEventListener("DOMContentLoaded", (event) => {
+    setActiveTab();
+  });
 </script>
 
+<script src="beercss/dist/cdn/beer.min.js"></script>
+
 <div id={id}>
-  <div class="character-nav">
+  <div class="tabs left-align row">
     {
-      characters.map((title) => (
-        <button
-          class="border round primary-border primary-text medium"
-          id={`button_${title.toLowerCase().replaceAll(" ", "-")}`}
-        >
-          {title}
-        </button>
+      characters.map((character, index) => (
+        <a data-ui={character.id} class={index === 0 ? "active" : ""}>
+          {character.title}
+        </a>
       ))
     }
+    <div class="max"></div>
+    <button class="small">Peepoptimizer</button>
+    <button class="transparent circle small">
+      <i>info</i>
+    </button>
   </div>
-
-  <section class="character-with-ar">
-    <slot />
-  </section>
+  <slot />
 </div>
-
-<style>
-  :global(.character:first-of-type) {
-    display: block;
-  }
-  .character-nav {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    margin-bottom: 1rem;
-  }
-</style>

@@ -1,21 +1,25 @@
 ---
-import { Character } from "discretize-ui/react-discretize-components/src";
-import Switch from "./Switch";
+import { getPicture } from "@astrojs/image";
+import images from "../images";
+import CharacterWrapper from "./CharacterWrapper";
 
 const { title, gear } = Astro.props;
 const parsedGear = JSON.parse(gear);
+
+const id = `page_${title
+  .toLowerCase()
+  .replaceAll(" ", "")
+  .replaceAll(/\/|[^a-zA-Z0-9]+/gm, "")}`;
+const specialization = parsedGear.attributes.specialization;
+
+const optimized = await getPicture({
+  src: images[specialization.toLowerCase()],
+  widths: [360, 480, 620],
+  alt: "Profession",
+  formats: ["avif", "webp"],
+});
 ---
 
-<div
-  class={`character`}
-  id={title.toLowerCase().replaceAll(" ", "-")}
-  data-title={title}
->
-  <Character {...parsedGear} client:visible disableSwitch />
+<div class={`page`} id={id}>
+  <CharacterWrapper {...parsedGear} client:only imageData={optimized} />
 </div>
-
-<style>
-  .character {
-    display: none;
-  }
-</style>
