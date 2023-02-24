@@ -1,12 +1,12 @@
 ---
-import discord from "../icons/discord.svg";
-import Discretize from "../icons/discretize.astro";
+import discord from "../../icons/discord.svg";
+import Discretize from "../../icons/discretize.astro";
 import NavBuilds from "./NavBuilds.astro";
 import NavDropdown from "./NavDropdown.astro";
 
 async function getBuilds() {
   // load markdown files and return the frontmatter
-  const builds = await Astro.glob("../../discretize-guides/builds/**/*.mdx");
+  const builds = await Astro.glob("../../../discretize-guides/builds/**/*.mdx");
 
   const navigationData = builds.map((build) => ({
     title: build.frontmatter.title,
@@ -29,7 +29,7 @@ async function getBuilds() {
 
 async function getGuides() {
   // load markdown files and return the frontmatter
-  const guides = await Astro.glob("../../discretize-guides/guides/**/*.mdx");
+  const guides = await Astro.glob("../../../discretize-guides/guides/**/*.mdx");
 
   const navigationData = guides.map((guide) => ({
     title: guide.frontmatter.title,
