@@ -1,4 +1,10 @@
 ---
+import Profession from "../gw2-ui/Profession.astro";
+import TextDivider from "../TextDivider.astro";
+import Label from "../Label.astro";
+
+const { title, specialization, role, hasBeginner, date } =
+  Astro.props.frontmatter;
 ---
 
 <script>
@@ -12,13 +18,56 @@
     });
 </script>
 
-<div>
-  Beginner
-  <label class="switch">
-    <input type="checkbox" id="switchBeginner" />
-    <span></span>
-  </label>
-  Advanced
+<div class="header row">
+  <Profession disableLink disableText name={specialization} size="big" />
+  <div class="max">
+    <h2>{title}</h2>
+    <p>{role}</p>
+  </div>
+
+  <div>
+    <Label>
+      <ul>
+        <li>
+          <i class="icon">date_range</i>
+          {new Date(date).toLocaleDateString()}
+        </li>
+      </ul>
+    </Label>
+  </div>
 </div>
 
-<h1>I am a build frontmatter yey</h1>
+<TextDivider text="Overview" />
+
+{
+  hasBeginner && (
+    <div>
+      Beginner
+      <label class="switch">
+        <input type="checkbox" id="switchBeginner" />
+        <span />
+      </label>
+      Advanced
+    </div>
+  )
+}
+
+<style>
+  .header {
+    font-family: Raleway;
+    line-height: 1.2;
+    margin-bottom: 2rem;
+  }
+  .header p {
+    font-family: Muli;
+    font-weight: 500;
+  }
+  .header ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .icon {
+    font-size: 0.8rem;
+  }
+</style>

@@ -96,14 +96,20 @@ const { title, disablePadding = false } = Astro.props;
     }
   }
   .main {
-    padding: 0rem 20px;
+    padding: 1.4rem 1.4rem;
     max-width: 1440px;
     margin: 0 auto;
     background-color: var(--background);
   }
+  main {
+    margin-top: 2rem;
+  }
   @media (max-width: 1400px) {
     .main {
       padding: 1rem;
+    }
+    main {
+      margin-top: 0rem;
     }
   }
 
