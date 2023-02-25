@@ -1,5 +1,6 @@
 ---
 import { Image } from "@astrojs/image/components";
+import { Icon } from "astro-icon";
 import Profession from "./gw2-ui/Profession.astro";
 import images from "./images";
 
@@ -7,10 +8,19 @@ interface Props {
   title: string;
 }
 const UPDATED_LAST_X_DAYS = 30;
-const { title, specialization, slug, date, cmGuide, role } = Astro.props;
+const {
+  title,
+  specialization,
+  slug,
+  date,
+  cmGuide,
+  role,
+  rating,
+  uptodate = { guide: true, gear: true },
+} = Astro.props;
 ---
 
-<a href={`builds/${slug}`} class="buildLink">
+<a href={`/builds/${slug}`} class="buildLink">
   <article class="row outer round">
     <Image
       src={images[specialization.toLowerCase()]}
@@ -20,7 +30,7 @@ const { title, specialization, slug, date, cmGuide, role } = Astro.props;
       class="image"
     />
     <p class="title">
-      <Profession name={specialization} disableText />
+      <Profession name={specialization} disableText className="spec" />
       {title}
       {
         // if this build was updated in the last 7 days, show a new tag
@@ -32,29 +42,49 @@ const { title, specialization, slug, date, cmGuide, role } = Astro.props;
     </p>
 
     <div class="lastUpdated m l">
-      <p>{new Date(date).toLocaleDateString()}</p>
-      <div class="tooltip top">Last updated</div>
-    </div>
-
-    <div class="tags m l">
-      <div class="chip border small">
-        <span>{role}</span>
+      <Icon
+        name="mdi:clock-outline"
+        height="2rem"
+        class={`${
+          uptodate.guide && uptodate.gear
+            ? "green"
+            : uptodate.guide || uptodate.gear
+            ? "yellow"
+            : "red"
+        } update-icon`}
+      />
+      <div class="tooltip top">
+        Gear: {uptodate.gear ? "up-to-date" : "not updated"}<br />
+        Guide: {uptodate.guide ? "up-to-date" : "not updated"}
       </div>
     </div>
 
+    <div class="tags l">
+      {
+        [rating, role].map((tag) => {
+          return (
+            <div class="chip border primary-border primary-text small">
+              <span>{tag}</span>
+            </div>
+          );
+        })
+      }
+    </div>
+
     <div class="max"></div>
-    <button class="btn btn-primary l">Build</button>
 
     <div class="l">
       {cmGuide ? <button class="btn btn-primary">CM Guide</button> : undefined}
     </div>
+
+    <button class="btn btn-primary l">Build</button>
   </article>
 </a>
 
 <style>
   .outer {
-    height: 130px;
-    border: 1px solid rgba(0, 0, 0, 0);
+    height: 120px;
+    border: 1px solid var(--body);
     width: 100%;
   }
   .outer:hover {
@@ -71,6 +101,7 @@ const { title, specialization, slug, date, cmGuide, role } = Astro.props;
   .lastUpdated {
     position: absolute;
     left: 500px;
+    font-size: 1rem;
   }
   .tags {
     position: absolute;
@@ -88,5 +119,11 @@ const { title, specialization, slug, date, cmGuide, role } = Astro.props;
       position: relative;
       left: 0;
     }
+  }
+  .update-icon {
+    color: black;
+  }
+  .spec {
+    font-size: 1.5rem !important;
   }
 </style>

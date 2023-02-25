@@ -13,6 +13,6 @@ interface Props extends GenericGw2Component {
 <ItemInternal
   {...Astro.props}
   client:idle
-  className="nowrap"
+  className={`nowrap ${Astro.props.className || ""}`.trim()}
   style={getSizeStyle(Astro.props)}
 />

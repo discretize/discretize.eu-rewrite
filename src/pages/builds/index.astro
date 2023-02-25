@@ -28,6 +28,8 @@ const builds = buildsRaw.map((build) => ({
   profession: build.frontmatter.profession,
   specialization: build.frontmatter.specialization,
   cmGuide: build.frontmatter.cmGuide,
+  uptodate: build.frontmatter.uptodate,
+  rating: build.frontmatter.rating,
   slug: build.file
     .split("discretize-guides/builds/")[1]
     .replace("/index.mdx", ""),

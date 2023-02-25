@@ -12,6 +12,6 @@ interface Props extends GenericGw2Component {
 <Condition
   {...Astro.props}
   client:visible
-  className="nowrap"
+  className={`nowrap ${Astro.props.className || ""}`.trim()}
   style={getSizeStyle(Astro.props)}
 />

@@ -12,6 +12,6 @@ interface Props extends GenericGw2Component {
 <ControlEffect
   {...Astro.props}
   client:idle
-  className="nowrap"
+  className={`nowrap ${Astro.props.className || ""}`.trim()}
   style={getSizeStyle(Astro.props)}
 />
