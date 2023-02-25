@@ -1,0 +1,92 @@
+---
+import { Image } from "@astrojs/image/components";
+import Profession from "./gw2-ui/Profession.astro";
+import images from "./images";
+
+interface Props {
+  title: string;
+}
+const UPDATED_LAST_X_DAYS = 30;
+const { title, specialization, slug, date, cmGuide, role } = Astro.props;
+---
+
+<a href={`builds/${slug}`} class="buildLink">
+  <article class="row outer round">
+    <Image
+      src={images[specialization.toLowerCase()]}
+      width={100}
+      height={100}
+      alt={specialization}
+      class="image"
+    />
+    <p class="title">
+      <Profession name={specialization} disableText />
+      {title}
+      {
+        // if this build was updated in the last 7 days, show a new tag
+        new Date(date).getTime() >
+        new Date().getTime() - UPDATED_LAST_X_DAYS * 24 * 60 * 60 * 1000 ? (
+          <span class="badge">Updated</span>
+        ) : undefined
+      }
+    </p>
+
+    <div class="lastUpdated m l">
+      <p>{new Date(date).toLocaleDateString()}</p>
+      <div class="tooltip top">Last updated</div>
+    </div>
+
+    <div class="tags m l">
+      <div class="chip border small">
+        <span>{role}</span>
+      </div>
+    </div>
+
+    <div class="max"></div>
+    <button class="btn btn-primary l">Build</button>
+
+    <div class="l">
+      {cmGuide ? <button class="btn btn-primary">CM Guide</button> : undefined}
+    </div>
+  </article>
+</a>
+
+<style>
+  .outer {
+    height: 130px;
+    border: 1px solid rgba(0, 0, 0, 0);
+    width: 100%;
+  }
+  .outer:hover {
+    box-shadow: var(--elevate2);
+    border: 1px solid var(--primary-dark);
+  }
+  .title {
+    margin-left: 3rem !important;
+  }
+  .buildLink {
+    display: block;
+    margin-bottom: 1rem;
+  }
+  .lastUpdated {
+    position: absolute;
+    left: 500px;
+  }
+  .tags {
+    position: absolute;
+    left: 700px;
+  }
+  @media (max-width: 900px) {
+    .lastUpdated {
+      position: relative;
+      left: 0;
+    }
+    .title {
+      margin-left: 0 !important;
+    }
+    .tags {
+      position: relative;
+      left: 0;
+    }
+  }
+</style>
