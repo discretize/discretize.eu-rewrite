@@ -22,5 +22,7 @@ export default function CharacterWrapper(props) {
     </picture>
   );
 
-  return <Character {...props} disableSwitch imageElement={<Image />} />;
+  return (
+    <Character {...props} disableSwitch imageElement={imageData && <Image />} />
+  );
 }

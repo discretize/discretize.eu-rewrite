@@ -1,6 +1,7 @@
 import { GEAR_SLOTS } from "discretize-gear-optimizer/src/utils/gw2-data";
 import React from "react";
 import AffixSelect from "./AffixSelect";
+import ResultCharacter from "./ResultCharacter";
 
 const testState = {
   optimizer: {
@@ -223,6 +224,7 @@ const testState = {
 };
 
 const Component = () => {
+  const [result, setResult] = React.useState([]);
   const [forcedSlots, setForcedSlots] = React.useState([
     null,
     null,
@@ -255,8 +257,8 @@ const Component = () => {
       if (done) {
         break;
       }
-      console.log(value);
     }
+    setResult(value.list);
     console.log(value);
   }
 
@@ -283,6 +285,10 @@ const Component = () => {
         ))}
       </div>
       <button onClick={onClick}>Calculate</button>
+
+      {result.length > 0 && (
+        <ResultCharacter character={result[0]} assumedBuffs={[]} />
+      )}
     </>
   );
 };
