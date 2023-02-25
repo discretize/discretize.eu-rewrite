@@ -60,8 +60,10 @@ const { title, disablePadding = false } = Astro.props;
     font-size: inherit;
   }
 
-  .nowrap {
-    white-space: nowrap;
+  @media only screen and (min-width: 1400px) {
+    .nowrap {
+      white-space: nowrap;
+    }
   }
 
   table td,

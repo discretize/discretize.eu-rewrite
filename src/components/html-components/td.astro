@@ -1,0 +1,15 @@
+<td><slot /></td>
+
+<style>
+  td {
+    border-bottom: 1px solid var(--overlay);
+  }
+  @media (max-width: 900px) {
+    td {
+      display: block;
+      width: auto;
+      border-bottom: none;
+      padding: 4px 24px;
+    }
+  }
+</style>

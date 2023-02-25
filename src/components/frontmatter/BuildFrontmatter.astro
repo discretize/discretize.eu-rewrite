@@ -6,7 +6,7 @@
   import { isBeginner } from "../../state/beginner";
 
   document
-    .querySelector<HTMLInputElement>("[id='switchBeginner'")
+    .querySelector<HTMLInputElement>("[id='switchBeginner']")
     .addEventListener("change", (e: InputEvent) => {
       isBeginner.set(!e.target.checked);
     });
