@@ -51,10 +51,38 @@ const guides = await getGuides();
     <a href="/"><Discretize className="discretizeLogo" /></a>
     <div class="max"></div>
 
-    <DarkModeSwitch />
+    <div class="l">
+      <DarkModeSwitch />
+    </div>
+
+    <div class="s m">
+      <button data-ui="#modal" class="transparent circle large"
+        ><i>menu</i>
+      </button>
+
+      <div class="modal left" id="modal">
+        <a href="/"><Discretize className="discretizeLogo" /></a>
+
+        <nav class="navMobile">
+          <div>
+            <a class="row wave" href="/builds">Builds</a>
+            <a class="row wave" href="/guides">Guides</a>
+            <a class="row wave" href="/fractals">Fractals</a>
+
+            <a class="row wave" href="/augmentation-calculator"
+              >Augmentation Calculator</a
+            >
+          </div>
+        </nav>
+
+        <div class="mobileDarkMode">
+          <DarkModeSwitch />
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-<nav class="nav">
+<nav class="nav l">
   <div class="lowerArea">
     <div class="buttonArea row">
       <NavBuilds builds={builds} />
@@ -81,6 +109,12 @@ const guides = await getGuides();
     background-color: var(--surface);
     z-index: 10;
     box-shadow: 0 1px 2px 0 rgb(0 0 0 / 15%);
+  }
+  .navMobile {
+    margin-bottom: 2rem;
+  }
+  .mobileDarkMode {
+    display: flex;
   }
   .topArea {
     background-color: var(--surface-variant);
