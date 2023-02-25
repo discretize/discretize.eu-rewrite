@@ -1,5 +1,7 @@
 ---
 import "discretize-ui/react-discretize-components/src/styles/defaultTheme.css";
+import { Icon } from "astro-icon";
+
 const id = Math.random().toString(16).slice(2);
 const { characters } = Astro.props;
 
@@ -37,7 +39,7 @@ characters.forEach((title, index) => {
     <div class="max"></div>
     <button class="small">Peepoptimizer</button>
     <button class="transparent circle small">
-      <i>info</i>
+      <Icon pack="mdi" name="information" />
     </button>
   </div>
   <noscript>To display the character, please enable JavaScript :)</noscript>

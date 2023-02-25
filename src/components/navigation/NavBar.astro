@@ -6,6 +6,7 @@ import DarkModeSwitch from "./DarkModeSwitch.astro";
 import NavButton from "./NavButton.astro";
 import type { EliteSpecTypes, ProfessionTypes } from "@gw2-ui/data/professions";
 import Discord from "../../icons/discord.astro";
+import { Icon } from "astro-icon";
 
 async function getBuilds() {
   // load markdown files and return the frontmatter
@@ -57,7 +58,7 @@ const guides = await getGuides();
 
     <div class="s m">
       <button data-ui="#modal" class="transparent circle large"
-        ><i>menu</i>
+        ><i><Icon name="mdi:menu" /></i>
       </button>
 
       <div class="modal left" id="modal">

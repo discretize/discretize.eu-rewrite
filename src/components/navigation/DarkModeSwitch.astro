@@ -1,3 +1,7 @@
+---
+import { Icon } from "astro-icon";
+---
+
 <script>
   function addListener() {
     const darkModeButtons = document.querySelectorAll<HTMLInputElement>(
@@ -31,6 +35,6 @@
 <label class="switch" id="darkModeSwitch">
   <input type="checkbox" />
   <span>
-    <i>light_mode</i>
+    <i><Icon name="mdi:bulb-on-outline" height="1rem" /></i>
   </span>
 </label>

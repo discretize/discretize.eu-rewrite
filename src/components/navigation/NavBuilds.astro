@@ -1,6 +1,7 @@
 ---
 import { Profession } from "@gw2-ui/components";
 import type { EliteSpecTypes, ProfessionTypes } from "@gw2-ui/data/professions";
+import { Icon } from "astro-icon";
 import NavButton from "./NavButton.astro";
 
 interface Props {
@@ -32,7 +33,9 @@ const { builds } = Astro.props;
                 style={{ whiteSpace: "nowrap" }}
               />
               <div class="max" />
-              <i>chevron_right</i>
+              <i>
+                <Icon name="mdi:chevron-right" />
+              </i>
             </div>
 
             <ul>
@@ -68,7 +71,6 @@ const { builds } = Astro.props;
   .buttonProfession {
     padding: 0.6rem;
     font-size: 1rem;
-    font-weight: 400;
   }
   .nested-dropdowns {
     /* Border */

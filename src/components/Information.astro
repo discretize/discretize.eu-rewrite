@@ -1,14 +1,16 @@
 ---
+import { Icon } from "astro-icon";
+
 interface Props {
   icon?: string;
 }
 
-const { icon = "information" } = Astro.props;
+const { icon = "mdi:information" } = Astro.props;
 ---
 
 <article class="information">
   <div class="row">
-    <i class="icon">{icon}</i>
+    <Icon name={icon} height="3rem" />
     <div class="max">
       <p><slot /></p>
     </div>
@@ -16,10 +18,6 @@ const { icon = "information" } = Astro.props;
 </article>
 
 <style>
-  .icon {
-    font-size: 3rem;
-    width: 3rem;
-  }
   .information {
     margin-bottom: 2rem;
   }

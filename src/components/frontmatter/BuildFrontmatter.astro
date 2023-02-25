@@ -2,6 +2,7 @@
 import Profession from "../gw2-ui/Profession.astro";
 import TextDivider from "../TextDivider.astro";
 import Label from "../Label.astro";
+import { Icon } from "astro-icon";
 
 const { title, specialization, role, hasBeginner, date } =
   Astro.props.frontmatter;
@@ -11,11 +12,14 @@ const { title, specialization, role, hasBeginner, date } =
   // get nanostore
   import { isBeginner } from "../../state/beginner";
 
-  document
-    .querySelector<HTMLInputElement>("[id='switchBeginner']")
-    .addEventListener("change", (e: InputEvent) => {
+  const switchElement = document.querySelector<HTMLInputElement>(
+    "[id='switchBeginner']"
+  );
+  if (switchElement) {
+    switchElement.addEventListener("change", (e: InputEvent) => {
       isBeginner.set(!e.target.checked);
     });
+  }
 </script>
 
 <div class="header row">
@@ -29,7 +33,7 @@ const { title, specialization, role, hasBeginner, date } =
     <Label>
       <ul>
         <li>
-          <i class="icon">date_range</i>
+          <Icon name="mdi:calendar-range" height="0.8rem" />
           {new Date(date).toLocaleDateString()}
         </li>
       </ul>
@@ -60,7 +64,6 @@ const { title, specialization, role, hasBeginner, date } =
   }
   .header p {
     font-family: Muli;
-    font-weight: 500;
   }
   .header ul {
     list-style: none;
