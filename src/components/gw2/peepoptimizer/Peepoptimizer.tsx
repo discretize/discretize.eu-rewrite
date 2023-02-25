@@ -1,4 +1,6 @@
-import { calculate } from "discretize-gear-optimizer/src/state/optimizer/optimizer";
+import { GEAR_SLOTS } from "discretize-gear-optimizer/src/utils/gw2-data";
+import React from "react";
+import AffixSelect from "./AffixSelect";
 
 const testState = {
   optimizer: {
@@ -221,11 +223,33 @@ const testState = {
 };
 
 const Component = () => {
-  function calc() {
+  const [forcedSlots, setForcedSlots] = React.useState([
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+  ]);
+
+  async function calc() {
     let value,
       done = false;
+
+    const { calculate } = await import(
+      "discretize-gear-optimizer/src/state/optimizer/optimizer"
+    );
+
+    testState.optimizer.form.forcedSlots.slots = forcedSlots;
     const resultGenerator = calculate(testState);
-    console.log(resultGenerator);
     while (true) {
       ({ value, done } = resultGenerator.next());
       if (done) {
@@ -237,10 +261,30 @@ const Component = () => {
   }
 
   const onClick = () => {
-    console.log("clicekd");
+    console.log("clicked");
+    console.log(forcedSlots);
     calc();
   };
-  return <button onClick={onClick}>Calculate</button>;
+
+  return (
+    <>
+      <div className="grid">
+        {GEAR_SLOTS.map(({ name }, index) => (
+          <div className="s12 m3" key={name}>
+            <AffixSelect
+              title={name}
+              onChange={(e) => {
+                const newForcedSlots = [...forcedSlots];
+                newForcedSlots[index] = e.target.value;
+                setForcedSlots(newForcedSlots);
+              }}
+            />
+          </div>
+        ))}
+      </div>
+      <button onClick={onClick}>Calculate</button>
+    </>
+  );
 };
 
 export default Component;

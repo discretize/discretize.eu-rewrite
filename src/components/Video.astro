@@ -9,12 +9,7 @@ interface Props {
 const { youtube, caption } = Astro.props;
 ---
 
-<YouTube
-  id={youtube}
-  poster="/hero_twilight-oasis.jpg"
-  playlabel="test"
-  class="youtube"
-/>
+<YouTube id={youtube} playlabel="test" class="youtube" />
 {caption && <sub>{caption}</sub>}
 
 <style is:global>
