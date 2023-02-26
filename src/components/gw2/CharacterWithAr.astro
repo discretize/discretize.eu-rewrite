@@ -29,7 +29,7 @@ characters.forEach((title, index) => {
 </script>
 
 <div id={id}>
-  <div class="tabs left-align row">
+  <div class="tabs left-align row charactertabs">
     {
       characters.map((character, index) => (
         <a data-ui={character.id} class={index === 0 ? "active" : ""}>
@@ -38,23 +38,32 @@ characters.forEach((title, index) => {
       ))
     }
     <div class="max"></div>
-    <a data-ui="#peepoptimizer">Peepoptimizer</a>
+    <a data-ui="#peepoptimizer" class="m l">Peepoptimizer</a>
     <button
       class="transparent circle small"
       aria-label="Information for Peepoptimizer"
+      class="l"
     >
-      <Icon pack="mdi" name="information" />
+      <Icon pack="mdi" name="information" class="l" />
     </button>
   </div>
   <noscript>To display the character, please enable JavaScript :)</noscript>
 
   <slot />
 
-  <div class="page" id="peepoptimizer"><Peepoptimizer client:visible /></div>
+  <div class="page m l" id="peepoptimizer">
+    <Peepoptimizer client:visible />
+  </div>
 </div>
 
 <style>
   .tabs {
     margin-bottom: 1rem;
+    flex-wrap: wrap !important;
+  }
+  @media (max-width: 768px) {
+    .tabs {
+      gap: 0.1rem !important;
+    }
   }
 </style>

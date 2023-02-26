@@ -9,7 +9,7 @@ const { icon = "mdi:information" } = Astro.props;
 ---
 
 <article class="information">
-  <div class="row">
+  <div class="row outer">
     <Icon name={icon} height="3rem" />
     <div class="max">
       <p><slot /></p>
@@ -18,6 +18,12 @@ const { icon = "mdi:information" } = Astro.props;
 </article>
 
 <style>
+  @media (max-width: 600px) {
+    .outer {
+      display: flex;
+      flex-direction: column;
+    }
+  }
   .information {
     margin-bottom: 2rem;
   }

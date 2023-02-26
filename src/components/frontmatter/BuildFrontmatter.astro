@@ -23,12 +23,13 @@ const { title, specialization, role, hasBeginner, date } =
 </script>
 
 <div class="header row">
-  <Profession disableLink disableText name={specialization} size="big" />
-  <div class="max">
-    <h2>{title}</h2>
-    <p>{role}</p>
+  <div class="left max">
+    <Profession disableLink disableText name={specialization} size="big" />
+    <div class="headline">
+      <h2>{title}</h2>
+      <p>{role}</p>
+    </div>
   </div>
-
   <div>
     <Label>
       <ul>
@@ -66,6 +67,11 @@ const { title, specialization, role, hasBeginner, date } =
     line-height: 1.2;
     margin-bottom: 2rem;
   }
+  @media (max-width: 768px) {
+    .header {
+      flex-direction: column;
+    }
+  }
   .header p {
     font-family: Muli;
   }
@@ -76,5 +82,12 @@ const { title, specialization, role, hasBeginner, date } =
   }
   .icon {
     font-size: 0.8rem;
+  }
+  .left {
+    display: flex;
+  }
+  .headline {
+    margin-left: 1rem;
+    align-self: center;
   }
 </style>
