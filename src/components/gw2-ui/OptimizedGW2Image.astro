@@ -1,0 +1,29 @@
+---
+import { getImage } from "@astrojs/image";
+import sizes from "discretize-ui/react-discretize-components/src/helpers/iconSizes";
+
+interface Props {
+  dataProp?: string;
+  data?: {
+    icon?: string;
+    name?: string;
+  };
+}
+const dataProp = Astro.props.dataProp || "data";
+const url = Astro.props[dataProp]?.icon;
+if (!url) return;
+
+const pixelSize = sizes[Astro.props?.size] || 18;
+
+const optimized = await getImage({
+  src: url,
+  width: pixelSize,
+  height: pixelSize,
+  format: "webp",
+  alt: Astro.props.data?.name,
+});
+
+Astro.props[dataProp].icon = optimized.src;
+---
+
+<slot />

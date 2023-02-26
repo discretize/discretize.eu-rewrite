@@ -1,17 +1,21 @@
 ---
+import { getImage, getPicture } from "@astrojs/image";
 import SkillInternal from "@gw2-ui/components/Skill/SkillInternal";
 import type GW2ApiSkill from "@gw2-ui/gw2api/types/skills/skill";
 import { getSizeStyle } from "src/utils/styles";
 import type { GenericGw2Component } from "src/utils/types";
+import OptimizedGW2Image from "./OptimizedGW2Image.astro";
 
 interface Props extends GenericGw2Component {
   data: GW2ApiSkill;
 }
 ---
 
-<SkillInternal
-  {...Astro.props}
-  client:idle
-  className={`nowrap ${Astro.props.className || ""}`.trim()}
-  style={getSizeStyle(Astro.props)}
-/>
+<OptimizedGW2Image {...Astro.props}>
+  <SkillInternal
+    client:visible
+    {...Astro.props}
+    className={`nowrap ${Astro.props.className || ""}`.trim()}
+    style={getSizeStyle(Astro.props)}
+  />
+</OptimizedGW2Image>

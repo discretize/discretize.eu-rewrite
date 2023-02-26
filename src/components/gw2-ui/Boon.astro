@@ -10,8 +10,8 @@ interface Props extends GenericGw2Component {
 ---
 
 <Boon
+  client:visible
   {...Astro.props}
-  client:idle
   className={`nowrap ${Astro.props.className || ""}`.trim()}
   style={getSizeStyle(Astro.props)}
 />

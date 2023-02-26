@@ -41,18 +41,30 @@ const traits3Selected = traits3SelectedIds
 {traits1}
 {
   traits1Id && (
-    <TraitLine client:idle id={traits1Id} defaultSelected={traits1Selected} />
+    <TraitLine
+      client:visible
+      id={traits1Id}
+      defaultSelected={traits1Selected}
+    />
   )
 }
 {traits2}
 {
   traits2Id && (
-    <TraitLine client:idle id={traits2Id} defaultSelected={traits2Selected} />
+    <TraitLine
+      client:visible
+      id={traits2Id}
+      defaultSelected={traits2Selected}
+    />
   )
 }
 {traits3}
 {
   traits3Id && (
-    <TraitLine client:idle id={traits3Id} defaultSelected={traits3Selected} />
+    <TraitLine
+      client:visible
+      id={traits3Id}
+      defaultSelected={traits3Selected}
+    />
   )
 }

@@ -3,15 +3,18 @@ import TraitInternal from "@gw2-ui/components/Trait/TraitInternal";
 import type GW2ApiTrait from "@gw2-ui/gw2api/types/traits/trait";
 import { getSizeStyle } from "src/utils/styles";
 import type { GenericGw2Component } from "src/utils/types";
+import OptimizedGW2Image from "./OptimizedGW2Image.astro";
 
 interface Props extends GenericGw2Component {
   data: GW2ApiTrait;
 }
 ---
 
-<TraitInternal
-  {...Astro.props}
-  client:idle
-  className={`nowrap ${Astro.props.className || ""}`.trim()}
-  style={getSizeStyle(Astro.props)}
-/>
+<OptimizedGW2Image {...Astro.props}>
+  <TraitInternal
+    client:visible
+    {...Astro.props}
+    className={`nowrap ${Astro.props.className || ""}`.trim()}
+    style={getSizeStyle(Astro.props)}
+  />
+</OptimizedGW2Image>
