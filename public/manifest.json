@@ -1,0 +1,20 @@
+{
+  "name": "Discretize",
+  "short_name": "Discretize",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "./index.html",
+  "theme_color": "#00cccc",
+  "background_color": "#2f3136",
+  "display": "standalone"
+}

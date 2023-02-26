@@ -1,6 +1,6 @@
 ---
 import Profession from "src/components/gw2-ui/Profession.astro";
-import Layout from "src/layouts/Layout.astro";
+import Layout, { SEOProps } from "src/layouts/Layout.astro";
 import "@gw2-ui/default_style.css";
 import "@discretize/typeface-menomonia";
 import BuildCard, { BuildCardProps } from "src/components/BuildCard.astro";
@@ -43,6 +43,10 @@ builds.forEach((build) => {
     profession.builds.push(build);
   }
 });
+
+const seo: SEOProps = {
+  title: "Builds",
+};
 ---
 
 <script>
@@ -140,7 +144,7 @@ builds.forEach((build) => {
   attachListeners();
 </script>
 
-<Layout title="Builds" disableBackground>
+<Layout seo={seo} disableBackground>
   <nav class="no-space buildsNav">
     <button
       class="border left-round max large primary"

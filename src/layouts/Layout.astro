@@ -6,17 +6,35 @@ import backgroundImage from "src/assets/images/hero_sunqua2.jpg";
 import NavBar from "../components/navigation/NavBar.astro";
 import { Picture } from "@astrojs/image/components";
 
+export interface SEOProps {
+  title?: string;
+  description?: string;
+  image?: string;
+  url?: string;
+}
 export interface Props {
-  title: string;
+  seo: SEOProps;
   disablePadding?: boolean;
   disableBackground?: boolean;
 }
 
+const titleTemplate = "%s - GW2 | Discretize [dT]";
+
 const {
-  title,
+  seo: {
+    title:
+      titleRaw = "GW2 | Discretize [dT] - Fractal, Profession and Mechanics Guides",
+    description = "Discretize is a high-end Guild Wars 2 fractal guild. Our guides strive for improving your knowledge of game mechanics, professions and fractals.",
+    image = "/logo.png",
+    url = "https://discretize.eu",
+  } = {},
   disablePadding = false,
   disableBackground = false,
 } = Astro.props;
+
+const title = titleRaw.startsWith("GW2 | Discretize [dT]")
+  ? titleRaw
+  : titleTemplate.replace("%s", titleRaw);
 
 let mainClasses = "";
 if (!disableBackground) {
@@ -31,13 +49,92 @@ mainClasses.trim();
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta char-set="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover"
+    />
+
+    <meta name="language" content="english" />
+    <meta http-equiv="content-language" content="en" />
+    <meta name="application-name" content="Discretize" />
+    <meta name="theme-color" content="#2f3136" />
+
+    <meta name="robots" content="index,follow" />
+    <meta name="googlebot" content="index,follow" />
+    <meta name="google" content="notranslate" />
+
+    <meta name="msapplication-TileColor" content="#2f3136" />
+
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="Discretize" />
+
+    <meta name="mobile-web-app-capable" content="yes" />
+
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href={`/apple-touch-icon.png`}
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href={`/favicon-32x32.png`}
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href={`/favicon-16x16.png`}
+    />
+    <link rel="manifest" href={`/manifest.json`} />
+    <link rel="mask-icon" href={`/safari-pinned-tab.svg`} color="#00cccc" />
+
     <meta name="generator" content={Astro.generator} />
     <script src="beercss/dist/cdn/beer.min.js"></script>
 
     <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={url} />
+    <meta item-prop="name" content={title} />
+    <meta item-prop="description" content={description} />
+    <meta item-prop="image" content={image} />
+    <meta property="og:url" content={url} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+    <meta key="og-image-width" property="og:image:width" content="512" />
+    <meta key="og-image-height" property="og:image:height" content="512" />
+    <meta name="twitter:url" content={url} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+    <!-- <script data-rh="true" type="application/ld+json">
+    [
+      {
+        "@context": "http://schema.org",
+        "@type": "WebSite",
+        url: "https://staging.discretize.eu/builds/engineer/power-mechanist/",
+        name: "Discretize",
+        alternateName: "Power (Alac) Mechanist - GW2 | Discretize [dT]",
+      },
+    ];
+  </script> -->
+
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Discretize" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="dns-prefetch" href="https://api.guildwars2.com" />
+    <link rel="preconnect" href="https://api.guildwars2.com" />
+    <link rel="dns-prefetch" href="https://render.guildwars2.com" />
+    <link rel="preconnect" href="https://render.guildwars2.com" />
   </head>
   <body class="dark">
     <NavBar />
@@ -59,173 +156,173 @@ mainClasses.trim();
       </div>
     </main>
   </body>
-</html>
 
-<style is:global>
-  ul,
-  ol {
-    padding-left: 40px;
-    margin: 0px 0px 16px;
-  }
-  ul > li,
-  ol > li {
-    margin-top: 0.5rem;
-  }
-
-  table {
-    font-size: inherit;
-  }
-
-  @media only screen and (min-width: 1400px) {
-    .nowrap {
-      white-space: nowrap;
+  <style is:global>
+    ul,
+    ol {
+      padding-left: 40px;
+      margin: 0px 0px 16px;
     }
-  }
+    ul > li,
+    ol > li {
+      margin-top: 0.5rem;
+    }
 
-  table td,
-  table th {
-    width: unset;
-  }
+    table {
+      font-size: inherit;
+    }
 
-  .backgroundImage {
-    display: none;
-  }
+    @media only screen and (min-width: 1400px) {
+      .nowrap {
+        white-space: nowrap;
+      }
+    }
 
-  @media only screen and (min-width: 1400px) {
+    table td,
+    table th {
+      width: unset;
+    }
+
     .backgroundImage {
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100vh;
-      width: 100%;
-      z-index: -1;
-      display: block;
+      display: none;
     }
-    .backgroundImage img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      opacity: 0.7;
-      filter: brightness(0.9);
+
+    @media only screen and (min-width: 1400px) {
+      .backgroundImage {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100%;
+        z-index: -1;
+        display: block;
+      }
+      .backgroundImage img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        opacity: 0.7;
+        filter: brightness(0.9);
+      }
     }
-  }
-  .main {
-    padding: 1.4rem 1.4rem;
-    max-width: 1440px;
-    margin: 0 auto;
-  }
-  .mainBg {
-    background-color: var(--background);
-  }
-  main {
-    margin-top: 2rem;
-  }
-  @media (max-width: 1400px) {
     .main {
-      padding: 1rem;
+      padding: 1.4rem 1.4rem;
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+    .mainBg {
+      background-color: var(--background);
     }
     main {
-      margin-top: 0rem;
+      margin-top: 2rem;
     }
-  }
+    @media (max-width: 1400px) {
+      .main {
+        padding: 1rem;
+      }
+      main {
+        margin-top: 0rem;
+      }
+    }
 
-  body {
-    line-height: 1.5;
-    font-size: 1.15rem;
-  }
+    body {
+      line-height: 1.5;
+      font-size: 1.15rem;
+    }
 
-  body.dark {
-    --primary: #00cccc;
-    --primary-dark: #009a9b;
-    --primary-light: #64ffff;
-    --on-primary: #2e2e2e;
-    --primary-container: #64ffff;
-    --on-primary-container: #2f3a3f;
-    --secondary: #b24d2c;
-    --on-secondary: #ffffff;
-    --secondary-container: #ff8b66;
-    --on-secondary-container: #5a3d2f;
-    --tertiary: #7d5260;
-    --on-tertiary: #ffffff;
-    --tertiary-container: #ffd8e4;
-    --on-tertiary-container: #370b1e;
-    --error: #b3261e;
-    --on-error: #ffffff;
-    --error-container: #f9dedc;
-    --on-error-container: #370b1e;
-    --background: #2f3136;
-    --on-background: #ddd;
-    --surface: #26292e;
-    --on-surface: #ddd;
-    --surface-variant: #202122;
-    --on-surface-variant: #49454e;
-    --inverse-surface: #2a2c31;
-    --inverse-on-surface: #f4eff4;
-    --outline: #79747e;
-    --body: #2f3136;
-    --active: rgba(0, 0, 0, 0.1);
-    --overlay: rgba(0, 0, 0, 0.5);
-    --elevate1: 0 1rem 1rem 0 rgba(0, 0, 0, 0.14),
-      0 1rem 3rem 0 rgba(0, 0, 0, 0.12), 0 2rem 1rem -2rem rgba(0, 0, 0, 0.05);
-    --elevate2: 0 6rem 10rem 0 rgba(0, 0, 0, 0.14),
-      0 1rem 18rem 0 rgba(0, 0, 0, 0.12), 0 3rem 5rem -1rem rgba(0, 0, 0, 0.3);
-    --elevate3: 0 10rem 16rem 0 rgba(0, 0, 0, 0.14),
-      0 1rem 31rem 0 rgba(0, 0, 0, 0.12), 0 3rem 9rem 0rem rgba(0, 0, 0, 0.4);
-    --size: 16px;
-    --font: "Raleway";
-    --speed1: 0.1s;
-    --speed2: 0.2s;
-    --speed3: 0.3s;
-    --speed4: 0.4s;
-  }
+    body.dark {
+      --primary: #00cccc;
+      --primary-dark: #009a9b;
+      --primary-light: #64ffff;
+      --on-primary: #2e2e2e;
+      --primary-container: #64ffff;
+      --on-primary-container: #2f3a3f;
+      --secondary: #b24d2c;
+      --on-secondary: #ffffff;
+      --secondary-container: #ff8b66;
+      --on-secondary-container: #5a3d2f;
+      --tertiary: #7d5260;
+      --on-tertiary: #ffffff;
+      --tertiary-container: #ffd8e4;
+      --on-tertiary-container: #370b1e;
+      --error: #b3261e;
+      --on-error: #ffffff;
+      --error-container: #f9dedc;
+      --on-error-container: #370b1e;
+      --background: #2f3136;
+      --on-background: #ddd;
+      --surface: #26292e;
+      --on-surface: #ddd;
+      --surface-variant: #202122;
+      --on-surface-variant: #49454e;
+      --inverse-surface: #2a2c31;
+      --inverse-on-surface: #f4eff4;
+      --outline: #79747e;
+      --body: #2f3136;
+      --active: rgba(0, 0, 0, 0.1);
+      --overlay: rgba(0, 0, 0, 0.5);
+      --elevate1: 0 1rem 1rem 0 rgba(0, 0, 0, 0.14),
+        0 1rem 3rem 0 rgba(0, 0, 0, 0.12), 0 2rem 1rem -2rem rgba(0, 0, 0, 0.05);
+      --elevate2: 0 6rem 10rem 0 rgba(0, 0, 0, 0.14),
+        0 1rem 18rem 0 rgba(0, 0, 0, 0.12), 0 3rem 5rem -1rem rgba(0, 0, 0, 0.3);
+      --elevate3: 0 10rem 16rem 0 rgba(0, 0, 0, 0.14),
+        0 1rem 31rem 0 rgba(0, 0, 0, 0.12), 0 3rem 9rem 0rem rgba(0, 0, 0, 0.4);
+      --size: 16px;
+      --font: "Raleway";
+      --speed1: 0.1s;
+      --speed2: 0.2s;
+      --speed3: 0.3s;
+      --speed4: 0.4s;
+    }
 
-  body.light {
-    --primary: #00cccc;
-    --primary-dark: #009a9b;
-    --primary-light: #64ffff;
-    --on-primary: #ffffff;
-    --primary-container: #64ffff;
-    --on-primary-container: #009a9b;
-    --secondary: #ff6e40;
-    --on-secondary: #ffffff;
-    --secondary-container: #ff8b66;
-    --on-secondary-container: #b24d2c;
-    --tertiary: #7d5260;
-    --on-tertiary: #ffffff;
-    --tertiary-container: #ffd8e4;
-    --on-tertiary-container: #370b1e;
-    --error: #b3261e;
-    --on-error: #ffffff;
-    --error-container: #f9dedc;
-    --on-error-container: #370b1e;
-    --background: #ffffff;
-    --on-background: #1c1b1f;
-    --surface: #f5f5f5;
-    --on-surface: #2f3435;
-    --surface-variant: #e9f9fa;
-    --on-surface-variant: #49454e;
-    --inverse-surface: #acc8cc;
-    --inverse-on-surface: #f4eff4;
-    --outline: #79747e;
-    --active: rgba(0, 0, 0, 0.1);
-    --overlay: rgba(0, 0, 0, 0.5);
-    --elevate1: 0 1rem 1rem 0 rgba(0, 0, 0, 0.14),
-      0 1rem 3rem 0 rgba(0, 0, 0, 0.12), 0 2rem 1rem -2rem rgba(0, 0, 0, 0.05);
-    --elevate2: 0 6rem 10rem 0 rgba(0, 0, 0, 0.14),
-      0 1rem 18rem 0 rgba(0, 0, 0, 0.12), 0 3rem 5rem -1rem rgba(0, 0, 0, 0.3);
-    --elevate3: 0 10rem 16rem 0 rgba(0, 0, 0, 0.14),
-      0 1rem 31rem 0 rgba(0, 0, 0, 0.12), 0 3rem 9rem 0rem rgba(0, 0, 0, 0.4);
-    --size: 16px;
-    --font: "Raleway";
-    --speed1: 0.1s;
-    --speed2: 0.2s;
-    --speed3: 0.3s;
-    --speed4: 0.4s;
-  }
+    body.light {
+      --primary: #00cccc;
+      --primary-dark: #009a9b;
+      --primary-light: #64ffff;
+      --on-primary: #ffffff;
+      --primary-container: #64ffff;
+      --on-primary-container: #009a9b;
+      --secondary: #ff6e40;
+      --on-secondary: #ffffff;
+      --secondary-container: #ff8b66;
+      --on-secondary-container: #b24d2c;
+      --tertiary: #7d5260;
+      --on-tertiary: #ffffff;
+      --tertiary-container: #ffd8e4;
+      --on-tertiary-container: #370b1e;
+      --error: #b3261e;
+      --on-error: #ffffff;
+      --error-container: #f9dedc;
+      --on-error-container: #370b1e;
+      --background: #ffffff;
+      --on-background: #1c1b1f;
+      --surface: #f5f5f5;
+      --on-surface: #2f3435;
+      --surface-variant: #e9f9fa;
+      --on-surface-variant: #49454e;
+      --inverse-surface: #acc8cc;
+      --inverse-on-surface: #f4eff4;
+      --outline: #79747e;
+      --active: rgba(0, 0, 0, 0.1);
+      --overlay: rgba(0, 0, 0, 0.5);
+      --elevate1: 0 1rem 1rem 0 rgba(0, 0, 0, 0.14),
+        0 1rem 3rem 0 rgba(0, 0, 0, 0.12), 0 2rem 1rem -2rem rgba(0, 0, 0, 0.05);
+      --elevate2: 0 6rem 10rem 0 rgba(0, 0, 0, 0.14),
+        0 1rem 18rem 0 rgba(0, 0, 0, 0.12), 0 3rem 5rem -1rem rgba(0, 0, 0, 0.3);
+      --elevate3: 0 10rem 16rem 0 rgba(0, 0, 0, 0.14),
+        0 1rem 31rem 0 rgba(0, 0, 0, 0.12), 0 3rem 9rem 0rem rgba(0, 0, 0, 0.4);
+      --size: 16px;
+      --font: "Raleway";
+      --speed1: 0.1s;
+      --speed2: 0.2s;
+      --speed3: 0.3s;
+      --speed4: 0.4s;
+    }
 
-  body:has(.nested-dropdowns li:hover) .main {
-    filter: brightness(0.5);
-    transition: all 0.7s ease;
-  }
-</style>
+    body:has(.nested-dropdowns li:hover) .main {
+      filter: brightness(0.5);
+      transition: all 0.7s ease;
+    }
+  </style>
+</html>
