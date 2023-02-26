@@ -39,7 +39,10 @@ characters.forEach((title, index) => {
     }
     <div class="max"></div>
     <a data-ui="#peepoptimizer">Peepoptimizer</a>
-    <button class="transparent circle small">
+    <button
+      class="transparent circle small"
+      aria-label="Information for Peepoptimizer"
+    >
       <Icon pack="mdi" name="information" />
     </button>
   </div>
@@ -47,7 +50,7 @@ characters.forEach((title, index) => {
 
   <slot />
 
-  <div class="page" id="peepoptimizer"><Peepoptimizer client:idle /></div>
+  <div class="page" id="peepoptimizer"><Peepoptimizer client:visible /></div>
 </div>
 
 <style>

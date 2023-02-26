@@ -9,7 +9,7 @@ const { title } = Astro.props;
 ---
 
 <article class="card">
-  <h5>{title}</h5>
+  <p class="title">{title}</p>
   <slot />
 </article>
 <style>
@@ -17,5 +17,9 @@ const { title } = Astro.props;
     margin-bottom: 1rem;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+  .title {
+    font-size: 1.5rem;
+    text-decoration: underline;
   }
 </style>

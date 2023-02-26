@@ -142,15 +142,27 @@ builds.forEach((build) => {
 
 <Layout title="Builds" disableBackground>
   <nav class="no-space buildsNav">
-    <button class="border left-round max large primary" id="button-current">
+    <button
+      class="border left-round max large primary"
+      id="button-current"
+      aria-label="Current Builds"
+    >
       <span>Current</span>
       <div class="tooltip up">Viable builds for the current patch</div>
     </button>
-    <button class="border no-round max large surface" id="button-dtlfg">
+    <button
+      class="border no-round max large surface"
+      id="button-dtlfg"
+      aria-label="Discretize LFG Builds"
+    >
       <span>[dT] LFG <Icon name="mdi:information" height="1rem" /></span>
       <div class="tooltip up">Builds used by the Discretize Guild</div>
     </button>
-    <button class="border right-round max large surface" id="button-archived">
+    <button
+      class="border right-round max large surface"
+      id="button-archived"
+      aria-label="Archived Builds"
+    >
       <span>Archive</span>
       <div class="tooltip up">Not updated, potentially outdated builds</div>
     </button>

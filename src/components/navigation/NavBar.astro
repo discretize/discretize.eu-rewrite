@@ -49,7 +49,7 @@ const guides = await getGuides();
 
 <div class="topArea">
   <div class="topButtonArea row">
-    <a href="/"><Discretize className="discretizeLogo" /></a>
+    <a href="/"><Discretize className="discretizeLogo" aria-label="Home" /></a>
     <div class="max"></div>
 
     <div class="l">
@@ -57,7 +57,10 @@ const guides = await getGuides();
     </div>
 
     <div class="s m">
-      <button data-ui="#modal" class="transparent circle large"
+      <button
+        data-ui="#modal"
+        class="transparent circle large"
+        aria-label="Menu"
         ><i><Icon name="mdi:menu" /></i>
       </button>
 
@@ -93,7 +96,7 @@ const guides = await getGuides();
       <div class="max"></div>
 
       <a href="https://discord.gg/TGrhn8qjYT">
-        <button class="border circle">
+        <button class="border circle" aria-label="Discord Link">
           <Discord className="discordIcon" />
         </button>
       </a>
