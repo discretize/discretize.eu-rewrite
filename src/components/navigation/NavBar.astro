@@ -12,13 +12,15 @@ async function getBuilds() {
   // load markdown files and return the frontmatter
   const builds = await Astro.glob("../../../discretize-guides/builds/**/*.mdx");
 
-  const navigationData = builds.map((build) => ({
-    title: build.frontmatter.title,
-    rating: build.frontmatter.rating,
-    profession: build.frontmatter.profession as ProfessionTypes,
-    specialization: build.frontmatter.specialization as EliteSpecTypes,
-    url: build.url.replace("discretize-guides", "").replace("/index.mdx", ""),
-  }));
+  const navigationData = builds
+    .filter((build) => build.frontmatter.archive !== true)
+    .map((build) => ({
+      title: build.frontmatter.title,
+      rating: build.frontmatter.rating,
+      profession: build.frontmatter.profession as ProfessionTypes,
+      specialization: build.frontmatter.specialization as EliteSpecTypes,
+      url: build.url.replace("discretize-guides", "").replace("/index.mdx", ""),
+    }));
 
   const data = {};
   navigationData.forEach((build) => {

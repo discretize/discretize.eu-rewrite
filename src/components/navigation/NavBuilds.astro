@@ -2,6 +2,7 @@
 import { Profession } from "@gw2-ui/components";
 import type { EliteSpecTypes, ProfessionTypes } from "@gw2-ui/data/professions";
 import { Icon } from "astro-icon";
+import TextDivider from "../TextDivider.astro";
 import NavButton from "./NavButton.astro";
 
 interface Props {
@@ -10,12 +11,63 @@ interface Props {
     {
       title: string;
       url: string;
+      rating: string;
       specialization: ProfessionTypes | EliteSpecTypes;
     }[]
   >;
 }
 
+const RATINGS = ["Discretize LFG", "Current"];
+
 const { builds } = Astro.props;
+
+// sort builds by rating
+const sortedBuilds = Object.keys(builds).reduce((acc, profession) => {
+  acc[profession] = builds[profession].sort((a, b) => {
+    const aRating = RATINGS.indexOf(a.rating);
+    const bRating = RATINGS.indexOf(b.rating);
+
+    if (aRating === bRating) {
+      return 0;
+    }
+
+    return aRating > bRating ? -1 : 1;
+  });
+
+  return acc;
+}, {} as Props["builds"]);
+
+// parition builds by rating
+const partitionedBuilds = Object.keys(sortedBuilds).reduce(
+  (acc, profession) => {
+    acc[profession] = sortedBuilds[profession].reduce(
+      (acc, build) => {
+        const rating = RATINGS.indexOf(build.rating);
+
+        if (rating === 0) {
+          acc[0].push(build);
+        } else {
+          acc[1].push(build);
+        }
+
+        return acc;
+      },
+      [[], []] as [
+        (typeof sortedBuilds)[ProfessionTypes],
+        (typeof sortedBuilds)[ProfessionTypes]
+      ]
+    );
+
+    return acc;
+  },
+  {} as Record<
+    ProfessionTypes,
+    [
+      (typeof sortedBuilds)[ProfessionTypes],
+      (typeof sortedBuilds)[ProfessionTypes]
+    ]
+  >
+);
 ---
 
 <ul class="nested-dropdowns">
@@ -23,7 +75,7 @@ const { builds } = Astro.props;
     <NavButton href="/builds" class="buttonMenu">Builds</NavButton>
     <ul>
       {
-        Object.keys(builds).map((profession) => (
+        Object.keys(sortedBuilds).map((profession) => (
           <li>
             <div class="wave buttonProfession row no-margin">
               <Profession
@@ -39,23 +91,32 @@ const { builds } = Astro.props;
             </div>
 
             <ul>
-              {builds[profession].map((build) => (
-                <li>
-                  <a href={build.url} class="buildLink">
-                    <div class="buttonProfession wave row no-margin">
-                      <Profession
-                        name={build.specialization}
-                        client:load
-                        disableLink
-                        disableText
-                        style={{ whiteSpace: "nowrap" }}
-                      />
+              {partitionedBuilds[profession].map((partition, index) => {
+                if (partition.length === 0) {
+                  return null;
+                }
 
-                      {build.title}
-                    </div>
-                  </a>
-                </li>
-              ))}
+                return (
+                  <>
+                    <TextDivider>{RATINGS[index]}</TextDivider>
+                    {partition.map((build) => (
+                      <li>
+                        <a href={build.url} class="_buildLink">
+                          <div class="buttonProfession wave row no-margin">
+                            <Profession
+                              name={build.specialization}
+                              client:load
+                              disableLink
+                              style={{ whiteSpace: "nowrap" }}
+                              text={build.title}
+                            />
+                          </div>
+                        </a>
+                      </li>
+                    ))}
+                  </>
+                );
+              })}
             </ul>
           </li>
         ))
@@ -65,7 +126,7 @@ const { builds } = Astro.props;
 </ul>
 
 <style>
-  .buildLink {
+  ._buildLink {
     width: 100%;
   }
   .buttonMenu {
@@ -118,6 +179,17 @@ const { builds } = Astro.props;
     left: 100%;
     position: absolute;
     top: 0;
+    min-width: 280px;
+  }
+
+  /* Applied to the dividers */
+  :global(.nested-dropdowns ul .root) {
+    cursor: default;
+    padding: 0.1rem 0.5rem;
+    font-size: 0.8rem;
+    margin-bottom: 0 !important;
+    color: var(--on-background);
+    font-weight: 400;
   }
 
   /* Change background color of list item when being hovered */
