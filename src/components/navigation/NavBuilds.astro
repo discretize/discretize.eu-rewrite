@@ -27,7 +27,7 @@ const { builds } = Astro.props;
           <li>
             <div class="wave buttonProfession row no-margin">
               <Profession
-                name={profession}
+                name={profession as ProfessionTypes}
                 client:load
                 disableLink
                 style={{ whiteSpace: "nowrap" }}

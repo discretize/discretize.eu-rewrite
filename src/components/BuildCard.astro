@@ -4,23 +4,43 @@ import { Icon } from "astro-icon";
 import Profession from "./gw2-ui/Profession.astro";
 import images from "./images";
 
-interface Props {
+export interface BuildCardProps {
   title: string;
+  role: string;
+  date: string;
+  profession: string;
+  specialization: string;
+  cmGuide: boolean;
+  uptodate: boolean;
+  rating: number;
+  slug: string;
+  archive: boolean;
 }
+
 const UPDATED_LAST_X_DAYS = 30;
 const {
   title,
   specialization,
+  profession,
   slug,
   date,
   cmGuide,
   role,
   rating,
   uptodate = { guide: true, gear: true },
+  archive = false,
 } = Astro.props;
+
+const pcM = `var(--gw2-color-${profession.toLowerCase()}-main)`;
+const pcL = `var(--gw2-color-${profession.toLowerCase()}-light)`;
 ---
 
-<a href={`/builds/${slug}`} class="buildLink">
+<a
+  href={`/builds/${slug}`}
+  class={`buildLink ${rating.toLowerCase().replace(" ", "")} ${
+    archive ? "archive" : ""
+  }`}
+>
   <article class="row outer round">
     <Image
       src={images[specialization.toLowerCase()]}
@@ -81,15 +101,14 @@ const {
   </article>
 </a>
 
-<style>
+<style define:vars={{ pcM, pcL }}>
   .outer {
     height: 120px;
-    border: 1px solid var(--body);
     width: 100%;
+    border: 1px solid var(--pcM);
   }
   .outer:hover {
-    box-shadow: var(--elevate2);
-    border: 1px solid var(--primary-dark);
+    border: 1px solid var(--pcL);
   }
   .title {
     margin-left: 3rem !important;
@@ -125,5 +144,9 @@ const {
   }
   .spec {
     font-size: 1.5rem !important;
+  }
+
+  .archive {
+    display: none;
   }
 </style>

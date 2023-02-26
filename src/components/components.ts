@@ -48,6 +48,7 @@ export const components = {
   Control: ControlEffect,
   Divider: TextDivider,
   Effect: CommonEffect,
+  GifPlayer: () => undefined,
   Grid,
   GridItem,
   Information,

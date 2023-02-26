@@ -1,0 +1,18 @@
+---
+import PROFESSIONS from "@gw2-ui/data/professions";
+import BuildsPage from "src/components/pages/BuildsPage.astro";
+
+export async function getStaticPaths() {
+  return Object.keys(PROFESSIONS).map((prof) => ({
+    params: {
+      profession: prof.toLowerCase(),
+    },
+    props: {
+      profession: prof,
+    },
+  }));
+}
+const { profession } = Astro.props;
+---
+
+<BuildsPage professions={[profession]} />

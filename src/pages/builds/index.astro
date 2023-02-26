@@ -1,68 +1,17 @@
 ---
-import Profession from "src/components/gw2-ui/Profession.astro";
-import Layout from "src/layouts/Layout.astro";
-import "@gw2-ui/default_style.css";
-import "@discretize/typeface-menomonia";
-import BuildsCard from "src/components/BuildsCard.astro";
+import { ProfessionTypes } from "@gw2-ui/data/professions";
+import BuildsPage from "src/components/pages/BuildsPage.astro";
 
-const PROFESSIONS = [
-  ["Guardian", []],
-  ["Warrior", []],
-  ["Revenant", []],
-  ["Engineer", []],
-  ["Ranger", []],
-  ["Thief", []],
-  ["Elementalist", []],
-  ["Mesmer", []],
-  ["Necromancer", []],
+const professions: ProfessionTypes[] = [
+  "Guardian",
+  "Warrior",
+  "Engineer",
+  "Ranger",
+  "Thief",
+  "Elementalist",
+  "Mesmer",
+  "Necromancer",
 ];
-
-const buildsRaw = await Astro.glob(
-  `../../../discretize-guides/builds/**/*/index.mdx`
-);
-
-const builds = buildsRaw.map((build) => ({
-  title: build.frontmatter.title,
-  role: build.frontmatter.role,
-  date: build.frontmatter.date,
-  profession: build.frontmatter.profession,
-  specialization: build.frontmatter.specialization,
-  cmGuide: build.frontmatter.cmGuide,
-  uptodate: build.frontmatter.uptodate,
-  rating: build.frontmatter.rating,
-  slug: build.file
-    .split("discretize-guides/builds/")[1]
-    .replace("/index.mdx", ""),
-}));
-builds.forEach((build) => {
-  const profession = PROFESSIONS.find(
-    ([profession]) => profession === build.profession
-  );
-  if (profession) {
-    profession[1].push(build);
-  }
-});
 ---
 
-<Layout title="Builds">
-  {
-    PROFESSIONS.map(([profession, builds]) => (
-      <>
-        <h3>
-          <Profession name={profession} disableLink />
-        </h3>
-        <div class="builds">
-          {builds.map((build) => (
-            <BuildsCard {...build} />
-          ))}
-        </div>
-      </>
-    ))
-  }
-</Layout>
-
-<style>
-  .builds {
-    margin-bottom: 2rem;
-  }
-</style>
+<BuildsPage professions={professions} />

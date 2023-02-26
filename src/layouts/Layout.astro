@@ -9,9 +9,23 @@ import { Picture } from "@astrojs/image/components";
 export interface Props {
   title: string;
   disablePadding?: boolean;
+  disableBackground?: boolean;
 }
 
-const { title, disablePadding = false } = Astro.props;
+const {
+  title,
+  disablePadding = false,
+  disableBackground = false,
+} = Astro.props;
+
+let mainClasses = "";
+if (!disableBackground) {
+  mainClasses += " mainBg";
+}
+if (!disablePadding) {
+  mainClasses += " main";
+}
+mainClasses.trim();
 ---
 
 <!DOCTYPE html>
@@ -40,7 +54,7 @@ const { title, disablePadding = false } = Astro.props;
           loading="lazy"
         />
       </div>
-      <div class={disablePadding ? "" : "main"}>
+      <div class={mainClasses}>
         <slot />
       </div>
     </main>
@@ -93,12 +107,15 @@ const { title, disablePadding = false } = Astro.props;
       object-fit: cover;
       object-position: center;
       opacity: 0.7;
+      filter: brightness(0.9);
     }
   }
   .main {
     padding: 1.4rem 1.4rem;
     max-width: 1440px;
     margin: 0 auto;
+  }
+  .mainBg {
     background-color: var(--background);
   }
   main {
@@ -188,7 +205,7 @@ const { title, disablePadding = false } = Astro.props;
     --on-surface: #2f3435;
     --surface-variant: #e9f9fa;
     --on-surface-variant: #49454e;
-    --inverse-surface: #313033;
+    --inverse-surface: #acc8cc;
     --inverse-on-surface: #f4eff4;
     --outline: #79747e;
     --active: rgba(0, 0, 0, 0.1);
