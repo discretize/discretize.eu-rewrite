@@ -14,6 +14,9 @@ import image from "@astrojs/image";
 import yaml from "@rollup/plugin-yaml";
 
 // https://astro.build/config
+import prefetch from "@astrojs/prefetch";
+
+// https://astro.build/config
 export default defineConfig({
   // vite: {
   //   ssr: {
@@ -31,6 +34,7 @@ export default defineConfig({
     //   },
     // },
   },
+
   integrations: [
     react(),
     mdx({
@@ -41,5 +45,6 @@ export default defineConfig({
     image({
       serviceEntryPoint: "@astrojs/image/sharp",
     }),
+    prefetch(),
   ],
 });

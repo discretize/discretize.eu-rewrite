@@ -1,0 +1,24 @@
+---
+interface Props {
+  href: string;
+  label?: string;
+  className?: string;
+  disablePrefetch?: boolean;
+}
+
+const { href, label, className, disablePrefetch = false } = Astro.props;
+
+const isInternal = href.startsWith("http") === false;
+
+const linkProps = {
+  href,
+  target: isInternal ? undefined : "_blank",
+  rel: isInternal ? "prefetch" : "noopener noreferrer nofollow",
+};
+
+if (disablePrefetch && isInternal) {
+  linkProps.rel = "";
+}
+---
+
+<a {...linkProps} aria-label={label} class={className}><slot /></a>

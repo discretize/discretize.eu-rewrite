@@ -7,6 +7,7 @@ import NavButton from "./NavButton.astro";
 import type { EliteSpecTypes, ProfessionTypes } from "@gw2-ui/data/professions";
 import Discord from "../../icons/discord.astro";
 import { Icon } from "astro-icon";
+import Link from "../Link.astro";
 
 async function getBuilds() {
   // load markdown files and return the frontmatter
@@ -51,7 +52,7 @@ const guides = await getGuides();
 
 <div class="topArea">
   <div class="topButtonArea row">
-    <a href="/"><Discretize className="discretizeLogo" aria-label="Home" /></a>
+    <Link href="/" label="Home"><Discretize className="discretizeLogo" /></Link>
     <div class="max"></div>
 
     <div class="l">
@@ -67,17 +68,28 @@ const guides = await getGuides();
       </button>
 
       <div class="modal left" id="modal">
-        <a href="/"><Discretize className="discretizeLogo" /></a>
+        <Link href="/" label="Home">
+          <Discretize className="discretizeLogo" />
+        </Link>
 
         <nav class="navMobile">
           <div>
-            <a class="row wave" href="/builds">Builds</a>
-            <a class="row wave" href="/guides">Guides</a>
-            <a class="row wave" href="/fractals">Fractals</a>
-
-            <a class="row wave" href="/augmentation-calculator"
-              >Augmentation Calculator</a
+            <Link className="row wave" disablePrefetch href="/builds">
+              Builds
+            </Link>
+            <Link className="row wave" disablePrefetch href="/guides">
+              Guides
+            </Link>
+            <Link className="row wave" disablePrefetch href="/fractals">
+              Fractals
+            </Link>
+            <Link
+              className="row wave"
+              disablePrefetch
+              href="/augmentation-calculator"
             >
+              Augmentation Calculator
+            </Link>
           </div>
         </nav>
 
@@ -93,15 +105,23 @@ const guides = await getGuides();
     <div class="buttonArea row">
       <NavBuilds builds={builds} />
       <NavDropdown title="Guides" content={guides} slug="/guides" />
-      <NavButton>Fractals</NavButton>
-      <NavButton>Augmentation Calculator</NavButton>
+      <Link className="discretizeNavButton" disablePrefetch href="/fractals">
+        Fractals
+      </Link>
+      <Link
+        className="discretizeNavButton"
+        disablePrefetch
+        href="/augmentation-calculator"
+      >
+        Augmentation Calculator
+      </Link>
       <div class="max"></div>
 
-      <a href="https://discord.gg/TGrhn8qjYT">
+      <Link href="https://discord.gg/TGrhn8qjYT" label="Discord Link">
         <button class="border circle" aria-label="Discord Link">
           <Discord className="discordIcon" />
         </button>
-      </a>
+      </Link>
     </div>
   </div>
 </nav>
@@ -115,6 +135,11 @@ const guides = await getGuides();
     background-color: var(--surface);
     z-index: 10;
     box-shadow: 0 1px 2px 0 rgb(0 0 0 / 15%);
+  }
+  :global(.discretizeNavButton) {
+    font-weight: 500;
+    font-size: 1.3rem;
+    font-family: Muli;
   }
   .navMobile {
     margin-bottom: 2rem;

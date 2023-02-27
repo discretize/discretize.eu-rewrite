@@ -2,6 +2,7 @@
 import { Profession } from "@gw2-ui/components";
 import type { EliteSpecTypes, ProfessionTypes } from "@gw2-ui/data/professions";
 import { Icon } from "astro-icon";
+import Link from "../Link.astro";
 import TextDivider from "../TextDivider.astro";
 import NavButton from "./NavButton.astro";
 
@@ -72,7 +73,9 @@ const partitionedBuilds = Object.keys(sortedBuilds).reduce(
 
 <ul class="nested-dropdowns">
   <li>
-    <NavButton href="/builds" class="buttonMenu">Builds</NavButton>
+    <Link href="/builds" className="buttonMenu discretizeNavButton">
+      Builds
+    </Link>
     <ul>
       {
         Object.keys(sortedBuilds).map((profession) => (
@@ -101,7 +104,11 @@ const partitionedBuilds = Object.keys(sortedBuilds).reduce(
                     <TextDivider>{RATINGS[index]}</TextDivider>
                     {partition.map((build) => (
                       <li>
-                        <a href={build.url} class="_buildLink">
+                        <Link
+                          href={build.url}
+                          className="_buildLink"
+                          label={build.title}
+                        >
                           <div class="buttonProfession wave row no-margin">
                             <Profession
                               name={build.specialization}
@@ -111,7 +118,7 @@ const partitionedBuilds = Object.keys(sortedBuilds).reduce(
                               text={build.title}
                             />
                           </div>
-                        </a>
+                        </Link>
                       </li>
                     ))}
                   </>
