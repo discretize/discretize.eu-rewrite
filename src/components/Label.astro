@@ -1,17 +1,26 @@
-<div class="box-outer">
+---
+const { className } = Astro.props;
+
+let classes = "box-outer";
+if (className) {
+  classes += " " + className;
+}
+---
+
+<div class={classes}>
   <span class="inner"><slot /></span>
 </div>
 
 <style>
   .box-outer {
-    padding: 8px;
+    padding: 0.5rem;
   }
   .inner {
     font-family: Muli;
     font-weight: 500;
     font-size: 0.8571428571428571rem;
     line-height: 1;
-    padding: 8px;
+    padding: 0.6rem;
     border-radius: 4px;
     border: 1px solid #1e2124;
     color: var(--on-background);

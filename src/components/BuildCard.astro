@@ -49,41 +49,56 @@ const pcL = `var(--gw2-color-${profession.toLowerCase()}-light)`;
       alt={specialization}
       class="image"
     />
-    <p class="title">
-      <Profession name={specialization} disableText className="spec" />
-      {title}
-      {
+    <div class="title">
+      <Profession
+        name={specialization}
+        disableLink
+        className="spec"
+        text={title}
+      />
+      <!-- {
         // if this build was updated in the last 7 days, show a new tag
         new Date(date).getTime() >
         new Date().getTime() - UPDATED_LAST_X_DAYS * 24 * 60 * 60 * 1000 ? (
           <span class="badge">Updated</span>
         ) : undefined
-      }
-    </p>
+      } -->
+    </div>
 
-    <div class="lastUpdated m l">
-      <Icon
-        name="mdi:clock-outline"
-        height="2rem"
-        class={`${
-          uptodate.guide && uptodate.gear
-            ? "green"
-            : uptodate.guide || uptodate.gear
-            ? "yellow"
-            : "red"
-        } update-icon`}
-      />
-      <div class="tooltip top">
-        Gear: {uptodate.gear ? "up-to-date" : "not updated"}<br />
-        Guide: {uptodate.guide ? "up-to-date" : "not updated"}
+    <div class="infoButtons">
+      <div class="lastUpdated">
+        <Icon
+          name="mdi:clock-outline"
+          height="1.8rem"
+          class={`${
+            uptodate.guide && uptodate.gear
+              ? "green"
+              : uptodate.guide || uptodate.gear
+              ? "yellow"
+              : "red"
+          } update-icon`}
+        />
+        <div class="tooltip top">
+          Gear: {uptodate.gear ? "up-to-date" : "not updated"}<br />
+          Guide: {uptodate.guide ? "up-to-date" : "not updated"}
+        </div>
       </div>
+
+      {
+        cmGuide && (
+          <div class="cmGuide">
+            <Icon name="mdi:book-open" height="1.8rem" />
+            <div class="tooltip top">CM-Guide available</div>
+          </div>
+        )
+      }
     </div>
 
     <div class="tags l">
       {
         [rating, role].map((tag) => {
           return (
-            <div class="chip border primary-border primary-text small">
+            <div class="chip border tertiary-border on-surface small tag">
               <span>{tag}</span>
             </div>
           );
@@ -91,41 +106,75 @@ const pcL = `var(--gw2-color-${profession.toLowerCase()}-light)`;
       }
     </div>
 
-    <div class="max"></div>
-
-    <div class="l">
+    <!-- <div class="l">
       {cmGuide ? <button class="btn btn-primary">CM Guide</button> : undefined}
     </div>
 
-    <button class="btn btn-primary l">Build</button>
+    <button class="btn btn-primary l">Build</button> -->
   </article>
 </a>
 
 <style define:vars={{ pcM, pcL }}>
   .outer {
-    height: 120px;
+    height: 110px;
+    padding: 0 2rem;
     width: 100%;
     border: 1px solid var(--pcM);
+    display: grid;
+    grid-template-columns: 1fr 2fr 80px 2fr;
   }
   .outer:hover {
     border: 1px solid var(--pcL);
   }
   .title {
-    margin-left: 3rem !important;
+    font-size: 1.4rem;
   }
   .buildLink {
     display: block;
     margin-bottom: 1rem;
   }
   .lastUpdated {
-    position: absolute;
-    left: 500px;
-    font-size: 1rem;
+    font-size: 0.8rem;
+  }
+  .cmGuide {
+    color: var(--primary);
+  }
+  .infoButtons {
+    display: flex;
+    gap: 0.5rem;
+    align-self: center;
   }
   .tags {
-    position: absolute;
-    left: 700px;
+    justify-self: flex-end;
   }
+  .tag {
+    cursor: default;
+  }
+  .chip {
+    font-size: 0.6rem;
+  }
+
+  .update-icon {
+    color: black;
+  }
+
+  .archive {
+    display: none;
+  }
+  @media (max-width: 1000px) {
+    .outer {
+      grid-template-columns: 1fr 2fr 80px;
+    }
+  }
+  @media (max-width: 500px) {
+    .outer {
+      padding: 0 0.5rem;
+    }
+    .title {
+      font-size: 1.1rem;
+    }
+  }
+
   @media (max-width: 900px) {
     .lastUpdated {
       position: relative;
@@ -138,15 +187,5 @@ const pcL = `var(--gw2-color-${profession.toLowerCase()}-light)`;
       position: relative;
       left: 0;
     }
-  }
-  .update-icon {
-    color: black;
-  }
-  .spec {
-    font-size: 1.5rem !important;
-  }
-
-  .archive {
-    display: none;
   }
 </style>
