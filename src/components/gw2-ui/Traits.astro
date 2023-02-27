@@ -1,26 +1,49 @@
 ---
-import { TraitLine } from "@gw2-ui/components";
+import { getImage } from "@astrojs/image";
+import TraitLineInternal from "@gw2-ui/components/TraitLine/TraitLineInternal";
+import type GW2ApiSpecialization from "@gw2-ui/gw2api/types/specialization/specialization";
+import GW2ApiTrait from "@gw2-ui/gw2api/types/traits/trait";
+
+interface TraitsData {
+  dataSpecialization: GW2ApiSpecialization;
+  dataTraits: Record<number, GW2ApiTrait>;
+}
 
 interface Props {
   traits1Id?: number;
+  traits1data?: TraitsData;
   traits1?: string;
   traits1SelectedIds?: string;
   traits2Id?: number;
+  traits2data?: TraitsData;
   traits2?: string;
   traits2SelectedIds?: string;
   traits3Id?: number;
+  traits3data?: TraitsData;
   traits3?: string;
   traits3SelectedIds?: string;
 }
 
 const {
   traits1Id,
+  traits1data: {
+    dataSpecialization: traits1dataSpecialization,
+    dataTraits: traits1dataTraits,
+  } = {},
   traits1,
   traits1SelectedIds,
   traits2Id,
+  traits2data: {
+    dataSpecialization: traits2dataSpecialization,
+    dataTraits: traits2dataTraits,
+  } = {},
   traits2,
   traits2SelectedIds,
   traits3Id,
+  traits3data: {
+    dataSpecialization: traits3dataSpecialization,
+    dataTraits: traits3dataTraits,
+  } = {},
   traits3,
   traits3SelectedIds,
 } = Astro.props;
@@ -36,14 +59,45 @@ const traits2Selected = traits2SelectedIds
 const traits3Selected = traits3SelectedIds
   ?.split(",")
   .map((id) => parseInt(id, 10));
+
+async function transformTraitsData(
+  data: Record<number, GW2ApiTrait>
+): Promise<Record<number, GW2ApiTrait>> {
+  const transformedTraits = await Promise.all(
+    Object.entries(data).map(async ([key, value]) => {
+      const optimized = await getImage({
+        src: value.icon,
+        width: 37,
+        height: 37,
+        format: "webp",
+        alt: "",
+      });
+
+      return [key, { ...value, icon: optimized.src }];
+    })
+  );
+
+  return Object.fromEntries(transformedTraits);
+}
+
+const dataTraits1 = traits1dataTraits
+  ? await transformTraitsData(traits1dataTraits)
+  : {};
+const dataTraits2 = traits2dataTraits
+  ? await transformTraitsData(traits2dataTraits)
+  : {};
+const dataTraits3 = traits3dataTraits
+  ? await transformTraitsData(traits3dataTraits)
+  : {};
 ---
 
 {traits1}
 {
   traits1Id && (
-    <TraitLine
+    <TraitLineInternal
       client:visible
-      id={traits1Id}
+      dataSpecialization={traits1dataSpecialization}
+      dataTraits={dataTraits1}
       defaultSelected={traits1Selected}
     />
   )
@@ -51,9 +105,10 @@ const traits3Selected = traits3SelectedIds
 {traits2}
 {
   traits2Id && (
-    <TraitLine
+    <TraitLineInternal
       client:visible
-      id={traits2Id}
+      dataSpecialization={traits2dataSpecialization}
+      dataTraits={dataTraits2}
       defaultSelected={traits2Selected}
     />
   )
@@ -61,9 +116,10 @@ const traits3Selected = traits3SelectedIds
 {traits3}
 {
   traits3Id && (
-    <TraitLine
+    <TraitLineInternal
       client:visible
-      id={traits3Id}
+      dataSpecialization={traits3dataSpecialization}
+      dataTraits={dataTraits3}
       defaultSelected={traits3Selected}
     />
   )

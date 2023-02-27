@@ -13,9 +13,14 @@ const items = JSON.parse(
 const skills = JSON.parse(
   fs.readFileSync("./gw2-api-extended/data/api-extended/skills.json", "utf-8")
 );
-
 const traits = JSON.parse(
   fs.readFileSync("./gw2-api-extended/data/api-extended/traits.json", "utf-8")
+);
+const specializations = JSON.parse(
+  fs.readFileSync(
+    "./gw2-api-extended/data/api-extended/specializations.json",
+    "utf-8"
+  )
 );
 
 function attrToProps(attr) {
@@ -28,27 +33,70 @@ function attrToProps(attr) {
   return props;
 }
 
-function resolve(array, attr) {
-  return array.filter((item) => item.id == attr.id)[0];
-}
+const resolve = (array) => (sourceProp) =>
+  array.find((item) => item.id == sourceProp);
 
-//const items = [];
+const resolveTraitLine = (id) => {
+  if (id === undefined) {
+    return undefined;
+  }
+
+  const specData = resolve(specializations)(id);
+
+  const dataTraits = [...specData.minor_traits, ...specData.major_traits]
+    .map((trait) => resolve(traits)(trait))
+    .reduce((result, trait) => {
+      result[trait.id] = trait;
+      return result;
+    }, {});
+
+  return { dataSpecialization: specData, dataTraits };
+};
 
 const COMPONENTS = [
   {
+    type: "Item",
+    resolvers: [
+      {
+        target_prop: "dataItem",
+        resolve: (attr) => resolve(items)(attr.id),
+      },
+    ],
+  },
+  {
     type: "Skill",
-    prop_name: "data",
-    resolve_methods: [(attr) => resolve(skills, attr)],
+    resolvers: [
+      {
+        target_prop: "data",
+        resolve: (attr) => resolve(skills)(attr.id),
+      },
+    ],
   },
   {
     type: "Trait",
-    prop_name: "data",
-    resolve_methods: [(attr) => resolve(traits, attr)],
+    resolvers: [
+      {
+        target_prop: "data",
+        resolve: (attr) => resolve(traits)(attr.id),
+      },
+    ],
   },
   {
-    type: "Item",
-    prop_name: "dataItem",
-    resolve_methods: [(attr) => resolve(items, attr)],
+    type: "Traits",
+    resolvers: [
+      {
+        target_prop: "traits1data",
+        resolve: (attr) => resolveTraitLine(attr.traits1Id),
+      },
+      {
+        target_prop: "traits2data",
+        resolve: (attr) => resolveTraitLine(attr.traits2Id),
+      },
+      {
+        target_prop: "traits3data",
+        resolve: (attr) => resolveTraitLine(attr.traits3Id),
+      },
+    ],
   },
 ];
 
@@ -62,38 +110,47 @@ export default () => {
         const attr = attrToProps(node.attributes);
 
         // apply all resolver functions
-        const value = COMPONENTS.find(
+        const result = COMPONENTS.find(
           (comp) => comp.type === componentType
-        ).resolve_methods.map((mapFunc) => mapFunc(attr))[0];
+        ).resolvers.map((resolver) => resolver.resolve(attr));
 
-        const data = {
-          estree: {
-            type: "Program",
-            body: [
-              {
-                type: "ExpressionStatement",
-                expression: valueToEstree(value),
-              },
-            ],
-            sourceType: "module",
-          },
-        };
+        // iterate over the results for each resolver function and put the into the MDast node
+        for (let i = 0; i < result.length; i++) {
+          const value = result[i];
 
-        // append all resolved props, that contain "id" back to the MDast node
-        // eslint-disable-next-line no-param-reassign
-        node.attributes = [
-          ...node.attributes,
-          {
-            type: "mdxJsxAttribute",
-            name: COMPONENTS.find((comp) => comp.type === componentType)
-              .prop_name,
-            value: {
-              type: "mdxJsxAttributeValueExpression",
-              value: JSON.stringify(value),
-              data,
+          if (!value) {
+            continue;
+          }
+
+          const data = {
+            estree: {
+              type: "Program",
+              body: [
+                {
+                  type: "ExpressionStatement",
+                  expression: valueToEstree(value),
+                },
+              ],
+              sourceType: "module",
             },
-          },
-        ];
+          };
+
+          // append all resolved props, that contain "id" back to the MDast node
+          // eslint-disable-next-line no-param-reassign
+          node.attributes = [
+            ...node.attributes,
+            {
+              type: "mdxJsxAttribute",
+              name: COMPONENTS.find((comp) => comp.type === componentType)
+                .resolvers[i].target_prop,
+              value: {
+                type: "mdxJsxAttributeValueExpression",
+                value: JSON.stringify(value),
+                data,
+              },
+            },
+          ];
+        }
       }
     });
 

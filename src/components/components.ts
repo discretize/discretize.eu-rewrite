@@ -1,7 +1,6 @@
 import Advanced from "./Advanced.astro";
 import Beginner from "./Beginner.astro";
 import Card from "./Card.astro";
-import CharacterWithAr from "./gw2/CharacterWithAr.astro";
 import Grid from "./Grid.astro";
 import GridItem from "./GridItem.astro";
 import Attribute from "./gw2-ui/Attribute.astro";
@@ -16,16 +15,17 @@ import Skill from "./gw2-ui/Skill.astro";
 import Trait from "./gw2-ui/Trait.astro";
 import Traits from "./gw2-ui/Traits.astro";
 import Character from "./gw2/Character.astro";
+import CharacterWithAr from "./gw2/CharacterWithAr.astro";
 import hr from "./html-components/hr.astro";
+import table from "./html-components/table.astro";
+import tbody from "./html-components/tbody.astro";
+import td from "./html-components/td.astro";
+import th from "./html-components/th.astro";
+import tr from "./html-components/tr.astro";
 import Information from "./Information.astro";
 import TextDivider from "./TextDivider.astro";
 import Video from "./Video.astro";
 import Warning from "./Warning.astro";
-import td from "./html-components/td.astro";
-import tr from "./html-components/tr.astro";
-import th from "./html-components/th.astro";
-import tbody from "./html-components/tbody.astro";
-import table from "./html-components/table.astro";
 
 export const components = {
   hr,
