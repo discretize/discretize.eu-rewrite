@@ -72,12 +72,24 @@ async function transformTraitsData(
         format: "webp",
         alt: "",
       });
-
       return [key, { ...value, icon: optimized.src }];
     })
   );
 
   return Object.fromEntries(transformedTraits);
+}
+
+async function transformSpecializationData(
+  data: GW2ApiSpecialization
+): Promise<GW2ApiSpecialization> {
+  const { src: background } = await getImage({
+    src: data.background,
+    width: 1024,
+    height: 256,
+    format: "webp",
+    alt: "",
+  });
+  return { ...data, background };
 }
 
 const dataTraits1 = traits1dataTraits
@@ -89,6 +101,16 @@ const dataTraits2 = traits2dataTraits
 const dataTraits3 = traits3dataTraits
   ? await transformTraitsData(traits3dataTraits)
   : {};
+
+const dataSpecialization1 = traits1dataSpecialization
+  ? await transformSpecializationData(traits1dataSpecialization)
+  : undefined;
+const dataSpecialization2 = traits2dataSpecialization
+  ? await transformSpecializationData(traits2dataSpecialization)
+  : undefined;
+const dataSpecialization3 = traits3dataSpecialization
+  ? await transformSpecializationData(traits3dataSpecialization)
+  : undefined;
 ---
 
 {traits1}
@@ -96,7 +118,7 @@ const dataTraits3 = traits3dataTraits
   traits1Id && (
     <TraitLineInternal
       client:visible
-      dataSpecialization={traits1dataSpecialization}
+      dataSpecialization={dataSpecialization1}
       dataTraits={dataTraits1}
       defaultSelected={traits1Selected}
     />
@@ -107,7 +129,7 @@ const dataTraits3 = traits3dataTraits
   traits2Id && (
     <TraitLineInternal
       client:visible
-      dataSpecialization={traits2dataSpecialization}
+      dataSpecialization={dataSpecialization2}
       dataTraits={dataTraits2}
       defaultSelected={traits2Selected}
     />
@@ -118,7 +140,7 @@ const dataTraits3 = traits3dataTraits
   traits3Id && (
     <TraitLineInternal
       client:visible
-      dataSpecialization={traits3dataSpecialization}
+      dataSpecialization={dataSpecialization3}
       dataTraits={dataTraits3}
       defaultSelected={traits3Selected}
     />
