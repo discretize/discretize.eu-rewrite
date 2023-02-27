@@ -18,6 +18,9 @@ import yaml from "@rollup/plugin-yaml";
 import prefetch from "@astrojs/prefetch";
 
 // https://astro.build/config
+import compress from "astro-compress";
+
+// https://astro.build/config
 export default defineConfig({
   // vite: {
   //   ssr: {
@@ -48,5 +51,14 @@ export default defineConfig({
       serviceEntryPoint: "@astrojs/image/sharp",
     }),
     prefetch(),
+    compress({
+      css: false,
+      html: {
+        collapseWhitespace: false,
+      },
+      img: false,
+      js: true,
+      svg: true,
+    }),
   ],
 });
