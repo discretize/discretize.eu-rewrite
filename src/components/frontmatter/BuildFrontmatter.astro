@@ -22,7 +22,7 @@ const { title, specialization, role, hasBeginner, date } =
   }
 </script>
 
-<div class="header row">
+<div class="row header">
   <div class="left max">
     <Profession disableLink disableText name={specialization} size="big" />
     <div class="headline">
@@ -66,6 +66,8 @@ const { title, specialization, role, hasBeginner, date } =
     font-family: Raleway;
     line-height: 1.2;
     margin-bottom: 2rem;
+    align-items: flex-start !important;
+    flex-wrap: wrap !important;
   }
   @media (max-width: 768px) {
     .header {
