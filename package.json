@@ -28,6 +28,7 @@
     "clsx": "^1.2.1",
     "cssnano": "^5.1.15",
     "estree-util-value-to-estree": "^2.1.0",
+    "hast-util-select": "^5.0.5",
     "nanostores": "^0.7.4",
     "postcss": "^8.4.21",
     "postcss-preset-env": "^8.0.1",
@@ -35,7 +36,8 @@
     "react-dom": "^18.0.0",
     "sharp": "^0.31.3",
     "typeface-muli": "^1.1.13",
-    "typeface-raleway": "^1.1.13"
+    "typeface-raleway": "^1.1.13",
+    "unist-util-remove": "^3.1.1"
   },
   "devDependencies": {
     "@reduxjs/toolkit": "^1.9.3",

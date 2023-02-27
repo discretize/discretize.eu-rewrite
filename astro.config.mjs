@@ -2,6 +2,7 @@ import { defineConfig } from "astro/config";
 import mdxgw2ui from "./src/utils/remark/remark-mdx-gw2ui/index";
 import mdxInjectData from "./src/utils/remark/remark-inject-data/index";
 import remarkInjectCharacterUi from "./src/utils/remark/remark-inject-character-ui";
+import removeEmptyThead from "./src/utils/rehype/rehype-remove-empty-thead";
 
 // https://astro.build/config
 import mdx from "@astrojs/mdx";
@@ -39,6 +40,7 @@ export default defineConfig({
     react(),
     mdx({
       remarkPlugins: [mdxgw2ui, mdxInjectData, remarkInjectCharacterUi],
+      rehypePlugins: [removeEmptyThead],
       gfm: true,
       extendMarkdownConfig: {},
     }),
