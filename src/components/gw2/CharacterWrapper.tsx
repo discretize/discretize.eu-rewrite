@@ -5,17 +5,29 @@ export default function CharacterWrapper(props) {
 
   const Image = () => (
     <picture>
-      {imageData.sources.map((source, index) => (
-        <source srcSet={source.srcset} type={source.type} key={index} />
-      ))}
+      {imageData.sources.map((img) =>
+        img.srcset.split(",").map((srcset, index) => {
+          const src = srcset.split(" ")[0];
+          // dont add a media query for the last source
+          // media query should be offset by 1 in the array of imageData.sources[i]
+          let width = img.srcset
+            .split(",")
+            [index + 1]?.split(" ")[1]
+            .replace("w", "");
+
+          let media = `(max-width: ${width}px)`;
+          if (index === img.srcset.split(",").length - 1) {
+            media = null;
+          }
+          return (
+            <source key={index} media={media} srcSet={src} type={img.type} />
+          );
+        })
+      )}
+
       <img
         decoding="async"
         loading="lazy"
-        style={{
-          objectFit: "contain",
-          height: "100%",
-          width: "100%",
-        }}
         src={imageData.image.src}
         alt={imageData.image.alt}
       />

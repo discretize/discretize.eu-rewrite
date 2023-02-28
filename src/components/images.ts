@@ -34,8 +34,26 @@ import specter from "../assets/images/professions/specter.png";
 import catalyst from "../assets/images/professions/catalyst.png";
 import virtuoso from "../assets/images/professions/virtuoso.png";
 import harbinger from "../assets/images/professions/harbinger.png";
+import { EliteSpecTypes } from "@gw2-ui/data/professions";
+import { getImage } from "@astrojs/image";
+import { OutputFormat } from "@astrojs/image/dist/loaders";
 
-export default {
+export async function getOptimizedImage(
+  specialization: EliteSpecTypes,
+  options = {
+    width: 100,
+    height: 100,
+    alt: "Profession",
+    format: "webp" as OutputFormat,
+  }
+) {
+  const image = specializationImages[specialization.toLowerCase()];
+  const optimzed = await getImage({ src: image.src, ...options });
+
+  return optimzed;
+}
+
+const specializationImages = {
   warrior,
   berserker,
   spellbreaker,
@@ -73,3 +91,5 @@ export default {
   virtuoso,
   harbinger,
 };
+
+export default specializationImages;

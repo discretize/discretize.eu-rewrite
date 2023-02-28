@@ -67,8 +67,8 @@ async function transformTraitsData(
     Object.entries(data).map(async ([key, value]) => {
       const optimized = await getImage({
         src: value.icon,
-        width: 37,
-        height: 37,
+        width: 48,
+        height: 48,
         format: "webp",
         alt: "",
       });

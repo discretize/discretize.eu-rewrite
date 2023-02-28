@@ -20,6 +20,14 @@ const optimized = await getPicture({
 });
 ---
 
-<div class={`page`} id={id}>
+<div class={`page character`} id={id}>
   <CharacterWrapper {...parsedGear} client:visible imageData={optimized} />
 </div>
+
+<style>
+  :global(.character img) {
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
+  }
+</style>
