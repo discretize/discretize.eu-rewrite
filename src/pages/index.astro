@@ -1,15 +1,29 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { Picture } from "@astrojs/image/components";
-import heroArkk from "../assets/images/hero_arkkarena.jpg";
+import hero1 from "../assets/images/hero_arkkarena.jpg";
 import heroShattered from "../assets/images/hero_shattered-observatory.jpg";
+import Discretize from "src/icons/discretize.astro";
+import Link from "src/components/Link.astro";
+import { Icon } from "astro-icon";
 ---
 
-<Layout seo={{}} disablePadding={true}>
-  <main>
+<Layout seo={{}} disablePadding={true} disableBackgroundImage={true}>
+  <div class="landingPage">
+    <div class="shadowBg"></div>
+    <div class="logo">
+      <Discretize color="#fff" />
+      <p class="subtext">International high-end GW2 fractal guild</p>
+      <span class="chip border primary-border primary-text"
+        >Guild <Icon name="mdi:arrow-down" height="1rem" /></span
+      >
+      <Link href="/builds">
+        <span class="chip border primary-border primary-text">Builds</span>
+      </Link>
+    </div>
     <div class="heroImageWrapper first">
       <Picture
-        src={heroArkk}
+        src={hero1}
         sizes="(max-width: 3840px) 100vw, 3840px"
         widths={[3840, 1920, 720, 480]}
         aspectRatio="16:9"
@@ -17,21 +31,95 @@ import heroShattered from "../assets/images/hero_shattered-observatory.jpg";
         class="heroImage"
       />
     </div>
+    <div class="squigglyDown">
+      <span class="squigglyDownArrow">Down</span>
+    </div>
+  </div>
 
-    <div class="heroImageWrapper">
-      <Picture
-        src={heroShattered}
-        sizes="(max-width: 3840px) 100vw, 3840px"
-        widths={[3840, 1920, 720, 480]}
-        aspectRatio="16:9"
-        alt="Background Hero Image"
-        class="heroImage"
-      />
-    </div>
-  </main>
+  <div class="heroImageWrapper">
+    <Picture
+      src={heroShattered}
+      sizes="(max-width: 3840px) 100vw, 3840px"
+      widths={[3840, 1920, 720, 480]}
+      aspectRatio="16:9"
+      alt="Background Hero Image"
+      class="heroImage"
+    />
+  </div>
 </Layout>
 
 <style>
+  @keyframes downarrow {
+    0% {
+      -webkit-transform: translateY(0);
+      -moz-transform: translateY(0);
+      -ms-transform: translateY(0);
+      transform: translateY(0);
+      opacity: 0.4;
+    }
+
+    100% {
+      -webkit-transform: translateY(0.4em);
+      -moz-transform: translateY(0.4em);
+      -ms-transform: translateY(0.4em);
+      transform: translateY(0.4em);
+      opacity: 0.9;
+    }
+  }
+  .squigglyDown {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
+    z-index: 10;
+  }
+  .squigglyDownArrow {
+    border-color: transparent;
+    border-style: solid;
+    border-width: 0 1.5em;
+    display: block;
+    height: 0;
+    margin: 1.5em auto;
+    opacity: 0.4;
+    text-indent: -9999px;
+    transform-origin: 50% 50%;
+    width: 0;
+    animation: downarrow 0.6s infinite alternate ease-in-out;
+    border-top: 2em solid #00cccc;
+  }
+  .landingPage {
+    text-align: center;
+    justify-content: center;
+  }
+  .subtext {
+    font-weight: 500;
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+  }
+  .logo {
+    max-width: 650px;
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 2rem;
+  }
+  .shadowBg {
+    background: radial-gradient(
+      circle,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.7) 0%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
   .heroImage {
     bottom: 0;
     height: 100%;

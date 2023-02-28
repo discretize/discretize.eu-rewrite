@@ -16,6 +16,7 @@ export interface Props {
   seo: SEOProps;
   disablePadding?: boolean;
   disableBackground?: boolean;
+  disableBackgroundImage?: boolean;
 }
 
 const titleTemplate = "%s - GW2 | Discretize [dT]";
@@ -30,6 +31,7 @@ const {
   } = {},
   disablePadding = false,
   disableBackground = false,
+  disableBackgroundImage = false,
 } = Astro.props;
 
 const title = titleRaw.startsWith("GW2 | Discretize [dT]")
@@ -139,18 +141,22 @@ mainClasses.trim();
   <body class="dark">
     <NavBar />
 
-    <main>
-      <div class="backgroundImage">
-        <Picture
-          src={backgroundImage}
-          alt="Background"
-          aspectRatio="3440:1440"
-          formats={["avif", "webp"]}
-          widths={[1600, 2160, 3440]}
-          sizes="(max-width: 1600px) 10vw, (max-width: 2160px) 50vw, 100vw"
-          loading="lazy"
-        />
-      </div>
+    <main class={disablePadding ? "" : "mainWrapper"}>
+      {
+        !disableBackgroundImage && (
+          <div class="backgroundImage">
+            <Picture
+              src={backgroundImage}
+              alt="Background"
+              aspectRatio="3440:1440"
+              formats={["avif", "webp"]}
+              widths={[1600, 2160, 3440]}
+              sizes="(max-width: 1600px) 10vw, (max-width: 2160px) 50vw, 100vw"
+              loading="lazy"
+            />
+          </div>
+        )
+      }
       <div class={mainClasses}>
         <slot />
       </div>
@@ -214,14 +220,14 @@ mainClasses.trim();
     .mainBg {
       background-color: var(--background);
     }
-    main {
+    .mainWrapper {
       margin-top: 2rem;
     }
     @media (max-width: 1400px) {
       .main {
         padding: 1rem;
       }
-      main {
+      .mainWrapper {
         margin-top: 0rem;
       }
     }
