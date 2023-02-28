@@ -15,7 +15,7 @@ import { Icon } from "astro-icon";
     window.scrollBy({
       top: window.innerHeight,
       left: 0,
-      behavior: "smooth",
+      behavior: "auto",
     });
   });
 </script>
@@ -26,11 +26,15 @@ import { Icon } from "astro-icon";
     <div class="logo">
       <Discretize color="#fff" />
       <p class="subtext">International high-end GW2 fractal guild</p>
-      <span class="chip border primary-border primary-text" id="buttonGuild"
+      <span class="chip border" id="buttonGuild"
         >Guild <Icon name="mdi:arrow-down" height="1rem" /></span
       >
       <Link href="/builds">
-        <span class="chip border primary-border primary-text">Builds</span>
+        <span class="chip border"
+          >Builds
+
+          <Icon name="mdi:format-list-bulleted" height="1rem" />
+        </span>
       </Link>
     </div>
     <div class="heroImageWrapper first">
@@ -48,7 +52,7 @@ import { Icon } from "astro-icon";
     </div>
   </div>
 
-  <div class="">
+  <div class="page2">
     <div class="heroImageWrapper">
       <Picture
         src={heroShattered}
@@ -107,6 +111,9 @@ import { Icon } from "astro-icon";
     transform: translate(-50%, -50%);
     padding: 2rem;
   }
+  .logo .chip {
+    color: #dddddd;
+  }
   .aboutText {
     color: #dddddd;
     position: absolute;
@@ -131,7 +138,7 @@ import { Icon } from "astro-icon";
     background: radial-gradient(
       circle,
       rgba(0, 0, 0, 0) 0%,
-      rgba(0, 0, 0, 0.7) 0%,
+      rgba(0, 0, 0, 0.8) 0%,
       rgba(0, 0, 0, 0) 100%
     );
     position: absolute;
