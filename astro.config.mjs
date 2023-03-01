@@ -53,9 +53,7 @@ export default defineConfig({
     prefetch(),
     compress({
       css: false,
-      html: {
-        collapseWhitespace: false,
-      },
+      html: false,
       img: false,
       js: true,
       svg: true,
