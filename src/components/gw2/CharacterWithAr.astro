@@ -18,16 +18,6 @@ characters.forEach((title, index) => {
 });
 ---
 
-<script define:vars={{ id }}>
-  function setActiveTab() {
-    const pages = document.querySelectorAll(`[id='${id}'] .page`);
-    pages[0].classList.add("active");
-  }
-  document.addEventListener("DOMContentLoaded", (event) => {
-    setActiveTab();
-  });
-</script>
-
 <div id={id}>
   <div class="tabs left-align row charactertabs">
     {

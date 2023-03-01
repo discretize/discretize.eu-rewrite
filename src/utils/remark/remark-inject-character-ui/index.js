@@ -13,10 +13,21 @@ function attrToProps(attr) {
 
 export default () => {
   return (markdownAST) => {
+    let firstCharacter = false;
+
     visit(markdownAST, (node) => {
       const componentType = node.name;
+      if (componentType === "Character" && firstCharacter) {
+        firstCharacter = false;
+        node.attributes.push({
+          type: "mdxJsxAttribute",
+          name: "isFirst",
+          value: "true",
+        });
+      }
 
       if (componentType === "CharacterWithAr") {
+        firstCharacter = true;
         // for every child node, check if its character
         // if it is, insert the title prop into a list of characters
         const characters = node.children

@@ -9,7 +9,12 @@ import Consumables from "./consumables/Consumables.astro";
 import Skills from "./skills/Skills.astro";
 import Weapons from "./weapons/Weapons.astro";
 
-const { title, gear, data } = Astro.props;
+interface Props {
+  title: string;
+  isFirst?: boolean;
+}
+
+const { title, gear, data, isFirst } = Astro.props;
 const parsedGear = JSON.parse(gear);
 
 const id = `page_${title
@@ -63,7 +68,7 @@ Object.keys(data.consumables).forEach((key) =>
 );
 ---
 
-<div class={`page character`} id={id}>
+<div class={`page character ${isFirst ? "active" : ""}`} id={id}>
   <div class="wrapper">
     <div class="side">
       <div class="section">
@@ -92,13 +97,14 @@ Object.keys(data.consumables).forEach((key) =>
 
         <img
           decoding="async"
-          loading="lazy"
+          loading="eager"
           src={imageData.image.src}
           alt={imageData.image.alt}
         />
       </picture>
 
       <div class="skillsLegends">
+        This build is strong in full condi
         <Skills {...data.skills} />
       </div>
     </div>
