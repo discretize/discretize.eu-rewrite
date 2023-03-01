@@ -1,0 +1,64 @@
+---
+import { firstUppercase } from "@discretize/react-discretize-components";
+import { ItemInternal } from "@gw2-ui/components";
+import GW2ApiItem from "@gw2-ui/gw2api/types/items/item";
+
+interface Props {
+  affix?: string;
+  infusion1Id?: number;
+  infusion2Id?: number;
+  sigil1Id?: number;
+  sigil1Data?: GW2ApiItem;
+  sigil1Name?: string;
+  sigil2Id?: number;
+  sigil2Data?: GW2ApiItem;
+  sigil2Name?: string;
+}
+
+const {
+  affix,
+  infusion1Id,
+  infusion2Id,
+  sigil1Id,
+  sigil1Name,
+  sigil1Data,
+  sigil2Id,
+  sigil2Name,
+  sigil2Data,
+} = Astro.props;
+
+function formatSigil(text: string): string {
+  return firstUppercase(
+    text
+      .replace("Superior Sigil of ", "")
+      .replace("Überlegenes Sigill der ", "")
+      .replace("Überlegenes Sigill des ", "")
+      .replace("Rune d'érudit ", "")
+  );
+}
+---
+
+<div class="listItemText">
+  {
+    affix ? (
+      <>
+        <span class="primaryText">{affix}</span>
+        <div class="secondaryText">
+          {sigil1Data ? (
+            <ItemInternal dataItem={sigil1Data} text={formatSigil} />
+          ) : (
+            sigil1Name
+          )}
+          {(sigil2Data || sigil2Name) && <br />}
+          {sigil2Data ? (
+            <ItemInternal dataItem={sigil2Data} text={formatSigil} />
+          ) : (
+            sigil2Name
+          )}
+        </div>
+      </>
+    ) : (
+      <span class="primaryText">Empty</span>
+    )
+  }
+</div>

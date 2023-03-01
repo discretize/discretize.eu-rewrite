@@ -1,0 +1,162 @@
+---
+import { getPicture } from "@astrojs/image";
+import { Attributes } from "@discretize/react-discretize-components";
+import { optimizeIcons } from "src/utils/apiAugments";
+import images from "../../images";
+import Armor from "./armor/Armor.astro";
+import BackAndTrinkets from "./backAndTrinkets/BackAndTrinkets.astro";
+import Consumables from "./consumables/Consumables.astro";
+import Skills from "./skills/Skills.astro";
+import Weapons from "./weapons/Weapons.astro";
+
+const { title, gear, data } = Astro.props;
+const parsedGear = JSON.parse(gear);
+
+const id = `page_${title
+  .toLowerCase()
+  .replaceAll(" ", "")
+  .replaceAll(/\/|[^a-zA-Z0-9]+/gm, "")}`;
+const specialization = parsedGear.attributes.specialization;
+
+const imageData = await getPicture({
+  src: images[specialization.toLowerCase()],
+  widths: [360, 480, 620],
+  alt: "Profession",
+  formats: ["avif", "webp"],
+});
+
+const modifiedSources = imageData.sources
+  .map((oneSource) =>
+    oneSource.srcset.split(",").map((srcset, index) => {
+      const src = srcset.split(" ")[0];
+      // dont add a media query for the last source
+      // media query should be offset by 1 in the array of imageData.sources[i]
+      let width = oneSource.srcset
+        .split(",")
+        [index + 1]?.split(" ")[1]
+        .replace("w", "");
+
+      let media = `(max-width: ${width}px)`;
+      if (index === oneSource.srcset.split(",").length - 1) {
+        media = null;
+      }
+      return {
+        media,
+        srcset: src,
+        type: oneSource.type,
+      };
+    })
+  )
+  .flat(1);
+
+// optimize all the gw2 api data
+data.upgrades.runes.forEach((data) => optimizeIcons(data, 16));
+data.upgrades.infusions.forEach((data) => optimizeIcons(data, 16));
+data.upgrades.sigils.forEach((data) => optimizeIcons(data, 16));
+Object.keys(data.armor).forEach((key) => optimizeIcons(data.armor[key], 60));
+Object.keys(data.weapon).forEach((key) => optimizeIcons(data.weapon[key], 60));
+Object.keys(data.backAndTrinket).forEach((key) =>
+  optimizeIcons(data.backAndTrinket[key], 60)
+);
+Object.keys(data.consumables).forEach((key) =>
+  optimizeIcons(data.consumables[key], 60)
+);
+---
+
+<div class={`page character`} id={id}>
+  <div class="wrapper">
+    <div class="side">
+      <div class="section">
+        <Armor
+          {...parsedGear.armor}
+          data={data.armor}
+          dataUpgrades={data.upgrades}
+        />
+      </div>
+      <div class="section">
+        <Weapons
+          {...parsedGear.weapon}
+          data={data.weapon}
+          dataUpgrades={data.upgrades}
+        />
+      </div>
+    </div>
+
+    <div class="middleSection">
+      <picture>
+        {
+          modifiedSources.map(({ media, srcset, type }) => (
+            <source media={media} srcset={srcset} type={type} />
+          ))
+        }
+
+        <img
+          decoding="async"
+          loading="lazy"
+          src={imageData.image.src}
+          alt={imageData.image.alt}
+        />
+      </picture>
+
+      <div class="skillsLegends">
+        <Skills {...data.skills} />
+      </div>
+    </div>
+
+    <div class="side">
+      <div class="section">
+        <Attributes {...parsedGear.attributes} client:visible />
+      </div>
+
+      <div class="section">
+        <BackAndTrinkets
+          {...parsedGear.backAndTrinket}
+          data={data.backAndTrinket}
+          dataUpgrades={data.upgrades}
+        />
+      </div>
+
+      <div class="section"><Consumables data={data.consumables} /></div>
+    </div>
+  </div>
+</div>
+
+<style>
+  :global(.character img) {
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
+  }
+  .wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .section {
+    padding: 16px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+  }
+  .middleSection {
+    display: flex;
+    flex: 0.7 0.2 300px;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .side {
+    display: flex;
+    flex: 0 0 250px;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  @media (min-width: 600px) {
+    .skillsLegends {
+      align-self: center;
+    }
+  }
+
+  .character {
+    margin-bottom: 1rem;
+  }
+</style>

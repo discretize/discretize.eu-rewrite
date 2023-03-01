@@ -1,0 +1,82 @@
+---
+import { firstUppercase } from "@discretize/react-discretize-components";
+import { Item, ItemInternal } from "@gw2-ui/components";
+import GW2ApiItem from "@gw2-ui/gw2api/types/items/item";
+
+interface Props {
+  affix?: string;
+  runeId?: number;
+  runeName?: string;
+  runeData?: GW2ApiItem;
+  infusionId?: number;
+}
+
+const { affix, runeId, runeName, runeData } = Astro.props;
+
+export function formatInfusion(result: string): string {
+  const match = result.match(/.*\+[0-9][0-9]?/g);
+  if (match?.length === 1) return match[0];
+  //TODO implement fallback for french and chinese
+  return result;
+}
+
+function formatRune(text: string): string {
+  if (!text) return undefined;
+  return firstUppercase(
+    text
+      .replace(/Superior Rune of (the)?/gm, "")
+      .replace("Runa superior del ", "")
+      .replace(/Überlegene Rune (des|der|von)?/gm, "")
+      .replace("Rune d'érudit ", "")
+  );
+}
+---
+
+<div class="listItemText">
+  <span class="primaryText">{affix}</span>
+  <div class="secondaryText">
+    {
+      runeId && !runeData && (
+        <Item id={runeId} text={formatRune(runeData?.name)} client:visible />
+      )
+    }
+
+    {
+      runeData && (
+        <ItemInternal
+          dataItem={runeData}
+          dataUpgrades={[]}
+          text={formatRune(runeData?.name)}
+          client:visible
+        />
+      )
+    }
+
+    {!runeId && !runeData && runeName}
+  </div>
+</div>
+
+<style>
+  :global(.listItemText) {
+    flex: 1 1 auto;
+    flex-grow: 0;
+    margin-left: 16px;
+    padding-left: 16px;
+    border-left: 1px solid var(--rdc-color-border);
+    line-height: 0;
+  }
+  :global(.primaryText) {
+    line-height: 1.4;
+    font-weight: 500;
+    font-family: var(--rdc-font-family);
+    color: var(--rdc-font-color);
+  }
+  :global(.secondaryText) {
+    margin: 0;
+    display: block;
+    line-height: 1.23;
+    font-size: 0.9rem;
+    font-weight: 300;
+    font-family: var(--rdc-font-family);
+  }
+</style>

@@ -1,0 +1,88 @@
+---
+import { NoSelection } from "@discretize/react-discretize-components";
+import { ConsumableEffect, ItemInternal } from "@gw2-ui/components";
+import GW2ApiItem from "@gw2-ui/gw2api/types/items/item";
+
+interface Props {
+  foodId?: number;
+  utilityId?: number;
+  infusionId?: number;
+  data?: {
+    foodData?: GW2ApiItem;
+    utilityData?: GW2ApiItem;
+    infusionData?: GW2ApiItem;
+  };
+}
+
+const { data } = Astro.props;
+const { foodData, utilityData, infusionData } = data;
+---
+
+<div class="root">
+  <div class="gridItem">
+    {
+      foodData ? (
+        <ItemInternal
+          dataItem={foodData}
+          className="gw2item"
+          disableText
+          client:visible
+        />
+      ) : (
+        <NoSelection className="gw2item" client:visible />
+      )
+    }
+    <span class="title">
+      <ConsumableEffect name="Nourishment" disableText /> Food
+    </span>
+  </div>
+  <div class="gridItem borderLeft">
+    {
+      utilityData ? (
+        <ItemInternal
+          dataItem={utilityData}
+          className="gw2item"
+          disableText
+          client:visible
+        />
+      ) : (
+        <NoSelection className="gw2item" client:visible />
+      )
+    }
+    <span class="title">
+      <ConsumableEffect name="Enhancement" disableText />
+      Utility
+    </span>
+  </div>
+  {
+    infusionData && (
+      <div class="gridItem borderLeft">
+        <ItemInternal
+          dataItem={infusionData}
+          className="gw2item"
+          disableText
+          client:visible
+        />
+        <span class="title">Infusion</span>
+      </div>
+    )
+  }
+</div>
+
+<style>
+  .root {
+    display: grid;
+    justify-content: center;
+    grid-auto-flow: column;
+    margin: -12px;
+  }
+  .gridItem {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 12px;
+  }
+  .borderLeft {
+    border-left: 1px solid var(--rdc-color-border);
+  }
+</style>

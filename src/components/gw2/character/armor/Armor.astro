@@ -1,0 +1,268 @@
+---
+import { getImage } from "@astrojs/image";
+import { CreateItem, Item, ItemInternal } from "@gw2-ui/components";
+import GW2ApiItem from "@gw2-ui/gw2api/types/items/item";
+import { Affix } from "discretize-gear-optimizer/src/utils/gw2-data";
+import { ItemUpgrades } from "src/utils/types";
+import ItemDetails from "./ItemDetails.astro";
+
+type Affix = React.ComponentProps<typeof Item>["stat"];
+type Weights = React.ComponentProps<typeof CreateItem>["weight"];
+type Rarity = React.ComponentProps<typeof CreateItem>["rarity"];
+
+interface Props {
+  data?: {
+    helm: GW2ApiItem;
+    shoulders: GW2ApiItem;
+    coat: GW2ApiItem;
+    gloves: GW2ApiItem;
+    leggings: GW2ApiItem;
+    boots: GW2ApiItem;
+  };
+  dataUpgrades?: {
+    runes: GW2ApiItem[];
+    infusions: GW2ApiItem[];
+  };
+  weight?: Weights;
+  showInfusions?: boolean;
+  helmId?: number;
+  helmRuneId?: number;
+  helmInfusionId?: number;
+  helmRuneCount?: number;
+  helmAffix: Affix;
+  helmRune?: string;
+  helmRarity?: Rarity;
+  shouldersId: number;
+  shouldersRuneId?: number;
+  shouldersInfusionId?: number;
+  shouldersRuneCount?: number;
+  shouldersAffix: Affix;
+  shouldersRune?: string;
+  shouldersRarity?: Rarity;
+  coatId: number;
+  coatRuneId?: number;
+  coatInfusionId?: number;
+  coatRuneCount?: number;
+  coatAffix: Affix;
+  coatRune?: string;
+  coatRarity?: Rarity;
+  glovesId: number;
+  glovesRuneId?: number;
+  glovesInfusionId?: number;
+  glovesRuneCount?: number;
+  glovesAffix: Affix;
+  glovesRune?: string;
+  glovesRarity?: Rarity;
+  leggingsId: number;
+  leggingsRuneId?: number;
+  leggingsInfusionId?: number;
+  leggingsRuneCount?: number;
+  leggingsAffix: Affix;
+  leggingsRune?: string;
+  leggingsRarity?: Rarity;
+  bootsId: number;
+  bootsRuneId?: number;
+  bootsInfusionId?: number;
+  bootsRuneCount?: number;
+  bootsAffix: Affix;
+  bootsRune?: string;
+  bootsRarity?: Rarity;
+}
+
+const {
+  data,
+  dataUpgrades,
+  weight,
+  helmId,
+  helmRuneId,
+  helmInfusionId,
+  helmRuneCount = 6,
+  helmAffix,
+  helmRune,
+  helmRarity,
+  shouldersId,
+  shouldersRuneId,
+  shouldersInfusionId,
+  shouldersRuneCount = 6,
+  shouldersAffix,
+  shouldersRune,
+  shouldersRarity,
+  coatId,
+  coatRuneId,
+  coatInfusionId,
+  coatRuneCount = 6,
+  coatAffix,
+  coatRune,
+  coatRarity,
+  glovesId,
+  glovesRuneId,
+  glovesInfusionId,
+  glovesRuneCount = 6,
+  glovesAffix,
+  glovesRune,
+  glovesRarity,
+  leggingsId,
+  leggingsRuneId,
+  leggingsInfusionId,
+  leggingsRuneCount = 6,
+  leggingsAffix,
+  leggingsRune,
+  leggingsRarity,
+  bootsId,
+  bootsRuneId,
+  bootsInfusionId,
+  bootsRuneCount = 6,
+  bootsAffix,
+  bootsRune,
+  bootsRarity,
+} = Astro.props;
+
+/**
+ * Creates an array of upgrades that can be passed on to the Item component. Undefined values will be filtered out.
+ * @param {number | undefined} infusionId id of the infusion
+ * @param {number | undefined} runeId id of the rune
+ * @param {number | undefined} runeCount number of runes that should be highlighted
+ * @returns
+ */
+function createUpgrades(
+  infusionData?: GW2ApiItem,
+  runeData?: GW2ApiItem,
+  runeCount: number = 1
+): ItemUpgrades {
+  let upgrades: ItemUpgrades = [];
+  if (infusionData) upgrades = [[infusionData, 1]];
+  if (runeData) upgrades = [...upgrades, [runeData, runeCount]];
+  return upgrades;
+}
+
+const armor = [
+  {
+    id: helmId,
+    data: data && data.helm,
+    runeId: helmRuneId,
+    infusionId: helmInfusionId,
+    runeCount: helmRuneCount,
+    affix: helmAffix,
+    rune: helmRune,
+    rarity: helmRarity,
+  },
+  {
+    id: shouldersId,
+    data: data && data.shoulders,
+    runeId: shouldersRuneId,
+    infusionId: shouldersInfusionId,
+    runeCount: shouldersRuneCount,
+    affix: shouldersAffix,
+    rune: shouldersRune,
+    rarity: shouldersRarity,
+  },
+  {
+    id: coatId,
+    data: data && data.coat,
+    runeId: coatRuneId,
+    infusionId: coatInfusionId,
+    runeCount: coatRuneCount,
+    affix: coatAffix,
+    rune: coatRune,
+    rarity: coatRarity,
+  },
+  {
+    id: glovesId,
+    data: data && data.gloves,
+    runeId: glovesRuneId,
+    infusionId: glovesInfusionId,
+    runeCount: glovesRuneCount,
+    affix: glovesAffix,
+    rune: glovesRune,
+    rarity: glovesRarity,
+  },
+  {
+    id: leggingsId,
+    data: data && data.leggings,
+    runeId: leggingsRuneId,
+    infusionId: leggingsInfusionId,
+    runeCount: leggingsRuneCount,
+    affix: leggingsAffix,
+    rune: leggingsRune,
+    rarity: leggingsRarity,
+  },
+  {
+    id: bootsId,
+    data: data && data.boots,
+    runeId: bootsRuneId,
+    infusionId: bootsInfusionId,
+    runeCount: bootsRuneCount,
+    affix: bootsAffix,
+    rune: bootsRune,
+    rarity: bootsRarity,
+  },
+].map((item) => {
+  const runeData = dataUpgrades?.runes.find(
+    (ritem) => ritem.id === item.runeId
+  );
+  const infusionData = dataUpgrades?.infusions.find(
+    (iitem) => iitem.id === item.infusionId
+  );
+
+  const upgrades = createUpgrades(infusionData, runeData, item.runeCount);
+
+  const fixedData = {
+    ...item.data,
+    name: `${item.affix}'s ${item.data.details.type}`,
+  };
+  delete fixedData.description;
+  delete fixedData.vendor_value;
+  delete fixedData.game_types;
+  delete fixedData.default_skin;
+  return {
+    ...item,
+    data: fixedData,
+    upgrades,
+    runeData,
+    infusionData,
+  };
+});
+---
+
+<ul class="list">
+  {
+    armor.map(({ data, upgrades, affix, runeData, rune }) => (
+      <li class="listItem">
+        <ItemInternal
+          dataItem={data}
+          dataUpgrades={upgrades}
+          disableText
+          className="gw2item"
+          client:visible
+        />
+        <ItemDetails affix={affix} runeData={runeData} runeName={rune} />
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  :global(.list) {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+  :global(.listItem) {
+    display: flex;
+    align-items: center;
+    line-height: 0;
+    justify-content: center;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+  :global(.listItem > *:first-child) {
+    text-align: right;
+  }
+  :global(.listItem > *:last-child) {
+    width: 55%;
+    text-align: left;
+  }
+</style>

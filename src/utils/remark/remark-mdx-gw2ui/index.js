@@ -31,6 +31,25 @@ const COMPONENTS = [
     resolve_methods: [(attr) => resolve("Skills", attr)],
   },
   {
+    type: "Character",
+    resolve_methods: [
+      (attr) => {
+        const gear = JSON.parse(attr.gear);
+        return {
+          ...attr,
+          gear: JSON.stringify({
+            ...gear,
+            armor: resolve("Armor", gear.armor),
+            weapon: resolve("Weapons", gear.weapon),
+            skills: resolve("Skills", gear.skills),
+            backAndTrinket: resolve("BackAndTrinkets", gear.backAndTrinket),
+            consumables: resolve("Consumables", gear.consumables),
+          }),
+        };
+      },
+    ],
+  },
+  {
     type: "Traits",
     resolve_methods: [
       (attr) => {
@@ -75,7 +94,9 @@ export default () => {
           ...node.attributes,
           ...Object.keys(newProps)
             .filter(
-              (key) => newProps[key] && key && key.toLowerCase().includes("id")
+              (key) =>
+                (newProps[key] && key && key.toLowerCase().includes("id")) ||
+                key === "gear"
             )
             .map((key) => ({
               type: "mdxJsxAttribute",

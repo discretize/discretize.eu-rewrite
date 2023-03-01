@@ -1,0 +1,140 @@
+---
+import { NoSelection } from "@discretize/react-discretize-components";
+import { SkillInternal } from "@gw2-ui/components";
+import GW2ApiSkill from "@gw2-ui/gw2api/types/skills/skill";
+import { optimizeIcons } from "src/utils/apiAugments";
+
+interface Props {
+  className?: string;
+  healData?: GW2ApiSkill;
+  utility1Data?: GW2ApiSkill;
+  utility2Data?: GW2ApiSkill;
+  utility3Data?: GW2ApiSkill;
+  eliteData?: GW2ApiSkill;
+  healId?: number;
+  utility1Id?: number;
+  utility2Id?: number;
+  utility3Id?: number;
+  eliteId?: number;
+}
+
+const {
+  className,
+  healData,
+  utility1Data,
+  utility2Data,
+  utility3Data,
+  eliteData,
+} = Astro.props;
+
+[healData, utility1Data, utility2Data, utility3Data, eliteData].forEach(
+  (data) => {
+    optimizeIcons(data, 60);
+  }
+);
+---
+
+<div class={`skillGrid ${className ?? ""}`}>
+  <div class="gridItem">
+    {
+      healData ? (
+        <SkillInternal
+          data={healData}
+          className="gw2item"
+          disableText
+          client:visible
+        />
+      ) : (
+        <NoSelection client:visible className="gw2item" />
+      )
+    }
+    <span class="title">Heal</span>
+  </div>
+
+  <div class={"gridItem gridItemMiddle borders"}>
+    <div>
+      {
+        utility1Data ? (
+          <SkillInternal
+            data={utility1Data}
+            className="gw2item"
+            disableText
+            client:visible
+          />
+        ) : (
+          <NoSelection client:visible className="gw2item" />
+        )
+      }
+      {
+        utility2Data ? (
+          <SkillInternal
+            data={utility2Data}
+            className="gw2item"
+            disableText
+            client:visible
+          />
+        ) : (
+          <NoSelection client:visible className="gw2item" />
+        )
+      }
+      {
+        utility3Data ? (
+          <SkillInternal
+            data={utility3Data}
+            className="gw2item"
+            disableText
+            client:visible
+          />
+        ) : (
+          <NoSelection client:visible className="gw2item" />
+        )
+      }
+    </div>
+    <span class="title">Utilities</span>
+  </div>
+
+  <div class="gridItem">
+    <div>
+      {
+        eliteData ? (
+          <SkillInternal
+            data={eliteData}
+            className="gw2item"
+            disableText
+            client:visible
+          />
+        ) : (
+          <NoSelection client:visible className="gw2item" />
+        )
+      }
+    </div>
+    <span class="title">Elite</span>
+  </div>
+</div>
+
+<style>
+  .skillGrid {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+  }
+  .gridItem {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+  .gridItemMiddle {
+    padding-right: 4px;
+    padding-left: 4px;
+  }
+  .borders {
+    border-left: 1px solid var(--rdc-color-border);
+    border-right: 1px solid var(--rdc-color-border);
+  }
+  :global(.title) {
+    font-size: 0.8125rem;
+    font-weight: 400;
+    font-family: var(--rdc-font-family);
+    color: var(--rdc-font-color);
+  }
+</style>

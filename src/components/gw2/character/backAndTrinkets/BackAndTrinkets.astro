@@ -1,0 +1,220 @@
+---
+import { ItemRarity } from "@gw2-ui/builder/itemRarities";
+import { ItemStatName } from "@gw2-ui/builder/itemStatNames";
+import { ItemInternal } from "@gw2-ui/components";
+import GW2ApiItem from "@gw2-ui/gw2api/types/items/item";
+import { addAffixToGw2ui } from "src/utils/apiAugments";
+
+type Affix = ItemStatName;
+type Rarity = ItemRarity;
+
+interface Props {
+  dataUpgrades?: {
+    infusions: GW2ApiItem[];
+  };
+  showInfusions?: boolean;
+
+  backItemId?: number;
+  backItemData?: GW2ApiItem;
+  backItemInfusion1Id?: number;
+  backItemInfusion2Id?: number;
+  backItemAffix?: Affix;
+  backItemRarity?: Rarity;
+  accessory1Id?: number;
+  accessory1Data?: GW2ApiItem;
+  accessory1InfusionId?: number;
+  accessory1Affix?: Affix;
+  accessory1Rarity?: Rarity;
+  accessory2Id?: number;
+  accessory2Data?: GW2ApiItem;
+  accessory2InfusionId?: number;
+  accessory2Affix?: Affix;
+  accessory2Rarity?: Rarity;
+  amuletId?: number;
+  amuletData?: GW2ApiItem;
+  amuletAffix?: Affix;
+  amuletRarity?: Rarity;
+  ring1Id?: number;
+  ring1Data?: GW2ApiItem;
+  ring1Infusion1Id?: number;
+  ring1Infusion2Id?: number;
+  ring1Infusion3Id?: number;
+  ring1Affix?: Affix;
+  ring1Rarity?: Rarity;
+  ring2Id?: number;
+  ring2Data?: GW2ApiItem;
+  ring2Infusion1Id?: number;
+  ring2Infusion2Id?: number;
+  ring2Infusion3Id?: number;
+  ring2Affix?: Affix;
+  ring2Rarity?: Rarity;
+}
+
+//unpack all
+const {
+  dataUpgrades: { infusions } = {},
+  data,
+  backItemId,
+  backItemInfusion1Id,
+  backItemInfusion2Id,
+  backItemAffix,
+  backItemRarity,
+  accessory1Id,
+  accessory1InfusionId,
+  accessory1Affix,
+  accessory1Rarity,
+  accessory2Id,
+  accessory2InfusionId,
+  accessory2Affix,
+  accessory2Rarity,
+  amuletId,
+  amuletAffix,
+  amuletRarity,
+  ring1Id,
+  ring1Infusion1Id,
+  ring1Infusion2Id,
+  ring1Infusion3Id,
+  ring1Affix,
+  ring1Rarity,
+  ring2Id,
+  ring2Infusion1Id,
+  ring2Infusion2Id,
+  ring2Infusion3Id,
+  ring2Affix,
+  ring2Rarity,
+} = Astro.props;
+
+const {
+  backItemData,
+  accessory1Data,
+  accessory2Data,
+  amuletData,
+  ring1Data,
+  ring2Data,
+} = data;
+
+function createUpgrades(infusionIds: number[]): [GW2ApiItem, number][] {
+  return infusionIds.map((infusionId) => [
+    infusions.find((infusion) => infusion.id === infusionId),
+    1,
+  ]);
+}
+
+const backItemUpgrades = createUpgrades(
+  [backItemInfusion1Id, backItemInfusion2Id].filter(Boolean)
+);
+const accessory1Upgrades = createUpgrades(
+  [accessory1InfusionId].filter(Boolean)
+);
+const accessory2Upgrades = createUpgrades(
+  [accessory2InfusionId].filter(Boolean)
+);
+const ring1Upgrades = createUpgrades(
+  [ring1Infusion1Id, ring1Infusion2Id, ring1Infusion3Id].filter(Boolean)
+);
+const ring2Upgrades = createUpgrades(
+  [ring2Infusion1Id, ring2Infusion2Id, ring2Infusion3Id].filter(Boolean)
+);
+
+// some gw2-items come with stat-selection. We need to add the affix to the item manually
+addAffixToGw2ui(backItemData, "Back Item", backItemAffix);
+addAffixToGw2ui(accessory1Data, "Accessory", accessory1Affix);
+addAffixToGw2ui(accessory2Data, "Accessory", accessory2Affix);
+addAffixToGw2ui(amuletData, "Amulet", amuletAffix);
+addAffixToGw2ui(ring1Data, "Ring", ring1Affix);
+addAffixToGw2ui(ring2Data, "Ring", ring2Affix);
+---
+
+<div class="root">
+  <div class="gridItem borderBottom upperRowItem">
+    <span class="title">{backItemAffix}</span>
+    <ItemInternal
+      dataItem={backItemData}
+      dataUpgrades={backItemUpgrades}
+      client:visible
+      disableText
+      className="gw2item"
+    />
+  </div>
+
+  <div class="gridItem borderBottom upperRowItem borderLeft">
+    <span class="title">{accessory1Affix}</span>
+    <ItemInternal
+      dataItem={accessory1Data}
+      dataUpgrades={accessory1Upgrades}
+      client:visible
+      disableText
+      className="gw2item"
+    />
+  </div>
+
+  <div class="gridItem borderBottom upperRowItem">
+    <span class="title">{accessory2Affix}</span>
+    <ItemInternal
+      dataItem={accessory2Data}
+      dataUpgrades={accessory2Upgrades}
+      client:visible
+      disableText
+      className="gw2item"
+    />
+  </div>
+
+  <div class="gridItem">
+    <ItemInternal
+      dataItem={amuletData}
+      client:visible
+      disableText
+      className="gw2item"
+    />
+    <span class="title">{amuletAffix}</span>
+  </div>
+
+  <div class="gridItem borderLeft">
+    <ItemInternal
+      dataItem={ring1Data}
+      dataUpgrades={ring1Upgrades}
+      client:visible
+      disableText
+      className="gw2item"
+    />
+    <span class="title">{ring1Affix}</span>
+  </div>
+
+  <div class="gridItem">
+    <ItemInternal
+      dataItem={ring2Data}
+      dataUpgrades={ring2Upgrades}
+      client:visible
+      disableText
+      className="gw2item"
+    />
+    <span class="title">{ring2Affix}</span>
+  </div>
+</div>
+
+<style>
+  .root {
+    grid-template-columns: repeat(3, 1fr);
+    margin: -12px;
+    display: grid;
+  }
+  .gridItem {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 12px;
+    align-items: flex-start;
+  }
+  .title {
+    font-size: 0.8125rem;
+  }
+  .borderLeft {
+    border-left: 1px solid var(--rdc-color-border);
+  }
+  .borderBottom {
+    border-bottom: 1px solid var(--rdc-color-border);
+  }
+  .upperRowItem {
+    align-self: flex-end;
+  }
+</style>

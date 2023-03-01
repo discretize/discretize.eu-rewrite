@@ -1,0 +1,308 @@
+---
+import { NoSelection } from "@discretize/react-discretize-components";
+import type { ItemRarity } from "@gw2-ui/builder/itemRarities";
+import type { ItemStatName } from "@gw2-ui/builder/itemStatNames";
+import { Icon, ItemInternal } from "@gw2-ui/components";
+import type GW2ApiItem from "@gw2-ui/gw2api/types/items/item";
+import TextDivider from "src/components/TextDivider.astro";
+import { addAffixToGw2ui } from "src/utils/apiAugments";
+import { ItemUpgrades } from "src/utils/types";
+import ItemDetails from "./ItemDetails.astro";
+
+type Rarity = ItemRarity;
+type Affix = ItemStatName;
+
+interface Props {
+  data?: {
+    weapon1MainData: GW2ApiItem;
+    weapon1OffData: GW2ApiItem;
+    weapon2MainData: GW2ApiItem;
+    weapon2OffData: GW2ApiItem;
+  };
+  dataUpgrades?: {
+    sigils: GW2ApiItem[];
+    infusions: GW2ApiItem[];
+  };
+  weapon1MainData?: GW2ApiItem;
+  weapon1OffData?: GW2ApiItem;
+  weapon2MainData?: GW2ApiItem;
+  weapon2OffData?: GW2ApiItem;
+  showInfusions?: boolean;
+  weapon1MainId?: number;
+  weapon1MainSigil1Id?: number;
+  weapon1MainSigil2Id?: number;
+  weapon1MainType?: string;
+  weapon1MainAffix?: Affix;
+  weapon1MainSigil1?: string;
+  weapon1MainSigil2?: string;
+  weapon1MainInfusion1Id?: number;
+  weapon1MainInfusion2Id?: number;
+  weapon1MainRarity?: Rarity;
+  weapon1OffId?: number;
+  weapon1OffSigilId?: number;
+  weapon1OffType?: string;
+  weapon1OffAffix?: Affix;
+  weapon1OffSigil?: string;
+  weapon1OffInfusionId?: number;
+  weapon1OffRarity?: Rarity;
+  weapon2MainId?: number;
+  weapon2MainSigil1Id?: number;
+  weapon2MainSigil2Id?: number;
+  weapon2MainType?: string;
+  weapon2MainAffix?: Affix;
+  weapon2MainSigil1?: string;
+  weapon2MainSigil2?: string;
+  weapon2MainInfusion1Id?: number;
+  weapon2MainInfusion2Id?: number;
+  weapon2MainRarity?: Rarity;
+  weapon2OffId?: number;
+  weapon2OffSigilId?: number;
+  weapon2OffType?: string;
+  weapon2OffAffix?: Affix;
+  weapon2OffSigil?: string;
+  weapon2OffInfusionId?: number;
+  weapon2OffRarity?: Rarity;
+}
+
+// unwrap all props
+const {
+  data: {
+    weapon1MainData,
+    weapon1OffData,
+    weapon2MainData,
+    weapon2OffData,
+  } = {},
+  dataUpgrades,
+  showInfusions,
+  weapon1MainId,
+  weapon1MainSigil1Id,
+  weapon1MainSigil2Id,
+  weapon1MainType,
+  weapon1MainAffix,
+  weapon1MainSigil1,
+  weapon1MainSigil2,
+  weapon1MainInfusion1Id,
+  weapon1MainInfusion2Id,
+  weapon1MainRarity,
+  weapon1OffId,
+  weapon1OffSigilId,
+  weapon1OffType,
+  weapon1OffAffix,
+  weapon1OffSigil,
+  weapon1OffInfusionId,
+  weapon1OffRarity,
+  weapon2MainId,
+  weapon2MainSigil1Id,
+  weapon2MainSigil2Id,
+  weapon2MainType,
+  weapon2MainAffix,
+  weapon2MainSigil1,
+  weapon2MainSigil2,
+  weapon2MainInfusion1Id,
+  weapon2MainInfusion2Id,
+  weapon2MainRarity,
+  weapon2OffId,
+  weapon2OffSigilId,
+  weapon2OffType,
+  weapon2OffAffix,
+  weapon2OffSigil,
+  weapon2OffInfusionId,
+  weapon2OffRarity,
+} = Astro.props;
+
+function createUpgrades(array: (GW2ApiItem | undefined)[]): ItemUpgrades {
+  return array
+    .filter((elem) => typeof elem !== "undefined")
+    .map((item) => [item, 1]) as ItemUpgrades;
+}
+
+const weapon1MainSigil1Data = dataUpgrades.sigils.find(
+  (sigil) => sigil.id === weapon1MainSigil1Id
+);
+const weapon1MainSigil2Data = dataUpgrades.sigils.find(
+  (sigil) => sigil.id === weapon1MainSigil2Id
+);
+const weapon1OffSigilData = dataUpgrades.sigils.find(
+  (sigil) => sigil.id === weapon1OffSigilId
+);
+const weapon2MainSigil1Data = dataUpgrades.sigils.find(
+  (sigil) => sigil.id === weapon2MainSigil1Id
+);
+const weapon2MainSigil2Data = dataUpgrades.sigils.find(
+  (sigil) => sigil.id === weapon2MainSigil2Id
+);
+const weapon2OffSigilData = dataUpgrades.sigils.find(
+  (sigil) => sigil.id === weapon2OffSigilId
+);
+const weapon1MainUpgrades = createUpgrades([
+  weapon1MainSigil1Data,
+  weapon1MainSigil2Data,
+  dataUpgrades.infusions.find(
+    (infusion) => infusion.id === weapon1MainInfusion1Id
+  ),
+  dataUpgrades.infusions.find(
+    (infusion) => infusion.id === weapon1MainInfusion2Id
+  ),
+]);
+const weapon1OffUpgrades = createUpgrades([
+  weapon1OffSigilData,
+  dataUpgrades.infusions.find(
+    (infusion) => infusion.id === weapon1OffInfusionId
+  ),
+]);
+const weapon2MainUpgrades = createUpgrades([
+  dataUpgrades.sigils.find((sigil) => sigil.id === weapon2MainSigil1Id),
+  dataUpgrades.sigils.find((sigil) => sigil.id === weapon2MainSigil2Id),
+  dataUpgrades.infusions.find(
+    (infusion) => infusion.id === weapon2MainInfusion1Id
+  ),
+  dataUpgrades.infusions.find(
+    (infusion) => infusion.id === weapon2MainInfusion2Id
+  ),
+]);
+const weapon2OffUpgrades = createUpgrades([
+  dataUpgrades.sigils.find((sigil) => sigil.id === weapon2OffSigilId),
+  dataUpgrades.infusions.find(
+    (infusion) => infusion.id === weapon2OffInfusionId
+  ),
+]);
+function fixData(data: GW2ApiItem | undefined, affix: Affix) {
+  if (data) {
+    addAffixToGw2ui(data, data.details.type, affix);
+  }
+  return data;
+}
+
+const weapon1MainDataFixed = fixData(weapon1MainData, weapon1MainAffix);
+const weapon1OffDataFixed = fixData(weapon1OffData, weapon1OffAffix);
+const weapon2MainDataFixed = fixData(weapon2MainData, weapon2MainAffix);
+const weapon2OffDataFixed = fixData(weapon2OffData, weapon2OffAffix);
+---
+
+<ul class="list">
+  <li class="listItem">
+    {
+      weapon1MainData ? (
+        <>
+          <ItemInternal
+            dataItem={weapon1MainDataFixed}
+            dataUpgrades={weapon1MainUpgrades}
+            disableText
+            className="gw2item"
+            client:visible
+          />
+          <ItemDetails
+            affix={weapon1MainAffix}
+            infusion1Id={weapon1MainInfusion1Id}
+            infusion2Id={weapon1MainInfusion2Id}
+            sigil1Id={weapon1MainSigil1Id}
+            sigil1Data={weapon1MainSigil1Data}
+            sigil1Name={weapon1MainSigil1}
+            sigil2Id={weapon1MainSigil2Id}
+            sigil2Data={weapon1MainSigil2Data}
+            sigil2Name={weapon1MainSigil2}
+          />
+        </>
+      ) : (
+        <>
+          <NoSelection className="gw2item" client:visible />
+          <ItemDetails />
+        </>
+      )
+    }
+  </li>
+
+  {
+    weapon1OffData && (
+      <li class="listItem">
+        <ItemInternal
+          dataItem={weapon1OffDataFixed}
+          dataUpgrades={weapon1OffUpgrades}
+          disableText
+          className="gw2item"
+          client:visible
+        />
+        <ItemDetails
+          affix={weapon1OffAffix}
+          infusion1Id={weapon1OffInfusionId}
+          sigil1Id={weapon1OffSigilId}
+          sigil1Data={weapon1OffSigilData}
+          sigil1Name={weapon1OffSigil}
+        />
+      </li>
+    )
+  }
+  {
+    !weapon1OffId && !weapon1OffType && !weapon1MainSigil2Id && (
+      <li class="listItem">
+        <NoSelection className="gw2item" client:visible />
+        <ItemDetails />
+      </li>
+    )
+  }
+</ul>
+
+{
+  (weapon2MainId || weapon2OffId || weapon2MainType || weapon2OffType) && (
+    <>
+      <TextDivider>
+        <Icon name="WeaponSwap" />
+      </TextDivider>
+
+      <ul class="list">
+        {weapon2MainData ? (
+          <li class="listItem">
+            <ItemInternal
+              dataItem={weapon2MainDataFixed}
+              dataUpgrades={weapon2MainUpgrades}
+              disableText
+              className="gw2item"
+              client:visible
+            />
+            <ItemDetails
+              affix={weapon2MainAffix}
+              infusion1Id={weapon2MainInfusion1Id}
+              infusion2Id={weapon2MainInfusion2Id}
+              sigil1Id={weapon2MainSigil1Id}
+              sigil1Data={weapon2MainSigil1Data}
+              sigil1Name={weapon2MainSigil1}
+              sigil2Id={weapon2MainSigil2Id}
+              sigil2Data={weapon2MainSigil2Data}
+              sigil2Name={weapon2MainSigil2}
+            />
+          </li>
+        ) : (
+          <li class="listItem">
+            <NoSelection className="gw2item" client:visible />
+            <ItemDetails />
+          </li>
+        )}
+
+        {weapon2OffData && (
+          <li class="listItem">
+            <ItemInternal
+              dataItem={weapon2OffDataFixed}
+              dataUpgrades={weapon2OffUpgrades}
+              disableText
+              className="gw2item"
+              client:visible
+            />
+            <ItemDetails
+              affix={weapon2OffAffix}
+              infusion1Id={weapon2OffInfusionId}
+              sigil1Id={weapon2OffSigilId}
+              sigil1Data={weapon2OffSigilData}
+              sigil1Name={weapon2OffSigil}
+            />
+          </li>
+        )}
+        {!weapon2OffId && !weapon2OffType && !weapon2MainSigil2Id && (
+          <li class="listItem">
+            <NoSelection className="gw2item" client:visible />
+            <ItemDetails />
+          </li>
+        )}
+      </ul>
+    </>
+  )
+}

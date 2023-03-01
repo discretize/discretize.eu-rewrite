@@ -14,7 +14,7 @@ import Profession from "./gw2-ui/Profession.astro";
 import Skill from "./gw2-ui/Skill.astro";
 import Trait from "./gw2-ui/Trait.astro";
 import Traits from "./gw2-ui/Traits.astro";
-import Character from "./gw2/Character.astro";
+import Character from "./gw2/character/Character.astro";
 import CharacterWithAr from "./gw2/CharacterWithAr.astro";
 import hr from "./html-components/hr.astro";
 import table from "./html-components/table.astro";

@@ -98,6 +98,113 @@ const COMPONENTS = [
       },
     ],
   },
+  {
+    type: "Character",
+    resolvers: [
+      {
+        target_prop: "data",
+        resolve: (attr) => {
+          const parsed = JSON.parse(attr.gear);
+          const armor = {
+            helm: resolve(items)(parsed.armor.helmId),
+            shoulders: resolve(items)(parsed.armor.shouldersId),
+            coat: resolve(items)(parsed.armor.coatId),
+            gloves: resolve(items)(parsed.armor.glovesId),
+            leggings: resolve(items)(parsed.armor.leggingsId),
+            boots: resolve(items)(parsed.armor.bootsId),
+          };
+
+          const upgrades = {
+            runes: [
+              ...new Set([
+                resolve(items)(parsed.armor.helmRuneId),
+                resolve(items)(parsed.armor.shouldersRuneId),
+                resolve(items)(parsed.armor.coatRuneId),
+                resolve(items)(parsed.armor.glovesRuneId),
+                resolve(items)(parsed.armor.leggingsRuneId),
+                resolve(items)(parsed.armor.bootsRuneId),
+              ]),
+            ].filter((rune) => !!rune),
+            infusions: [
+              ...new Set([
+                resolve(items)(parsed.armor.helmInfusionId),
+                resolve(items)(parsed.armor.shouldersInfusionId),
+                resolve(items)(parsed.armor.coatInfusionId),
+                resolve(items)(parsed.armor.glovesInfusionId),
+                resolve(items)(parsed.armor.leggingsInfusionId),
+                resolve(items)(parsed.armor.bootsInfusionId),
+                resolve(items)(parsed.weapon.weapon1MainInfusion1Id),
+                resolve(items)(parsed.weapon.weapon1MainInfusion2Id),
+                resolve(items)(parsed.weapon.weapon1OffInfusionId),
+                resolve(items)(parsed.weapon.weapon2MainInfusion1Id),
+                resolve(items)(parsed.weapon.weapon2MainInfusion2Id),
+                resolve(items)(parsed.weapon.weapon2OffInfusionId),
+                resolve(items)(parsed.backAndTrinket.backItemInfusion1Id),
+                resolve(items)(parsed.backAndTrinket.backItemInfusion2Id),
+                resolve(items)(parsed.backAndTrinket.accessory1InfusionId),
+                resolve(items)(parsed.backAndTrinket.accessory2InfusionId),
+                resolve(items)(parsed.backAndTrinket.ring1Infusion1Id),
+                resolve(items)(parsed.backAndTrinket.ring1Infusion2Id),
+                resolve(items)(parsed.backAndTrinket.ring1Infusion3Id),
+                resolve(items)(parsed.backAndTrinket.ring2Infusion1Id),
+                resolve(items)(parsed.backAndTrinket.ring2Infusion2Id),
+                resolve(items)(parsed.backAndTrinket.ring2Infusion3Id),
+              ]),
+            ].filter((infusion) => !!infusion),
+            sigils: [
+              ...new Set([
+                resolve(items)(parsed.weapon.weapon1MainSigil1Id),
+                resolve(items)(parsed.weapon.weapon1MainSigil2Id),
+                resolve(items)(parsed.weapon.weapon1OffSigilId),
+                resolve(items)(parsed.weapon.weapon2MainSigil1Id),
+                resolve(items)(parsed.weapon.weapon2MainSigil2Id),
+                resolve(items)(parsed.weapon.weapon2OffSigilId),
+              ]),
+            ].filter((sigil) => !!sigil),
+          };
+
+          const weapon = {
+            weapon1MainData: resolve(items)(parsed.weapon.weapon1MainId),
+            weapon1OffData: resolve(items)(parsed.weapon.weapon1OffId),
+            weapon2MainData: resolve(items)(parsed.weapon.weapon2MainId),
+            weapon2OffData: resolve(items)(parsed.weapon.weapon2OffId),
+          };
+
+          const resolved_skills = {
+            healData: resolve(skills)(parsed.skills.healId),
+            utility1Data: resolve(skills)(parsed.skills.utility1Id),
+            utility2Data: resolve(skills)(parsed.skills.utility2Id),
+            utility3Data: resolve(skills)(parsed.skills.utility3Id),
+            eliteData: resolve(skills)(parsed.skills.eliteId),
+          };
+
+          const backAndTrinket = {
+            backItemData: resolve(items)(parsed.backAndTrinket.backItemId),
+            accessory1Data: resolve(items)(parsed.backAndTrinket.accessory1Id),
+            accessory2Data: resolve(items)(parsed.backAndTrinket.accessory2Id),
+            ring1Data: resolve(items)(parsed.backAndTrinket.ring1Id),
+            ring2Data: resolve(items)(parsed.backAndTrinket.ring2Id),
+            amuletData: resolve(items)(parsed.backAndTrinket.amuletId),
+          };
+
+          const consumables = {
+            foodData: resolve(items)(parsed.consumables.foodId),
+            utilityData: resolve(items)(parsed.consumables.utilityId),
+            infusionData: resolve(items)(parsed.consumables.infusionId),
+          };
+
+          return {
+            armor,
+            upgrades,
+            weapon,
+            skills: resolved_skills,
+            backAndTrinket,
+            consumables,
+          };
+        },
+      },
+    ],
+  },
 ];
 
 export default () => {
