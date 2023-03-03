@@ -1,0 +1,20 @@
+---
+import OverviewPage from "src/components/pages/OverviewPage.astro";
+import Layout from "src/layouts/Layout.astro";
+
+const guides = (
+  await Astro.glob(`../../../discretize-guides/guides/**/*/index.mdx`)
+).map((guide) => {
+  return {
+    title: guide.frontmatter.title,
+    date: guide.frontmatter.date,
+    image: guide.frontmatter.image,
+    slug: guide.file.split("discretize-guides/")[1].replace("/index.mdx", ""),
+    description: guide.frontmatter.description,
+  };
+});
+---
+
+<Layout seo={{ title: "Guides" }} disableBackground>
+  <OverviewPage items={guides} />
+</Layout>

@@ -1,0 +1,47 @@
+---
+interface Props {
+  items: Array<{
+    title: string;
+    image: string;
+    slug: string;
+    date: string;
+    description: string;
+  }>;
+}
+
+const { items } = Astro.props;
+---
+
+<div class="overviewPageWrapper">
+  {
+    items.map((item) => (
+      <a href={item.slug}>
+        <article>
+          <h5>
+            <span>
+              {item.title}
+              <span class="badge">{item.date}</span>
+            </span>
+          </h5>
+          <p>{item.description}</p>
+        </article>
+      </a>
+    ))
+  }
+</div>
+
+<style>
+  .overviewPageWrapper {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .overviewPageWrapper a {
+    width: 100%;
+  }
+  article {
+    width: 100%;
+  }
+  h5 {
+    margin-top: 1rem;
+  }
+</style>
