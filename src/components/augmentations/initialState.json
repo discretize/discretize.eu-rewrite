@@ -1,0 +1,116 @@
+{
+  "daily": {
+    "relics": 594.9238095238095,
+    "pristines": 21,
+    "matrices": 3,
+    "pages": 6
+  },
+  "mistAttunements": [
+    {
+      "id": 298,
+      "name": "Mist Attunement 4",
+      "title": "Fractal God",
+      "relics": 55000,
+      "pristines": 2000,
+      "matrices": 300,
+      "total": {
+        "relics": 160000,
+        "pristines": 3200,
+        "matrices": 750,
+        "journals": 24
+      },
+      "days": 229.59946941665754,
+      "standard": {
+        "daysForRelics": 268.9420013767269,
+        "daysForPristines": 152.38095238095238,
+        "daysForMatrices": 250,
+        "daysForJournals": 112
+      },
+      "convert": {
+        "pristinesToRelics": 1621.5888577498083,
+        "relicsToMatrices": 918.02387625041,
+        "pagesToJournals": 672
+      }
+    },
+    {
+      "id": 296,
+      "name": "Mist Attunement 3",
+      "title": "Fractal Champion",
+      "relics": 45000,
+      "pristines": 0,
+      "matrices": 225,
+      "journals": 16,
+      "total": {
+        "relics": 105000,
+        "pristines": 1200,
+        "matrices": 450,
+        "journals": 24
+      },
+      "days": 135.8747145122523,
+      "standard": {
+        "daysForRelics": 176.49318840347703,
+        "daysForPristines": 57.142857142857146,
+        "daysForMatrices": 150,
+        "daysForJournals": 112
+      },
+      "convert": {
+        "pristinesToRelics": 1653.3690047572982,
+        "relicsToMatrices": 635.6378469486467,
+        "pagesToJournals": 672
+      }
+    },
+    {
+      "id": 297,
+      "name": "Mist Attunement 2",
+      "title": "Fractal Prodigy",
+      "relics": 35000,
+      "pristines": 1200,
+      "matrices": 150,
+      "total": {
+        "relics": 60000,
+        "pristines": 1200,
+        "matrices": 225,
+        "journals": 8
+      },
+      "days": 85.72146281216638,
+      "standard": {
+        "daysForRelics": 100.8532505162726,
+        "daysForPristines": 57.142857142857146,
+        "daysForMatrices": 75,
+        "daysForJournals": 37.333333333333336
+      },
+      "convert": {
+        "pristinesToRelics": 600.150719055494,
+        "relicsToMatrices": 0,
+        "pagesToJournals": 224
+      }
+    },
+    {
+      "id": 299,
+      "name": "Mist Attunement 1",
+      "title": "Fractal Savant",
+      "relics": 25000,
+      "pristines": 0,
+      "matrices": 75,
+      "journals": 8,
+      "total": {
+        "relics": 25000,
+        "pristines": 0,
+        "matrices": 75,
+        "journals": 8
+      },
+      "days": 37.333333333333336,
+      "standard": {
+        "daysForRelics": 42.02218771511358,
+        "daysForPristines": 0,
+        "daysForMatrices": 25,
+        "daysForJournals": 37.333333333333336
+      },
+      "convert": {
+        "pristinesToRelics": 784,
+        "relicsToMatrices": 0,
+        "pagesToJournals": 224
+      }
+    }
+  ]
+}

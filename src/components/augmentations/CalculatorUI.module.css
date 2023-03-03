@@ -1,0 +1,23 @@
+.augSettingButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.augSettingButtons label {
+  margin-left: 0 !important;
+}
+.augSettingButtons label span {
+  font-size: 1.15rem;
+}
+
+.augCalcTextInput {
+  margin-top: 1.2rem !important;
+  margin-bottom: 0 !important;
+}
+.augCalcInputContainer {
+  margin: 4rem;
+  padding: 2rem;
+  border-radius: 1rem;
+  background-color: var(--surface);
+}
