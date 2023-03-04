@@ -3,36 +3,6 @@ import { CalculatorUI } from "src/components/augmentations/CalculatorUI";
 import Layout from "src/layouts/Layout.astro";
 ---
 
-<script>
-  const myWorker = new Worker("src/workers/augmentations/augcalc.js");
-
-  const augCalc = document.getElementById("augCalc");
-  //   augCalc.addEventListener("click", () => {
-  //     myWorker.postMessage({
-  //       relics: 1000,
-  //       pristines: 1000,
-  //       matrices: 1,
-  //       augment: 2,
-  //       journals: 0,
-  //       pages: 0,
-  //       cm100: true,
-  //       cm99: true,
-  //       cm98: true,
-  //       t4s: true,
-  //       recs: true,
-  //       weekly: true,
-  //       convertPots: true,
-  //       extraRelicsEnable: false,
-  //       extraRelicsValue: 0,
-  //     });
-  //   });
-
-  myWorker.onmessage = (e) => {
-    const result = e.data;
-    console.log("Message received from worker", result);
-  };
-</script>
-
 <Layout seo={{ title: "Augmentations Calculator" }}>
   <h1>Augmentations Calculator</h1>
 

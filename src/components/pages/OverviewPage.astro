@@ -20,7 +20,7 @@ const { items } = Astro.props;
       <a href={item.slug}>
         <article class="guidecard">
           <Picture
-            src={item.imageUrl}
+            src={"../../../" + item.imageUrl}
             alt={item.title}
             sizes="(max-width: 600px) 300px, 300px"
             widths={[300]}

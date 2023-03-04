@@ -27,6 +27,7 @@ import TextDivider from "./TextDivider.astro";
 import Video from "./Video.astro";
 import Augmentation from "./gw2-ui/Augmentation.astro";
 import Warning from "./Warning.astro";
+import Label from "./Label.astro";
 
 export const components = {
   hr,
@@ -56,7 +57,7 @@ export const components = {
   Information,
   Instability: MistlockInstability,
   Item,
-  Label: () => undefined,
+  Label,
   Skill,
   Skills: () => undefined,
   SpecialActionKey: () => undefined,
