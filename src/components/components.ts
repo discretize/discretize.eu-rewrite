@@ -25,6 +25,7 @@ import tr from "./html-components/tr.astro";
 import Information from "./Information.astro";
 import TextDivider from "./TextDivider.astro";
 import Video from "./Video.astro";
+import Augmentation from "./gw2-ui/Augmentation.astro";
 import Warning from "./Warning.astro";
 
 export const components = {
@@ -34,6 +35,7 @@ export const components = {
   th,
   tbody,
   table,
+  Augmentation,
   Advanced,
   Attribute,
   Beginner,

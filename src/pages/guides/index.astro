@@ -8,9 +8,12 @@ const guides = (
   return {
     title: guide.frontmatter.title,
     date: guide.frontmatter.date,
-    image: guide.frontmatter.image,
     slug: guide.file.split("discretize-guides/")[1].replace("/index.mdx", ""),
     description: guide.frontmatter.description,
+    imageUrl:
+      "discretize-guides/" +
+      guide.file.split("discretize-guides/")[1].replace("index.mdx", "") +
+      guide.frontmatter.image,
   };
 });
 ---
