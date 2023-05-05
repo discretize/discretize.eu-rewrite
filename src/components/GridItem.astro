@@ -23,6 +23,7 @@ if (typeof xs !== "undefined") {
 } else {
   classNames += " s12";
 }
+// these transformations must be done because beercss doesnt know about sm and md, only m
 if (typeof sm !== "undefined" || typeof md !== "undefined") {
   const sm_i = parseSafeInt(sm);
   const md_i = parseSafeInt(md);

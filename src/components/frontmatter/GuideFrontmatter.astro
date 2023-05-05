@@ -1,4 +1,47 @@
 ---
+import TextDivider from "../TextDivider.astro";
+import Label from "../Label.astro";
+import { Icon } from "astro-icon";
+
+const { title, author, date } = Astro.props;
 ---
 
-<h1>I am a guide frontmatter yey</h1>
+<section>
+  <h1>{title}</h1>
+
+  <div>
+    <Label>
+      <ul>
+        <li>
+          <Icon name="mdi:calendar" height="0.8rem" /><span
+            >{new Date(date).toDateString()}</span
+          >
+        </li>
+        <li><Icon name="mdi:human" height="0.8rem" /><span>{author}</span></li>
+      </ul>
+    </Label>
+  </div>
+</section>
+
+<TextDivider text="Guide" />
+
+<style>
+  h1 {
+    flex-grow: 1;
+  }
+  section {
+    display: flex;
+  }
+  ul {
+    list-style: none;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  ul > :not(:last-child) {
+    margin-bottom: 0.5rem;
+    margin-top: 0;
+  }
+  li span {
+    margin-left: 0.5rem;
+  }
+</style>

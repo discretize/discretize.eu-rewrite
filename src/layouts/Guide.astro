@@ -3,7 +3,7 @@ import GuideFrontmatter from "src/components/frontmatter/GuideFrontmatter.astro"
 import Layout, { SEOProps } from "./Layout.astro";
 
 export interface Props {
-  title: string;
+  frontmatter: {};
 }
 
 const { title } = Astro.props.frontmatter;
@@ -13,6 +13,6 @@ const seo: SEOProps = {
 ---
 
 <Layout seo={seo}>
-  <GuideFrontmatter />
+  <GuideFrontmatter {...Astro.props.frontmatter} />
   <slot />
 </Layout>

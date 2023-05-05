@@ -28,6 +28,7 @@ import Video from "./Video.astro";
 import Augmentation from "./gw2-ui/Augmentation.astro";
 import Warning from "./Warning.astro";
 import Label from "./Label.astro";
+import Image from "./html-components/Image.astro";
 
 export const components = {
   hr,
@@ -54,6 +55,7 @@ export const components = {
   GifPlayer: () => undefined,
   Grid,
   GridItem,
+  Image,
   Information,
   Instability: MistlockInstability,
   Item,
