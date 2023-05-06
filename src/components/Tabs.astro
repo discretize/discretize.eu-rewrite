@@ -1,0 +1,57 @@
+---
+import { ProfessionTypes } from "@gw2-ui/data/professions";
+import Profession from "./gw2-ui/Profession.astro";
+
+interface Props {
+  tabs: Array<{
+    title: string;
+    specialization: ProfessionTypes;
+    id?: string;
+  }>;
+}
+
+const { tabs } = Astro.props;
+
+tabs.forEach((tab, index) => {
+  tabs[index] = {
+    ...tab,
+    id: `#page_${(tab.title || tab.specialization)
+      ?.toLowerCase()
+      .replaceAll(" ", "")
+      .replaceAll(/\/|[^a-zA-Z0-9]+/gm, "")}`,
+  };
+});
+---
+
+<div>
+  <div class="tabs">
+    {
+      tabs.map((tab, index) => (
+        <a data-ui={tab.id} class={index === 0 ? "active" : ""}>
+          {tab.title ? (
+            tab.title
+          ) : (
+            <div class="professionHeader">
+              <Profession
+                name={tab.specialization}
+                disableLink
+                disableText
+                size="medium"
+              />
+              <span>{tab.specialization}</span>
+            </div>
+          )}
+        </a>
+      ))
+    }
+  </div>
+  <slot />
+</div>
+
+<style>
+  .professionHeader {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+</style>

@@ -15,8 +15,11 @@ import Profession from "./gw2-ui/Profession.astro";
 import Skill from "./gw2-ui/Skill.astro";
 import Trait from "./gw2-ui/Trait.astro";
 import Traits from "./gw2-ui/Traits.astro";
+import BuildLink from "./gw2/BuildLink.astro";
 import Character from "./gw2/character/Character.astro";
 import CharacterWithAr from "./gw2/CharacterWithAr.astro";
+import blockquote from "./html-components/blockquote.astro";
+import code from "./html-components/code.astro";
 import hr from "./html-components/hr.astro";
 import Image from "./html-components/Image.astro";
 import MDLink from "./html-components/MDLink.astro";
@@ -27,12 +30,11 @@ import th from "./html-components/th.astro";
 import tr from "./html-components/tr.astro";
 import Information from "./Information.astro";
 import Label from "./Label.astro";
+import Tabs from "./Tabs.astro";
+import Tab from "./Tab.astro";
 import TextDivider from "./TextDivider.astro";
 import Video from "./Video.astro";
 import Warning from "./Warning.astro";
-import code from "./html-components/code.astro";
-import BuildLink from "./gw2/BuildLink.astro";
-import blockquote from "./html-components/blockquote.astro";
 
 export const components = {
   hr,
@@ -71,8 +73,8 @@ export const components = {
   Skills: () => undefined,
   SpecialActionKey: () => undefined,
   Specialization: Profession,
-  Tab: () => undefined,
-  Tabs: () => undefined,
+  Tab,
+  Tabs,
   Trait,
   Traits,
   Uncategorized: () => undefined,

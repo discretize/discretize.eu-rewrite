@@ -19,6 +19,7 @@ import prefetch from "@astrojs/prefetch";
 
 // https://astro.build/config
 import compress from "astro-compress";
+import injectTabs from "./src/utils/remark/inject-tabs";
 
 // https://astro.build/config
 export default defineConfig({
@@ -42,7 +43,12 @@ export default defineConfig({
   integrations: [
     react(),
     mdx({
-      remarkPlugins: [mdxgw2ui, mdxInjectData, remarkInjectCharacterUi],
+      remarkPlugins: [
+        mdxgw2ui,
+        mdxInjectData,
+        remarkInjectCharacterUi,
+        injectTabs,
+      ],
       rehypePlugins: [removeEmptyThead],
       gfm: true,
       extendMarkdownConfig: {},
