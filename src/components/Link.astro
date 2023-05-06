@@ -1,14 +1,24 @@
 ---
+import { Icon } from "astro-icon";
+
 interface Props {
   href: string;
   label?: string;
   className?: string;
   disablePrefetch?: boolean;
+  enableDecoration?: boolean;
 }
 
-const { href, label, className, disablePrefetch = false } = Astro.props;
+const {
+  href,
+  label,
+  className,
+  disablePrefetch = false,
+  enableDecoration = false,
+} = Astro.props;
 
-const isInternal = href.startsWith("http") === false;
+const isInternal = !href.startsWith("http");
+let finalClassName = className || "";
 
 const linkProps = {
   href,
@@ -19,6 +29,28 @@ const linkProps = {
 if (disablePrefetch && isInternal) {
   linkProps.rel = "";
 }
+
+if (enableDecoration) {
+  finalClassName += " primary-text link";
+}
+
+finalClassName = finalClassName.trim();
 ---
 
-<a {...linkProps} aria-label={label} class={className}><slot /></a>
+<a {...linkProps} aria-label={label} class={finalClassName}
+  ><slot />
+  {
+    enableDecoration && !isInternal ? (
+      <Icon name="mdi:link-variant" class="link-decoration-item" size="0.8em" />
+    ) : undefined
+  }
+</a>
+
+<style>
+  .link:hover {
+    text-decoration: underline;
+  }
+  .link-decoration-item {
+    margin-left: 0.2rem;
+  }
+</style>
