@@ -4,19 +4,29 @@ import Layout from "src/layouts/Layout.astro";
 
 const guides = (
   await Astro.glob(`../../../discretize-guides/fractals/**/*/index.mdx`)
-).map((guide) => {
-  return {
-    title: guide.frontmatter.title,
-    date: guide.frontmatter.date,
-    slug:
-      "/" + guide.file.split("discretize-guides/")[1].replace("/index.mdx", ""),
-    description: guide.frontmatter.description,
-    imageUrl:
-      "discretize-guides/" +
-      guide.file.split("discretize-guides/")[1].replace("index.mdx", "") +
-      guide.frontmatter.image,
-  };
-});
+)
+  .map((guide) => {
+    return {
+      title:
+        guide.frontmatter.difficulties.map((diff) => diff.level).join(", ") +
+        " - " +
+        guide.frontmatter.title,
+      date: guide.frontmatter.date,
+      slug:
+        "/" +
+        guide.file.split("discretize-guides/")[1].replace("/index.mdx", ""),
+      description: guide.frontmatter.description,
+      imageUrl:
+        "discretize-guides/" +
+        guide.file.split("discretize-guides/")[1].replace("index.mdx", "") +
+        guide.frontmatter.image,
+      record: guide.frontmatter.record,
+      level: guide.frontmatter.difficulties[0].level,
+    };
+  })
+  .sort((a, b) => {
+    return b.level - a.level;
+  });
 ---
 
 <Layout seo={{ title: "Guides" }} disableBackground>

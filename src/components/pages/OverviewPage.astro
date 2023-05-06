@@ -1,5 +1,8 @@
 ---
 import { Picture } from "@astrojs/image/components";
+import { ProfessionTypes } from "@gw2-ui/data/professions";
+import { Icon } from "astro-icon";
+import Profession from "../gw2-ui/Profession.astro";
 
 interface Props {
   items: Array<{
@@ -8,6 +11,15 @@ interface Props {
     date: string;
     description: string;
     imageUrl: string;
+    record?: {
+      time: string;
+      by: Array<{ name: string; tag: string }>;
+      youtube: Array<{
+        id: string;
+        name: string;
+        specialization: ProfessionTypes;
+      }>;
+    };
   }>;
 }
 
@@ -27,12 +39,39 @@ const { items } = Astro.props;
             aspectRatio="16:9"
           />
           <div class="guideCardRightSide">
-            <h5>{item.title}</h5>
-            <p>{item.description}</p>
+            <div class="headline">
+              <h4>{item.title}</h4>
+              <span class="guideCardDate">
+                <small>{new Date(item.date).toLocaleDateString()}</small>
+              </span>
+            </div>
 
-            <span class="guideCardDate">
-              <small>{new Date(item.date).toLocaleDateString()}</small>
-            </span>
+            <p class="description">{item.description}</p>
+
+            {item.record ? (
+              <span class="guideCardRecord">
+                <Icon
+                  name="mdi:podium-gold"
+                  size="1.2rem"
+                  style={{ marginRight: "0.5rem", color: "gold" }}
+                />{" "}
+                {"  "}
+                <small>
+                  {item.record.time} by{" "}
+                  {item.record.by.map((author, index) => (
+                    <span>
+                      {author.name} [{author.tag}]{" "}
+                      {index < item.record.by.length - 1 ? "," : ""}
+                    </span>
+                  ))}
+                  {item.record.youtube.map(({ specialization }) => (
+                    <Profession name={specialization} disableText />
+                  ))}
+                </small>
+              </span>
+            ) : (
+              ""
+            )}
           </div>
         </article>
       </a>
@@ -66,6 +105,13 @@ const { items } = Astro.props;
     justify-content: flex-end;
     margin-top: 0.5rem;
   }
+
+  .guideCardRecord {
+    color: var(--on-surface);
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.5rem;
+  }
   @media (max-width: 600px) {
     .guidecard {
       flex-direction: column;
@@ -92,5 +138,13 @@ const { items } = Astro.props;
   }
   article:hover {
     border: 1px solid var(--primary);
+  }
+  .headline {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  .description {
+    font-weight: 300;
   }
 </style>
