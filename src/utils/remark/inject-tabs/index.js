@@ -14,9 +14,18 @@ function attrToProps(attr) {
 export default () => {
   return (markdownAST) => {
     let firstTab = false;
+    let uid = 0;
 
     visit(markdownAST, (node) => {
       const componentType = node.name;
+
+      if (componentType === "Tab") {
+        node.attributes.push({
+          type: "mdxJsxAttribute",
+          name: "uid",
+          value: uid.toString(),
+        });
+      }
 
       if (componentType === "Tab" && firstTab) {
         firstTab = false;
@@ -29,6 +38,7 @@ export default () => {
 
       if (componentType === "Tabs") {
         firstTab = true;
+        uid += 1;
         // for every child node, check if its character
         // if it is, insert the title prop into a list of characters
         const tabs = node.children
@@ -59,6 +69,11 @@ export default () => {
             value: JSON.stringify(tabs),
             data,
           },
+        });
+        node.attributes.push({
+          type: "mdxJsxAttribute",
+          name: "uid",
+          value: uid.toString(),
         });
       }
     });

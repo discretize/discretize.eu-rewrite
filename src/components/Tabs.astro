@@ -3,6 +3,7 @@ import { ProfessionTypes } from "@gw2-ui/data/professions";
 import Profession from "./gw2-ui/Profession.astro";
 
 interface Props {
+  uid: string;
   tabs: Array<{
     title: string;
     specialization: ProfessionTypes;
@@ -10,12 +11,12 @@ interface Props {
   }>;
 }
 
-const { tabs } = Astro.props;
+const { tabs, uid } = Astro.props;
 
 tabs.forEach((tab, index) => {
   tabs[index] = {
     ...tab,
-    id: `#page_${(tab.title || tab.specialization)
+    id: `#page_${uid}_${(tab.title || tab.specialization)
       ?.toLowerCase()
       .replaceAll(" ", "")
       .replaceAll(/\/|[^a-zA-Z0-9]+/gm, "")}`,
@@ -23,7 +24,7 @@ tabs.forEach((tab, index) => {
 });
 ---
 
-<div>
+<div class="rootTabs">
   <div class="tabs">
     {
       tabs.map((tab, index) => (
@@ -45,13 +46,42 @@ tabs.forEach((tab, index) => {
       ))
     }
   </div>
-  <slot />
+
+  <div class="content">
+    <slot />
+  </div>
 </div>
 
 <style>
+  .tabs {
+    border: 2px solid rgb(42, 44, 49);
+    background-color: var(--surface);
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 1px -2px,
+      rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;
+    z-index: 1;
+    width: calc(100% - 50px);
+    margin: 0 auto;
+  }
+
   .professionHeader {
     display: flex;
     align-items: center;
     flex-direction: column;
+  }
+  .content {
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 1px -2px inset,
+      rgba(0, 0, 0, 0.14) 0px 2px 2px 0px inset,
+      rgba(0, 0, 0, 0.12) 0px 1px 5px 0px inset;
+    background-color: rgb(42, 44, 49);
+    border-radius: 4px;
+    padding: 0 16px;
+    padding-top: 1.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    position: relative;
+    top: -25px;
+  }
+  .rootTabs {
+    margin-bottom: 1rem;
   }
 </style>

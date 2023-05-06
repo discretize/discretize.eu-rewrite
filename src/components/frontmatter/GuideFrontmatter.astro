@@ -10,7 +10,7 @@ const { title, author, date } = Astro.props;
   <h1>{title}</h1>
 
   <div>
-    <Label>
+    <Label className="additionalPadding">
       <ul>
         <li>
           <Icon name="mdi:calendar" height="0.8rem" /><span
@@ -54,5 +54,8 @@ const { title, author, date } = Astro.props;
   }
   li span {
     margin-left: 0.5rem;
+  }
+  .additionalPadding {
+    padding: 8px !important;
   }
 </style>
