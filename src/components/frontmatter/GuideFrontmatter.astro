@@ -17,7 +17,16 @@ const { title, author, date } = Astro.props;
             >{new Date(date).toDateString()}</span
           >
         </li>
-        <li><Icon name="mdi:human" height="0.8rem" /><span>{author}</span></li>
+        {
+          author && (
+            <li>
+              <>
+                <Icon name="mdi:human" height="0.8rem" />
+                <span>{author}</span>
+              </>
+            </li>
+          )
+        }
       </ul>
     </Label>
   </div>
@@ -37,9 +46,11 @@ const { title, author, date } = Astro.props;
     padding: 0 !important;
     margin: 0 !important;
   }
+  ul > li {
+    margin-top: 0 !important;
+  }
   ul > :not(:last-child) {
     margin-bottom: 0.5rem;
-    margin-top: 0;
   }
   li span {
     margin-left: 0.5rem;

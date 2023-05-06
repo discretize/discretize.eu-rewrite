@@ -5,6 +5,7 @@ import "typeface-muli";
 import backgroundImage from "src/assets/images/backgrounds/lobby.png";
 import NavBar from "../components/navigation/NavBar.astro";
 import { Picture } from "@astrojs/image/components";
+import "./fontSizes.css";
 
 export interface SEOProps {
   title?: string;
@@ -253,11 +254,6 @@ mainClasses.trim();
       .mainWrapper {
         margin-top: 0rem;
       }
-    }
-
-    body {
-      line-height: 1.5;
-      font-size: 1.15rem;
     }
 
     body.dark {
