@@ -1,0 +1,21 @@
+---
+import PROFESSIONS from "@gw2-ui/data/professions";
+import Profession from "../gw2-ui/Profession.astro";
+import Link from "../Link.astro";
+const { build, specialization } = Astro.props;
+
+// Record<ProfessionTypes, EliteSpecTypes[]>
+const profession = Object.entries(PROFESSIONS).find(
+  ([_, specs]) => specs.indexOf(specialization) > -1
+)[0];
+
+const link = `/builds/${profession}/${build.replace(/ /g, "-")}`.toLowerCase();
+---
+
+<Link href={link} className="hoverLink">
+  <div class="tooltip">Go to build</div>
+
+  <Profession name={specialization} disableLink text={build + " 🡢"} />
+</Link>
+
+<style></style>

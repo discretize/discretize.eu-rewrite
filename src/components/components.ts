@@ -31,6 +31,8 @@ import TextDivider from "./TextDivider.astro";
 import Video from "./Video.astro";
 import Warning from "./Warning.astro";
 import code from "./html-components/code.astro";
+import BuildLink from "./gw2/BuildLink.astro";
+import blockquote from "./html-components/blockquote.astro";
 
 export const components = {
   hr,
@@ -38,6 +40,7 @@ export const components = {
   tr,
   th,
   code,
+  blockquote,
   a: MDLink,
   tbody,
   table,
@@ -45,7 +48,7 @@ export const components = {
   Advanced,
   Attribute,
   Beginner,
-  BuildLink: () => undefined,
+  BuildLink,
   Boon,
   Boss: () => undefined,
   Card,

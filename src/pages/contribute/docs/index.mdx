@@ -45,8 +45,8 @@ Special characters like `'`, spaces and capital letters are normalized for the m
 | ----------- | ---------------------------------------- | ----------------- | ---------------------------------------------------- | ------------------------------------------------ |
 | name        | `string`                                 | Item name         | `<Item name="Tin of Fruitcake"/>`                    | <Item name="Tin of Fruitcake"/>                  |
 | affix, type | `string`                                 | Item affix + type | `<Item affix="Berserker" type="Longbow"/>`           | <Item affix="Berserker" type="Longbow" />        |
-| size        | one of `tiny, small, medium, large, big` | Icon size         | `<Item name="Delicious Rice Ball" size="large"/>`    | <Item name="Delicious Rice Ball" size="medium"/> |
-| disableText | `boolean`                                | Disables the text | `<Item affix="Viper" type="Back Item" disableText/>` | <Item affix="Viper" type="Back Item" />          |
+| size        | one of `tiny, small, medium, medium2, large, large2, big` | Icon size         | `<Item name="Delicious Rice Ball" size="large"/>`    | <Item name="Delicious Rice Ball" size="large"/> |
+| disableText | `boolean`                                | Disables the text | `<Item affix="Viper" type="Back Item" disableText/>` | <Item affix="Viper" type="Back Item" disableText/>          |
 | id          | `number`                                 | Item id           | `<Item id="49940"/>`                                 | <Item id="49940"/>                               |
 
 ---
@@ -92,20 +92,6 @@ Note that you can use the `size` and `disableText` parameters with those as well
 | ----------------------------------------------------------------- | --------------------------------------------------------------- |
 | `<Label>Example label</Label>`                                    | <Label>Example label</Label>                                    |
 | `<BuildLink build="Condi Firebrand" specialization="Firebrand"/>` | <BuildLink build="Condi Firebrand" specialization="Firebrand"/> |
-
-### Compositions
-
-Shows a composition with tooltip and link to the meta page. Predefined compositions can be selected starting with an underscore. The size parameter is optional.
-
-Available pregenerated: \_Rainbow, \_Rainbearbow, \_RGB
-
-```
-<Composition name="MAMA Specialized" composition="Soulbeast,Soulbeast,Dragonhunter,Berserker,Renegade" roles="DPS,DPS(frost spirit),Quickness/DPS,CC/Banner/DPS,Alacrity/CC/DPS" size="small"/>
-<Composition name="_Rainbow"/>
-```
-
-<Composition name="MAMASpecialized" composition="Soulbeast,Soulbeast,Dragonhunter,Berserker,Renegade" roles="DPS,DPS(frost spirit),Quickness/DPS,CC/Banner/DPS,Alacrity/CC/DPS" size="small"/>
-<Composition name="_Rainbow"/>
 
 ---
 
