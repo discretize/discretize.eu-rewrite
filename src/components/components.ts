@@ -69,6 +69,7 @@ export const components = {
   Instability: MistlockInstability,
   Item,
   Label,
+  ProfessionVideo: () => undefined,
   Skill,
   Skills: () => undefined,
   SpecialActionKey: () => undefined,

@@ -45,8 +45,23 @@ async function getGuides() {
   return navigationData;
 }
 
+async function getFractals() {
+  // load markdown files and return the frontmatter
+  const fractals = await Astro.glob(
+    "../../../discretize-guides/fractals/**/*.mdx"
+  );
+
+  const navigationData = fractals.map((fractal) => ({
+    title: fractal.frontmatter.title,
+    url: fractal.url.replace("discretize-guides", "").replace("/index.mdx", ""),
+  }));
+
+  return navigationData;
+}
+
 const builds = await getBuilds();
 const guides = await getGuides();
+const fractals = await getFractals();
 ---
 
 <div class="topArea">
@@ -100,9 +115,8 @@ const guides = await getGuides();
     <div class="buttonArea row">
       <NavBuilds builds={builds} />
       <NavDropdown title="Guides" content={guides} slug="/guides" />
-      <Link className="discretizeNavButton" disablePrefetch href="/fractals">
-        Fractals
-      </Link>
+      <Link className="discretizeNavButton" href="/fractals">Fractals</Link>
+
       <Link
         className="discretizeNavButton"
         disablePrefetch
