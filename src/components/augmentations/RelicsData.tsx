@@ -1,5 +1,6 @@
-import { Item } from "@gw2-ui/components";
-import React from "react";
+import { ItemInternal } from "@gw2-ui/components";
+import GW2ApiItem from "gw2-api-extended/types/items/item";
+import component_data from "./component-data.json";
 
 export const MIST_ATTUNEMENTS = [
   {
@@ -38,8 +39,18 @@ export const MIST_ATTUNEMENTS = [
   },
 ];
 
-export const Relic = (props) => <Item id={38022} {...props} />;
-export const Pristine = (props) => <Item id={39078} {...props} />;
-export const Matrix = (props) => <Item id={79230} {...props} />;
-export const Journal = (props) => <Item id={75439} {...props} />;
-export const Page = (props) => <Item id={73834} {...props} />;
+export const Relic = (props) => (
+  <ItemInternal dataItem={component_data["38022"] as GW2ApiItem} {...props} />
+);
+export const Pristine = (props) => (
+  <ItemInternal dataItem={component_data["69862"] as GW2ApiItem} {...props} />
+);
+export const Matrix = (props) => (
+  <ItemInternal dataItem={component_data["79230"] as GW2ApiItem} {...props} />
+);
+export const Page = (props) => (
+  <ItemInternal dataItem={component_data["73834"] as GW2ApiItem} {...props} />
+);
+export const Journal = (props) => (
+  <ItemInternal dataItem={component_data["75439"] as GW2ApiItem} {...props} />
+);
