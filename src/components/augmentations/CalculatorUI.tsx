@@ -3,6 +3,11 @@ import React, { useEffect, useState } from "react";
 import classes from "./CalculatorUI.module.css";
 import { MIST_ATTUNEMENTS } from "./RelicsData";
 import initialState from "./initialState.json";
+import { TextDivider } from "@discretize/react-discretize-components";
+import { Augmentation, Item, ItemInternal } from "@gw2-ui/components";
+import component_data from "./component-data.json";
+import GW2ApiItem from "gw2-api-extended/types/items/item";
+import { AugmentationsTypes } from "@gw2-ui/data/augmentations";
 
 interface Props {}
 
@@ -15,7 +20,7 @@ interface CalculationResult {
   };
   mistAttunements: Array<{
     id: number;
-    name: string;
+    name: AugmentationsTypes;
     title: string;
     days: number;
     matrices: number;
@@ -42,6 +47,22 @@ interface CalculationResult {
   }>;
 }
 
+const Relic = (props) => (
+  <ItemInternal dataItem={component_data["38022"] as GW2ApiItem} {...props} />
+);
+const Pristine = (props) => (
+  <ItemInternal dataItem={component_data["69862"] as GW2ApiItem} {...props} />
+);
+const Matrix = (props) => (
+  <ItemInternal dataItem={component_data["79230"] as GW2ApiItem} {...props} />
+);
+const Page = (props) => (
+  <ItemInternal dataItem={component_data["73834"] as GW2ApiItem} {...props} />
+);
+const Journal = (props) => (
+  <ItemInternal dataItem={component_data["75439"] as GW2ApiItem} {...props} />
+);
+
 export function CalculatorUI(props: Props): React.ReactElement {
   const [state, setState] = useState({
     relics: 0,
@@ -61,10 +82,12 @@ export function CalculatorUI(props: Props): React.ReactElement {
     extraRelicsValue: 0,
   });
   const [webworker, setWebworker] = useState<Worker | null>(null);
-  const [result, setResult] = useState<CalculationResult>(initialState);
+  const [result, setResult] = useState<CalculationResult>(
+    initialState as CalculationResult
+  );
 
   useEffect(() => {
-    const myWorker = new Worker("src/workers/augmentations/augcalc");
+    const myWorker = new Worker("/workers/augmentations/augcalc.worker.js");
     setWebworker(myWorker);
 
     myWorker.onmessage = (e) => {
@@ -159,7 +182,7 @@ export function CalculatorUI(props: Props): React.ReactElement {
 
   return (
     <>
-      <div className="grid large-space">
+      <div className="grid">
         <div className="s12 m6">
           <div className={classes.augCalcInputContainer}>
             <h4>Current account values</h4>
@@ -178,7 +201,7 @@ export function CalculatorUI(props: Props): React.ReactElement {
                   </option>
                 ))}
               </select>
-              <label className="active">Label</label>
+              <label className="active">Mist Attunement Tier</label>
               <i>arrow_drop_down</i>
             </div>
 
@@ -204,38 +227,187 @@ export function CalculatorUI(props: Props): React.ReactElement {
         <div className="s12 m6">
           <div className={classes.augCalcInputContainer}>
             <h4>Dailies</h4>
-            <div className={`field ${classes.augSettingButtons}`}>
+            <ul className={`${classes.augSettingsList}`}>
               {inputs
                 .filter((augInput) => typeof augInput.value === "boolean")
                 .map((input) => (
-                  <label key={input.stateName} className="checkbox">
-                    <input
-                      type="checkbox"
-                      checked={input.value as boolean}
-                      onChange={(e) =>
-                        setState({
-                          ...state,
-                          [input.stateName]: e.target.checked,
-                        })
-                      }
-                    />
-                    <span>{input.label}</span>
-                  </label>
+                  <li key={input.stateName}>
+                    <label className="checkbox">
+                      <input
+                        type="checkbox"
+                        className="large"
+                        checked={input.value as boolean}
+                        onChange={(e) =>
+                          setState({
+                            ...state,
+                            [input.stateName]: e.target.checked,
+                          })
+                        }
+                      />
+                      <span>{input.label}</span>
+                    </label>
+                  </li>
                 ))}
-            </div>
+            </ul>
           </div>
         </div>
       </div>
-
       <button onClick={calculate}>Calculate</button>
+      <TextDivider text="Results" />
+      {result?.mistAttunements.length > 0 && (
+        <article className={classes.resultContainer}>
+          <h5 className={classes.resultHeading}>
+            You will be a Fractal God in{" "}
+            {Math.ceil(result?.mistAttunements[0].days)} days 🎉
+          </h5>
+          <p>
+            Daily earnings:
+            <ul style={{ marginBottom: 0 }}>
+              <li>
+                {Math.ceil(result?.daily.relics)} <Relic />
+              </li>
+              <li>
+                {Math.ceil(result?.daily.pristines)} <Pristine />
+              </li>
+              <li>
+                {Math.ceil(result?.daily.matrices)} <Matrix />
+              </li>
+              <li>
+                {Math.ceil(result?.daily.pages)} <Page />
+              </li>
+            </ul>
+          </p>
+        </article>
+      )}
 
-      {result?.mistAttunements.map((result) => (
-        <div key={result.id}>
-          <h4>{result.name}</h4>
-          <p>{result.title}</p>
-          <p>{result.days}</p>
-        </div>
-      ))}
+      {result?.mistAttunements.length === 0 ? (
+        <article className={classes.resultContainer}>
+          <h5 className={classes.resultHeading}>
+            You already are a Fractal God!
+          </h5>
+        </article>
+      ) : (
+        <>
+          <div style={{ marginBottom: "2rem" }}></div>
+          <table className="medium-space border">
+            <thead>
+              <tr>
+                <th>Attunement</th>
+                <th className={classes.rightAlign}>Tier Cost</th>
+                <th className={classes.rightAlign}>Total Cost</th>
+                <th className={classes.rightAlign}>Normal Duration</th>
+                <th className={classes.rightAlign}>Ideal Conversions</th>
+                <th className={classes.rightAlign}>Ideal Duration</th>
+              </tr>
+            </thead>
+            <tbody>
+              {result?.mistAttunements.map((result) => (
+                <React.Fragment key={result.id}>
+                  <tr>
+                    <td>
+                      <Augmentation name={result.name} />
+                      <br />
+                      {result.title}
+                    </td>
+                    <td className={classes.rightAlign}>
+                      {result.relics} <Relic disableText />
+                      <br />
+                      {result.pristines ? (
+                        <>
+                          {result.pristines} <Pristine disableText />
+                          <br />
+                        </>
+                      ) : undefined}
+                      {result.matrices} <Matrix disableText />
+                      <br />
+                      {result.journals ? (
+                        <>
+                          {result.journals} <Journal disableText />
+                        </>
+                      ) : undefined}
+                    </td>
+
+                    <td className={classes.rightAlign}>
+                      {result.total.relics} <Relic disableText />
+                      <br />
+                      {result.total.pristines ? (
+                        <>
+                          {result.total.pristines} <Pristine disableText />
+                          <br />
+                        </>
+                      ) : undefined}
+                      {result.total.matrices} <Matrix disableText />
+                      <br />
+                      {result.total.journals ? (
+                        <>
+                          {result.total.journals} <Journal disableText />
+                        </>
+                      ) : undefined}
+                    </td>
+
+                    <td className={classes.rightAlign}>
+                      {result.standard.daysForRelics > 0 && (
+                        <>
+                          {Math.ceil(result.standard.daysForRelics)} days for{" "}
+                          <Relic disableText />
+                          <br />
+                        </>
+                      )}
+                      {result.standard.daysForPristines > 0 && (
+                        <>
+                          {Math.ceil(result.standard.daysForPristines)} days for{" "}
+                          <Pristine disableText />
+                          <br />
+                        </>
+                      )}
+                      {result.standard.daysForMatrices > 0 && (
+                        <>
+                          {Math.ceil(result.standard.daysForMatrices)} days for{" "}
+                          <Matrix disableText />
+                          <br />
+                        </>
+                      )}
+                      {result.standard.daysForJournals > 0 && (
+                        <>
+                          {Math.ceil(result.standard.daysForJournals)} days for{" "}
+                          <Journal disableText />
+                        </>
+                      )}
+                    </td>
+
+                    <td className={classes.rightAlign}>
+                      {Math.ceil(result.convert.relicsToMatrices) > 0 && (
+                        <>
+                          {Math.ceil(result.convert.relicsToMatrices)}{" "}
+                          <Relic disableText /> to <Matrix disableText />
+                          <br />
+                        </>
+                      )}
+                      {Math.ceil(result.convert.pristinesToRelics) > 0 && (
+                        <>
+                          {Math.ceil(result.convert.pristinesToRelics)}{" "}
+                          <Pristine disableText /> to <Relic disableText />
+                          <br />
+                        </>
+                      )}
+                      {Math.ceil(result.convert.pagesToJournals) > 0 && (
+                        <>
+                          {Math.ceil(result.convert.pagesToJournals)}{" "}
+                          <Page disableText /> to <Journal disableText />
+                        </>
+                      )}
+                    </td>
+
+                    <td className={`${classes.rightAlign}`}>
+                      {Math.ceil(result.days)} days
+                    </td>
+                  </tr>
+                </React.Fragment>
+              ))}
+            </tbody>
+          </table>
+        </>
+      )}
     </>
   );
 }

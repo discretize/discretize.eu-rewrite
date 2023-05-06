@@ -1,10 +1,14 @@
 ---
+import "@discretize/typeface-menomonia";
+import "@gw2-ui/default_style.css";
+import "discretize-ui/react-discretize-components/src/styles/defaultTheme.css";
 import { CalculatorUI } from "src/components/augmentations/CalculatorUI";
 import Layout from "src/layouts/Layout.astro";
 ---
 
 <Layout seo={{ title: "Augmentations Calculator" }}>
   <h1>Augmentations Calculator</h1>
+  <hr />
 
   <CalculatorUI client:visible />
 </Layout>

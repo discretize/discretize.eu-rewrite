@@ -1,15 +1,16 @@
-.augSettingButtons {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+.augSettingsList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.augSettingsList li {
+  margin-top: 0.8rem;
+}
+.augSettingsList li * {
+  font-size: 1.1rem;
 }
 
-.augSettingButtons label {
-  margin-left: 0 !important;
-}
-.augSettingButtons label span {
-  font-size: 1.15rem;
-}
+
 
 .augCalcTextInput {
   margin-top: 1.2rem !important;
@@ -20,4 +21,31 @@
   padding: 2rem;
   border-radius: 1rem;
   background-color: var(--surface);
+}
+
+@media (max-width: 900px) {
+  .augCalcInputContainer {
+    margin: 1rem;
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .augCalcInputContainer {
+    margin: 0.5rem;
+  }
+}
+
+.resultHeading {
+  margin-bottom: 0;
+  color: var(--primary)
+}
+
+.resultContainer {
+  max-width: 430px;
+  margin: 0 auto;
+}
+
+.rightAlign {
+  text-align: right;
 }

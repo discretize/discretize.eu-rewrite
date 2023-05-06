@@ -1,0 +1,81 @@
+{
+  "38022": {
+    "name": "Fractal Relic",
+    "description": "A small portion of the Mists, magically crystallized.",
+    "type": "Consumable",
+    "level": 0,
+    "rarity": "Fine",
+    "vendor_value": 25,
+    "game_types": ["Activity", "Wvw", "Dungeon", "Pve"],
+    "flags": ["AccountBound", "NoSalvage", "NoSell", "AccountBindOnUse"],
+    "restrictions": [],
+    "id": 38022,
+    "chat_link": "[&AgGGlAAA]",
+    "icon": "https://render.guildwars2.com/file/BA9FEE67BC11A82763097396A9F52438F8392109/526361.png",
+    "details": {
+      "type": "Generic"
+    }
+  },
+  "69862": {
+    "name": "Pristine Fractal Relic",
+    "description": "Double-click to deposit 1 Pristine Fractal Relic in your wallet.",
+    "type": "Consumable",
+    "level": 0,
+    "rarity": "Fine",
+    "vendor_value": 25,
+    "game_types": ["Pvp", "PvpLobby", "Activity", "Wvw", "Dungeon", "Pve"],
+    "flags": ["AccountBound", "NoSalvage", "NoSell", "AccountBindOnUse"],
+    "restrictions": [],
+    "id": 69862,
+    "chat_link": "[&AgHmEAEA]",
+    "icon": "https://render.guildwars2.com/file/130FCE6AF6B704CF5AE554EFC0312AC573555856/526362.png",
+    "details": {
+      "type": "Immediate"
+    }
+  },
+  "79230": {
+    "name": "Integrated Fractal Matrix",
+    "description": "Obtained from vendors in the Mistlock Observatory. Used to purchase rare items.",
+    "type": "Trophy",
+    "level": 0,
+    "rarity": "Ascended",
+    "vendor_value": 1000,
+    "game_types": ["Activity", "Wvw", "Dungeon", "Pve"],
+    "flags": ["AccountBound", "NoSalvage", "NoSell", "AccountBindOnUse"],
+    "restrictions": [],
+    "id": 79230,
+    "chat_link": "[&AgF+NQEA]",
+    "icon": "https://render.guildwars2.com/file/EFB10E0748A8E82B176BD1AFFBF5E2B4C72D06CD/1465514.png"
+  },
+  "73834": {
+    "name": "Fractal Research Page",
+    "description": "Double-click to combine 28 Fractal Research Pages into 1 Fractal Journal. Fractal Journals can be sold to vendors or used in fractal backpack collections.",
+    "type": "Gizmo",
+    "level": 0,
+    "rarity": "Rare",
+    "vendor_value": 0,
+    "game_types": ["Wvw", "Dungeon", "Pve"],
+    "flags": ["AccountBound", "NoSalvage", "NoSell", "AccountBindOnUse"],
+    "restrictions": [],
+    "id": 73834,
+    "chat_link": "[&AgFqIAEA]",
+    "icon": "https://render.guildwars2.com/file/1C990751CCE83D1FD0C690C516C9012EFC1F5C0E/1202365.png",
+    "details": {
+      "type": "Default"
+    }
+  },
+  "75439": {
+    "name": "Fractal Journal",
+    "description": "The accumulation of knowledge from completing Dessa's Daily Recommended Fractals. Her observers inside the fractals would be interested in your findings.",
+    "type": "Trophy",
+    "level": 0,
+    "rarity": "Rare",
+    "vendor_value": 2000,
+    "game_types": ["Wvw", "Dungeon", "Pve"],
+    "flags": ["AccountBound", "NoSalvage", "AccountBindOnUse"],
+    "restrictions": [],
+    "id": 75439,
+    "chat_link": "[&AgGvJgEA]",
+    "icon": "https://render.guildwars2.com/file/B317F008713BA542FBF9B8153FF39E45EBCB5046/1202364.png"
+  }
+}
