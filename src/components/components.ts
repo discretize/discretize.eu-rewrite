@@ -30,12 +30,14 @@ import Label from "./Label.astro";
 import TextDivider from "./TextDivider.astro";
 import Video from "./Video.astro";
 import Warning from "./Warning.astro";
+import code from "./html-components/code.astro";
 
 export const components = {
   hr,
   td,
   tr,
   th,
+  code,
   a: MDLink,
   tbody,
   table,

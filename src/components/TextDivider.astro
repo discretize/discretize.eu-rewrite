@@ -8,7 +8,7 @@ const { text, disableContent = false } = Astro.props;
 ---
 
 <div class="root">
-  <div class="divider"></div>
+  <div class="textdivider"></div>
   {
     !disableContent ? (
       <div class="content">
@@ -16,7 +16,7 @@ const { text, disableContent = false } = Astro.props;
       </div>
     ) : undefined
   }
-  <div class="divider"></div>
+  <div class="textdivider"></div>
 </div>
 
 <style>
@@ -27,7 +27,7 @@ const { text, disableContent = false } = Astro.props;
     justify-content: center;
     margin-bottom: 16px;
   }
-  .divider {
+  .textdivider {
     height: 1px;
     background-color: var(--rdc-color-border);
     flex-grow: 1;
