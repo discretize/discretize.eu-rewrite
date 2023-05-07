@@ -223,7 +223,7 @@ const testState = {
   },
 };
 
-const Component = () => {
+const Component = ({ templates }) => {
   const [result, setResult] = React.useState([]);
   const [forcedSlots, setForcedSlots] = React.useState([
     null,
@@ -270,6 +270,10 @@ const Component = () => {
 
   return (
     <>
+      <h3>Create your own build in case you already own different gear.</h3>
+      <h3>1. Select template</h3>
+
+      <h3>2. Select gear you already own</h3>
       <div className="grid">
         {GEAR_SLOTS.map(({ name }, index) => (
           <div className="s12 m3" key={name}>
