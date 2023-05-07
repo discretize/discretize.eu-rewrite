@@ -22,3 +22,24 @@ h4 {
 h5 {
     font-size: 1.25em;
 }
+
+@media screen and (max-width: 600px) {
+    h1 {
+        font-size: 2.44em;
+    }
+    h2 {
+        font-size: 1.95em;
+    }
+    h3 {
+        font-size: 1.56em;
+    }
+    h4 {
+        font-size: 1.25em;
+    }
+    h5 {
+        font-size: 1em;
+    }
+    body {
+        font-size: 16px;
+    }
+}
