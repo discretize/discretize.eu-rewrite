@@ -42,13 +42,15 @@ const { items } = Astro.props;
             <div class="headline">
               <h4>{item.title}</h4>
               <span class="guideCardDate">
-                <small>{new Date(item.date).toLocaleDateString()}</small>
+                <small>
+                  updated {new Date(item.date).toLocaleDateString()}
+                </small>
               </span>
             </div>
 
             <p class="description">{item.description}</p>
 
-            {item.record ? (
+            {item.record && false ? (
               <span class="guideCardRecord">
                 <Icon
                   name="mdi:podium-gold"
