@@ -1,0 +1,261 @@
+---
+import TextDivider from "../TextDivider.astro";
+import { Icon } from "astro-icon";
+import { Picture } from "@astrojs/image/components";
+import Attribute from "../gw2-ui/Attribute.astro";
+import { Item } from "@gw2-ui/components";
+
+const {
+  title,
+  cycle,
+  sigils,
+  potions,
+  description,
+  date,
+  difficulties,
+  image,
+  long_description,
+} = Astro.props;
+
+// ignore image from frontmatter and force header.jpg
+const images = import.meta.glob(
+  `../../../discretize-guides/fractals/*/images/header.jpg`,
+  { import: "default" }
+);
+
+let headerImage;
+for (const image of Object.keys(images)) {
+  if (image.includes(Astro.url.pathname)) {
+    headerImage = image;
+    break;
+  }
+}
+
+if (!headerImage) {
+  throw new Error(
+    "No header image found for this fractal " +
+      title +
+      " " +
+      Astro.url.pathname +
+      " " +
+      JSON.stringify(images)
+  );
+}
+---
+
+<div class="headerMobile">
+  <h1>{title}</h1>
+
+  <Picture
+    src={headerImage}
+    alt="Header"
+    width={1280}
+    height={500}
+    widths={[550]}
+    aspectRatio={1280 / 500}
+    class="headerImage"
+    sizes="100vw"
+  />
+</div>
+
+<div class="headerImageWrapper">
+  <Picture
+    src={headerImage}
+    alt="Header"
+    width={1280}
+    height={500}
+    widths={[1200, 1920]}
+    aspectRatio={1280 / 500}
+    class="headerImage"
+  />
+
+  <div class="headerImageOverlay">
+    <h1>{difficulties.map((d) => d.level).join(", ")} - {title}</h1>
+    <small>{description}</small>
+  </div>
+
+  <div class="headerImageOverlayCorner">
+    <small>
+      <Icon name="mdi:calendar" height="0.8rem" /> last updated on {
+        new Date(date).toDateString()
+      }
+    </small>
+  </div>
+</div>
+
+<p class="mb-1">
+  {long_description}
+</p>
+
+<TextDivider text="Details" />
+
+<section class="details mb-1">
+  <div class="grid">
+    <div class="m6 s12">
+      <table>
+        <tbody>
+          <tr>
+            <th>Difficulties</th>
+            <td
+              >{
+                difficulties.map((d) => (
+                  <>
+                    Level {d.level} -{" "}
+                    <Attribute
+                      name="Agony Resistance"
+                      text={d.ar + " Agony Resistance"}
+                    />
+                    <br />
+                  </>
+                ))
+              }</td
+            >
+          </tr>
+          <tr>
+            <th>Cycle</th>
+            <td>{cycle}</td>
+          </tr>
+
+          {
+            potions ? (
+              <tr>
+                <th>Potions</th>
+                <td>
+                  <ul>
+                    {potions.map((p) => (
+                      <li>
+                        <Item client:visible id={p.id} />
+                      </li>
+                    ))}
+                  </ul>
+                </td>
+              </tr>
+            ) : null
+          }
+
+          {
+            sigils ? (
+              <tr>
+                <th>Sigils</th>
+                <td>
+                  <ul>
+                    {sigils.map((s) => (
+                      <li>
+                        <Item client:visible id={s.id} />
+                      </li>
+                    ))}
+                  </ul>
+                </td>
+              </tr>
+            ) : null
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<TextDivider text="Guide" />
+
+<style>
+  .details ul {
+    list-style: none;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .details ul > li {
+    margin-top: 0 !important;
+  }
+  .details ul > :not(:last-child) {
+    margin-bottom: 0.1rem;
+  }
+  .details li span {
+    margin-left: 0.5rem;
+  }
+  .additionalPadding {
+    padding: 8px !important;
+  }
+
+  .headerMobile {
+    display: none;
+  }
+
+  @media (max-width: 600px) {
+    .headerMobile {
+      display: block;
+    }
+  }
+
+  .headerImage {
+    width: 100%;
+    height: auto;
+  }
+
+  .headerImageWrapper {
+    position: relative;
+    height: 100%;
+
+    margin-left: -1.4rem;
+    margin-right: -1.4rem;
+    margin-top: -1.4rem;
+
+    margin-bottom: 1rem;
+  }
+
+  @media (max-width: 600px) {
+    .headerImageWrapper {
+      display: none;
+    }
+  }
+
+  .headerImageOverlay {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    max-width: 100%;
+    height: 120px;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+
+    padding: 1rem;
+    background: var(--primary);
+
+    color: var(--on-primary);
+  }
+
+  .headerImageOverlay h1 {
+    margin-bottom: 0;
+    font-weight: 600;
+  }
+
+  .headerImageOverlayCorner {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0.3rem;
+    font-size: 0.9.rem;
+    background: var(--primary);
+    color: var(--on-primary);
+  }
+
+  .mb-1 {
+    margin-bottom: 1rem;
+  }
+  .details th {
+    font-weight: 600;
+  }
+
+  .details tr > td,
+  .details tr > th {
+    border-bottom: 1px solid var(--rdc-color-border);
+    padding: 1rem;
+  }
+
+  .details tbody :last-child > td,
+  .details tbody :last-child > th {
+    border-bottom: none;
+  }
+</style>

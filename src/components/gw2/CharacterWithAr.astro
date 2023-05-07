@@ -16,6 +16,11 @@ characters.forEach((title, index) => {
       .replaceAll(/\/|[^a-zA-Z0-9]+/gm, "")}`,
   };
 });
+
+// read out json templates for peepoptimizer
+const templates = (
+  await Astro.glob("../../assets/data/optimizer-state/ranger/*.json")
+).map((d) => d.default);
 ---
 
 <div id={id}>
@@ -42,7 +47,7 @@ characters.forEach((title, index) => {
   <slot />
 
   <div class="page m l" id="peepoptimizer">
-    <Peepoptimizer client:visible />
+    <Peepoptimizer client:visible templates={templates} />
   </div>
 </div>
 

@@ -35,6 +35,7 @@ import Tab from "./Tab.astro";
 import TextDivider from "./TextDivider.astro";
 import Video from "./Video.astro";
 import Warning from "./Warning.astro";
+import Achievement from "./gw2/Achievement.astro";
 
 export const components = {
   hr,
@@ -46,6 +47,7 @@ export const components = {
   a: MDLink,
   tbody,
   table,
+  Achievement,
   Augmentation,
   Advanced,
   Attribute,

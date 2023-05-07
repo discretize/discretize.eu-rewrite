@@ -1,0 +1,18 @@
+---
+import FractalFrontmatter from "src/components/frontmatter/FractalFrontmatter.astro";
+import Layout, { SEOProps } from "./Layout.astro";
+
+export interface Props {
+  frontmatter: {};
+}
+
+const { title } = Astro.props.frontmatter;
+const seo: SEOProps = {
+  title,
+};
+---
+
+<Layout seo={seo}>
+  <FractalFrontmatter {...Astro.props.frontmatter} />
+  <slot />
+</Layout>

@@ -1,0 +1,28 @@
+---
+import fractalAchievement from "@assets/images/icons/fractalachievement.png";
+import { Image } from "@astrojs/image/components";
+import Card from "../Card.astro";
+
+const { title } = Astro.props;
+---
+
+<Card title={title}>
+  <div class="flex">
+    <Image
+      width={64}
+      height={64}
+      src={fractalAchievement}
+      alt="Fractal Achievement"
+    />
+
+    <slot />
+  </div>
+</Card>
+
+<style>
+  .flex {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+</style>
