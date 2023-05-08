@@ -1,16 +1,13 @@
-export default async function imageFetch(
-  pathname: string,
-  type: "fractals" | "guides"
-) {
+export default async function imageFetch(pathname: string) {
   // ignore image from frontmatter and force header.jpg
   const images = import.meta.glob(
     `../../../discretize-guides/*/*/images/header.jpg`,
     { import: "default" }
   );
-
+  console.log(images);
   let headerImage;
   for (const image of Object.keys(images)) {
-    if (image.includes(`/${type}/`) && image.includes(pathname)) {
+    if (image.includes(pathname)) {
       headerImage = image;
       break;
     }
@@ -18,8 +15,7 @@ export default async function imageFetch(
 
   if (!headerImage) {
     throw new Error(
-      "No header image found for this fractal " +
-        type +
+      "No header image found for this content: " +
         " " +
         pathname +
         " " +
