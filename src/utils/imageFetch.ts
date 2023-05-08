@@ -1,10 +1,14 @@
 export default async function imageFetch(pathname: string) {
   // ignore image from frontmatter and force header.jpg
-  const images = import.meta.glob(
-    `../../../discretize-guides/*/*/images/header.jpg`,
+  const fractalImages = import.meta.glob(
+    `../../../discretize-guides/fractals/*/images/header.jpg`,
     { import: "default" }
   );
-  console.log(images);
+  const guideImages = import.meta.glob(
+    `../../../discretize-guides/guides/*/images/header.jpg`,
+    { import: "default" }
+  );
+  const images = { ...fractalImages, ...guideImages };
   let headerImage;
   for (const image of Object.keys(images)) {
     if (image.includes(pathname)) {
