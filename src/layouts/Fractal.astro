@@ -2,6 +2,7 @@
 import FractalFrontmatter from "src/components/frontmatter/FractalFrontmatter.astro";
 import Layout, { SEOProps } from "./Layout.astro";
 import type { Props as FractalProps } from "src/components/frontmatter/FractalFrontmatter.astro";
+import { getImage } from "@astrojs/image";
 
 export interface Props {
   frontmatter: FractalProps;
@@ -12,8 +13,36 @@ export interface Props {
   }[];
 }
 const { title } = Astro.props.frontmatter;
+
+// ignore image from frontmatter and force header.jpg
+const images = import.meta.glob(
+  `../../../discretize-guides/fractals/*/images/header.jpg`,
+  { import: "default" }
+);
+
+let headerImage;
+for (const image of Object.keys(images)) {
+  if (image.includes(Astro.url.pathname)) {
+    headerImage = image;
+    break;
+  }
+}
+if (!headerImage) {
+  throw new Error("No header image found");
+}
+
+const ogImage = await getImage({
+  src: headerImage,
+  height: 512,
+  width: 512,
+  format: "jpeg",
+  alt: "OG Image",
+});
+
 const seo: SEOProps = {
   title,
+  description: Astro.props.frontmatter.long_description || undefined,
+  image: import.meta.env.CF_PAGES_URL + ogImage?.src || undefined,
 };
 ---
 
