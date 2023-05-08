@@ -7,6 +7,25 @@ const { src, caption, ...attrs } = Astro.props;
 const formats: OutputFormat[] = ["avif", "webp", "jpeg"];
 ---
 
+<script>
+  let isEnhanced = false;
+
+  // attach on click listener to image
+
+  for (const img of document.querySelectorAll("img")) {
+    img.addEventListener("click", () => {
+      if (isEnhanced) {
+        img.classList.remove("maximized");
+        document.body.style.overflow = "auto";
+      } else {
+        img.classList.add("maximized");
+        document.body.style.overflow = "hidden";
+      }
+      isEnhanced = !isEnhanced;
+    });
+  }
+</script>
+
 <figure>
   <span class="imgWrapper">
     <Picture
@@ -48,5 +67,25 @@ const formats: OutputFormat[] = ["avif", "webp", "jpeg"];
     margin-left: auto;
     margin-right: auto;
     max-width: 627px;
+  }
+
+  img {
+    transition: transform 0.25s ease;
+    cursor: zoom-in;
+  }
+
+  .maximized {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+
+    object-fit: contain;
+    object-position: center;
+    z-index: 1000;
+    cursor: zoom-out;
+
+    background-color: rgba(0, 0, 0, 0.5);
   }
 </style>
