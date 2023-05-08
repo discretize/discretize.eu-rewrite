@@ -15,12 +15,27 @@ export interface Props {
 }
 const { title } = Astro.props.frontmatter;
 
-const images = Object.keys(
-  import.meta.glob(`../../../discretize-guides/fractals/*/images/header.jpg`, {
-    import: "default",
-  })
+// const images = Object.keys(
+//   import.meta.glob(`../../../discretize-guides/fractals/*/images/header.jpg`, {
+//     import: "default",
+//   })
+// );
+// const headerImage = await imageFetch(images, Astro.url.pathname);
+// ignore image from frontmatter and force header.jpg
+const images = import.meta.glob(
+  `../../../discretize-guides/fractals/*/images/header.jpg`,
+  { import: "default" }
 );
-const headerImage = await imageFetch(images, Astro.url.pathname);
+let headerImage;
+for (const image of Object.keys(images)) {
+  if (image.includes(Astro.url.pathname)) {
+    headerImage = image;
+    break;
+  }
+}
+if (!headerImage) {
+  throw new Error("No header image found");
+}
 
 const ogImage = await getImage({
   src: headerImage,
