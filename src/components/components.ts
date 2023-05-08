@@ -1,6 +1,7 @@
 import Advanced from "./Advanced.astro";
 import Beginner from "./Beginner.astro";
 import Card from "./Card.astro";
+import GifPlayer from "./GifPlayer.astro";
 import Grid from "./Grid.astro";
 import GridItem from "./GridItem.astro";
 import Attribute from "./gw2-ui/Attribute.astro";
@@ -15,6 +16,7 @@ import Profession from "./gw2-ui/Profession.astro";
 import Skill from "./gw2-ui/Skill.astro";
 import Trait from "./gw2-ui/Trait.astro";
 import Traits from "./gw2-ui/Traits.astro";
+import Achievement from "./gw2/Achievement.astro";
 import BuildLink from "./gw2/BuildLink.astro";
 import Character from "./gw2/character/Character.astro";
 import CharacterWithAr from "./gw2/CharacterWithAr.astro";
@@ -30,12 +32,11 @@ import th from "./html-components/th.astro";
 import tr from "./html-components/tr.astro";
 import Information from "./Information.astro";
 import Label from "./Label.astro";
-import Tabs from "./Tabs.astro";
 import Tab from "./Tab.astro";
+import Tabs from "./Tabs.astro";
 import TextDivider from "./TextDivider.astro";
 import Video from "./Video.astro";
 import Warning from "./Warning.astro";
-import Achievement from "./gw2/Achievement.astro";
 
 export const components = {
   hr,
@@ -63,7 +64,7 @@ export const components = {
   Control: ControlEffect,
   Divider: TextDivider,
   Effect: CommonEffect,
-  GifPlayer: () => undefined,
+  GifPlayer,
   Grid,
   GridItem,
   Image,

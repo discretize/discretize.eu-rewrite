@@ -1,0 +1,87 @@
+---
+import { Icon } from "astro-icon";
+const { caption, url } = Astro.props;
+---
+
+<div class="videoWrapper">
+  <script>
+    async function play(video: HTMLVideoElement) {
+      await video.play();
+      let playButton = video.parentElement.children[0];
+      if (playButton instanceof HTMLElement) {
+        playButton.style.display = "none";
+      }
+    }
+
+    async function pause(video: HTMLVideoElement) {
+      await video.pause();
+      let playButton = video.parentElement.children[0];
+      if (playButton instanceof HTMLElement) {
+        playButton.style.display = "block";
+      }
+    }
+
+    for (let tupel of document.querySelectorAll<HTMLVideoElement>("video")) {
+      tupel.addEventListener(
+        "mouseover",
+        async (e) => e.target instanceof HTMLVideoElement && play(e.target),
+        false
+      );
+      tupel.addEventListener(
+        "mouseout",
+        (e) => e.target instanceof HTMLVideoElement && pause(e.target),
+        false
+      );
+      tupel.addEventListener(
+        "click",
+        (e) => {
+          if (e.target instanceof HTMLVideoElement) {
+            if (e.target.paused) {
+              play(e.target);
+            } else {
+              pause(e.target);
+            }
+          }
+        },
+        false
+      );
+    }
+  </script>
+
+  <div class="playButton">
+    <Icon name="mdi:play-circle-outline" size="4rem" class="playButtonIcon" />
+  </div>
+
+  <video loop preload="auto">
+    <source src={url} type="video/webm" />
+    <caption>{{ caption }}</caption>
+  </video>
+</div>
+
+<style>
+  video {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+  }
+  .videoWrapper {
+    position: relative;
+    padding-bottom: 56.25%;
+    /* 16:9 */
+    padding-top: 25px;
+    height: 0;
+  }
+
+  .playButton {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    z-index: 1;
+  }
+
+  .playButtonIcon {
+    color: var(--primary-dark);
+  }
+</style>
