@@ -4,6 +4,25 @@ import { Icon } from "astro-icon";
 import { Picture } from "@astrojs/image/components";
 import Attribute from "../gw2-ui/Attribute.astro";
 import { Item } from "@gw2-ui/components";
+import { TOC } from "astro-toc";
+import Card from "../Card.astro";
+
+export interface Props {
+  title: string;
+  cycle: string;
+  sigils: { id: number }[];
+  potions: { id: number }[];
+  description: string;
+  date: string;
+  difficulties: { level: number; ar: number }[];
+  image: string;
+  long_description: string;
+  headings: {
+    depth: number;
+    slug: string;
+    text: string;
+  }[];
+}
 
 const {
   title,
@@ -15,6 +34,7 @@ const {
   difficulties,
   image,
   long_description,
+  headings,
 } = Astro.props;
 
 // ignore image from frontmatter and force header.jpg
@@ -91,7 +111,7 @@ if (!headerImage) {
 
 <section class="details mb-1">
   <div class="grid">
-    <div class="m6 s12">
+    <div class="l6 m6 s12">
       <table>
         <tbody>
           <tr>
@@ -151,6 +171,19 @@ if (!headerImage) {
           }
         </tbody>
       </table>
+    </div>
+    <div class="l6 m6 s12 toc">
+      <Card title="Table of contents">
+        <TOC
+          toc={headings.map((heading) => ({
+            title: heading.text,
+            url: "#" + heading.slug,
+            depth: heading.depth - 1,
+          }))}
+          maxDepth={2}
+          as="number"
+        />
+      </Card>
     </div>
   </div>
 </section>
@@ -257,5 +290,16 @@ if (!headerImage) {
   .details tbody :last-child > td,
   .details tbody :last-child > th {
     border-bottom: none;
+  }
+
+  .toc {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+
+  @media (max-width: 600px) {
+    .toc {
+      display: block;
+    }
   }
 </style>

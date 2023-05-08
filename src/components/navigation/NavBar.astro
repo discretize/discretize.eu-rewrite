@@ -100,6 +100,13 @@ const fractals = await getFractals();
             <Link className="row wave" disablePrefetch href="/augmentations">
               Augmentations Calc
             </Link>
+            <Link
+              className="row wave"
+              disablePrefetch
+              href="https://optimizer.discretize.eu"
+            >
+              Optimizer
+            </Link>
           </div>
         </nav>
 
@@ -115,7 +122,9 @@ const fractals = await getFractals();
     <div class="buttonArea row">
       <NavBuilds builds={builds} />
       <NavDropdown title="Guides" content={guides} slug="/guides" />
-      <Link className="discretizeNavButton" href="/fractals">Fractals</Link>
+      <Link className="discretizeNavButton" disablePrefetch href="/fractals">
+        Fractals
+      </Link>
 
       <Link
         className="discretizeNavButton"
@@ -123,6 +132,14 @@ const fractals = await getFractals();
         href="/augmentations"
       >
         Augmentations Calc
+      </Link>
+
+      <Link
+        className="discretizeNavButton"
+        disablePrefetch
+        href="https://optimizer.discretize.eu"
+      >
+        Optimizer
       </Link>
       <div class="max"></div>
 

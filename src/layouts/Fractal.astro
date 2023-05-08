@@ -1,11 +1,16 @@
 ---
 import FractalFrontmatter from "src/components/frontmatter/FractalFrontmatter.astro";
 import Layout, { SEOProps } from "./Layout.astro";
+import type { Props as FractalProps } from "src/components/frontmatter/FractalFrontmatter.astro";
 
 export interface Props {
-  frontmatter: {};
+  frontmatter: FractalProps;
+  headings: {
+    depth: number;
+    slug: string;
+    text: string;
+  }[];
 }
-
 const { title } = Astro.props.frontmatter;
 const seo: SEOProps = {
   title,
@@ -13,6 +18,9 @@ const seo: SEOProps = {
 ---
 
 <Layout seo={seo}>
-  <FractalFrontmatter {...Astro.props.frontmatter} />
+  <FractalFrontmatter
+    {...Astro.props.frontmatter}
+    headings={Astro.props.headings}
+  />
   <slot />
 </Layout>

@@ -1,0 +1,15 @@
+---
+export interface Props {
+  headings: {
+    depth: number;
+    slug: string;
+    text: string;
+  }[];
+}
+
+const { headings } = Astro.props;
+---
+
+<ol>
+  {headings.map(({ depth, slug, text }) => <li />)}
+</ol>
