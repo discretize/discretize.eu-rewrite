@@ -37,7 +37,12 @@ const {
   headings,
 } = Astro.props;
 
-const headerImage = await imageFetch(Astro.url.pathname, "fractals");
+const images = Object.keys(
+  import.meta.glob(`../../../discretize-guides/fractals/*/images/header.jpg`, {
+    import: "default",
+  })
+);
+const headerImage = await imageFetch(images, Astro.url.pathname);
 ---
 
 <Header
