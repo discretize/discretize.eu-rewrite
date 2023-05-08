@@ -15,41 +15,36 @@ export interface Props {
 }
 const { title } = Astro.props.frontmatter;
 
-// const images = Object.keys(
-//   import.meta.glob(`../../../discretize-guides/fractals/*/images/header.jpg`, {
-//     import: "default",
-//   })
-// );
-// const headerImage = await imageFetch(images, Astro.url.pathname);
-// ignore image from frontmatter and force header.jpg
-const images = import.meta.glob(
-  `../../../discretize-guides/fractals/*/images/header.jpg`,
-  { import: "default" }
-);
-let headerImage;
-for (const image of Object.keys(images)) {
-  if (image.includes(Astro.url.pathname)) {
-    headerImage = image;
-    break;
+const rawImages = import.meta.glob(
+  `../../discretize-guides/fractals/*/images/header.jpg`,
+  {
+    import: "default",
   }
-}
-if (!headerImage) {
-  throw new Error("No header image found");
-}
+);
+const images = Object.keys({ ...rawImages });
+const headerImage = await imageFetch(images, Astro.url.pathname);
 
-const ogImage = await getImage({
-  src: headerImage,
-  height: 512,
-  width: 512,
-  format: "jpeg",
-  alt: "OG Image",
-});
+let seo: SEOProps = { title };
 
-const seo: SEOProps = {
-  title,
-  description: Astro.props.frontmatter.long_description || undefined,
-  image: import.meta.env.CF_PAGES_URL + ogImage?.src || undefined,
-};
+if (headerImage) {
+  const thumbnail = (await Object.entries(rawImages).find(
+    ([k, v]) => k === headerImage
+  )[1]()) as ImageMetadata;
+
+  const ogImage = await getImage({
+    src: thumbnail.src,
+    height: 512,
+    width: 512,
+    format: "jpeg",
+    alt: "OG Image",
+  });
+
+  seo = {
+    title,
+    description: Astro.props.frontmatter.long_description || undefined,
+    image: import.meta.env.CF_PAGES_URL + ogImage?.src,
+  };
+}
 ---
 
 <Layout seo={seo}>

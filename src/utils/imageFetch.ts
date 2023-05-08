@@ -8,7 +8,7 @@ export default async function imageFetch(images: string[], pathname: string) {
   }
 
   if (!headerImage) {
-    throw new Error(
+    console.warn(
       "No header image found for this content: " +
         " " +
         pathname +

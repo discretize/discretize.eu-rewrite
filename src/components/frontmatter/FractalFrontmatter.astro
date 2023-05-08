@@ -37,34 +37,12 @@ const {
   headings,
 } = Astro.props;
 
-// const images = Object.keys(
-//   import.meta.glob(`../../../discretize-guides/fractals/*/images/header.jpg`, {
-//     import: "default",
-//   })
-// );
-// const headerImage = await imageFetch(images, Astro.url.pathname);
-
-const images = import.meta.glob(
-  `../../../discretize-guides/fractals/*/images/header.jpg`,
-  { import: "default" }
+const images = Object.keys(
+  import.meta.glob(`../../../discretize-guides/fractals/*/images/header.jpg`, {
+    import: "default",
+  })
 );
-let headerImage;
-for (const image of Object.keys(images)) {
-  if (image.includes(Astro.url.pathname)) {
-    headerImage = image;
-    break;
-  }
-}
-if (!headerImage) {
-  throw new Error(
-    "No header image found for this fractal " +
-      title +
-      " " +
-      Astro.url.pathname +
-      " " +
-      JSON.stringify(images)
-  );
-}
+const headerImage = await imageFetch(images, Astro.url.pathname);
 ---
 
 <Header
