@@ -6,6 +6,8 @@ import Attribute from "../gw2-ui/Attribute.astro";
 import { Item } from "@gw2-ui/components";
 import { TOC } from "astro-toc";
 import Card from "../Card.astro";
+import Header from "./Header.astro";
+import imageFetch from "src/utils/imageFetch";
 
 export interface Props {
   title: string;
@@ -37,71 +39,15 @@ const {
   headings,
 } = Astro.props;
 
-// ignore image from frontmatter and force header.jpg
-const images = import.meta.glob(
-  `../../../discretize-guides/fractals/*/images/header.jpg`,
-  { import: "default" }
-);
-
-let headerImage;
-for (const image of Object.keys(images)) {
-  if (image.includes(Astro.url.pathname)) {
-    headerImage = image;
-    break;
-  }
-}
-
-if (!headerImage) {
-  throw new Error(
-    "No header image found for this fractal " +
-      title +
-      " " +
-      Astro.url.pathname +
-      " " +
-      JSON.stringify(images)
-  );
-}
+const headerImage = await imageFetch(Astro.url.pathname, "fractals");
 ---
 
-<div class="headerMobile">
-  <h1>{title}</h1>
-
-  <Picture
-    src={headerImage}
-    alt="Header"
-    width={1280}
-    height={500}
-    widths={[550]}
-    aspectRatio={1280 / 500}
-    class="headerImage"
-    sizes="100vw"
-  />
-</div>
-
-<div class="headerImageWrapper">
-  <Picture
-    src={headerImage}
-    alt="Header"
-    width={1280}
-    height={500}
-    widths={[1200, 1920]}
-    aspectRatio={1280 / 500}
-    class="headerImage"
-  />
-
-  <div class="headerImageOverlay">
-    <h1>{difficulties.map((d) => d.level).join(", ")} - {title}</h1>
-    <small>{description}</small>
-  </div>
-
-  <div class="headerImageOverlayCorner">
-    <small>
-      <Icon name="mdi:calendar" height="0.8rem" /> last updated on {
-        new Date(date).toDateString()
-      }
-    </small>
-  </div>
-</div>
+<Header
+  title={difficulties.map((d) => d.level).join(", ") + " " + title}
+  description={description}
+  date={date}
+  image={headerImage}
+/>
 
 <p class="mb-1">
   {long_description}
@@ -207,71 +153,6 @@ if (!headerImage) {
   }
   .additionalPadding {
     padding: 8px !important;
-  }
-
-  .headerMobile {
-    display: none;
-  }
-
-  @media (max-width: 600px) {
-    .headerMobile {
-      display: block;
-    }
-  }
-
-  .headerImage {
-    width: 100%;
-    height: auto;
-  }
-
-  .headerImageWrapper {
-    position: relative;
-    height: 100%;
-
-    margin-left: -1.4rem;
-    margin-right: -1.4rem;
-    margin-top: -1.4rem;
-
-    margin-bottom: 1rem;
-  }
-
-  @media (max-width: 600px) {
-    .headerImageWrapper {
-      display: none;
-    }
-  }
-
-  .headerImageOverlay {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    max-width: 100%;
-    height: 120px;
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: flex-start;
-
-    padding: 1rem;
-    background: var(--primary);
-
-    color: var(--on-primary);
-  }
-
-  .headerImageOverlay h1 {
-    margin-bottom: 0;
-    font-weight: 600;
-  }
-
-  .headerImageOverlayCorner {
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 0.3rem;
-    font-size: 0.9.rem;
-    background: var(--primary);
-    color: var(--on-primary);
   }
 
   .mb-1 {
