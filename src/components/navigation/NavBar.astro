@@ -7,6 +7,7 @@ import type { EliteSpecTypes, ProfessionTypes } from "@gw2-ui/data/professions";
 import Discord from "../../icons/discord.astro";
 import { Icon } from "astro-icon";
 import Link from "../Link.astro";
+import { BACKGROUND, BORDER, TEXT } from "src/styles";
 
 async function getBuilds() {
   // load markdown files and return the frontmatter
@@ -45,81 +46,95 @@ async function getGuides() {
   return navigationData;
 }
 
-async function getFractals() {
-  // load markdown files and return the frontmatter
-  const fractals = await Astro.glob(
-    "../../../discretize-guides/fractals/**/*.mdx"
-  );
-
-  const navigationData = fractals.map((fractal) => ({
-    title: fractal.frontmatter.title,
-    url: fractal.url.replace("discretize-guides", "").replace("/index.mdx", ""),
-  }));
-
-  return navigationData;
-}
-
 const builds = await getBuilds();
 const guides = await getGuides();
-const fractals = await getFractals();
 ---
 
-<div class="topArea">
-  <div class="topButtonArea row">
-    <Link href="/" label="Home"><Discretize className="discretizeLogo" /></Link>
-    <div class="max"></div>
+<script>
+  const button = document.querySelector("#toggleMobileNav");
+  const overlay = document.querySelector("#overlay");
+  const drawer = document.querySelector("#mobileDrawer");
 
-    <div class="l">
+  button.addEventListener("click", () => {
+    drawer.classList.toggle("hidden");
+
+    overlay.classList.toggle("hidden");
+  });
+
+  overlay.addEventListener("click", () => {
+    drawer.classList.toggle("hidden");
+
+    overlay.classList.toggle("hidden");
+  });
+</script>
+
+<div class="topArea bg-sky-50 dark:bg-zinc-900">
+  <div class="topButtonArea flex items-center justify-between">
+    <Link href="/" label="Home">
+      <Discretize className="h-12" />
+    </Link>
+
+    <div class="max-md:hidden">
       <DarkModeSwitch />
     </div>
-
-    <div class="s m">
-      <button
-        data-ui="#modal"
-        class="transparent circle large"
-        aria-label="Menu"
-        ><i><Icon name="mdi:menu" /></i>
-      </button>
-
-      <div class="modal left" id="modal">
-        <Link href="/" label="Home">
-          <Discretize className="discretizeLogo" />
-        </Link>
-
-        <nav class="navMobile">
-          <div>
-            <Link className="row wave" disablePrefetch href="/builds">
-              Builds
-            </Link>
-            <Link className="row wave" disablePrefetch href="/guides">
-              Guides
-            </Link>
-            <Link className="row wave" disablePrefetch href="/fractals">
-              Fractals
-            </Link>
-            <Link className="row wave" disablePrefetch href="/augmentations">
-              Augmentations Calc
-            </Link>
-            <Link
-              className="row wave"
-              disablePrefetch
-              href="https://optimizer.discretize.eu"
-            >
-              Optimizer
-            </Link>
-          </div>
-        </nav>
-
-        <div class="mobileDarkMode">
-          <DarkModeSwitch />
-        </div>
-      </div>
-    </div>
+    <button id="toggleMobileNav" class="rounded md:hidden hamburgerButton">
+      <Icon name="mdi:menu" size="2rem" />
+    </button>
   </div>
 </div>
-<nav class="nav l">
-  <div class="lowerArea">
-    <div class="buttonArea row">
+
+<div
+  id="overlay"
+  class="hidden z-10 top-0 fixed right-auto bottom-auto top-0 left-0 w-full h-full opacity-50 bg-black dark:bg-black-900"
+>
+</div>
+<div
+  id="mobileDrawer"
+  class={`${BACKGROUND} drawer hidden right-auto bottom-auto top-0 left-0 fixed inset w-[300px] h-full z-50 overflow-x-hidden p-4`}
+>
+  <div class="flex justify-between items-center flex-col gap-4">
+    <Link href="/" label="Home">
+      <Discretize className="h-12" />
+    </Link>
+
+    <Link className="discretizeNavButton" disablePrefetch href="/builds">
+      Builds
+    </Link>
+
+    <Link className="discretizeNavButton" disablePrefetch href="/guides">
+      Guides
+    </Link>
+
+    <Link className="discretizeNavButton" disablePrefetch href="/fractals">
+      Fractals
+    </Link>
+
+    <Link className="discretizeNavButton" disablePrefetch href="/augmentations">
+      Augmentations Calc
+    </Link>
+
+    <Link
+      href="https://discord.gg/TGrhn8qjYT"
+      disablePrefetch
+      label="Discord Link"
+    >
+      <button
+        class={`rounded-full ${BORDER} p-[2px] border-[0.0626rem] p-0 w-10 h-10 mx-2`}
+        aria-label="Discord Link"
+      >
+        <Discord className="w-8 h-8" />
+      </button>
+    </Link>
+
+    <DarkModeSwitch />
+  </div>
+</div>
+
+<nav
+  class=`shadow z-10 top-0 mt-0 sticky bg-stone-100 dark:bg-zinc-800 max-md:hidden`
+>
+  <div class="lowerArea border-t-4 border-blue-500">
+    <div class={`buttonArea flex items-center ${TEXT} max-h-[40px]`}>
       <NavBuilds builds={builds} />
       <NavDropdown title="Guides" content={guides} slug="/guides" />
       <Link className="discretizeNavButton" disablePrefetch href="/fractals">
@@ -135,17 +150,23 @@ const fractals = await getFractals();
       </Link>
 
       <Link
-        className="discretizeNavButton"
+        className="discretizeNavButton flex-grow"
         disablePrefetch
         href="https://optimizer.discretize.eu"
       >
         Optimizer
       </Link>
-      <div class="max"></div>
 
-      <Link href="https://discord.gg/TGrhn8qjYT" label="Discord Link">
-        <button class="border circle" aria-label="Discord Link">
-          <Discord className="discordIcon" />
+      <Link
+        href="https://discord.gg/TGrhn8qjYT"
+        disablePrefetch
+        label="Discord Link"
+      >
+        <button
+          class={`rounded-full ${BORDER} p-[2px] border-[0.0626rem] p-0 w-10 h-10 mx-2`}
+          aria-label="Discord Link"
+        >
+          <Discord className="w-8 h-8" />
         </button>
       </Link>
     </div>
@@ -153,29 +174,16 @@ const fractals = await getFractals();
 </nav>
 
 <style>
-  .nav {
-    position: sticky;
-    margin-top: 0 !important;
-    top: 0px;
-
-    background-color: var(--surface);
-    z-index: 10;
-    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 15%);
+  .drawer {
+    transition: left 0.5s cubic-bezier(0.82, 0.085, 0.395, 0.895);
   }
+
   :global(.discretizeNavButton) {
     font-weight: 500;
     font-size: 1.3rem;
     font-family: Muli;
   }
-  .navMobile {
-    margin-bottom: 2rem;
-  }
-  .mobileDarkMode {
-    display: flex;
-  }
-  .topArea {
-    background-color: var(--surface-variant);
-  }
+
   .topButtonArea {
     max-height: 4rem;
     padding: 2rem 0rem;
@@ -194,7 +202,6 @@ const fractals = await getFractals();
     margin: 0 auto;
   }
   .lowerArea {
-    border: 5px solid var(--primary);
     border-left: 0px;
     border-right: 0px;
     border-bottom: 0px;
@@ -203,13 +210,5 @@ const fractals = await getFractals();
     padding-top: 0.7rem;
     padding-bottom: 0.7rem;
     width: 100%;
-  }
-
-  .discordIcon {
-    width: 2rem;
-    height: 2rem;
-  }
-  .discretizeLogo {
-    height: 3rem;
   }
 </style>

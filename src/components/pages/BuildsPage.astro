@@ -8,6 +8,7 @@ import TextDivider from "src/components/TextDivider.astro";
 import Label from "src/components/Label.astro";
 import type { ProfessionTypes } from "@gw2-ui/data/professions";
 import { Icon } from "astro-icon";
+import Tooltip from "../Tooltip.astro";
 
 interface Props {
   professions: ProfessionTypes[];
@@ -56,19 +57,18 @@ const seo: SEOProps = {
   const archivedBuilds =
     document.querySelectorAll<HTMLAnchorElement>(".archive");
   const buildsSections = document.querySelectorAll<HTMLDivElement>(".builds");
-  const allButtons =
-    document.querySelectorAll<HTMLButtonElement>(".buildsNav button");
+  const allButtons = [];
 
   function highlightButton(id: string) {
     const button = document.querySelector(`[id='${id}']`);
-    button.classList.remove("surface");
-    button.classList.add("primary");
+    button.classList.remove("hover:bg-gray-100", "dark:hover:bg-gray-600");
+    button.classList.add("bg-blue-500", "dark:bg-blue-500");
 
     // unhighlight the other buttons
     allButtons.forEach((button) => {
       if (button.id !== id) {
-        button.classList.remove("primary");
-        button.classList.add("surface");
+        button.classList.remove("bg-blue-500", "dark:bg-blue-500");
+        button.classList.add("hover:bg-gray-100", "dark:hover:bg-gray-600");
       }
     });
   }
@@ -139,44 +139,65 @@ const seo: SEOProps = {
       "[id='button-archived']"
     );
     archivedBuildsButton.addEventListener("click", showArchivedBuilds);
+    allButtons.push(dT_LFG_Button, currentBuildsButton, archivedBuildsButton);
   }
   // attach listeners on page load
   attachListeners();
 </script>
 
 <Layout seo={seo} disableBackground>
-  <div class="buildsPageWrapper">
-    <nav class="no-space buildsNav">
-      <button
-        class="border left-round max large primary"
-        id="button-current"
-        aria-label="Current Builds"
-      >
-        <span>Current</span>
-        <div class="tooltip up">Viable builds for the current patch</div>
-      </button>
-      <button
-        class="border no-round max large surface"
-        id="button-dtlfg"
-        aria-label="Discretize LFG Builds"
-      >
-        <span>[dT] LFG <Icon name="mdi:information" height="1rem" /></span>
-        <div class="tooltip up">Builds used by the Discretize Guild</div>
-      </button>
-      <button
-        class="border right-round max large surface"
-        id="button-archived"
-        aria-label="Archived Builds"
-      >
-        <span>Archive</span>
-        <div class="tooltip up">Not updated, potentially outdated builds</div>
-      </button>
-    </nav>
+  <div class="max-w-[1000px] m-auto md:mt-4">
+    <div class="flex rounded-md shadow-sm h-[46px]" role="group">
+      <Tooltip className="flex-auto">
+        <button
+          slot="target"
+          type="button"
+          class="px-4 py-2 text-sm w-full h-full font-medium text-gray-900 bg-white border border-gray-200 rounded-l-lg hover:bg-gray-100 hover:text-blue-700 focus:ring-0 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600"
+          id="button-current"
+          aria-label="Current Builds"
+        >
+          <span>Current</span>
+        </button>
+        <div slot="tooltip">Viable builds for the current patch</div>
+      </Tooltip>
+      <Tooltip className="flex-auto">
+        <button
+          slot="target"
+          type="button"
+          class="px-4 py-2 text-sm w-full h-full font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:ring-0 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600"
+          id="button-dtlfg"
+          aria-label="Discretize LFG Builds"
+        >
+          <span class="whitespace-nowrap"
+            >[dT] LFG <Icon
+              name="mdi:information"
+              height="1rem"
+              class="inline"
+            /></span
+          >
+        </button>
+        <div slot="tooltip">Builds used by the Discretize Guild</div>
+      </Tooltip>
+      <Tooltip className="flex-auto">
+        <button
+          slot="target"
+          type="button"
+          class="px-4 py-2 text-sm w-full h-full font-medium text-gray-900 bg-white border border-gray-200 rounded-r-md hover:bg-gray-100 hover:text-blue-700 focus:ring-0 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600"
+          id="button-archived"
+          aria-label="Archived Builds"
+        >
+          <span>Archive</span>
+        </button>
+        <div slot="tooltip" class="tooltip up">
+          Not updated, potentially outdated builds
+        </div>
+      </Tooltip>
+    </div>
 
     {
       PROFESSIONS.map(({ profession, builds }) => (
         <>
-          <div class="builds">
+          <div class="mt-4 text-xl">
             <TextDivider>
               <Label>
                 <Profession name={profession} disableLink />
@@ -191,14 +212,3 @@ const seo: SEOProps = {
     }
   </div>
 </Layout>
-
-<style>
-  .builds {
-    margin-top: 2rem;
-    font-size: 1.2rem;
-  }
-  .buildsPageWrapper {
-    max-width: 1000px;
-    margin: 0 auto;
-  }
-</style>

@@ -1,6 +1,6 @@
 ---
+import { BACKGROUND } from "src/styles";
 import Link from "../Link.astro";
-import NavButton from "./NavButton.astro";
 
 interface Props {
   content: {
@@ -14,22 +14,18 @@ interface Props {
 const { content, title, slug } = Astro.props;
 ---
 
-<ul class="nested-dropdowns">
+<ul class={`nested-dropdowns`}>
   <li>
-    <Link
-      href={slug}
-      className="buttonMenu discretizeNavButton"
-      disablePrefetch
-    >
+    <Link href={slug} className="m-0 discretizeNavButton" disablePrefetch>
       {title}
     </Link>
-    <ul>
+    <ul class={`${BACKGROUND} shadow`}>
       {
         content.map((entry) => (
-          <li>
+          <li class="dark:hover:bg-gray-100/20 hover:bg-gray-300">
             <Link
               href={entry.url}
-              className="wave buttonProfession row no-margin"
+              className="w-full whitespace-nowrap p-3 flex h-[48px]"
             >
               {entry.title}
             </Link>
@@ -41,13 +37,6 @@ const { content, title, slug } = Astro.props;
 </ul>
 
 <style>
-  .buttonMenu {
-    margin: 0;
-  }
-  .buttonProfession {
-    padding: 0.6rem;
-    font-size: 1rem;
-  }
   .nested-dropdowns {
     /* Border */
     display: flex;
@@ -79,10 +68,6 @@ const { content, title, slug } = Astro.props;
     list-style-type: none;
     margin: 0;
     padding: 0;
-
-    background-color: var(--background);
-
-    box-shadow: var(--elevate2);
   }
 
   /* Show the direct sub nested-dropdowns when hovering the list item */

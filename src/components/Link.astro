@@ -1,5 +1,6 @@
 ---
 import { Icon } from "astro-icon";
+import { TEXT } from "src/styles";
 
 interface Props {
   href: string;
@@ -31,7 +32,7 @@ if (disablePrefetch && isInternal) {
 }
 
 if (enableDecoration) {
-  finalClassName += " primary-text link";
+  finalClassName += ` primary-text link`;
 }
 
 finalClassName = finalClassName.trim();

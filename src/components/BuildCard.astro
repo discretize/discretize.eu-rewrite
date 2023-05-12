@@ -1,8 +1,7 @@
 ---
-import { Image } from "@astrojs/image/components";
 import { Icon } from "astro-icon";
 import Profession from "./gw2-ui/Profession.astro";
-import images, { getOptimizedImage } from "./images";
+import { getOptimizedImage } from "./images";
 
 export interface BuildCardProps {
   title: string;
@@ -39,11 +38,11 @@ const image = await getOptimizedImage(specialization.toLowerCase());
 
 <a
   href={`/builds/${slug}`}
-  class={`buildLink ${rating.toLowerCase().replace(" ", "")} ${
-    archive ? "archive" : ""
+  class={`mb-4 block ${rating.toLowerCase().replace(" ", "")} ${
+    archive ? "hidden" : ""
   }`}
 >
-  <article class="row outer round">
+  <article class="outer rounded-3xl flex items-center">
     <img
       src={image.src}
       width={100}
@@ -51,7 +50,7 @@ const image = await getOptimizedImage(specialization.toLowerCase());
       alt={specialization}
       class="image"
     />
-    <div class="title">
+    <div class="text-2xl">
       <Profession
         name={specialization}
         disableLink
@@ -68,7 +67,7 @@ const image = await getOptimizedImage(specialization.toLowerCase());
     </div>
 
     <div class="infoButtons">
-      <div class="lastUpdated">
+      <div class="text-xs">
         <Icon
           name="mdi:clock-outline"
           height="1.8rem"
@@ -88,7 +87,7 @@ const image = await getOptimizedImage(specialization.toLowerCase());
 
       {
         cmGuide && (
-          <div class="cmGuide">
+          <div class="text-blue-500">
             <Icon name="mdi:book-open" height="1.8rem" />
             <div class="tooltip top">CM-Guide available</div>
           </div>
@@ -96,11 +95,11 @@ const image = await getOptimizedImage(specialization.toLowerCase());
       }
     </div>
 
-    <div class="tags l">
+    <div class="justify-end max-lg:hidden">
       {
         [rating, role].map((tag) => {
           return (
-            <div class="chip border tertiary-border on-surface small tag">
+            <div class="chip border tertiary-border on-surface small cursor-default">
               <span>{tag}</span>
             </div>
           );
@@ -128,30 +127,13 @@ const image = await getOptimizedImage(specialization.toLowerCase());
   .outer:hover {
     border: 1px solid var(--pcL);
   }
-  .title {
-    font-size: 1.4rem;
-  }
-  .buildLink {
-    display: block;
-    margin-bottom: 1rem;
-  }
-  .lastUpdated {
-    font-size: 0.8rem;
-  }
-  .cmGuide {
-    color: var(--primary);
-  }
+
   .infoButtons {
     display: flex;
     gap: 0.5rem;
     align-self: center;
   }
-  .tags {
-    justify-self: flex-end;
-  }
-  .tag {
-    cursor: default;
-  }
+
   .chip {
     font-size: 0.6rem;
   }
@@ -160,9 +142,6 @@ const image = await getOptimizedImage(specialization.toLowerCase());
     color: black;
   }
 
-  .archive {
-    display: none;
-  }
   @media (max-width: 1000px) {
     .outer {
       grid-template-columns: 1fr 2fr 80px;

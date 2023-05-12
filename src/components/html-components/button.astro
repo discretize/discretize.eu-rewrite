@@ -1,0 +1,16 @@
+---
+interface Props {
+  variant?: "outline" | "filled";
+  id?: string;
+}
+
+const { variant, id } = Astro.props;
+---
+
+<button
+  class="middle none center mr-3 rounded-lg border border-blue-500 py-3 px-6 text-xs font-bold uppercase text-blue-500 transition-all hover:opacity-75 focus:ring focus:ring-blue-200 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+  data-ripple-light="true"
+  id={id}
+>
+  <slot />
+</button>
