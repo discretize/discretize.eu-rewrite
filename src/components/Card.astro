@@ -2,13 +2,14 @@
 export interface Props {
   title?: string;
   specialization?: string;
+  className?: string;
 }
 
-const { title, specialization } = Astro.props;
+const { title, specialization, className = "" } = Astro.props;
 ---
 
 <article
-  class="mb-6 mt-4 overflow-hidden text-ellipsis embossed p-4 rounded-md shadow-xl border-[1px] border-zinc-500 dark:border-0"
+  class={`mb-6 mt-4 overflow-hidden text-ellipsis embossed p-4 rounded-md shadow-xl border-[1px] border-zinc-500 dark:border-0 ${className}`}
 >
   {
     (title || specialization) && (
