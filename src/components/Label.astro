@@ -1,7 +1,8 @@
 ---
+import { TEXT } from "src/styles";
 const { className } = Astro.props;
 
-let classes = "inner";
+let classes = `embossed inner ${TEXT}`;
 if (className) {
   classes += " " + className;
 }
@@ -18,9 +19,7 @@ if (className) {
     padding: 2px 6px;
     border-radius: 4px;
     border: 1px solid #1e2124;
-    color: rgb(177, 177, 181);
     display: inline-block;
-    background-color: var(--inverse-surface);
     box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
       0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
     vertical-align: unset;

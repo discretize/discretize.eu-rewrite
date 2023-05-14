@@ -1,5 +1,6 @@
 ---
 import { Icon } from "astro-icon";
+import Card from "./Card.astro";
 
 interface Props {
   icon?: string;
@@ -8,23 +9,9 @@ interface Props {
 const { icon = "mdi:information" } = Astro.props;
 ---
 
-<article class="information">
-  <div class="row outer">
-    <Icon name={icon} height="3rem" />
-    <div class="max">
-      <p><slot /></p>
-    </div>
+<Card>
+  <div class="flex max-md:flex-col gap-4 items-center">
+    <Icon name={icon} height="3rem" width="3rem" class="flex-none" />
+    <slot />
   </div>
-</article>
-
-<style>
-  @media (max-width: 600px) {
-    .outer {
-      display: flex;
-      flex-direction: column;
-    }
-  }
-  .information {
-    margin-bottom: 2rem;
-  }
-</style>
+</Card>

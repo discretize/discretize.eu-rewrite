@@ -2,6 +2,7 @@
 import { Icon } from "astro-icon";
 import Profession from "./gw2-ui/Profession.astro";
 import { getOptimizedImage } from "./images";
+import Tooltip from "./Tooltip.astro";
 
 export interface BuildCardProps {
   title: string;
@@ -27,7 +28,6 @@ const {
   role,
   rating,
   uptodate = { guide: true, gear: true },
-  archive = false,
 } = Astro.props;
 
 const pcM = `var(--gw2-color-${profession.toLowerCase()}-main)`;
@@ -38,11 +38,10 @@ const image = await getOptimizedImage(specialization.toLowerCase());
 
 <a
   href={`/builds/${slug}`}
-  class={`mb-4 block ${rating.toLowerCase().replace(" ", "")} ${
-    archive ? "hidden" : ""
-  }`}
+  class={`mb-4 block ${rating === "archive" ? "hidden" : ""}`}
+  data-rating={rating.toLowerCase().replace(" ", "")}
 >
-  <article class="outer rounded-3xl flex items-center">
+  <article class="outer rounded-3xl flex items-center embossed">
     <img
       src={image.src}
       width={100}
@@ -68,50 +67,54 @@ const image = await getOptimizedImage(specialization.toLowerCase());
 
     <div class="infoButtons">
       <div class="text-xs">
-        <Icon
-          name="mdi:clock-outline"
-          height="1.8rem"
-          class={`${
-            uptodate.guide && uptodate.gear
-              ? "green"
-              : uptodate.guide || uptodate.gear
-              ? "yellow"
-              : "red"
-          } update-icon`}
-        />
-        <div class="tooltip top">
-          Gear: {uptodate.gear ? "up-to-date" : "not updated"}<br />
-          Guide: {uptodate.guide ? "up-to-date" : "not updated"}
-        </div>
+        <Tooltip>
+          <span slot="target">
+            <Icon
+              name="mdi:clock-outline"
+              height="1.8rem"
+              class={`${
+                uptodate.guide && uptodate.gear
+                  ? "text-green-500"
+                  : uptodate.guide || uptodate.gear
+                  ? "yellow"
+                  : "red"
+              }`}
+            />
+          </span>
+          <div slot="tooltip">
+            Gear: {uptodate.gear ? "up-to-date" : "not updated"}<br />
+            Guide: {uptodate.guide ? "up-to-date" : "not updated"}
+          </div>
+        </Tooltip>
       </div>
 
       {
         cmGuide && (
-          <div class="text-blue-500">
-            <Icon name="mdi:book-open" height="1.8rem" />
-            <div class="tooltip top">CM-Guide available</div>
-          </div>
+          <>
+            <Tooltip>
+              <div class="text-blue-500" slot="target">
+                <Icon name="mdi:book-open" height="1.8rem" />
+              </div>
+              <span slot="tooltip">CM-Guide available</span>
+            </Tooltip>
+          </>
         )
       }
     </div>
 
-    <div class="justify-end max-lg:hidden">
+    <div class="justify-end flex max-lg:hidden gap-2">
       {
         [rating, role].map((tag) => {
           return (
-            <div class="chip border tertiary-border on-surface small cursor-default">
+            <div
+              class={`chip border rounded-lg tertiary-border on-surface small cursor-default px-2 border-${profession.toLowerCase()}-main`}
+            >
               <span>{tag}</span>
             </div>
           );
         })
       }
     </div>
-
-    <!-- <div class="l">
-      {cmGuide ? <button class="btn btn-primary">CM Guide</button> : undefined}
-    </div>
-
-    <button class="btn btn-primary l">Build</button> -->
   </article>
 </a>
 
@@ -136,10 +139,6 @@ const image = await getOptimizedImage(specialization.toLowerCase());
 
   .chip {
     font-size: 0.6rem;
-  }
-
-  .update-icon {
-    color: black;
   }
 
   @media (max-width: 1000px) {

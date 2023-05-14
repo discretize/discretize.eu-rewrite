@@ -22,24 +22,22 @@ const { title, specialization, role, hasBeginner, date } =
   }
 </script>
 
-<div class="row header">
-  <div class="left max">
+<div class="flex items-center mb-2">
+  <div class="flex flex-grow">
     <Profession disableLink disableText name={specialization} size="big" />
-    <div class="headline">
-      <h2>{title}</h2>
+    <div class="ml-4 self-center">
+      <h1>{title}</h1>
       <p>{role}</p>
     </div>
   </div>
-  <div>
-    <Label className="additionalPadding">
-      <ul>
-        <li>
-          <Icon name="mdi:calendar-range" height="0.8rem" />
-          {new Date(date).toLocaleDateString()}
-        </li>
-      </ul>
-    </Label>
-  </div>
+  <Label className="p-2">
+    <ul>
+      <li class="flex">
+        <Icon name="mdi:calendar-range" height="0.8rem" class="mr-2" />
+        {new Date(date).toLocaleDateString()}
+      </li>
+    </ul>
+  </Label>
 </div>
 
 <TextDivider text="Overview" />
@@ -60,39 +58,3 @@ const { title, specialization, role, hasBeginner, date } =
     </div>
   )
 }
-
-<style>
-  .header {
-    font-family: Raleway;
-    line-height: 1.2;
-    margin-bottom: 2rem;
-    align-items: flex-start !important;
-    flex-wrap: wrap !important;
-  }
-  @media (max-width: 768px) {
-    .header {
-      flex-direction: column;
-    }
-  }
-  .header p {
-    font-family: Muli;
-  }
-  .header ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  .icon {
-    font-size: 0.8rem;
-  }
-  .left {
-    display: flex;
-  }
-  .headline {
-    margin-left: 1rem;
-    align-self: center;
-  }
-  .additionalPadding {
-    padding: 8px !important;
-  }
-</style>

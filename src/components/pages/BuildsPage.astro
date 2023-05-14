@@ -48,27 +48,107 @@ builds.forEach((build) => {
 const seo: SEOProps = {
   title: "Builds",
 };
+
+const SELECTED = [
+  "hover:bg-blue-700",
+  "dark:hover:bg-blue-300",
+  "bg-blue-500",
+  "dark:bg-blue-500",
+  "text-black",
+];
+const UNSELECTED = ["embossed", "dark:hover:bg-gray-700", "hover:bg-gray-200"];
+
+const SHARED =
+  "px-4 py-2 text-sm w-full h-full font-medium border-gray-600 focus:ring-0";
 ---
 
-<script>
-  const dT_LFG_Builds =
-    document.querySelectorAll<HTMLAnchorElement>(".discretizelfg");
-  const allBuilds = document.querySelectorAll<HTMLAnchorElement>(".buildLink");
-  const archivedBuilds =
-    document.querySelectorAll<HTMLAnchorElement>(".archive");
-  const buildsSections = document.querySelectorAll<HTMLDivElement>(".builds");
+<Layout seo={seo} disableBackground>
+  <div class="max-w-[1000px] m-auto md:mt-4">
+    <div class="flex rounded-md shadow-sm h-[46px]" role="group">
+      <Tooltip className="flex-auto">
+        <button
+          slot="target"
+          type="button"
+          class={`${SHARED} border rounded-l-lg ${SELECTED.join(" ")}`}
+          id="button-current"
+          aria-label="Current Builds"
+        >
+          <span>Current</span>
+        </button>
+        <div slot="tooltip">Viable builds for the current patch</div>
+      </Tooltip>
+      <Tooltip className="flex-auto">
+        <button
+          slot="target"
+          type="button"
+          class={`${SHARED} border-t border-b ${UNSELECTED.join(" ")}`}
+          id="button-dtlfg"
+          aria-label="Discretize LFG Builds"
+        >
+          <span class="whitespace-nowrap"
+            >[dT] LFG <Icon
+              name="mdi:information"
+              height="1rem"
+              class="inline"
+            /></span
+          >
+        </button>
+        <div slot="tooltip">Builds used by the Discretize Guild</div>
+      </Tooltip>
+      <Tooltip className="flex-auto">
+        <button
+          slot="target"
+          type="button"
+          class={`${SHARED} border rounded-r-md" ${UNSELECTED.join(" ")}`}
+          id="button-archived"
+          aria-label="Archived Builds"
+        >
+          <span>Archive</span>
+        </button>
+        <div slot="tooltip" class="tooltip up">
+          Not updated, potentially outdated builds
+        </div>
+      </Tooltip>
+    </div>
+
+    {
+      PROFESSIONS.map(({ profession, builds }) => (
+        <>
+          <div class="mt-4 text-xl">
+            <TextDivider>
+              <Label className="p-3">
+                <Profession name={profession} disableLink />
+              </Label>
+            </TextDivider>
+            {builds.map((build) => (
+              <BuildCard {...build} />
+            ))}
+          </div>
+        </>
+      ))
+    }
+  </div>
+</Layout>
+
+<script define:vars={{ SELECTED, UNSELECTED }}>
+  const dT_LFG_Builds = document.querySelectorAll(
+    "a[data-rating='discretizelfg']"
+  );
+  console.log(dT_LFG_Builds);
+  const allBuilds = document.querySelectorAll("a[data-rating]");
+  const archivedBuilds = document.querySelectorAll("a[data-rating='archive']");
+  const buildsSections = document.querySelectorAll(".builds");
   const allButtons = [];
 
-  function highlightButton(id: string) {
+  function highlightButton(id) {
     const button = document.querySelector(`[id='${id}']`);
-    button.classList.remove("hover:bg-gray-100", "dark:hover:bg-gray-600");
-    button.classList.add("bg-blue-500", "dark:bg-blue-500");
-
+    button.classList.remove(...UNSELECTED);
+    button.classList.add(...SELECTED);
     // unhighlight the other buttons
     allButtons.forEach((button) => {
       if (button.id !== id) {
-        button.classList.remove("bg-blue-500", "dark:bg-blue-500");
-        button.classList.add("hover:bg-gray-100", "dark:hover:bg-gray-600");
+        button.classList.remove(...SELECTED);
+        button.classList.add(...UNSELECTED);
       }
     });
   }
@@ -144,71 +224,3 @@ const seo: SEOProps = {
   // attach listeners on page load
   attachListeners();
 </script>
-
-<Layout seo={seo} disableBackground>
-  <div class="max-w-[1000px] m-auto md:mt-4">
-    <div class="flex rounded-md shadow-sm h-[46px]" role="group">
-      <Tooltip className="flex-auto">
-        <button
-          slot="target"
-          type="button"
-          class="px-4 py-2 text-sm w-full h-full font-medium text-gray-900 bg-white border border-gray-200 rounded-l-lg hover:bg-gray-100 hover:text-blue-700 focus:ring-0 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600"
-          id="button-current"
-          aria-label="Current Builds"
-        >
-          <span>Current</span>
-        </button>
-        <div slot="tooltip">Viable builds for the current patch</div>
-      </Tooltip>
-      <Tooltip className="flex-auto">
-        <button
-          slot="target"
-          type="button"
-          class="px-4 py-2 text-sm w-full h-full font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:ring-0 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600"
-          id="button-dtlfg"
-          aria-label="Discretize LFG Builds"
-        >
-          <span class="whitespace-nowrap"
-            >[dT] LFG <Icon
-              name="mdi:information"
-              height="1rem"
-              class="inline"
-            /></span
-          >
-        </button>
-        <div slot="tooltip">Builds used by the Discretize Guild</div>
-      </Tooltip>
-      <Tooltip className="flex-auto">
-        <button
-          slot="target"
-          type="button"
-          class="px-4 py-2 text-sm w-full h-full font-medium text-gray-900 bg-white border border-gray-200 rounded-r-md hover:bg-gray-100 hover:text-blue-700 focus:ring-0 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600"
-          id="button-archived"
-          aria-label="Archived Builds"
-        >
-          <span>Archive</span>
-        </button>
-        <div slot="tooltip" class="tooltip up">
-          Not updated, potentially outdated builds
-        </div>
-      </Tooltip>
-    </div>
-
-    {
-      PROFESSIONS.map(({ profession, builds }) => (
-        <>
-          <div class="mt-4 text-xl">
-            <TextDivider>
-              <Label>
-                <Profession name={profession} disableLink />
-              </Label>
-            </TextDivider>
-            {builds.map((build) => (
-              <BuildCard {...build} />
-            ))}
-          </div>
-        </>
-      ))
-    }
-  </div>
-</Layout>

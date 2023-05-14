@@ -4,10 +4,10 @@
 
 @layer base {
   h1 {
-    @apply text-5xl;
+    @apply text-5xl mb-4;
   }
   h2 {
-    @apply text-4xl;
+    @apply text-4xl mb-4;
   }
   h3 {
     @apply text-3xl;
@@ -20,5 +20,23 @@
   }
   body {
     @apply text-base;
+  }
+  * > p {
+    @apply mb-3;
+  }
+  * > p:last-child {
+    @apply mb-0;
+  }
+}
+
+@layer components {
+  .embossed {
+    @apply dark:bg-[#26292e] bg-neutral-100;
+  }
+  .border-warrior-main {
+    border-color: var(--gw2-color-warrior-main);
+  }
+  .boder-elementalist-main {
+    border-color: var(--gw2-color-elementalist-main);
   }
 }

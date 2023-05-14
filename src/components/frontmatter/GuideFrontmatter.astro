@@ -6,56 +6,30 @@ import { Icon } from "astro-icon";
 const { title, author, date } = Astro.props;
 ---
 
-<section>
-  <h1>{title}</h1>
-
-  <div>
-    <Label className="additionalPadding">
-      <ul>
-        <li>
-          <Icon name="mdi:calendar" height="0.8rem" /><span
-            >{new Date(date).toDateString()}</span
-          >
-        </li>
-        {
-          author && (
-            <li>
-              <>
-                <Icon name="mdi:human" height="0.8rem" />
-                <span>{author}</span>
-              </>
-            </li>
-          )
-        }
-      </ul>
-    </Label>
+<div class="flex items-center mb-2">
+  <div class="flex flex-grow">
+    <div class="self-center">
+      <h1>{title}</h1>
+    </div>
   </div>
-</section>
+  <Label className="p-2">
+    <ul>
+      <li class="flex">
+        <Icon name="mdi:calendar-range" height="0.8rem" class="mr-2" />
+        {new Date(date).toLocaleDateString()}
+      </li>
+      {
+        author && (
+          <li class="flex">
+            <>
+              <Icon name="mdi:human" height="0.8rem" class="mr-2" />
+              <span>{author}</span>
+            </>
+          </li>
+        )
+      }
+    </ul>
+  </Label>
+</div>
 
 <TextDivider text="Guide" />
-
-<style>
-  h1 {
-    flex-grow: 1;
-  }
-  section {
-    display: flex;
-  }
-  ul {
-    list-style: none;
-    padding: 0 !important;
-    margin: 0 !important;
-  }
-  ul > li {
-    margin-top: 0 !important;
-  }
-  ul > :not(:last-child) {
-    margin-bottom: 0.5rem;
-  }
-  li span {
-    margin-left: 0.5rem;
-  }
-  .additionalPadding {
-    padding: 8px !important;
-  }
-</style>
