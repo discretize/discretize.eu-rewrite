@@ -20,7 +20,7 @@ const PROFESSIONS = Astro.props.professions.map((profession) => ({
 }));
 
 const buildsRaw = await Astro.glob(
-  `../../../discretize-guides/builds/**/*/index.mdx`
+  `../../../discretize-guides/builds/**/index.mdx`
 );
 const builds: BuildCardProps[] = buildsRaw.map((build) => ({
   title: build.frontmatter.title,

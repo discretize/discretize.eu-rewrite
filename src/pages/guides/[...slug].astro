@@ -6,7 +6,7 @@ import { components } from "../../components/components";
 
 export async function getStaticPaths() {
   const guides = await Astro.glob(
-    `../../../discretize-guides/guides/**/*/index.mdx`
+    `../../../discretize-guides/guides/**/index.mdx`
   );
 
   const cleanPaths = guides.map((guide) => ({
