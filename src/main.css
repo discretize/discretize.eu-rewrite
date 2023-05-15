@@ -27,6 +27,10 @@
   * > p:last-child {
     @apply mb-0;
   }
+  ol li p,
+  ul li p {
+    @apply inline;
+  }
 }
 
 @layer components {

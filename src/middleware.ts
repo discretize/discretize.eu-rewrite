@@ -38,8 +38,12 @@ async function onRequestProd({ locals, request }, next) {
 }
 
 // only apply to production build
-let func;
-if (process.env.NODE_ENV === "production") {
-  func = onRequestProd;
+let onRequest;
+if (process.env.NODE_ENV === "development") {
+  onRequest = (_, next) => {
+    return next();
+  };
+} else {
+  onRequest = onRequestProd;
 }
-export default func;
+export { onRequest };
