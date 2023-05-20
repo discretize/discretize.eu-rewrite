@@ -29,11 +29,21 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("daisyui")],
   safelist: [
     {
       pattern: /^col-span-\d+$/,
       variants: ["sm", "md", "lg", "xl", "2xl"],
     },
   ],
+  daisyui: {
+    styled: true,
+    themes: ["dark", "light"],
+    base: false,
+    utils: false,
+    logs: true,
+    rtl: false,
+    prefix: "",
+    darkTheme: "dark",
+  },
 };

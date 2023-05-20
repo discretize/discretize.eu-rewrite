@@ -2,7 +2,6 @@
 import { TextDivider } from "@discretize/react-discretize-components";
 import { AugmentationsTypes } from "@gw2-ui/data/augmentations";
 import React, { useEffect, useState } from "react";
-import classes from "./CalculatorUI.module.css";
 import initialState from "./initialState.json";
 import { Matrix, MIST_ATTUNEMENTS, Page, Pristine, Relic } from "./RelicsData";
 import ResultTable from "./ResultTable";
@@ -184,14 +183,17 @@ export function CalculatorUI(props: Props): React.ReactElement {
 
   return (
     <>
-      <div className="grid">
-        <div className="s12 m6">
-          <div className={classes.augCalcInputContainer}>
+      <div className="grid grid-cols-12 gap-4">
+        <div className="row-auto col-end-auto sm:col-span-12 md:col-span-6">
+          <div className={"m-2 sm:m-4 sm:p-8 xl:m-16 xl:p-8 rounded"}>
             <h4>Current account values</h4>
-            <div
-              className={`field label suffix border ${classes.augCalcTextInput}`}
-            >
+            <div className={`mt-5 mb-0 form-control w-full`}>
+              <label className="label">
+                <span className="label-text">Mist Attunement Tier</span>
+              </label>
+
               <select
+                className="select select-bordered"
                 onChange={(e) =>
                   setState({ ...state, augment: parseInt(e.target.value, 10) })
                 }
@@ -203,51 +205,51 @@ export function CalculatorUI(props: Props): React.ReactElement {
                   </option>
                 ))}
               </select>
-              <label className="active">Mist Attunement Tier</label>
-              <i>arrow_drop_down</i>
             </div>
 
             {inputs
               .filter((augInput) => typeof augInput.value !== "boolean")
               .map((input) => (
-                <div
-                  key={input.stateName}
-                  className={`field label border ${classes.augCalcTextInput}`}
-                >
+                <div key={input.stateName} className={`form-control w-full`}>
+                  <label className="label">
+                    <span className="label-text">{input.label}</span>
+                  </label>
                   <input
                     name={input.stateName}
                     type="text"
                     value={input.value as number}
                     onChange={onInputChange}
+                    className="input input-bordered w-full"
                   />
-                  <label>{input.label}</label>
                 </div>
               ))}
           </div>
         </div>
 
-        <div className="s12 m6">
-          <div className={classes.augCalcInputContainer}>
+        <div className="row-auto col-end-auto sm:col-span-12 md:col-span-6">
+          <div className={"m-2 sm:m-4 sm:p-8 xl:m-16 xl:p-8 rounded"}>
             <h4>Dailies</h4>
-            <ul className={`${classes.augSettingsList}`}>
+            <ul className={`m-0 p-0 list-none`}>
               {inputs
                 .filter((augInput) => typeof augInput.value === "boolean")
                 .map((input) => (
-                  <li key={input.stateName}>
-                    <label className="checkbox">
-                      <input
-                        type="checkbox"
-                        className="large"
-                        checked={input.value as boolean}
-                        onChange={(e) =>
-                          setState({
-                            ...state,
-                            [input.stateName]: e.target.checked,
-                          })
-                        }
-                      />
-                      <span>{input.label}</span>
-                    </label>
+                  <li key={input.stateName} className="mt-3">
+                    <div className="form-control">
+                      <label className="label cursor-pointer">
+                        <input
+                          type="checkbox"
+                          className="checkbox checkbox-accent"
+                          checked={input.value as boolean}
+                          onChange={(e) =>
+                            setState({
+                              ...state,
+                              [input.stateName]: e.target.checked,
+                            })
+                          }
+                        />
+                        <span className="label-text">{input.label}</span>
+                      </label>
+                    </div>
                   </li>
                 ))}
             </ul>
@@ -258,15 +260,15 @@ export function CalculatorUI(props: Props): React.ReactElement {
       <TextDivider text="Results" />
 
       {result?.mistAttunements.length === 0 ? (
-        <article className={classes.resultContainer}>
-          <h5 className={classes.resultHeading}>
+        <article className={`max-w-md m-auto text-center`}>
+          <h5 className="mb-0 text-blue-500">
             🎉 You already are a Fractal God! 🎉
           </h5>
         </article>
       ) : (
         <>
-          <article className={classes.resultContainer}>
-            <h5 className={classes.resultHeading}>
+          <article className={`max-w-md m-auto`}>
+            <h5 className="mb-0 text-blue-500">
               You will be a Fractal God in{" "}
               {Math.ceil(result?.mistAttunements[0].days)} days 🎉
             </h5>
