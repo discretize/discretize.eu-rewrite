@@ -38,7 +38,18 @@ module.exports = {
   ],
   daisyui: {
     styled: true,
-    themes: ["dark", "light"],
+    themes: [
+      "light",
+      {
+        discretizeDark: {
+          primary: "#00CCCC",
+          secondary: "#BD93F9",
+          accent: "#00CCCC",
+          neutral: "#2f3136",
+          "base-100": "#26292e",
+        },
+      },
+    ],
     base: false,
     utils: false,
     logs: true,

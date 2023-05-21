@@ -43,4 +43,7 @@
   .boder-elementalist-main {
     border-color: var(--gw2-color-elementalist-main);
   }
+  .table :where(th, td) {
+    white-space: inherit;
+  }
 }
