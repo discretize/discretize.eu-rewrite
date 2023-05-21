@@ -14,18 +14,9 @@ function attrToProps(attr) {
 export default () => {
   return (markdownAST) => {
     let firstTab = false;
-    let uid = 0;
 
     visit(markdownAST, (node) => {
       const componentType = node.name;
-
-      if (componentType === "Tab") {
-        node.attributes.push({
-          type: "mdxJsxAttribute",
-          name: "uid",
-          value: uid.toString(),
-        });
-      }
 
       if (componentType === "Tab" && firstTab) {
         firstTab = false;
@@ -69,11 +60,6 @@ export default () => {
             value: JSON.stringify(tabs),
             data,
           },
-        });
-        node.attributes.push({
-          type: "mdxJsxAttribute",
-          name: "uid",
-          value: uid.toString(),
         });
       }
     });
