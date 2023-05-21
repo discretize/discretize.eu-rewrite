@@ -1,6 +1,7 @@
 ---
 import { Item } from "@gw2-ui/components";
 import { TOC } from "astro-toc";
+import { fractalHeaders } from "src/utils/cache";
 import imageFetch from "src/utils/imageFetch";
 import Card from "../Card.astro";
 import Grid from "../Grid.astro";
@@ -44,12 +45,8 @@ const {
   headings,
 } = Astro.props;
 
-const images = Object.keys(
-  import.meta.glob(`../../../discretize-guides/fractals/**/images/header.jpg`, {
-    import: "default",
-  })
-);
-const headerImage = await imageFetch(images, Astro.url.pathname);
+const headerImage =
+  "../" + (await imageFetch(Object.keys(fractalHeaders), Astro.url.pathname));
 ---
 
 <Header

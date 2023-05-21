@@ -18,9 +18,10 @@ characters.forEach((title, index) => {
 });
 
 // read out json templates for peepoptimizer
-const templates = (
-  await Astro.glob("../../assets/data/optimizer-state/ranger/*.json")
-).map((d) => d.default);
+// const templates = (
+//   await Astro.glob("../../assets/data/optimizer-state/ranger/*.json")
+// ).map((d) => d.default);
+const templates = [];
 
 const activeClasses = ["text-blue-500", "border-b-2", "border-blue-500"];
 const nonActiveClasses = [

@@ -3,9 +3,26 @@ import Profession from "../gw2-ui/Profession.astro";
 import TextDivider from "../TextDivider.astro";
 import Label from "../Label.astro";
 import { Icon } from "astro-icon";
+import { EliteSpecTypes, ProfessionTypes } from "@gw2-ui/data/professions";
 
-const { title, specialization, role, hasBeginner, date } =
-  Astro.props.frontmatter;
+export interface Props {
+  title: string;
+  specialization: EliteSpecTypes;
+  role: string;
+  hasBeginner: boolean;
+  date: string;
+  hidden?: boolean;
+  rating: string;
+  profession: ProfessionTypes;
+  boons: {
+    name: string;
+    uptime: string;
+    variant: string;
+  }[];
+  code: string;
+}
+
+const { title, specialization, role, hasBeginner, date } = Astro.props;
 ---
 
 <script>

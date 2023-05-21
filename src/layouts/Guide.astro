@@ -1,12 +1,18 @@
 ---
 import GuideFrontmatter from "src/components/frontmatter/GuideFrontmatter.astro";
 import Layout, { SEOProps } from "./Layout.astro";
+import type { Props as GuideProps } from "src/components/frontmatter/GuideFrontmatter.astro";
+import { guideHeaders } from "src/utils/cache";
+import imageFetch from "src/utils/imageFetch";
 
 export interface Props {
-  frontmatter: {};
+  frontmatter: GuideProps;
 }
 
 const { title } = Astro.props.frontmatter;
+
+const headerImage = imageFetch(Object.keys(guideHeaders), Astro.url.pathname);
+
 const seo: SEOProps = {
   title,
 };

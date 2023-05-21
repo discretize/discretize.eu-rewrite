@@ -1,4 +1,4 @@
-export default async function imageFetch(images: string[], pathname: string) {
+export default function imageFetch(images: string[], pathname: string) {
   let headerImage;
   for (const image of images) {
     if (image.includes(pathname)) {

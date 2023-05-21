@@ -1,19 +1,31 @@
 ---
 import BuildFrontmatter from "../components/frontmatter/BuildFrontmatter.astro";
 import Layout, { SEOProps } from "./Layout.astro";
+import type { Props as BuildProps } from "../components/frontmatter/BuildFrontmatter.astro";
+import { getImage } from "@astrojs/image";
+import images from "../components/images";
 
 export interface Props {
-  title: string;
+  frontmatter: BuildProps;
 }
 
-const { title } = Astro.props.frontmatter;
+const { title, specialization } = Astro.props.frontmatter;
+
+const ogImage = await getImage({
+  src: images[specialization?.toLowerCase()],
+  width: 512,
+  height: 512,
+  format: "jpeg",
+  alt: "OG Image",
+});
 
 const seo: SEOProps = {
   title,
+  image: ogImage?.src,
 };
 ---
 
 <Layout seo={seo}>
-  <BuildFrontmatter frontmatter={Astro.props.frontmatter} />
+  <BuildFrontmatter {...Astro.props.frontmatter} />
   <slot />
 </Layout>

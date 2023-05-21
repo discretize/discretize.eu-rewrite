@@ -1,17 +1,24 @@
 ---
+import type { EliteSpecTypes, ProfessionTypes } from "@gw2-ui/data/professions";
+import { Icon } from "astro-icon";
+import { BACKGROUND, BORDER, TEXT } from "src/styles";
+import { mdxBuilds, mdxGuides } from "src/utils/cache";
+import frontmatterReader from "src/utils/frontmatterReader";
+import Discord from "../../icons/discord.astro";
 import Discretize from "../../icons/discretize.astro";
+import Link from "../Link.astro";
+import DarkModeSwitch from "./DarkModeSwitch.astro";
 import NavBuilds from "./NavBuilds.astro";
 import NavDropdown from "./NavDropdown.astro";
-import DarkModeSwitch from "./DarkModeSwitch.astro";
-import type { EliteSpecTypes, ProfessionTypes } from "@gw2-ui/data/professions";
-import Discord from "../../icons/discord.astro";
-import { Icon } from "astro-icon";
-import Link from "../Link.astro";
-import { BACKGROUND, BORDER, TEXT } from "src/styles";
 
 async function getBuilds() {
   // load markdown files and return the frontmatter
-  const builds = await Astro.glob("../../../discretize-guides/builds/**/*.mdx");
+  const builds = await Promise.all(
+    Object.keys(mdxBuilds).map(
+      async (buildUrl) =>
+        await frontmatterReader(buildUrl.replace("../../", ""))
+    )
+  );
 
   const navigationData = builds
     .filter((build) => build.frontmatter.archive !== true)
@@ -36,7 +43,12 @@ async function getBuilds() {
 
 async function getGuides() {
   // load markdown files and return the frontmatter
-  const guides = await Astro.glob("../../../discretize-guides/guides/**/*.mdx");
+  const guides = await Promise.all(
+    Object.keys(mdxGuides).map(
+      async (guideUrl) =>
+        await frontmatterReader(guideUrl.replace("../../", ""))
+    )
+  );
 
   const navigationData = guides.map((guide) => ({
     title: guide.frontmatter.title,
@@ -85,7 +97,7 @@ const guides = await getGuides();
 
 <div
   id="overlay"
-  class="hidden z-10 top-0 fixed right-auto bottom-auto top-0 left-0 w-full h-full opacity-50 bg-black dark:bg-black-900"
+  class="hidden z-10 fixed right-auto bottom-auto top-0 left-0 w-full h-full opacity-50 bg-black dark:bg-black-900"
 >
 </div>
 <div
@@ -131,7 +143,7 @@ const guides = await getGuides();
 </div>
 
 <nav
-  class=`shadow z-10 top-0 mt-0 sticky bg-stone-100 dark:bg-zinc-800 max-md:hidden`
+  class=`shadow z-50 top-0 mt-0 sticky bg-stone-100 dark:bg-zinc-800 max-md:hidden`
 >
   <div class="lowerArea border-t-4 border-blue-500">
     <div class={`buttonArea flex items-center ${TEXT} max-h-[40px]`}>

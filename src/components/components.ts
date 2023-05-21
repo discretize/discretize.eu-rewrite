@@ -73,6 +73,7 @@ export const components = {
   GridItem,
   Image,
   Information,
+  InformationBlock: () => undefined,
   Instability: MistlockInstability,
   Item,
   Label,

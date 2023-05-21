@@ -4,30 +4,26 @@ import Layout, { SEOProps } from "./Layout.astro";
 import type { Props as FractalProps } from "src/components/frontmatter/FractalFrontmatter.astro";
 import { getImage } from "@astrojs/image";
 import imageFetch from "src/utils/imageFetch";
+import { fractalHeaders } from "src/utils/cache";
 
 export interface Props {
   frontmatter: FractalProps;
   headings: {
     depth: number;
     slug: string;
+    image: string;
     text: string;
   }[];
+  url: string;
 }
-const { title } = Astro.props.frontmatter;
+const { title, image } = Astro.props.frontmatter;
 
-const rawImages = import.meta.glob(
-  `../../discretize-guides/fractals/**/images/header.jpg`,
-  {
-    import: "default",
-  }
-);
-const images = Object.keys({ ...rawImages });
-const headerImage = await imageFetch(images, Astro.url.pathname);
+const headerImage = imageFetch(Object.keys(fractalHeaders), Astro.url.pathname);
 
 let seo: SEOProps = { title };
 
 if (headerImage) {
-  const thumbnail = (await Object.entries(rawImages).find(
+  const thumbnail = (await Object.entries(fractalHeaders).find(
     ([k, v]) => k === headerImage
   )[1]()) as ImageMetadata;
 

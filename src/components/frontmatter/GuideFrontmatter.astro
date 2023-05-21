@@ -3,6 +3,12 @@ import TextDivider from "../TextDivider.astro";
 import Label from "../Label.astro";
 import { Icon } from "astro-icon";
 
+export interface Props {
+  title: string;
+  author?: string;
+  date: string;
+}
+
 const { title, author, date } = Astro.props;
 ---
 
