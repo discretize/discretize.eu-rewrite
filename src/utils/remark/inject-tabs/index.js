@@ -29,7 +29,6 @@ export default () => {
 
       if (componentType === "Tabs") {
         firstTab = true;
-        uid += 1;
         // for every child node, check if its character
         // if it is, insert the title prop into a list of characters
         const tabs = node.children
