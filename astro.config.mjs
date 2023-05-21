@@ -17,8 +17,6 @@ import yaml from "@rollup/plugin-yaml";
 // https://astro.build/config
 import prefetch from "@astrojs/prefetch";
 
-// https://astro.build/config
-import compress from "astro-compress";
 import injectTabs from "./src/utils/remark/inject-tabs";
 
 // https://astro.build/config
@@ -46,6 +44,7 @@ export default defineConfig({
     //   },
     // },
   },
+  compressHTML: true,
 
   integrations: [
     react(),
@@ -65,13 +64,7 @@ export default defineConfig({
       cacheDir: ".cache",
     }),
     prefetch(),
-    compress({
-      css: false,
-      html: false,
-      img: false,
-      js: true,
-      svg: true,
-    }),
+
     tailwind({ config: { applyBaseStyles: false } }),
   ],
 });
