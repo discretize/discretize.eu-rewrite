@@ -207,7 +207,7 @@ export function CalculatorUI(props: Props): React.ReactElement {
       />
 
       <div className="grid grid-cols-12 gap-8 mt-8">
-        <div className="row-auto col-end-auto sm:col-span-12 md:col-span-3">
+        <div className="row-auto col-end-auto col-span-12 md:col-span-3">
           <div className={""}>
             <h2>Account values</h2>
 
@@ -279,7 +279,7 @@ export function CalculatorUI(props: Props): React.ReactElement {
           </div>
         </div>
 
-        <div className="row-auto col-end-auto sm:col-span-12 md:col-span-9 ml-16">
+        <div className="row-auto col-end-auto col-span-12 md:col-span-9 md:ml-16">
           <h2>Results</h2>
           <div className="flex space-between flex-col gap-10">
             <div
