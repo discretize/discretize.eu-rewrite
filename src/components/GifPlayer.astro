@@ -3,85 +3,63 @@ import { Icon } from "astro-icon";
 const { caption, url } = Astro.props;
 ---
 
-<div class="videoWrapper">
-  <script>
-    async function play(video: HTMLVideoElement) {
-      await video.play();
-      let playButton = video.parentElement.children[0];
-      if (playButton instanceof HTMLElement) {
-        playButton.style.display = "none";
+<script>
+  class VideoFigure extends HTMLElement {
+    connectedCallback() {
+      this.video.addEventListener("mouseover", () => this.play());
+      this.video.addEventListener("mouseout", () => this.pause());
+
+      this.playButton.addEventListener("click", (e) => this.play());
+      this.video.addEventListener("click", (e) => {
+        if (this.video.paused) {
+          this.play();
+        } else {
+          this.pause();
+        }
+      });
+    }
+
+    get video() {
+      return this.querySelector("video");
+    }
+
+    get playButton() {
+      return this.querySelector("#playButton");
+    }
+
+    async play() {
+      try {
+        await this.video.play();
+        // for some reason we need to play it twice for mobile devices
+        await this.video.play();
+
+        if (this.playButton instanceof HTMLElement) {
+          this.playButton.style.display = "none";
+        }
+      } catch (e) {}
+    }
+
+    pause() {
+      this.video.pause();
+      if (this.playButton instanceof HTMLElement) {
+        this.playButton.style.display = "block";
       }
     }
+  }
 
-    async function pause(video: HTMLVideoElement) {
-      await video.pause();
-      let playButton = video.parentElement.children[0];
-      if (playButton instanceof HTMLElement) {
-        playButton.style.display = "block";
-      }
-    }
+  customElements.define("video-figure", VideoFigure);
+</script>
 
-    for (let tupel of document.querySelectorAll<HTMLVideoElement>("video")) {
-      tupel.addEventListener(
-        "mouseover",
-        async (e) => e.target instanceof HTMLVideoElement && play(e.target),
-        false
-      );
-      tupel.addEventListener(
-        "mouseout",
-        (e) => e.target instanceof HTMLVideoElement && pause(e.target),
-        false
-      );
-      tupel.addEventListener(
-        "click",
-        (e) => {
-          if (e.target instanceof HTMLVideoElement) {
-            if (e.target.paused) {
-              play(e.target);
-            } else {
-              pause(e.target);
-            }
-          }
-        },
-        false
-      );
-    }
-  </script>
-
-  <div class="playButton">
-    <Icon name="mdi:play-circle-outline" size="4rem" class="playButtonIcon" />
+<video-figure class="relative pb-[56.25%] pt-[25px] h-0 mb-4">
+  <div
+    id="playButton"
+    class="absolute top-2/4 left-2/4 -translate-x-1/2 -translate-y-1/2 cursor-pointer z-10 text-blue-500"
+  >
+    <Icon name="mdi:play-circle-outline" size="4rem" />
   </div>
 
-  <video loop preload="auto">
+  <video loop preload="auto" class="w-full h-auto rounded">
     <source src={url} type="video/webm" />
-    <caption>{{ caption }}</caption>
   </video>
-</div>
-
-<style>
-  video {
-    width: 100%;
-    height: auto;
-    border-radius: 4px;
-  }
-  .videoWrapper {
-    position: relative;
-    padding-bottom: 56.25%;
-    /* 16:9 */
-    padding-top: 25px;
-    height: 0;
-  }
-
-  .playButton {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    cursor: pointer;
-    z-index: 1;
-  }
-
-  .playButtonIcon {
-    color: var(--primary-dark);
-  }
-</style>
+  <figcaption class="text-sm m-0 text-center pt-1 px-2">{caption}</figcaption>
+</video-figure>
