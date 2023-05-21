@@ -37,10 +37,12 @@ function RelicsCalculatorImport(props) {
     error: "",
   });
 
-  const handleChange =
-    (name, boolean = false) =>
-    ({ target: { value, checked } }) =>
-      setState({ ...state, [name]: boolean ? checked : value });
+  const handleSaveLocally = () => {
+    setState({ ...state, saveLocally: !state.saveLocally });
+    if (!state.saveLocally) {
+      localStorage.removeItem(LOCAL_STORAGE_KEY);
+    }
+  };
 
   const handleClickToggle = () => {
     setState({ ...state, open: !state.open });
@@ -200,9 +202,21 @@ function RelicsCalculatorImport(props) {
         <p>
           To import your relevant account values, please enter your Guild Wars 2
           API key here. You need the inventories, unlocks and wallet
-          permissions. Your API key is only stored in your browser and only used
-          to interact with the Guild Wars 2 API.
+          permissions. You can store your API key in your browser for later use.
+          The API key never leaves your browser asides from authenticating with
+          the Guild Wars 2 API.
         </p>
+        <div className="form-control max-w-xs mb-4">
+          <label className="label cursor-pointer">
+            <span className="label-text">Save locally</span>
+            <input
+              type="checkbox"
+              checked={state.saveLocally}
+              className="checkbox checkbox-primary"
+              onChange={handleSaveLocally}
+            />
+          </label>
+        </div>
         <div className="flex">
           <input
             type="text"
