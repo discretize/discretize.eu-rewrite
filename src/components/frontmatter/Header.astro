@@ -5,7 +5,7 @@ import { Icon } from "astro-icon";
 const { title, description, image: headerImage, date } = Astro.props;
 ---
 
-<div class="headerMobile">
+<div class="sm:hidden">
   <h1>{title}</h1>
 
   <Picture
@@ -13,101 +13,38 @@ const { title, description, image: headerImage, date } = Astro.props;
     alt="Header"
     width={1280}
     height={500}
-    widths={[550]}
+    widths={[640]}
     aspectRatio={1280 / 500}
-    class="headerImage"
     sizes="100vw"
   />
 </div>
 
-<div class="headerImageWrapper">
+<div
+  class="relative h-full mx-[-1.4rem] mt-[-1.393rem] mb-4 max-sm:hidden max-[1439px]:mt-[-1rem] max-[1439px]:mx-[-1rem]"
+>
   <Picture
     src={headerImage}
     alt="Header"
     width={1280}
     height={500}
-    widths={[1200, 1920]}
+    widths={[1440]}
     aspectRatio={1280 / 500}
-    class="headerImage"
+    sizes="1440px"
+    class="w-full"
   />
 
-  <div class="headerImageOverlay">
-    <h1>{title}</h1>
+  <div
+    class="transform translate-y-[-50%] absolute top-1/2 left-0 max-w-full h-[120px] flex justify-between flex-col items-start p-4 bg-blue-500 text-black"
+  >
+    <h1 class="mb-0 font-semibold">{title}</h1>
     <small>{description}</small>
   </div>
 
-  <div class="headerImageOverlayCorner">
-    <small>
+  <div class="absolute top-0 right-0 p-1 text-sm bg-blue-500 text-black">
+    <small class="flex gap-1 items-center">
       <Icon name="mdi:calendar" height="0.8rem" /> last updated on {
         new Date(date).toDateString()
       }
     </small>
   </div>
 </div>
-
-<style>
-  .headerMobile {
-    display: none;
-  }
-
-  @media (max-width: 600px) {
-    .headerMobile {
-      display: block;
-    }
-  }
-
-  .headerImage {
-    width: 100%;
-    height: auto;
-  }
-
-  .headerImageWrapper {
-    position: relative;
-    height: 100%;
-
-    margin-left: -1.4rem;
-    margin-right: -1.4rem;
-    margin-top: -1.4rem;
-
-    margin-bottom: 1rem;
-  }
-
-  @media (max-width: 600px) {
-    .headerImageWrapper {
-      display: none;
-    }
-  }
-
-  .headerImageOverlay {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    max-width: 100%;
-    height: 120px;
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: flex-start;
-
-    padding: 1rem;
-    background: var(--primary);
-
-    color: var(--on-primary);
-  }
-
-  .headerImageOverlay h1 {
-    margin-bottom: 0;
-    font-weight: 600;
-  }
-
-  .headerImageOverlayCorner {
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 0.3rem;
-    font-size: 0.9.rem;
-    background: var(--primary);
-    color: var(--on-primary);
-  }
-</style>

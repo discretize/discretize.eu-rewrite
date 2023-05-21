@@ -3,7 +3,14 @@ import { Item } from "@gw2-ui/components";
 import { TOC } from "astro-toc";
 import imageFetch from "src/utils/imageFetch";
 import Card from "../Card.astro";
+import Grid from "../Grid.astro";
+import GridItem from "../GridItem.astro";
 import Attribute from "../gw2-ui/Attribute.astro";
+import Table from "../html-components/table.astro";
+import Tbody from "../html-components/tbody.astro";
+import Td from "../html-components/td.astro";
+import Th from "../html-components/th.astro";
+import Tr from "../html-components/tr.astro";
 import TextDivider from "../TextDivider.astro";
 import Header from "./Header.astro";
 
@@ -38,7 +45,7 @@ const {
 } = Astro.props;
 
 const images = Object.keys(
-  import.meta.glob(`../../../discretize-guides/fractals/*/images/header.jpg`, {
+  import.meta.glob(`../../../discretize-guides/fractals/**/images/header.jpg`, {
     import: "default",
   })
 );
@@ -52,21 +59,19 @@ const headerImage = await imageFetch(images, Astro.url.pathname);
   image={headerImage}
 />
 
-<p class="mb-1">
-  {long_description}
-</p>
+{long_description && <p class="mb-4">{long_description}</p>}
 
 <TextDivider text="Details" />
 
-<section class="details mb-1">
-  <div class="grid">
-    <div class="l6 m6 s12">
-      <table>
-        <tbody>
-          <tr>
-            <th>Difficulties</th>
-            <td
-              >{
+<section class="mb-4">
+  <Grid>
+    <GridItem>
+      <Table>
+        <Tbody>
+          <Tr>
+            <Th>Difficulties</Th>
+            <Td>
+              {
                 difficulties.map((d) => (
                   <>
                     Level {d.level} -{" "}
@@ -77,19 +82,19 @@ const headerImage = await imageFetch(images, Astro.url.pathname);
                     <br />
                   </>
                 ))
-              }</td
-            >
-          </tr>
-          <tr>
-            <th>Cycle</th>
-            <td>{cycle}</td>
-          </tr>
+              }
+            </Td>
+          </Tr>
+          <Tr>
+            <Th>Cycle</Th>
+            <Td>{cycle}</Td>
+          </Tr>
 
           {
             potions ? (
-              <tr>
-                <th>Potions</th>
-                <td>
+              <Tr>
+                <Th>Potions</Th>
+                <Td>
                   <ul>
                     {potions.map((p) => (
                       <li>
@@ -97,16 +102,16 @@ const headerImage = await imageFetch(images, Astro.url.pathname);
                       </li>
                     ))}
                   </ul>
-                </td>
-              </tr>
+                </Td>
+              </Tr>
             ) : null
           }
 
           {
             sigils ? (
-              <tr>
-                <th>Sigils</th>
-                <td>
+              <Tr>
+                <Th>Sigils</Th>
+                <Td>
                   <ul>
                     {sigils.map((s) => (
                       <li>
@@ -114,76 +119,29 @@ const headerImage = await imageFetch(images, Astro.url.pathname);
                       </li>
                     ))}
                   </ul>
-                </td>
-              </tr>
+                </Td>
+              </Tr>
             ) : null
           }
-        </tbody>
-      </table>
-    </div>
-    <div class="l6 m6 s12 toc">
-      <Card title="Table of contents">
-        <TOC
-          toc={headings.map((heading) => ({
-            title: heading.text,
-            url: "#" + heading.slug,
-            depth: heading.depth - 1,
-          }))}
-          maxDepth={2}
-          as="number"
-        />
-      </Card>
-    </div>
-  </div>
+        </Tbody>
+      </Table>
+    </GridItem>
+    <GridItem>
+      <div class="md:flex md:flex-row-reverse">
+        <Card title="Table of contents" className="!mt-0">
+          <TOC
+            toc={headings.map((heading) => ({
+              title: heading.text,
+              url: "#" + heading.slug,
+              depth: heading.depth - 1,
+            }))}
+            maxDepth={2}
+            as="number"
+          />
+        </Card>
+      </div>
+    </GridItem>
+  </Grid>
 </section>
 
 <TextDivider text="Guide" />
-
-<style>
-  .details ul {
-    list-style: none;
-    padding: 0 !important;
-    margin: 0 !important;
-  }
-  .details ul > li {
-    margin-top: 0 !important;
-  }
-  .details ul > :not(:last-child) {
-    margin-bottom: 0.1rem;
-  }
-  .details li span {
-    margin-left: 0.5rem;
-  }
-  .additionalPadding {
-    padding: 8px !important;
-  }
-
-  .mb-1 {
-    margin-bottom: 1rem;
-  }
-  .details th {
-    font-weight: 600;
-  }
-
-  .details tr > td,
-  .details tr > th {
-    border-bottom: 1px solid var(--rdc-color-border);
-    padding: 1rem;
-  }
-
-  .details tbody :last-child > td,
-  .details tbody :last-child > th {
-    border-bottom: none;
-  }
-
-  .toc {
-    display: flex;
-    flex-direction: row-reverse;
-  }
-
-  @media (max-width: 600px) {
-    .toc {
-      display: block;
-    }
-  }
-</style>

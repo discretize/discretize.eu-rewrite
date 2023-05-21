@@ -3,7 +3,7 @@ import OverviewPage from "src/components/pages/OverviewPage.astro";
 import Layout from "src/layouts/Layout.astro";
 
 const guides = (
-  await Astro.glob(`../../../discretize-guides/fractals/**/*/index.mdx`)
+  await Astro.glob(`../../../discretize-guides/fractals/**/index.mdx`)
 )
   ?.map((guide) => {
     return {

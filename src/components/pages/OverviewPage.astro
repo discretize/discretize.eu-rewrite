@@ -1,8 +1,5 @@
 ---
 import { Picture } from "@astrojs/image/components";
-import { ProfessionTypes } from "@gw2-ui/data/professions";
-import { Icon } from "astro-icon";
-import Profession from "../gw2-ui/Profession.astro";
 
 interface Props {
   items: Array<{
@@ -11,142 +8,39 @@ interface Props {
     date: string;
     description: string;
     imageUrl: string;
-    record?: {
-      time: string;
-      by: Array<{ name: string; tag: string }>;
-      youtube: Array<{
-        id: string;
-        name: string;
-        specialization: ProfessionTypes;
-      }>;
-    };
   }>;
 }
 
 const { items } = Astro.props;
 ---
 
-<div class="overviewPageWrapper">
+<div class="max-w-[1000px] m-auto">
   {
     items.map((item) => (
-      <a href={item.slug}>
-        <article class="guidecard">
+      <a href={item.slug} class="w-full mb-8 inline-flex">
+        <article class="border-blue-700 hover:border-blue-300 border-2 border-solid rounded-xl flex w-full gap-4 max-sm:gap-2 max-sm:flex-col sm:max-h-[173px] embossed shadow-lg">
           <Picture
             src={"../../../" + item.imageUrl}
             alt={item.title}
-            sizes="(max-width: 600px) 300px, 300px"
-            widths={[300]}
+            sizes="(max-width: 639px) 100vh, 300px"
+            widths={[300, 600]}
             aspectRatio="16:9"
+            class="sm:rounded-l-xl max-sm:rounded-t-xl sm:max-w-none"
           />
-          <div class="guideCardRightSide">
-            <div class="headline">
-              <h4>{item.title}</h4>
-              <span class="guideCardDate">
+          <div class="p-4 flex flex-col justify-between w-full">
+            <div class="flex justify-between max-sm:flex-col max-sm:mb-2">
+              <h2 class="max-sm:mb-1">{item.title}</h2>
+              <span class="text-sm">
                 <small>
                   updated {new Date(item.date).toLocaleDateString()}
                 </small>
               </span>
             </div>
 
-            <p class="description">{item.description}</p>
-
-            {item.record && false ? (
-              <span class="guideCardRecord">
-                <Icon
-                  name="mdi:podium-gold"
-                  size="1.2rem"
-                  style={{ marginRight: "0.5rem", color: "gold" }}
-                />{" "}
-                {"  "}
-                <small>
-                  {item.record.time} by{" "}
-                  {item.record.by.map((author, index) => (
-                    <span>
-                      {author.name} [{author.tag}]{" "}
-                      {index < item.record.by.length - 1 ? "," : ""}
-                    </span>
-                  ))}
-                  {item.record.youtube.map(({ specialization }) => (
-                    <Profession name={specialization} disableText />
-                  ))}
-                </small>
-              </span>
-            ) : (
-              ""
-            )}
+            <p class="font-light">{item.description}</p>
           </div>
         </article>
       </a>
     ))
   }
 </div>
-
-<style>
-  .overviewPageWrapper {
-    max-width: 1000px;
-    margin: 0 auto;
-  }
-  .overviewPageWrapper a {
-    width: 100%;
-    margin-bottom: 2rem;
-    max-height: 169px !important;
-  }
-  .guidecard {
-    width: 100%;
-    display: flex;
-    gap: 1rem;
-  }
-  article img {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-  .guideCardDate {
-    font-size: 0.8rem;
-    color: var(--on-surface);
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 0.5rem;
-  }
-
-  .guideCardRecord {
-    color: var(--on-surface);
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 0.5rem;
-  }
-  @media (max-width: 600px) {
-    .guidecard {
-      flex-direction: column;
-    }
-    .overviewPageWrapper a {
-      max-height: 100% !important;
-    }
-    article img {
-      width: 100%;
-      border-top-right-radius: inherit;
-      border-bottom-left-radius: 0;
-    }
-  }
-  .guideCardRightSide {
-    padding: 1rem;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  article {
-    padding: 0 !important;
-    border: 1px solid var(--primary-dark);
-  }
-  article:hover {
-    border: 1px solid var(--primary);
-  }
-  .headline {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-  }
-  .description {
-    font-weight: 300;
-  }
-</style>

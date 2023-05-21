@@ -22,12 +22,19 @@ import compress from "astro-compress";
 import injectTabs from "./src/utils/remark/inject-tabs";
 
 // https://astro.build/config
+import tailwind from "@astrojs/tailwind";
+
+// https://astro.build/config
 export default defineConfig({
+  cacheDir: ".cache",
   // vite: {
   //   ssr: {
   //     noExternal: ["@floating-ui/react-dom"],
   //   },
   // },
+  experimental: {
+    middleware: true,
+  },
   vite: {
     build: {
       assetsInlineLimit: 0,
@@ -55,6 +62,7 @@ export default defineConfig({
     }),
     image({
       serviceEntryPoint: "@astrojs/image/sharp",
+      cacheDir: ".cache",
     }),
     prefetch(),
     compress({
@@ -64,5 +72,6 @@ export default defineConfig({
       js: true,
       svg: true,
     }),
+    tailwind({ config: { applyBaseStyles: false } }),
   ],
 });

@@ -2,9 +2,9 @@
 import { Profession } from "@gw2-ui/components";
 import type { EliteSpecTypes, ProfessionTypes } from "@gw2-ui/data/professions";
 import { Icon } from "astro-icon";
+import { BACKGROUND } from "src/styles";
 import Link from "../Link.astro";
 import TextDivider from "../TextDivider.astro";
-import NavButton from "./NavButton.astro";
 
 interface Props {
   builds: Record<
@@ -73,27 +73,21 @@ const partitionedBuilds = Object.keys(sortedBuilds).reduce(
 
 <ul class="nested-dropdowns">
   <li>
-    <Link href="/builds" className="buttonMenu discretizeNavButton">
-      Builds
-    </Link>
-    <ul>
+    <Link href="/builds" className="m-0 discretizeNavButton">Builds</Link>
+    <ul class={`${BACKGROUND} shadow`}>
       {
         Object.keys(sortedBuilds).map((profession) => (
-          <li>
-            <div class="wave buttonProfession row no-margin">
+          <li class="dark:hover:bg-gray-100/20 hover:bg-gray-300">
+            <div class="flex items-center h-[48px] w-[185px] whitespace-nowrap p-3 justify-between">
               <Profession
                 name={profession as ProfessionTypes}
                 client:load
                 disableLink
-                style={{ whiteSpace: "nowrap" }}
               />
-              <div class="max" />
-              <i>
-                <Icon name="mdi:chevron-right" />
-              </i>
+              <Icon name="mdi:chevron-right" size="1.5rem" />
             </div>
 
-            <ul>
+            <ul class={`${BACKGROUND} shadow`}>
               {partitionedBuilds[profession].map((partition, index) => {
                 if (partition.length === 0) {
                   return null;
@@ -103,18 +97,18 @@ const partitionedBuilds = Object.keys(sortedBuilds).reduce(
                   <>
                     <TextDivider>{RATINGS[index]}</TextDivider>
                     {partition.map((build) => (
-                      <li>
+                      <li class="dark:hover:bg-gray-100/20 hover:bg-gray-300">
                         <Link
                           href={build.url}
-                          className="_buildLink"
+                          className="w-full"
                           label={build.title}
                         >
-                          <div class="buttonProfession wave row no-margin">
+                          <div class="flex items-center h-[48px] whitespace-nowrap p-3 justify-between">
                             <Profession
                               name={build.specialization}
                               client:load
                               disableLink
-                              style={{ whiteSpace: "nowrap" }}
+                              className="whitespace-nowrap"
                               text={build.title}
                             />
                           </div>
@@ -133,17 +127,6 @@ const partitionedBuilds = Object.keys(sortedBuilds).reduce(
 </ul>
 
 <style>
-  ._buildLink {
-    width: 100%;
-  }
-  .buttonMenu {
-    margin: 0;
-  }
-  .buttonProfession {
-    padding: 0.6rem;
-    font-size: 1rem;
-    width: 100%;
-  }
   .nested-dropdowns {
     /* Border */
     display: flex;
@@ -175,10 +158,6 @@ const partitionedBuilds = Object.keys(sortedBuilds).reduce(
     list-style-type: none;
     margin: 0;
     padding: 0;
-
-    background-color: var(--background);
-
-    box-shadow: var(--elevate2);
   }
 
   /* The second level sub nested-dropdowns */
@@ -195,7 +174,6 @@ const partitionedBuilds = Object.keys(sortedBuilds).reduce(
     padding: 0.1rem 0.5rem;
     font-size: 0.8rem;
     margin-bottom: 0 !important;
-    color: var(--on-background);
     font-weight: 400;
   }
 

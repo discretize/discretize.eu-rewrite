@@ -1,5 +1,6 @@
 ---
 import { Icon } from "astro-icon";
+import { TEXT } from "src/styles";
 
 interface Props {
   href: string;
@@ -31,26 +32,17 @@ if (disablePrefetch && isInternal) {
 }
 
 if (enableDecoration) {
-  finalClassName += " primary-text link";
+  finalClassName += ` text-blue-500 hover:underline`;
 }
 
 finalClassName = finalClassName.trim();
 ---
 
-<a {...linkProps} aria-label={label} class={finalClassName}
-  ><slot />
+<a {...linkProps} aria-label={label} class={finalClassName}>
+  <slot />
   {
     enableDecoration && !isInternal ? (
-      <Icon name="mdi:link-variant" class="link-decoration-item" size="0.8em" />
+      <Icon name="mdi:link-variant" class="inline-flex" size="0.8em" />
     ) : undefined
   }
 </a>
-
-<style>
-  .link:hover {
-    text-decoration: underline;
-  }
-  .link-decoration-item {
-    margin-left: 0.2rem;
-  }
-</style>

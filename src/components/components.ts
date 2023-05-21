@@ -30,6 +30,7 @@ import tbody from "./html-components/tbody.astro";
 import td from "./html-components/td.astro";
 import th from "./html-components/th.astro";
 import tr from "./html-components/tr.astro";
+import ul from "./html-components/ul.astro";
 import Information from "./Information.astro";
 import Label from "./Label.astro";
 import Tab from "./Tab.astro";
@@ -37,12 +38,15 @@ import Tabs from "./Tabs.astro";
 import TextDivider from "./TextDivider.astro";
 import Video from "./Video.astro";
 import Warning from "./Warning.astro";
+import li from "./html-components/li.astro";
 
 export const components = {
   hr,
   td,
   tr,
   th,
+  ul,
+  li,
   code,
   blockquote,
   a: MDLink,

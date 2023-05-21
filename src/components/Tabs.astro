@@ -3,7 +3,6 @@ import { ProfessionTypes } from "@gw2-ui/data/professions";
 import Profession from "./gw2-ui/Profession.astro";
 
 interface Props {
-  uid: string;
   tabs: Array<{
     title: string;
     specialization: ProfessionTypes;
@@ -11,12 +10,12 @@ interface Props {
   }>;
 }
 
-const { tabs, uid } = Astro.props;
+const { tabs } = Astro.props;
 
 tabs.forEach((tab, index) => {
   tabs[index] = {
     ...tab,
-    id: `#page_${uid}_${(tab.title || tab.specialization)
+    id: `page_${(tab.title || tab.specialization)
       ?.toLowerCase()
       .replaceAll(" ", "")
       .replaceAll(/\/|[^a-zA-Z0-9]+/gm, "")}`,
@@ -24,15 +23,50 @@ tabs.forEach((tab, index) => {
 });
 ---
 
-<div class="rootTabs">
-  <div class="tabs">
+<script>
+  class TabsComponent extends HTMLElement {
+    connectedCallback() {
+      this.allTabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          this.allTabs.forEach((tab) => tab.classList.remove("tab-active"));
+          tab.classList.add("tab-active");
+
+          this.allContents.forEach((content) => {
+            content.classList.add("hidden");
+            if (content.id === tab.attributes["data-ui"].value) {
+              content.classList.remove("hidden");
+            }
+          });
+        });
+      });
+    }
+
+    get allTabs() {
+      return this.querySelectorAll(".tab");
+    }
+
+    get allContents() {
+      return this.querySelectorAll(".content");
+    }
+  }
+
+  customElements.define("tabs-component", TabsComponent);
+</script>
+
+<tabs-component>
+  <div
+    class="tabs tabs-boxed max-w-[calc(100%-4rem)] m-auto relative mb-[-2rem]"
+  >
     {
       tabs.map((tab, index) => (
-        <a data-ui={tab.id} class={index === 0 ? "active" : ""}>
+        <div
+          data-ui={tab.id}
+          class={(index === 0 ? "tab-active" : "") + " tab !h-16"}
+        >
           {tab.title ? (
             tab.title
           ) : (
-            <div class="professionHeader">
+            <div class="flex flex-col">
               <Profession
                 name={tab.specialization}
                 disableLink
@@ -42,47 +76,12 @@ tabs.forEach((tab, index) => {
               <span>{tab.specialization}</span>
             </div>
           )}
-        </a>
+        </div>
       ))
     }
   </div>
 
-  <div class="content">
+  <div class="embossed p-4 pt-12 rounded">
     <slot />
   </div>
-</div>
-
-<style>
-  .tabs {
-    border: 2px solid var(--surface-variant);
-    background-color: var(--surface);
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 1px -2px,
-      rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;
-    z-index: 1;
-    width: calc(100% - 50px);
-    margin: 0 auto;
-    overflow-x: auto;
-  }
-
-  .professionHeader {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-  }
-  .content {
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 1px -2px inset,
-      rgba(0, 0, 0, 0.14) 0px 2px 2px 0px inset,
-      rgba(0, 0, 0, 0.12) 0px 1px 5px 0px inset;
-    background-color: var(--surface);
-    border-radius: 4px;
-    padding: 0 16px;
-    padding-top: 1.5rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    position: relative;
-    top: -25px;
-  }
-  .rootTabs {
-    margin-bottom: 1rem;
-  }
-</style>
+</tabs-component>

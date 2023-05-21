@@ -16,7 +16,7 @@ export interface Props {
 const { title } = Astro.props.frontmatter;
 
 const rawImages = import.meta.glob(
-  `../../discretize-guides/fractals/*/images/header.jpg`,
+  `../../discretize-guides/fractals/**/images/header.jpg`,
   {
     import: "default",
   }

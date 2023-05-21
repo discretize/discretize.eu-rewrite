@@ -7,7 +7,7 @@ interface Props {
   xl?: string;
 }
 
-const { xs, sm, md, lg, xl } = Astro.props;
+const { xs = "12", sm = "6", md, lg, xl } = Astro.props;
 
 function parseSafeInt(value) {
   const parsed = parseInt(value, 10);
@@ -17,29 +17,20 @@ function parseSafeInt(value) {
   return parsed;
 }
 
-let classNames = "";
-if (typeof xs !== "undefined") {
-  classNames += ` s${xs}`;
-} else {
-  classNames += " s12";
-}
-// these transformations must be done because beercss doesnt know about sm and md, only m
-if (typeof sm !== "undefined" || typeof md !== "undefined") {
-  const sm_i = parseSafeInt(sm);
-  const md_i = parseSafeInt(md);
+const classes = { sm: xs, md: sm, lg: md, xl: lg, "2xl": xl };
+let classNames = Object.entries(classes)
+  .map(([key, value]) => {
+    const parsed = parseSafeInt(value);
+    if (parsed === 0) {
+      return "";
+    }
+    const prefix = key === "sm" ? "" : `${key}:`;
 
-  classNames += ` m${Math.max(sm_i, md_i)}`;
-} else {
-  classNames += " m6";
-}
-if (typeof lg !== "undefined" || typeof xl !== "undefined") {
-  const lg_i = parseSafeInt(lg);
-  const xl_i = parseSafeInt(xl);
-
-  classNames += ` l${Math.max(lg_i, xl_i)}`;
-}
+    return `${prefix}col-span-${parsed}`;
+  })
+  .join(" ");
 ---
 
-<div class={classNames.trim()}>
+<div class={"row-auto col-end-auto " + classNames}>
   <slot />
 </div>

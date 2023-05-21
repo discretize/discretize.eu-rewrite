@@ -6,6 +6,7 @@ import heroShattered from "../assets/images/hero_sunqua2.jpg";
 import Discretize from "src/icons/discretize.astro";
 import Link from "src/components/Link.astro";
 import { Icon } from "astro-icon";
+import Button from "src/components/html-components/button.astro";
 ---
 
 <script>
@@ -21,21 +22,31 @@ import { Icon } from "astro-icon";
 </script>
 
 <Layout seo={{}} disablePadding={true} disableBackgroundImage={true}>
-  <div class="landingPage">
+  <div class="landingPage relative">
     <div class="shadowBg"></div>
     <div class="logo">
-      <Discretize color="#fff" />
+      <Discretize color="fill-white" />
       <p class="subtext">International high-end GW2 fractal guild</p>
-      <span class="chip border" id="buttonGuild"
-        >Guild <Icon name="mdi:arrow-down" height="1rem" /></span
-      >
-      <Link href="/builds">
-        <span class="chip border"
-          >Builds
+      <span class="flex justify-center gap-4">
+        <Button id="buttonGuild">
+          <span class="flex">
+            Guild <Icon name="mdi:arrow-down" className="ml-4" height="1rem" />
+          </span>
+        </Button>
 
-          <Icon name="mdi:format-list-bulleted" height="1rem" />
-        </span>
-      </Link>
+        <Link href="/builds" className="">
+          <Button>
+            <span class="flex">
+              Builds
+              <Icon
+                name="mdi:format-list-bulleted"
+                className="ml-4"
+                height="1rem"
+              />
+            </span>
+          </Button>
+        </Link>
+      </span>
     </div>
     <div class="heroImageWrapper first">
       <Picture
@@ -52,7 +63,7 @@ import { Icon } from "astro-icon";
     </div>
   </div>
 
-  <div class="page2">
+  <div class="page2 relative">
     <div class="heroImageWrapper">
       <Picture
         src={heroShattered}
@@ -142,11 +153,9 @@ import { Icon } from "astro-icon";
       rgba(0, 0, 0, 0) 100%
     );
     position: absolute;
-    top: 0;
+
     z-index: 1;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    inset: 0;
   }
   .heroImage {
     bottom: 0;

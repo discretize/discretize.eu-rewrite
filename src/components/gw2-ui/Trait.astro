@@ -14,7 +14,7 @@ interface Props extends GenericGw2Component {
   <TraitInternal
     client:visible
     {...Astro.props}
-    className={`nowrap ${Astro.props.className || ""}`.trim()}
+    className={`whitespace-nowrap ${Astro.props.className || ""}`.trim()}
     style={getSizeStyle(Astro.props)}
   />
 </OptimizedGW2Image>

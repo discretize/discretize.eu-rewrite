@@ -2,12 +2,13 @@
 interface Props {
   text?: string;
   disableContent?: boolean;
+  className?: string;
 }
 
-const { text, disableContent = false } = Astro.props;
+const { text, disableContent = false, className } = Astro.props;
 ---
 
-<div class="root">
+<div class={`root ${className}`.trim()}>
   <div class="textdivider"></div>
   {
     !disableContent ? (

@@ -1,8 +1,8 @@
 ---
-import { Image } from "@astrojs/image/components";
 import { Icon } from "astro-icon";
 import Profession from "./gw2-ui/Profession.astro";
-import images, { getOptimizedImage } from "./images";
+import { getOptimizedImage } from "./images";
+import Tooltip from "./Tooltip.astro";
 
 export interface BuildCardProps {
   title: string;
@@ -28,7 +28,6 @@ const {
   role,
   rating,
   uptodate = { guide: true, gear: true },
-  archive = false,
 } = Astro.props;
 
 const pcM = `var(--gw2-color-${profession.toLowerCase()}-main)`;
@@ -39,11 +38,10 @@ const image = await getOptimizedImage(specialization.toLowerCase());
 
 <a
   href={`/builds/${slug}`}
-  class={`buildLink ${rating.toLowerCase().replace(" ", "")} ${
-    archive ? "archive" : ""
-  }`}
+  class={`mb-4 block ${rating === "archive" ? "hidden" : ""}`}
+  data-rating={rating.toLowerCase().replace(" ", "")}
 >
-  <article class="row outer round">
+  <article class="outer rounded-3xl flex items-center embossed">
     <img
       src={image.src}
       width={100}
@@ -51,7 +49,7 @@ const image = await getOptimizedImage(specialization.toLowerCase());
       alt={specialization}
       class="image"
     />
-    <div class="title">
+    <div class="text-2xl">
       <Profession
         name={specialization}
         disableLink
@@ -68,51 +66,55 @@ const image = await getOptimizedImage(specialization.toLowerCase());
     </div>
 
     <div class="infoButtons">
-      <div class="lastUpdated">
-        <Icon
-          name="mdi:clock-outline"
-          height="1.8rem"
-          class={`${
-            uptodate.guide && uptodate.gear
-              ? "green"
-              : uptodate.guide || uptodate.gear
-              ? "yellow"
-              : "red"
-          } update-icon`}
-        />
-        <div class="tooltip top">
-          Gear: {uptodate.gear ? "up-to-date" : "not updated"}<br />
-          Guide: {uptodate.guide ? "up-to-date" : "not updated"}
-        </div>
+      <div class="text-xs">
+        <Tooltip>
+          <span slot="target">
+            <Icon
+              name="mdi:clock-outline"
+              height="1.8rem"
+              class={`${
+                uptodate.guide && uptodate.gear
+                  ? "text-green-500"
+                  : uptodate.guide || uptodate.gear
+                  ? "yellow"
+                  : "red"
+              }`}
+            />
+          </span>
+          <div slot="tooltip">
+            Gear: {uptodate.gear ? "up-to-date" : "not updated"}<br />
+            Guide: {uptodate.guide ? "up-to-date" : "not updated"}
+          </div>
+        </Tooltip>
       </div>
 
       {
         cmGuide && (
-          <div class="cmGuide">
-            <Icon name="mdi:book-open" height="1.8rem" />
-            <div class="tooltip top">CM-Guide available</div>
-          </div>
+          <>
+            <Tooltip>
+              <div class="text-blue-500" slot="target">
+                <Icon name="mdi:book-open" height="1.8rem" />
+              </div>
+              <span slot="tooltip">CM-Guide available</span>
+            </Tooltip>
+          </>
         )
       }
     </div>
 
-    <div class="tags l">
+    <div class="justify-end flex max-lg:hidden gap-2">
       {
         [rating, role].map((tag) => {
           return (
-            <div class="chip border tertiary-border on-surface small tag">
+            <div
+              class={`chip border rounded-lg tertiary-border on-surface small cursor-default px-2 border-${profession.toLowerCase()}-main`}
+            >
               <span>{tag}</span>
             </div>
           );
         })
       }
     </div>
-
-    <!-- <div class="l">
-      {cmGuide ? <button class="btn btn-primary">CM Guide</button> : undefined}
-    </div>
-
-    <button class="btn btn-primary l">Build</button> -->
   </article>
 </a>
 
@@ -128,41 +130,17 @@ const image = await getOptimizedImage(specialization.toLowerCase());
   .outer:hover {
     border: 1px solid var(--pcL);
   }
-  .title {
-    font-size: 1.4rem;
-  }
-  .buildLink {
-    display: block;
-    margin-bottom: 1rem;
-  }
-  .lastUpdated {
-    font-size: 0.8rem;
-  }
-  .cmGuide {
-    color: var(--primary);
-  }
+
   .infoButtons {
     display: flex;
     gap: 0.5rem;
     align-self: center;
   }
-  .tags {
-    justify-self: flex-end;
-  }
-  .tag {
-    cursor: default;
-  }
+
   .chip {
     font-size: 0.6rem;
   }
 
-  .update-icon {
-    color: black;
-  }
-
-  .archive {
-    display: none;
-  }
   @media (max-width: 1000px) {
     .outer {
       grid-template-columns: 1fr 2fr 80px;

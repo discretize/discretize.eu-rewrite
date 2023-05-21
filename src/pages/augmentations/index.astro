@@ -3,12 +3,30 @@ import "@discretize/typeface-menomonia";
 import "@gw2-ui/default_style.css";
 import "discretize-ui/react-discretize-components/src/styles/defaultTheme.css";
 import { CalculatorUI } from "src/components/augmentations/CalculatorUI";
+import Augmentation from "src/components/gw2-ui/Augmentation.astro";
+import Information from "src/components/Information.astro";
+import TextDivider from "src/components/TextDivider.astro";
 import Layout from "src/layouts/Layout.astro";
 ---
 
 <Layout seo={{ title: "Augmentations Calculator" }}>
   <h1>Augmentations Calculator</h1>
-  <hr />
+
+  <p>
+    Calculates the amount of time it takes to acquire the endgame fractal
+    augmentations like <Augmentation name={"Mist Attunement 1"} />, <Augmentation
+      name={"Mist Attunement 4"}
+    />. Furthermore, it calculates the optimal conversion rates between
+    currencies.
+  </p>
+
+  <p>
+    Enter your current account values on the left side, your daily routine and
+    the calculator will display the time it takes to acquire each augmentation
+    in real time.
+  </p>
+
+  <TextDivider disableContent className="mb-6" />
 
   <CalculatorUI client:visible />
 </Layout>

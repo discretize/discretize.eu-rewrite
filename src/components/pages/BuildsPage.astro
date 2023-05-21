@@ -8,6 +8,7 @@ import TextDivider from "src/components/TextDivider.astro";
 import Label from "src/components/Label.astro";
 import type { ProfessionTypes } from "@gw2-ui/data/professions";
 import { Icon } from "astro-icon";
+import Tooltip from "../Tooltip.astro";
 
 interface Props {
   professions: ProfessionTypes[];
@@ -19,7 +20,7 @@ const PROFESSIONS = Astro.props.professions.map((profession) => ({
 }));
 
 const buildsRaw = await Astro.glob(
-  `../../../discretize-guides/builds/**/*/index.mdx`
+  `../../../discretize-guides/builds/**/index.mdx`
 );
 const builds: BuildCardProps[] = buildsRaw.map((build) => ({
   title: build.frontmatter.title,
@@ -47,28 +48,107 @@ builds.forEach((build) => {
 const seo: SEOProps = {
   title: "Builds",
 };
+
+const SELECTED = [
+  "hover:bg-blue-700",
+  "dark:hover:bg-blue-300",
+  "bg-blue-500",
+  "dark:bg-blue-500",
+  "text-black",
+];
+const UNSELECTED = ["embossed", "dark:hover:bg-gray-700", "hover:bg-gray-200"];
+
+const SHARED =
+  "px-4 py-2 text-sm w-full h-full font-medium border-gray-600 focus:ring-0";
 ---
 
-<script>
-  const dT_LFG_Builds =
-    document.querySelectorAll<HTMLAnchorElement>(".discretizelfg");
-  const allBuilds = document.querySelectorAll<HTMLAnchorElement>(".buildLink");
-  const archivedBuilds =
-    document.querySelectorAll<HTMLAnchorElement>(".archive");
-  const buildsSections = document.querySelectorAll<HTMLDivElement>(".builds");
-  const allButtons =
-    document.querySelectorAll<HTMLButtonElement>(".buildsNav button");
+<Layout seo={seo} disableBackground>
+  <div class="max-w-[1000px] m-auto md:mt-4">
+    <div class="flex rounded-md shadow-sm h-[46px]" role="group">
+      <Tooltip className="flex-auto">
+        <button
+          slot="target"
+          type="button"
+          class={`${SHARED} border rounded-l-lg ${SELECTED.join(" ")}`}
+          id="button-current"
+          aria-label="Current Builds"
+        >
+          <span>Current</span>
+        </button>
+        <div slot="tooltip">Viable builds for the current patch</div>
+      </Tooltip>
+      <Tooltip className="flex-auto">
+        <button
+          slot="target"
+          type="button"
+          class={`${SHARED} border-t border-b ${UNSELECTED.join(" ")}`}
+          id="button-dtlfg"
+          aria-label="Discretize LFG Builds"
+        >
+          <span class="whitespace-nowrap"
+            >[dT] LFG <Icon
+              name="mdi:information"
+              height="1rem"
+              class="inline"
+            /></span
+          >
+        </button>
+        <div slot="tooltip">Builds used by the Discretize Guild</div>
+      </Tooltip>
+      <Tooltip className="flex-auto">
+        <button
+          slot="target"
+          type="button"
+          class={`${SHARED} border rounded-r-md" ${UNSELECTED.join(" ")}`}
+          id="button-archived"
+          aria-label="Archived Builds"
+        >
+          <span>Archive</span>
+        </button>
+        <div slot="tooltip" class="tooltip up">
+          Not updated, potentially outdated builds
+        </div>
+      </Tooltip>
+    </div>
 
-  function highlightButton(id: string) {
+    {
+      PROFESSIONS.map(({ profession, builds }) => (
+        <>
+          <div class="mt-4 text-xl">
+            <TextDivider>
+              <Label className="p-3">
+                <Profession name={profession} disableLink />
+              </Label>
+            </TextDivider>
+            {builds.map((build) => (
+              <BuildCard {...build} />
+            ))}
+          </div>
+        </>
+      ))
+    }
+  </div>
+</Layout>
+
+<script define:vars={{ SELECTED, UNSELECTED }}>
+  const dT_LFG_Builds = document.querySelectorAll(
+    "a[data-rating='discretizelfg']"
+  );
+  console.log(dT_LFG_Builds);
+  const allBuilds = document.querySelectorAll("a[data-rating]");
+  const archivedBuilds = document.querySelectorAll("a[data-rating='archive']");
+  const buildsSections = document.querySelectorAll(".builds");
+  const allButtons = [];
+
+  function highlightButton(id) {
     const button = document.querySelector(`[id='${id}']`);
-    button.classList.remove("surface");
-    button.classList.add("primary");
-
+    button.classList.remove(...UNSELECTED);
+    button.classList.add(...SELECTED);
     // unhighlight the other buttons
     allButtons.forEach((button) => {
       if (button.id !== id) {
-        button.classList.remove("primary");
-        button.classList.add("surface");
+        button.classList.remove(...SELECTED);
+        button.classList.add(...UNSELECTED);
       }
     });
   }
@@ -139,66 +219,8 @@ const seo: SEOProps = {
       "[id='button-archived']"
     );
     archivedBuildsButton.addEventListener("click", showArchivedBuilds);
+    allButtons.push(dT_LFG_Button, currentBuildsButton, archivedBuildsButton);
   }
   // attach listeners on page load
   attachListeners();
 </script>
-
-<Layout seo={seo} disableBackground>
-  <div class="buildsPageWrapper">
-    <nav class="no-space buildsNav">
-      <button
-        class="border left-round max large primary"
-        id="button-current"
-        aria-label="Current Builds"
-      >
-        <span>Current</span>
-        <div class="tooltip up">Viable builds for the current patch</div>
-      </button>
-      <button
-        class="border no-round max large surface"
-        id="button-dtlfg"
-        aria-label="Discretize LFG Builds"
-      >
-        <span>[dT] LFG <Icon name="mdi:information" height="1rem" /></span>
-        <div class="tooltip up">Builds used by the Discretize Guild</div>
-      </button>
-      <button
-        class="border right-round max large surface"
-        id="button-archived"
-        aria-label="Archived Builds"
-      >
-        <span>Archive</span>
-        <div class="tooltip up">Not updated, potentially outdated builds</div>
-      </button>
-    </nav>
-
-    {
-      PROFESSIONS.map(({ profession, builds }) => (
-        <>
-          <div class="builds">
-            <TextDivider>
-              <Label>
-                <Profession name={profession} disableLink />
-              </Label>
-            </TextDivider>
-            {builds.map((build) => (
-              <BuildCard {...build} />
-            ))}
-          </div>
-        </>
-      ))
-    }
-  </div>
-</Layout>
-
-<style>
-  .builds {
-    margin-top: 2rem;
-    font-size: 1.2rem;
-  }
-  .buildsPageWrapper {
-    max-width: 1000px;
-    margin: 0 auto;
-  }
-</style>
