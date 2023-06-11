@@ -20,9 +20,22 @@ export interface Props {
     variant: string;
   }[];
   code: string;
+  cmGuide?: string;
+  uptodate?: {
+    guide?: boolean;
+    gear?: boolean;
+  };
 }
 
-const { title, specialization, role, hasBeginner, date } = Astro.props;
+const {
+  title,
+  specialization,
+  role,
+  hasBeginner,
+  date,
+  cmGuide,
+  uptodate: { guide = true, gear = true } = {},
+} = Astro.props;
 ---
 
 <script>
@@ -57,21 +70,34 @@ const { title, specialization, role, hasBeginner, date } = Astro.props;
   </Label>
 </div>
 
-<TextDivider text="Overview" />
+<div class="flex items-center gap-4 mb-4">
+  <span>Gear: {!gear ? "not" : ""} updated</span>
+  <span class="flex-grow">Guide: {!gear ? "not" : ""} updated</span>
 
-{
-  hasBeginner && (
-    <div>
-      Beginner
-      <label class="switch">
-        <input
-          type="checkbox"
-          id="switchBeginner"
-          aria-label="Switch between Beginner and Advanced"
-        />
-        <span />
-      </label>
-      Advanced
-    </div>
-  )
-}
+  {
+    cmGuide && (
+      <button class="btn btn-primary ">
+        <a href={cmGuide} target="_blank" rel="noopener noreferrer">
+          CM Guide
+        </a>
+      </button>
+    )
+  }
+
+  {
+    hasBeginner && (
+      <div class="form-control">
+        <label class="label cursor-pointer">
+          <span class="label-text mr-4">Advanced mode</span>
+          <input
+            id="switchBeginner"
+            type="checkbox"
+            class="checkbox"
+            aria-label="Switch between Beginner and Advanced"
+          />
+        </label>
+      </div>
+    )
+  }
+</div>
+<TextDivider text="Overview" />
