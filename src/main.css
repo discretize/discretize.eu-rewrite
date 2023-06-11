@@ -22,11 +22,11 @@
     @apply text-base;
   }
   * > p {
-    @apply mb-3;
+    @apply mb-4;
   }
-  * > p:last-child {
+  /* * > p:last-child {
     @apply mb-0;
-  }
+  } */
   ol li p,
   ul li p {
     @apply inline;

@@ -50,7 +50,7 @@ const { caption, url } = Astro.props;
   customElements.define("video-figure", VideoFigure);
 </script>
 
-<video-figure class="relative pb-[56.25%] pt-[25px] h-0 mb-4">
+<video-figure class="relative pb-[56.25%] pt-[25px]">
   <div
     id="playButton"
     class="absolute top-2/4 left-2/4 -translate-x-1/2 -translate-y-1/2 cursor-pointer z-10 text-blue-500"
@@ -61,5 +61,7 @@ const { caption, url } = Astro.props;
   <video loop preload="auto" class="w-full h-auto rounded">
     <source src={url} type="video/webm" />
   </video>
-  <figcaption class="text-sm m-0 text-center pt-1 px-2">{caption}</figcaption>
+  <figcaption class="text-sm m-0 text-center pt-1 px-2 mb-4">
+    {caption}
+  </figcaption>
 </video-figure>

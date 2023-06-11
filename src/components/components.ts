@@ -39,6 +39,7 @@ import TextDivider from "./TextDivider.astro";
 import Video from "./Video.astro";
 import Warning from "./Warning.astro";
 import li from "./html-components/li.astro";
+import ol from "./html-components/ol.astro";
 
 export const components = {
   hr,
@@ -47,6 +48,7 @@ export const components = {
   th,
   ul,
   li,
+  ol,
   code,
   blockquote,
   a: MDLink,
