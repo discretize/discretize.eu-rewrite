@@ -13,3 +13,45 @@ h5,
 h6 {
   display: block;
 }
+.table :where(tbody th, tbody td) {
+  --tw-bg-opacity: 1;
+  background-color: hsl(var(--b1) / 1);
+  background-color: hsl(var(--b1) / var(--tw-bg-opacity));
+}
+.table:where(:not(.table-zebra))
+  :where(thead, tbody, tfoot)
+  :where(tr:not(:last-child) :where(th, td)) {
+  --tw-border-opacity: 1;
+  border-bottom-width: 1px;
+  border-color: hsl(var(--b2, var(--b1)) / var(--tw-border-opacity));
+}
+.table :where(thead, tfoot) :where(th, td) {
+  --tw-bg-opacity: 1;
+  background-color: hsl(var(--b2, var(--b1)) / 1);
+  background-color: hsl(var(--b2, var(--b1)) / var(--tw-bg-opacity));
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1rem;
+  text-transform: uppercase;
+}
+:where(.table :first-child) :where(:first-child) :where(th, td):first-child {
+  border-top-left-radius: 0.5rem;
+}
+:where(.table :first-child) :where(:first-child) :where(th, td):last-child {
+  border-top-right-radius: 0.5rem;
+}
+.table :where(thead, tfoot) :where(th, td) {
+  --tw-bg-opacity: 0.7;
+  background-color: hsl(var(--b2, var(--b1)) / 1);
+  background-color: hsl(var(--b2, var(--b1)) / var(--tw-bg-opacity));
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1rem;
+  text-transform: uppercase;
+}
+.table {
+  font-size: inherit !important;
+}
+.table :where(thead, tfoot) {
+  color: hsl(var(--bc) / 1) !important;
+}

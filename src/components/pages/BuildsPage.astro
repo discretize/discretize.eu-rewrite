@@ -9,6 +9,7 @@ import Label from "src/components/Label.astro";
 import type { ProfessionTypes } from "@gw2-ui/data/professions";
 import { Icon } from "astro-icon";
 import Tooltip from "../Tooltip.astro";
+import { BACKGROUND } from "src/styles";
 
 interface Props {
   professions: ProfessionTypes[];
@@ -112,116 +113,128 @@ const SHARED =
       </Tooltip>
     </div>
 
-    {
-      PROFESSIONS.map(({ profession, builds }) => (
-        <>
-          <div class="mt-4 text-xl">
-            <TextDivider>
-              <Label className="p-3">
-                <Profession name={profession} disableLink />
-              </Label>
-            </TextDivider>
-            {builds.map((build) => (
-              <BuildCard {...build} />
-            ))}
-          </div>
-        </>
-      ))
-    }
+    <div class="w-full flex flex-col mt-4">
+      {
+        PROFESSIONS.map(({ profession, builds }) => (
+          <>
+            <div
+              tabindex="0"
+              class={`collapse collapse-arrow border border-base-300 ${BACKGROUND} mb-4 builds`}
+            >
+              <input type="checkbox" />
+
+              <div class="collapse-title text-xl font-medium">
+                <Profession
+                  name={profession}
+                  disableLink
+                  style={{ fontSize: 20 }}
+                />
+              </div>
+              <div class="collapse-content">
+                {builds.map((build) => (
+                  <BuildCard {...build} />
+                ))}
+              </div>
+            </div>
+          </>
+        ))
+      }
+    </div>
   </div>
 </Layout>
 
 <script define:vars={{ SELECTED, UNSELECTED }}>
-  const dT_LFG_Builds = document.querySelectorAll(
-    "a[data-rating='discretizelfg']"
-  );
-  console.log(dT_LFG_Builds);
-  const allBuilds = document.querySelectorAll("a[data-rating]");
-  const archivedBuilds = document.querySelectorAll("a[data-rating='archive']");
-  const buildsSections = document.querySelectorAll(".builds");
-  const allButtons = [];
+const dT_LFG_Builds = document.querySelectorAll(
+  "a[data-rating='discretizelfg']"
+);
+console.log(dT_LFG_Builds);
+const allBuilds = document.querySelectorAll("a[data-rating]");
+const archivedBuilds = document.querySelectorAll("a[data-rating='archive']");
+const buildsSections = document.querySelectorAll(".builds");
+const allButtons = [];
 
-  function highlightButton(id) {
-    const button = document.querySelector(`[id='${id}']`);
-    button.classList.remove(...UNSELECTED);
-    button.classList.add(...SELECTED);
-    // unhighlight the other buttons
-    allButtons.forEach((button) => {
-      if (button.id !== id) {
-        button.classList.remove(...SELECTED);
-        button.classList.add(...UNSELECTED);
-      }
-    });
-  }
+function highlightButton(id) {
+  const button = document.querySelector(`[id='${id}']`);
+  button.classList.remove(...UNSELECTED);
+  button.classList.add(...SELECTED);
+  // unhighlight the other buttons
+  allButtons.forEach((button) => {
+    if (button.id !== id) {
+      button.classList.remove(...SELECTED);
+      button.classList.add(...UNSELECTED);
+    }
+  });
+}
 
-  function removeEmptySections() {
-    buildsSections.forEach((build) => {
-      build.style.display = "block";
-    });
-    // check if categories .builds are empty and hide if they are
-    buildsSections.forEach((build) => {
-      // count children that are visible
-      const visibleChildren = Array.from(build.children).filter((child) => {
-        return child.style.display !== "none";
-      });
-      if (visibleChildren.length === 1) {
-        build.style.display = "none";
-      }
-    });
-  }
-
-  function hideAllBuilds() {
-    allBuilds.forEach((builds) => {
-      builds.style.display = "none";
-    });
-  }
-
-  function showDiscretizeLFGBuilds() {
-    hideAllBuilds();
-    dT_LFG_Builds.forEach((dT_LFG_Build) => {
-      // show the build by accessign styles
-      dT_LFG_Build.style.display = "block";
-    });
-
-    removeEmptySections();
-    highlightButton("button-dtlfg");
-  }
-
-  function showCurrentBuilds() {
-    allBuilds.forEach((builds) => {
-      builds.style.display = "block";
-    });
-    archivedBuilds.forEach((archivedBuild) => {
-      // hide the build by accessign styles
-      archivedBuild.style.display = "none";
-    });
-    removeEmptySections();
-    highlightButton("button-current");
-  }
-
-  function showArchivedBuilds() {
-    hideAllBuilds();
-    archivedBuilds.forEach((archivedBuild) => {
-      // show the build by accessign styles
-      archivedBuild.style.display = "block";
-    });
-    removeEmptySections();
-    highlightButton("button-archived");
-  }
-
-  function attachListeners() {
-    const dT_LFG_Button = document.querySelector("[id='button-dtlfg']");
-    dT_LFG_Button.addEventListener("click", showDiscretizeLFGBuilds);
-
-    const currentBuildsButton = document.querySelector("[id='button-current']");
-    currentBuildsButton.addEventListener("click", showCurrentBuilds);
-
-    const archivedBuildsButton = document.querySelector(
-      "[id='button-archived']"
+function removeEmptySections() {
+  buildsSections.forEach((build) => {
+    build.style.display = "grid";
+  });
+  // check if categories .builds are empty and hide if they are
+  buildsSections.forEach((build) => {
+    // count children that are visible
+    const visibleChildren = Array.from(build.children[2].children).filter(
+      (child) => child.style.display !== "none"
     );
-    archivedBuildsButton.addEventListener("click", showArchivedBuilds);
-    allButtons.push(dT_LFG_Button, currentBuildsButton, archivedBuildsButton);
-  }
-  // attach listeners on page load
-  attachListeners();
+    console.log(visibleChildren);
+    if (visibleChildren.length === 0) {
+      build.style.display = "none";
+    }
+  });
+}
+
+function hideAllBuilds() {
+  allBuilds.forEach((builds) => {
+    builds.style.display = "none";
+  });
+}
+
+function showDiscretizeLFGBuilds() {
+  hideAllBuilds();
+  dT_LFG_Builds.forEach((dT_LFG_Build) => {
+    // show the build by accessign styles
+    dT_LFG_Build.style.display = "block";
+  });
+
+  removeEmptySections();
+  highlightButton("button-dtlfg");
+}
+
+function showCurrentBuilds() {
+  allBuilds.forEach((builds) => {
+    builds.style.display = "block";
+  });
+  archivedBuilds.forEach((archivedBuild) => {
+    // hide the build by accessign styles
+    archivedBuild.style.display = "none";
+  });
+  removeEmptySections();
+  highlightButton("button-current");
+}
+
+function showArchivedBuilds() {
+  hideAllBuilds();
+  archivedBuilds.forEach((archivedBuild) => {
+    // show the build by accessign styles
+    archivedBuild.style.display = "block";
+  });
+  removeEmptySections();
+  highlightButton("button-archived");
+}
+
+function attachListeners() {
+  const dT_LFG_Button = document.querySelector("[id='button-dtlfg']");
+  dT_LFG_Button.addEventListener("click", showDiscretizeLFGBuilds);
+
+  const currentBuildsButton = document.querySelector("[id='button-current']");
+  currentBuildsButton.addEventListener("click", showCurrentBuilds);
+
+  const archivedBuildsButton = document.querySelector(
+    "[id='button-archived']"
+  );
+  archivedBuildsButton.addEventListener("click", showArchivedBuilds);
+  allButtons.push(dT_LFG_Button, currentBuildsButton, archivedBuildsButton);
+}
+// attach listeners on page load
+attachListeners();
 </script>

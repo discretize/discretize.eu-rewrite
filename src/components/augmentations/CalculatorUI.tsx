@@ -287,7 +287,7 @@ export function CalculatorUI(props: Props): React.ReactElement {
                 result?.mistAttunements.length ? "alert-info" : "alert-success"
               }`}
             >
-              <div>
+              <div className="flex gap-4">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"

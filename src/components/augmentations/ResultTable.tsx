@@ -4,7 +4,7 @@ import { Journal, Matrix, Page, Pristine, Relic } from "./RelicsData";
 
 export default function ResultTable({ result }) {
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto shadow-xl">
       <table className="table w-full border-collapse border-spacing-0 font-normal">
         <thead>
           <tr>
