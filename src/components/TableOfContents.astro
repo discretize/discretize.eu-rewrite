@@ -1,0 +1,24 @@
+---
+import { TOC } from "astro-toc";
+
+interface Props {
+    headings: {
+        text: string;
+        slug: string;
+        depth: number;
+    }[];
+    offset?: number;
+}
+
+const { headings, offset = 0 } = Astro.props;
+---
+
+<TOC
+    toc={Astro.props.headings.map((heading) => ({
+        title: heading.text,
+        url: "#" + heading.slug,
+        depth: heading.depth + offset,
+    }))}
+    maxDepth={2}
+    as="number"
+/>

@@ -2,6 +2,32 @@
 import Layout from "./Layout.astro";
 import "@gw2-ui/default_style.css";
 import "@discretize/typeface-menomonia";
+import TableOfContents from "src/components/TableOfContents.astro";
+
+interface Props {
+    headings: {
+        depth: number;
+        slug: string;
+        image: string;
+        text: string;
+    }[];
+    frontmatter: {
+        toc: boolean;
+    };
+}
+
+const { headings, frontmatter } = Astro.props;
 ---
 
-<Layout seo={{}}><slot /></Layout>
+<Layout seo={{}}>
+    {
+        frontmatter.toc && (
+            <TableOfContents
+                headings={headings.filter(
+                    (heading) => !heading.slug.match("heading-")
+                )}
+            />
+        )
+    }
+    <slot />
+</Layout>

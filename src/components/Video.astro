@@ -4,17 +4,17 @@ import { YouTube } from "@astro-community/astro-embed-youtube";
 interface Props {
   youtube: string;
   caption?: string;
+  timestamp?: number;
 }
 
-const { youtube, caption } = Astro.props;
+const { youtube, caption, timestamp } = Astro.props;
+
+let params = "&modestbranding=1&rel=0";
+
+if (timestamp) {
+  params += `&start=${timestamp}`;
+}
 ---
 
-<YouTube id={youtube} playlabel="test" class="youtube" />
+<YouTube id={youtube} playlabel="test" class="youtube" params={params} />
 {caption && <sub>{caption}</sub>}
-
-<style is:global>
-  lite-youtube > .lty-playbtn {
-    min-width: 1.5rem !important;
-    width: unset;
-  }
-</style>

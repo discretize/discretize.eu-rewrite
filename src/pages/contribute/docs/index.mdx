@@ -1,19 +1,17 @@
 ---
+toc: true
 layout: ../../../layouts/Default.astro
 ---
 
-import { components as a } from '../../../components/components';
+import { components as a } from "../../../components/components";
 
-export const components = {...a};
+export const components = { ...a };
 
+# Standard components documentation
 
-## Inline components
+This page contains all components that can be used in a markdown guide / build.
 
-Inline components can be used as standalone elements or within block components like paragraphs or tables.
-
----
-
-### Standard markdown components
+## Various markdown components
 
 | Code                            | Output                        |
 | ------------------------------- | ----------------------------- |
@@ -26,98 +24,274 @@ Inline components can be used as standalone elements or within block components 
 
 ---
 
-### Guild Wars 2 components
+## Headings
 
-Most of our Gw2 components are created with the help of the [official game API](https://wiki.guildwars2.com/wiki/API:2). In general it should not be necessary to research IDs, as we resolve them automatically with the help of other identifiers like `name` or `affix`.
-
-Our current mapping can be queried using the [ID Helper](/editor/ids) tool. As we keep its size as small as possible, some special items might not be present - in those cases you can still specify a fixed ID. You can find a specific ID by searching for the desired Item/Skill/whatever in the wiki and then clicking on "API".
-
----
-
-#### Items
-
-Items can be created by specifying either a `name` or a `type` and `affix` combination.
-If there are multiple results for the query, the one with the lowest `id` will be taken.
-
-Special characters like `'`, spaces and capital letters are normalized for the mapping.
-
-| Parameter   | Type                                     | Description       | Example                                              | Output                                           |
-| ----------- | ---------------------------------------- | ----------------- | ---------------------------------------------------- | ------------------------------------------------ |
-| name        | `string`                                 | Item name         | `<Item name="Tin of Fruitcake"/>`                    | <Item name="Tin of Fruitcake"/>                  |
-| affix, type | `string`                                 | Item affix + type | `<Item affix="Berserker" type="Longbow"/>`           | <Item affix="Berserker" type="Longbow" />        |
-| size        | one of `tiny, small, medium, medium2, large, large2, big` | Icon size         | `<Item name="Delicious Rice Ball" size="large"/>`    | <Item name="Delicious Rice Ball" size="large"/> |
-| disableText | `boolean`                                | Disables the text | `<Item affix="Viper" type="Back Item" disableText/>` | <Item affix="Viper" type="Back Item" disableText/>          |
-| id          | `number`                                 | Item id           | `<Item id="49940"/>`                                 | <Item id="49940"/>                               |
-
----
-
-#### Skills and traits
-
-Skills and traits are resolved using a `name` and a `profession` (optional).
-The profession theme color is automatically applied to the link, even if you don't specify one.
-
-Again - special characters, case sensitivity and spaces don't matter. `<Skill name="TotHe LiMiT!"/>` will be resolved as <Skill name="TotHe LiMiT!"/>.
-
-| Parameter   | Type                                     | Description            | Example                                      | Output                                     |
-| ----------- | ---------------------------------------- | ---------------------- | -------------------------------------------- | ------------------------------------------ |
-| name        | `string`                                 | Skill/trait name       | `<Trait name="Pyromancers Training"/>`       | <Trait name="Pyromancers Training"/>       |
-| profession  | `string`                                 | Skill/trait profession | `<Skill name="Stab" profession="Mesmer"/>`   | <Skill name="Stab" profession="Mesmer"/>   |
-| size        | one of `tiny, small, medium, large, big` | Icon size              | `<Trait name="King of Fires" size="large"/>` | <Trait name="King of Fires" size="large"/> |
-| disableText | `boolean`                                | Disables the text      | `<Skill name="Epidemic" disableText/>`       | <Skill name="Epidemic" disableText/>       |
-| id          | `number`                                 | Skill/trait id         | `<Skill id="13113"/>`                        | <Skill id="13113"/>                        |
-
----
-
-#### Other Gw2 components
-
-Some other game-related components can be created with a simple `name` identifier.
-Check the reference column for the proper spelling.
-
-Note that you can use the `size` and `disableText` parameters with those as well.
-
-| Usage                                    | Output                                 | Reference                                                                                                     |
-| ---------------------------------------- | -------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| `<Boon name="Might"/>`                   | <Boon name="Might"/>                   | [List of boons](https://wiki.guildwars2.com/wiki/Boon#List_of_boons)                                          |
-| `<Condition name="Burning"/>`            | <Condition name="Burning"/>            | [List of conditions](https://wiki.guildwars2.com/wiki/Condition#List_of_conditions)                           |
-| `<Control name="Stun"/>`                 | <Control name="Stun"/>                 | [List of control effects](https://wiki.guildwars2.com/wiki/Control_effect#Control_effects)                    |
-| `<Effect name="Stealth"/>`               | <Effect name="Stealth"/>               | [List of other effects](https://wiki.guildwars2.com/wiki/Effect#Other_effects)                                |
-| `<Instability name="No Pain, No Gain"/>` | <Instability name="No Pain, No Gain"/> | [List of mistlock instabilities](https://wiki.guildwars2.com/wiki/Fractals_of_the_Mists#Mistlock_Instability) |
-| `<Specialization name="Weaver"/>`        | <Specialization name="Weaver"/>        | [List of specializations](https://wiki.guildwars2.com/wiki/Specialization#List_of_specializations)            |
-
----
-
-### Other components
-
-| Code                                                              | Output                                                          |
-| ----------------------------------------------------------------- | --------------------------------------------------------------- |
-| `<Label>Example label</Label>`                                    | <Label>Example label</Label>                                    |
-| `<BuildLink build="Condi Firebrand" specialization="Firebrand"/>` | <BuildLink build="Condi Firebrand" specialization="Firebrand"/> |
-
----
-
-### Boss Header component
-
-Use the option `hideRotation` to hide the rotation text divider underneath the header.
+<Grid>
+<GridItem>
 
 ```
-<Boss name="mama" video="rM2uB5yprLc" foodId="43360" utilityId="50082" healId="14401" utility1Id="29941" utility2="outrage" utility3="bullscharge" eliteId="30343" weapon1MainAffix="Berserker" weapon1MainType="axe" weapon1MainSigil1="force" weapon1MainInfusion1Id="37131" weapon1OffAffix="berserker" weapon1OffType="axe"  weapon1OffSigil="impact" weapon1OffInfusionId="37131" weapon2OffAffix="Berserker" weapon2OffType="mace" weapon2OffSigil="paralyzation" weapon2OffInfusionId="37131" >
 
-- Change <Skill name="bullscharge"/> to <Skill name="throwbolas"/> if you dont need the additional CC
-- Play <Trait name="Smashbrawler"/>!
+# Heading 1
 
-</Boss>
+## Heading 2
+
+### Heading 3
+
+#### Heading 4
+
+##### Heading 5
+
+###### Heading 6
+
 ```
 
-<Boss name="mama" video="rM2uB5yprLc" legend1Id="28134" legend2Id="28134" foodId="43360" utilityId="50082" healId="14401" utility1Id="29941" utility2="outrage" utility3="bullscharge" eliteId="30343" weapon1MainAffix="Berserker" weapon1MainType="axe" weapon1MainSigil1="force" weapon1MainInfusion1Id="37131" weapon1OffAffix="Berserker" weapon1OffType="axe"  weapon1OffSigil="impact" weapon1OffInfusionId="37131" weapon2OffAffix="Berserker" weapon2OffType="mace" weapon2OffSigil="paralyzation" weapon2OffInfusionId="37131" >
-- Change <Skill name="bullscharge"/> to <Skill name="throwbolas"/> if you dont need the additional CC
-- Play <Trait name="Smashbrawler"/>!
-</Boss>
+</GridItem>
+
+<GridItem>
+
+# Heading 1
+
+## Heading 2
+
+### Heading 3
+
+#### Heading 4
+
+##### Heading 5
+
+###### Heading 6
+
+</GridItem>
+</Grid>
 
 ---
 
-## Block components
+## Lists
 
-Block elements always take up the entire width of their parent element.
+Simply indent the list items with **two** spaces to create a nested list. For each successive level of indentation, add two more spaces.
+
+### Unordered lists
+
+<Grid>
+<GridItem>
+
+```
+- Item one
+- Item two
+  - Nested item one
+  - Nested item two
+    - Nested nested item one
+    - Nested nested item two
+- Item three with a new line using four spaces
+- Item four
+```
+
+Note that using `*` instead of the `-` character works as well.
+
+</GridItem>
+
+<GridItem>
+
+- Item one
+- Item two
+  - Nested item one
+  - Nested item two
+    - Nested nested item one
+    - Nested nested item two
+- Item three with a new line using four spaces
+- Item four
+
+</GridItem>
+</Grid>
+
+### Ordered list
+
+<Grid>
+<GridItem>
+
+```
+1. Item one
+2. Item two
+   1. Nested ordered items need to be indexed with **three** spaces
+   2. Nested item two
+      1. Nested nested item one
+3. Item three with a new line
+   using four spaces
+4. Item four
+```
+
+</GridItem>
+
+<GridItem>
+
+1. Item one
+2. Item two
+   1. Nested ordered items need to be indexed with **three** spaces
+   2. Nested item two
+      1. Nested nested item one
+3. Item three with a new line
+   using four spaces
+4. Item four
+
+</GridItem>
+</Grid>
+
+---
+
+## Tables
+
+<Grid>
+<GridItem>
+
+```md
+| Column header 1 | Column header 2            |       Column header 3 |
+| --------------- | -------------------------- | --------------------: |
+| Cell 1          | Cell 2 with a<br/>new line | Right aligned cololun |
+| Cell 3          | Cell 4                     |                   col |
+```
+
+If you want to create a head-less table, simply leave the column header cells blank.
+You don't need to add spaces to make the table look pretty.
+
+</GridItem>
+
+<GridItem>
+
+| Column header 1 | Column header 2            |   Column header 3 |
+| --------------- | -------------------------- | ----------------: |
+| Cell 1          | Cell 2 with a<br/>new line | Right aligned col |
+| Cell 3          | Cell 4                     |               col |
+
+|        Center         |
+| :-------------------: |
+| Center with `:-----:` |
+
+</GridItem>
+</Grid>
+
+---
+
+## Images
+
+<Grid>
+<GridItem>
+
+```
+![Example image caption](images/hero_sunqua2.jpg)
+```
+
+Image paths need to be absolute to the actual markdown file within our [GitHub repository](https://github.com/discretize/discretize-guides).
+Sadly this does not work in the editor.
+
+</GridItem>
+
+<GridItem>
+
+![Example image caption](images/hero_sunqua2.jpg)
+
+</GridItem>
+
+<GridItem>
+Although the above syntax is the preferred variant, you can use the standard Markdown image syntax to preview images in editor context or to embed external images.
+Keep in mind that images you link to now might not be available in the future.
+
+```
+![Wallpaper](https://d3b4yo2b5lbfy.cloudfront.net/wp-content/uploads/wallpapers/992e8891d301-1920x1200.jpg)
+```
+
+</GridItem>
+
+<GridItem>
+
+![Wallpaper](https://d3b4yo2b5lbfy.cloudfront.net/wp-content/uploads/wallpapers/992e8891d301-1920x1200.jpg)
+
+</GridItem>
+</Grid>
+
+---
+
+## Videos
+
+<Grid>
+<GridItem>
+
+```
+<Video title="Example video title" youtube="xcJtL7QggTI" timestamp={12} />
+```
+
+</GridItem>
+
+<GridItem>
+<Video title="Example video title" youtube="xcJtL7QggTI" timestamp={12} />
+</GridItem>
+</Grid>
+
+---
+
+## Animations / GIFs
+
+<Grid>
+<GridItem>
+
+```
+<GifPlayer caption="insert a caption" url="https://pub-80c25841bf1e4cbda246ab1b42798500.r2.dev/airphase.webm" />
+```
+
+</GridItem>
+<GridItem>
+<GifPlayer caption="insert a caption" url="https://pub-80c25841bf1e4cbda246ab1b42798500.r2.dev/airphase.webm" />
+</GridItem>
+</Grid>
+
+---
+
+## Blockquote
+
+<Grid>
+<GridItem>
+
+```
+> Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.
+```
+
+</GridItem>
+
+<GridItem>
+
+> Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.
+
+</GridItem>
+</Grid>
+---
+## Inline HTML
+
+<Grid>
+<GridItem>
+
+```
+<dl>
+  <dt>Definition list</dt>
+  <dd>Is something people use sometimes.</dd>
+
+  <dt>Markdown in HTML</dt>
+  <dd>Does *not* work **very** well. Use HTML <em>tags</em>.</dd>
+</dl>
+```
+
+You can use any HTML tags you want. You can also pass styles to them using the `style` attribute.
+
+</GridItem>
+
+<GridItem>
+<dl>
+  <dt>Definition list</dt>
+  <dd>Is something people use sometimes.</dd>
+
+  <dt>Markdown in HTML</dt>
+  <dd>Does *not* work **very** well. Use HTML <em>tags</em>.</dd>
+</dl>
+</GridItem>
+</Grid>
 
 ---
 
@@ -148,141 +322,96 @@ Inserting a blank line between passages results in two distinct paragraphs.
 
 ---
 
-### Headings
+# Guild Wars 2 components
+
+Most of our Gw2 components are created with the help of the [official game API](https://wiki.guildwars2.com/wiki/API:2). In general it should not be necessary to research IDs, as we resolve them automatically with the help of other identifiers like `name` or `affix`.
+
+Our current mapping can be queried using the [ID Helper](/contribute/ids) tool (currently not implemented). As we keep its size as small as possible, some special items might not be present - in those cases you can still specify a fixed ID. You can find a specific ID by searching for the desired Item/Skill/whatever in the wiki and then clicking on "API".
+
+---
+
+## Items
+
+Items can be created by specifying either a `name` or a `type` and `affix` combination.
+If there are multiple results for the query, the one with the lowest `id` will be taken.
+
+Special characters like `'`, spaces and capital letters are normalized for the mapping.
+
+| Parameter   | Type                                                      | Description       | Example                                              | Output                                             |
+| ----------- | --------------------------------------------------------- | ----------------- | ---------------------------------------------------- | -------------------------------------------------- |
+| name        | `string`                                                  | Item name         | `<Item name="Tin of Fruitcake"/>`                    | <Item name="Tin of Fruitcake"/>                    |
+| affix, type | `string`                                                  | Item affix + type | `<Item affix="Berserker" type="Longbow"/>`           | <Item affix="Berserker" type="Longbow" />          |
+| size        | one of `tiny, small, medium, medium2, large, large2, big` | Icon size         | `<Item name="Delicious Rice Ball" size="large"/>`    | <Item name="Delicious Rice Ball" size="large"/>    |
+| disableText | `boolean`                                                 | Disables the text | `<Item affix="Viper" type="Back Item" disableText/>` | <Item affix="Viper" type="Back Item" disableText/> |
+| id          | `number`                                                  | Item id           | `<Item id="49940"/>`                                 | <Item id="49940"/>                                 |
+
+---
+
+## Skills and traits
+
+Skills and traits are resolved using a `name` and a `profession` (optional).
+The profession theme color is automatically applied to the link, even if you don't specify one.
+
+Again - special characters, case sensitivity and spaces don't matter. `<Skill name="TotHe LiMiT!"/>` will be resolved as <Skill name="TotHe LiMiT!"/>.
+
+| Parameter   | Type                                     | Description            | Example                                      | Output                                     |
+| ----------- | ---------------------------------------- | ---------------------- | -------------------------------------------- | ------------------------------------------ |
+| name        | `string`                                 | Skill/trait name       | `<Trait name="Pyromancers Training"/>`       | <Trait name="Pyromancers Training"/>       |
+| profession  | `string`                                 | Skill/trait profession | `<Skill name="Stab" profession="Mesmer"/>`   | <Skill name="Stab" profession="Mesmer"/>   |
+| size        | one of `tiny, small, medium, large, big` | Icon size              | `<Trait name="King of Fires" size="large"/>` | <Trait name="King of Fires" size="large"/> |
+| disableText | `boolean`                                | Disables the text      | `<Skill name="Epidemic" disableText/>`       | <Skill name="Epidemic" disableText/>       |
+| id          | `number`                                 | Skill/trait id         | `<Skill id="13113"/>`                        | <Skill id="13113"/>                        |
+
+---
+
+## Achievements
 
 <Grid>
-<GridItem>
-
-```
-
-# Heading 1
-
-## Heading 2
-
-### Heading 3
-
-#### Heading 4
-
-##### Heading 5
-
-###### Heading 6
-
-```
-
-</GridItem>
-
-<GridItem>
-
-# Heading 1
-
-## Heading 2
-
-### Heading 3
-
-#### Heading 4
-
-##### Heading 5
-
-###### Heading 6
-
-</GridItem>
+  <GridItem>
+    ```
+    <Achievement name="The Shatterer">
+      Beat the Shatterer in Blazeridge Steppes. You can find him in the north of
+      the map. He spawns every 2 hours. Use <Boon name="Might" /> and{" "}
+      <Skill name="Stability" /> to survive his attacks.
+    </Achievement>
+    ```
+  </GridItem>
+  <GridItem>
+    <Achievement name="The Shatterer">
+      Beat the Shatterer in Blazeridge Steppes. You can find him in the north of
+      the map. He spawns every 2 hours. Use <Boon name="Might" /> and{" "}
+      <Skill name="MeteorShower" /> to survive his attacks.
+    </Achievement>
+  </GridItem>
 </Grid>
 
 ---
 
-### Lists
+## Other Gw2 components
 
-<Grid>
-<GridItem>
+Some other game-related components can be created with a simple `name` identifier.
+Check the reference column for the proper spelling.
 
-#### Unordered lists
+Note that you can use the `size` and `disableText` parameters with those as well.
 
-```
-- Item one
-- Item two
-  - Nested item one
-  - Nested item two
-- Item three with a new line using four spaces
-- Item four
-```
-
-Note that using `-` instead of the `\*` character works as well.
-
-</GridItem>
-
-<GridItem>
-
-- Item one
-- Item two
-  - Nested item one
-  - Nested item two
-- Item three with a new line using four spaces
-- Item four
-
-</GridItem>
-
-<GridItem>
-
-#### Ordered list
-
-```
-1. Item one
-2. Item two
-   1. Nested ordered items need to be indexed with **three** spaces
-   2. Nested item two
-3. Item three with a new line
-   using four spaces
-4. Item four
-```
-
-</GridItem>
-
-<GridItem>
-
-1. Item one
-2. Item two
-   1. Nested ordered items need to be indexed with **three** spaces
-   2. Nested item two
-3. Item three with a new line
-   using four spaces
-4. Item four
-
-</GridItem>
-</Grid>
+| Usage                                    | Output                                   | Reference                                                                                                               |
+| ---------------------------------------- | ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `<Attribute name="Power"/>`              | <Attribute name="Power"/>                | [List of attributes](https://wiki.guildwars2.com/wiki/Attribute#List_of_attributes)                                     |
+| `<Augmentation name="Fractal Savant"/>`  | <Augmentation name="Mist Attunement 1"/> | [List of fractal augmentations](https://github.com/discretize/discretize-ui/blob/main/gw2-ui/src/data/augmentations.ts) |
+| `<Boon name="Might"/>`                   | <Boon name="Might"/>                     | [List of boons](https://wiki.guildwars2.com/wiki/Boon#List_of_boons)                                                    |
+| `<Condition name="Burning"/>`            | <Condition name="Burning"/>              | [List of conditions](https://wiki.guildwars2.com/wiki/Condition#List_of_conditions)                                     |
+| `<Control name="Stun"/>`                 | <Control name="Stun"/>                   | [List of control effects](https://wiki.guildwars2.com/wiki/Control_effect#Control_effects)                              |
+| `<Effect name="Stealth"/>`               | <Effect name="Stealth"/>                 | [List of other effects](https://wiki.guildwars2.com/wiki/Effect#Other_effects)                                          |
+| `<Instability name="No Pain, No Gain"/>` | <Instability name="No Pain, No Gain"/>   | [List of mistlock instabilities](https://wiki.guildwars2.com/wiki/Fractals_of_the_Mists#Mistlock_Instability)           |
+| `<Specialization name="Weaver"/>`        | <Specialization name="Weaver"/>          | [List of specializations](https://wiki.guildwars2.com/wiki/Specialization#List_of_specializations)                      |
 
 ---
 
-### Tables
+# UI Components
 
-<Grid>
-<GridItem>
+These components can be used to create a consistent look and feel across the website.
 
-```
-
-| Column header 1 | Column header 2            |
-| --------------- | -------------------------- |
-| Cell 1          | Cell 2 with a<br/>new line |
-| Cell 3          | Cell 4                     |
-
-```
-
-If you want to create a head-less table, simply leave the column header cells blank.
-
-</GridItem>
-
-<GridItem>
-
-| Column header 1 | Column header 2            |
-| --------------- | -------------------------- |
-| Cell 1          | Cell 2 with a<br/>new line |
-| Cell 3          | Cell 4                     |
-
-</GridItem>
-</Grid>
-
----
-
-### Dividers
+## Dividers
 
 <Grid>
 <GridItem>
@@ -311,34 +440,14 @@ If you want to create a head-less table, simply leave the column header cells bl
 
 <GridItem>
 
-<Divider text="Divider text"/>
+<Divider text="Divider text" />
 
 </GridItem>
 </Grid>
 
 ---
 
-### Blockquote
-
-<Grid>
-<GridItem>
-
-```
-> Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.
-```
-
-</GridItem>
-
-<GridItem>
-
-> Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.
-
-</GridItem>
-</Grid>
-
----
-
-### Grids
+## Grids
 
 Our grid system is based on a 12-column grid layout. You can use `<Grid>` for the container and `<GridItem>` for the item components.
 There are five grid breakpoints:
@@ -379,9 +488,9 @@ If not specified otherwise, a `<GridItem>` will have the attributes `xs="12"` an
     Left content
   </GridItem>
 
-  <GridItem>
-    Right content
-  </GridItem>
+{" "}
+
+<GridItem>Right content</GridItem>
 
   <GridItem>
     This item will be placed in a new row
@@ -419,13 +528,13 @@ If not specified otherwise, a `<GridItem>` will have the attributes `xs="12"` an
     `sm="4"`
   </GridItem>
 
-  <GridItem sm="6">
-    `sm="6"`
-  </GridItem>
+{" "}
 
-  <GridItem sm="2">
-    `sm="2"`
-  </GridItem>
+<GridItem sm="6">`sm="6"`</GridItem>
+
+{" "}
+
+<GridItem sm="2">`sm="2"`</GridItem>
 
   <GridItem sm="11">
     `sm="11"`
@@ -436,7 +545,7 @@ If not specified otherwise, a `<GridItem>` will have the attributes `xs="12"` an
 
 ---
 
-### Cards
+## Cards
 
 <Grid>
 <GridItem>
@@ -473,13 +582,14 @@ Tab content 1
 Tab content 2
 </Tab>
 
-<Tab title="Tab 3">
+<Tab specialization="Ranger">
 Tab content 3
 </Tab>
 </Tabs>
 ```
 
 You can also use the `specialization` property instead of `title` to create themed tabs.
+
 </GridItem>
 
 <GridItem>
@@ -488,11 +598,9 @@ You can also use the `specialization` property instead of `title` to create them
 Tab content 1
 </Tab>
 
-<Tab title="Tab 2">
-Tab content 2
-</Tab>
+<Tab title="Tab 2">Tab content 2</Tab>
 
-<Tab title="Tab 3">
+<Tab specialization="Ranger">
 Tab content 3
 </Tab>
 </Tabs>
@@ -501,7 +609,7 @@ Tab content 3
 
 ---
 
-### Messages
+## Messages
 
 <Grid>
 <GridItem>
@@ -516,9 +624,7 @@ This is an important message.
 
 <GridItem>
 
-<Warning>
-This is an important message.
-</Warning>
+<Warning>This is an important message.</Warning>
 
 </GridItem>
 <GridItem>
@@ -533,73 +639,14 @@ This is an important message.
 
 <GridItem>
 
-<Information>
-This is an information message.
-</Information>
+<Information>This is an information message.</Information>
 
 </GridItem>
 </Grid>
 
 ---
 
-### Images
-
-<Grid>
-<GridItem>
-
-```
-![Example image caption](images/hero_sunqua2.jpg)
-```
-
-Image paths need to be absolute to the actual markdown file within our [GitHub repository](https://github.com/discretize/discretize-guides).
-Sadly this does not work in the editor.
-
-</GridItem>
-
-<GridItem>
-
-![Example image caption](images/hero_sunqua2.jpg)
-
-</GridItem>
-
-<GridItem>
-Although the above syntax is the preferred variant, you can use the standard Markdown image syntax to preview images in editor context or to embed external images.
-Keep in mind that images are not minified this way!
-
-```
-![Mythwright Gambit](https://cdn.discordapp.com/attachments/143473968639246345/489469167851012136/MythwrightGambit_02.png)
-```
-
-</GridItem>
-
-<GridItem>
-
-![Mythwright Gambit](https://cdn.discordapp.com/attachments/143473968639246345/489469167851012136/MythwrightGambit_02.png)
-
-</GridItem>
-</Grid>
-
----
-
-### Videos
-
-<Grid>
-<GridItem>
-
-```
-<Video title="Example video title" youtube="xcJtL7QggTI" timestamp={12} />
-```
-
-</GridItem>
-
-<GridItem>
-<Video title="Example video title" youtube="xcJtL7QggTI" timestamp={12} />
-</GridItem>
-</Grid>
-
----
-
-### Build guide components
+## Build guide components
 
 Writing build summaries has never been easier thanks to our automatic ID resolving.
 Note that you suffix `Id` behind parameters if you want to use a fixed ID, like `glovesRuneId="76491"`.
@@ -613,10 +660,24 @@ Note that you suffix `Id` behind parameters if you want to use a fixed ID, like 
 ```
 
 Use the option "unembossed" to remove the card.
+
 </GridItem>
 
 <GridItem>
-<Weapons weapon1MainType="Axe" weapon1MainAffix="Assassin" weapon1MainSigil1="Force" weapon1OffType="Dagger" weapon1OffAffix="Seraph" weapon1OffSigil="Impact" weapon2MainType="Scepter" weapon2MainAffix="Berserker" weapon2MainSigil1="Severance" weapon2OffType="Mace" weapon2OffAffix="Viper" weapon2OffSigil="Paralyzation"/>
+  <Weapons
+    weapon1MainType="Axe"
+    weapon1MainAffix="Assassin"
+    weapon1MainSigil1="Force"
+    weapon1OffType="Dagger"
+    weapon1OffAffix="Seraph"
+    weapon1OffSigil="Impact"
+    weapon2MainType="Scepter"
+    weapon2MainAffix="Berserker"
+    weapon2MainSigil1="Severance"
+    weapon2OffType="Mace"
+    weapon2OffAffix="Viper"
+    weapon2OffSigil="Paralyzation"
+  />
 </GridItem>
 
 <GridItem>
@@ -626,10 +687,18 @@ Use the option "unembossed" to remove the card.
 ```
 
 Use the option "unembossed" to remove the card.
+
 </GridItem>
 
 <GridItem>
-<Traits traits1="Strength" traits1Selected="Peak Performance,Body Blow,Berserkers Power" traits2="Tactics" traits2Selected="Leg Specialist,Empower Allies,Phalanx Strength" traits3="Discipline" traits3Selected="Warriors Sprint,Doubled Standards,Axe Mastery"/>
+  <Traits
+    traits1="Strength"
+    traits1Selected="Peak Performance,Body Blow,Berserkers Power"
+    traits2="Tactics"
+    traits2Selected="Leg Specialist,Empower Allies,Phalanx Strength"
+    traits3="Discipline"
+    traits3Selected="Warriors Sprint,Doubled Standards,Axe Mastery"
+  />
 </GridItem>
 
 <GridItem>
@@ -639,9 +708,26 @@ Use the option "unembossed" to remove the card.
 ```
 
 Use the option "unembossed" to remove the card.
+
 </GridItem>
 
 <GridItem>
 <Skills heal="Water Spirit" utility1="Frost Spirit" utility2="Vulture Stance" utility3="Signet of the Wild" elite="One Wolf Pack"/>
 </GridItem>
 </Grid>
+
+---
+
+## Beginner / Advanced
+
+You can wrap content in a `<Beginner>` or `<Advanced>` component to only show it for the currently selected mode.
+The mode selection is only available for builds at the moment.
+
+---
+
+## Other components
+
+| Code                                                              | Output                                                          |
+| ----------------------------------------------------------------- | --------------------------------------------------------------- |
+| `<Label>Example label</Label>`                                    | <Label>Example label</Label>                                    |
+| `<BuildLink build="Condi Firebrand" specialization="Firebrand"/>` | <BuildLink build="Condi Firebrand" specialization="Firebrand"/> |

@@ -1,6 +1,5 @@
 ---
 import { Item } from "@gw2-ui/components";
-import { TOC } from "astro-toc";
 import { fractalHeaders } from "src/utils/cache";
 import imageFetch from "src/utils/imageFetch";
 import Card from "../Card.astro";
@@ -14,6 +13,7 @@ import Th from "../html-components/th.astro";
 import Tr from "../html-components/tr.astro";
 import TextDivider from "../TextDivider.astro";
 import Header from "./Header.astro";
+import TableOfContents from "../TableOfContents.astro";
 
 export interface Props {
   title: string;
@@ -126,15 +126,7 @@ const headerImage =
     <GridItem>
       <div class="md:flex md:flex-row-reverse">
         <Card title="Table of contents" className="!mt-0">
-          <TOC
-            toc={headings.map((heading) => ({
-              title: heading.text,
-              url: "#" + heading.slug,
-              depth: heading.depth - 1,
-            }))}
-            maxDepth={2}
-            as="number"
-          />
+          <TableOfContents headings={headings} offset={-1} />
         </Card>
       </div>
     </GridItem>
