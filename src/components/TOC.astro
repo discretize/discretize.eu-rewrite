@@ -1,15 +1,63 @@
 ---
-export interface Props {
-  headings: {
-    depth: number;
-    slug: string;
-    text: string;
-  }[];
+// copied from here and slightly adjusted https://github.com/theisel/astro-toc/blob/main/packages/astro-toc/lib/TOC.astro
+interface ToC {
+  depth: number;
+  [k: string]: any;
 }
-
-const { headings } = Astro.props;
+interface BaseProps<T> {
+  toc: (T & ToC)[];
+  as?: "bullet" | "number" | "menu";
+  maxDepth?: number | string;
+}
+type ClassicProps = BaseProps<{
+  title: string;
+  url?: string;
+}>;
+interface UseComponentProps
+  extends BaseProps<{
+    [key: string]: any;
+  }> {
+  use: (props: any /* Can we do better than `any`? */) => any;
+}
+export type Props = ClassicProps | UseComponentProps;
+const { toc, depth = 1, ...props } = Astro.props;
+const { use: Cmp, class: className } = props;
+const as = props.as ?? props.style ?? "bullet";
+const maxDepth = Number(props.maxDepth);
+const hasMaxDepth = Number.isInteger(maxDepth);
+const headings = toc.filter((it) => it.depth === depth);
+const Tag = Cmp ?? "menu" === as ? "menu" : "number" === as ? "ol" : "ul";
 ---
 
-<ol>
-  {headings.map(({ depth, slug, text }) => <li />)}
-</ol>
+<Tag data-astro-toc={depth}>
+  {
+    headings.map((it, idx) => {
+      const nextHeading = headings[idx + 1];
+      const subHeadings = toc.slice(
+        (toc as any).indexOf(it) + 1,
+        nextHeading ? (toc as any).indexOf(nextHeading) : undefined
+      );
+      const hasSubHeadings = subHeadings.length > 0;
+      const shouldRenderSubHeadings = hasMaxDepth
+        ? maxDepth > it.depth
+        : hasSubHeadings;
+
+      return (
+        <li data-astro-toc={depth}>
+          <div>
+            {Cmp ? (
+              <Cmp {...it} class={className} />
+            ) : it.url ? (
+              <a href={it.url}>{it.title}</a>
+            ) : (
+              it.title
+            )}
+            {shouldRenderSubHeadings ? (
+              <Astro.self toc={subHeadings} depth={it.depth + 1} {...props} />
+            ) : null}
+          </div>
+        </li>
+      );
+    })
+  }
+</Tag>
