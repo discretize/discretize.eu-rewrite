@@ -5,7 +5,7 @@ import Profession from "./gw2-ui/Profession.astro";
 interface Props {
   tabs: Array<{
     title: string;
-    specialization: ProfessionTypes;
+    specialization?: ProfessionTypes;
     id?: string;
   }>;
 }
@@ -55,13 +55,13 @@ tabs.forEach((tab, index) => {
 
 <tabs-component>
   <div
-    class="tabs tabs-boxed max-w-[calc(100%-4rem)] m-auto relative mb-[-2rem]"
+    class="tabs tabs-boxed max-w-[calc(100%-4rem)] m-auto relative mb-[-2rem] border-2 dark:border-none border-gray-200"
   >
     {
       tabs.map((tab, index) => (
         <div
           data-ui={tab.id}
-          class={(index === 0 ? "tab-active" : "") + " tab !h-16"}
+          class={(index === 0 ? "tab-active" : "") + ` tab !h-12`}
         >
           {tab.title ? (
             tab.title
@@ -73,7 +73,6 @@ tabs.forEach((tab, index) => {
                 disableText
                 size="medium"
               />
-              <span>{tab.specialization}</span>
             </div>
           )}
         </div>
@@ -81,7 +80,7 @@ tabs.forEach((tab, index) => {
     }
   </div>
 
-  <div class="embossed p-4 pt-12 rounded">
+  <div class="embossed p-4 pt-12 rounded shadow">
     <slot />
   </div>
 </tabs-component>

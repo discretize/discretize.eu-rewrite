@@ -8,7 +8,7 @@ const { title, isFirst, specialization } = Astro.props;
     ?.toLowerCase()
     .replaceAll(/\/|[^a-zA-Z0-9]+/gm, "")}`}
 >
-  <div class="page-content">
+  <div class="page-content [&>p]:!mb-0">
     <slot />
   </div>
 </div>

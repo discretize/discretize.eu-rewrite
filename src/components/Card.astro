@@ -9,7 +9,7 @@ const { title, specialization, className = "" } = Astro.props;
 ---
 
 <article
-  class={`mb-6 mt-4 overflow-hidden text-ellipsis embossed p-4 rounded-md shadow-xl border-[1px] border-zinc-500 dark:border-0 ${className}`}
+  class={`mb-6 mt-4 overflow-hidden text-ellipsis embossed p-4 rounded-md shadow-xl border-[1px] border-zinc-500 dark:border-0 [&>p]:!mb-0 ${className}`}
 >
   {
     (title || specialization) && (
