@@ -8,12 +8,12 @@
         counter-reset: section;
     }
     ol ol {
-        padding-left: 1.5em !important;
-        margin-bottom: 0.5rem !important; /* needed to lower gap for nested ols */
+        margin-bottom: 0rem !important; /* needed to lower gap for nested ols */
     }
 
     ol > li {
         padding-top: 0.75rem;
+        display: flex;
     }
 
     ol > li::before {
@@ -28,5 +28,6 @@
         border: 1px solid rgb(30, 33, 36);
         margin-right: 8px;
         margin-left: 8px !important;
+        margin-bottom: auto;
     }
 </style>
