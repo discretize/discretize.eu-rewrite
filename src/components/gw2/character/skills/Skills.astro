@@ -2,7 +2,6 @@
 import { NoSelection } from "@discretize/react-discretize-components";
 import { SkillInternal } from "@gw2-ui/components";
 import GW2ApiSkill from "@gw2-ui/gw2api/types/skills/skill";
-import { optimizeIcons } from "src/utils/apiAugments";
 
 interface Props {
   className?: string;
@@ -29,7 +28,8 @@ const {
 
 [healData, utility1Data, utility2Data, utility3Data, eliteData].forEach(
   (data) => {
-    optimizeIcons(data, 60);
+    if (!data) return;
+    data.icon += `?w=60`;
   }
 );
 ---

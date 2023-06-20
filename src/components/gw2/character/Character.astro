@@ -1,7 +1,6 @@
 ---
 import { getPicture } from "@astrojs/image";
 import { Attributes } from "@discretize/react-discretize-components";
-import { optimizeIcons } from "src/utils/apiAugments";
 import images from "../../images";
 import Armor from "./armor/Armor.astro";
 import BackAndTrinkets from "./backAndTrinkets/BackAndTrinkets.astro";
@@ -12,6 +11,8 @@ import Weapons from "./weapons/Weapons.astro";
 interface Props {
   title: string;
   isFirst?: boolean;
+  gear: string;
+  data: any;
 }
 
 const { title, gear, data, isFirst } = Astro.props;
@@ -54,17 +55,22 @@ const modifiedSources = imageData.sources
   )
   .flat(1);
 
+const addParam = (data, pixel) => {
+  if (!data) return;
+  data.icon += `?w=${pixel}`;
+};
+
 // optimize all the gw2 api data
-data.upgrades.runes.forEach((data) => optimizeIcons(data, 16));
-data.upgrades.infusions.forEach((data) => optimizeIcons(data, 16));
-data.upgrades.sigils.forEach((data) => optimizeIcons(data, 16));
-Object.keys(data.armor).forEach((key) => optimizeIcons(data.armor[key], 60));
-Object.keys(data.weapon).forEach((key) => optimizeIcons(data.weapon[key], 60));
+data.upgrades.runes.forEach((data) => addParam(data, 16));
+data.upgrades.infusions.forEach((data) => addParam(data, 16));
+data.upgrades.sigils.forEach((data) => addParam(data, 16));
+Object.keys(data.armor).forEach((key) => addParam(data.armor[key], 60));
+Object.keys(data.weapon).forEach((key) => addParam(data.weapon[key], 60));
 Object.keys(data.backAndTrinket).forEach((key) =>
-  optimizeIcons(data.backAndTrinket[key], 60)
+  addParam(data.backAndTrinket[key], 60)
 );
 Object.keys(data.consumables).forEach((key) =>
-  optimizeIcons(data.consumables[key], 60)
+  addParam(data.consumables[key], 60)
 );
 ---
 

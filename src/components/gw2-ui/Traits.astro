@@ -1,5 +1,4 @@
 ---
-import { getImage } from "@astrojs/image";
 import TraitLineInternal from "@gw2-ui/components/TraitLine/TraitLineInternal";
 import type GW2ApiSpecialization from "@gw2-ui/gw2api/types/specialization/specialization";
 import GW2ApiTrait from "@gw2-ui/gw2api/types/traits/trait";
@@ -60,56 +59,42 @@ const traits3Selected = traits3SelectedIds
   ?.split(",")
   .map((id) => parseInt(id, 10));
 
-async function transformTraitsData(
+function transformTraitsData(
   data: Record<number, GW2ApiTrait>
-): Promise<Record<number, GW2ApiTrait>> {
-  const transformedTraits = await Promise.all(
-    Object.entries(data).map(async ([key, value]) => {
-      const optimized = await getImage({
-        src: value.icon,
-        width: 48,
-        height: 48,
-        format: "webp",
-        alt: "",
-      });
-      return [key, { ...value, icon: optimized.src }];
-    })
-  );
+): Record<number, GW2ApiTrait> {
+  const transformedTraits = Object.entries(data).map(([key, value]) => {
+    return [key, { ...value, icon: value.icon + `?w=37` }];
+  });
 
   return Object.fromEntries(transformedTraits);
 }
 
-async function transformSpecializationData(
+function transformSpecializationData(
   data: GW2ApiSpecialization
-): Promise<GW2ApiSpecialization> {
-  const { src: background } = await getImage({
-    src: data.background,
-    width: 1024,
-    height: 256,
-    format: "webp",
-    alt: "",
-  });
-  return { ...data, background };
+): GW2ApiSpecialization {
+  if (!data.background) return data;
+  data.background += `?w=1024&h=256`;
+  return data;
 }
 
 const dataTraits1 = traits1dataTraits
-  ? await transformTraitsData(traits1dataTraits)
+  ? transformTraitsData(traits1dataTraits)
   : {};
 const dataTraits2 = traits2dataTraits
-  ? await transformTraitsData(traits2dataTraits)
+  ? transformTraitsData(traits2dataTraits)
   : {};
 const dataTraits3 = traits3dataTraits
-  ? await transformTraitsData(traits3dataTraits)
+  ? transformTraitsData(traits3dataTraits)
   : {};
 
 const dataSpecialization1 = traits1dataSpecialization
-  ? await transformSpecializationData(traits1dataSpecialization)
+  ? transformSpecializationData(traits1dataSpecialization)
   : undefined;
 const dataSpecialization2 = traits2dataSpecialization
-  ? await transformSpecializationData(traits2dataSpecialization)
+  ? transformSpecializationData(traits2dataSpecialization)
   : undefined;
 const dataSpecialization3 = traits3dataSpecialization
-  ? await transformSpecializationData(traits3dataSpecialization)
+  ? transformSpecializationData(traits3dataSpecialization)
   : undefined;
 ---
 

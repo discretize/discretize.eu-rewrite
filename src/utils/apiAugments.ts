@@ -1,4 +1,3 @@
-import { getImage } from "@astrojs/image";
 import type { ItemCategoryName } from "@gw2-ui/builder/itemCategoryNames";
 import ITEM_MODIFIERS, { ItemModifiers } from "@gw2-ui/builder/itemModifiers";
 import { ItemStatName } from "@gw2-ui/builder/itemStatNames";
@@ -40,23 +39,4 @@ function addAffixToGw2ui(
   return data;
 }
 
-async function optimizeIcons(data: GW2ApiItem, size: number = 60) {
-  if (!data) return data;
-
-  if (data.icon) {
-    // optimize icon
-    const optimized = await getImage({
-      src: data.icon,
-      width: size,
-      height: size,
-      format: "webp",
-      alt: "",
-    });
-
-    data.icon = optimized.src;
-  }
-
-  return data;
-}
-
-export { addAffixToGw2ui, optimizeIcons };
+export { addAffixToGw2ui };

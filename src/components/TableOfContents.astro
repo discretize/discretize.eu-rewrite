@@ -14,7 +14,7 @@ const { headings, offset = 0 } = Astro.props;
 ---
 
 <TOC
-    toc={Astro.props.headings.map((heading) => ({
+    toc={headings.map((heading) => ({
         title: heading.text,
         url: "#" + heading.slug,
         depth: heading.depth + offset,
