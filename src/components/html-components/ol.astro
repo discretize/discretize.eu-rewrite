@@ -19,7 +19,10 @@
     ol > li::before {
         counter-increment: section 1;
         content: counters(section, ".");
-        background-color: rgb(42, 44, 49);
+        --tw-bg-opacity: 1;
+        background-color: hsl(
+            var(--b1) / var(--tw-bg-opacity)
+        ); /* rgb(42, 44, 49); */
         border-radius: 4px;
         box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 1px -1px,
             rgba(0, 0, 0, 0.14) 0px 1px 1px 0px,
