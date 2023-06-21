@@ -30,8 +30,8 @@ const {
   uptodate = { guide: true, gear: true },
 } = Astro.props;
 
-const pcM = `var(--gw2-color-${profession.toLowerCase()}-main)`;
-const pcL = `var(--gw2-color-${profession.toLowerCase()}-light)`;
+const professionColorMain = `var(--gw2-color-${profession.toLowerCase()}-main)`;
+const professionColorLight = `var(--gw2-color-${profession.toLowerCase()}-light)`;
 
 const image = await getOptimizedImage(specialization.toLowerCase());
 ---
@@ -41,7 +41,9 @@ const image = await getOptimizedImage(specialization.toLowerCase());
   class={`mb-4 block ${rating === "archive" ? "hidden" : ""}`}
   data-rating={rating.toLowerCase().replace(" ", "")}
 >
-  <article class="outer rounded-3xl flex items-center embossed">
+  <article
+    class={`outer h-28 py-0 px-8 w-full grid rounded-3xl items-center embossed border-[1px] border-solid grid-cols-1  grid-flow-col-dense`}
+  >
     <img
       src={image.src}
       width={100}
@@ -65,7 +67,7 @@ const image = await getOptimizedImage(specialization.toLowerCase());
       } -->
     </div>
 
-    <div class="infoButtons">
+    <div class="flex gap-2 self-center">
       <div class="text-xs">
         <Tooltip>
           <span slot="target">
@@ -107,7 +109,7 @@ const image = await getOptimizedImage(specialization.toLowerCase());
         [rating, role].map((tag) => {
           return (
             <div
-              class={`chip border rounded-lg tertiary-border on-surface small cursor-default px-2 border-${profession.toLowerCase()}-main`}
+              class={`text-xs border rounded-lg tertiary-border on-surface small cursor-default px-2 border-${profession.toLowerCase()}-main`}
             >
               <span>{tag}</span>
             </div>
@@ -118,54 +120,11 @@ const image = await getOptimizedImage(specialization.toLowerCase());
   </article>
 </a>
 
-<style define:vars={{ pcM, pcL }}>
+<style define:vars={{ professionColorLight, professionColorMain }}>
   .outer {
-    height: 110px;
-    padding: 0 2rem;
-    width: 100%;
-    border: 1px solid var(--pcM);
-    display: grid;
-    grid-template-columns: 1fr 2fr 80px 2fr;
+    border-color: var(--professionColorMain);
   }
   .outer:hover {
-    border: 1px solid var(--pcL);
-  }
-
-  .infoButtons {
-    display: flex;
-    gap: 0.5rem;
-    align-self: center;
-  }
-
-  .chip {
-    font-size: 0.6rem;
-  }
-
-  @media (max-width: 1000px) {
-    .outer {
-      grid-template-columns: 1fr 2fr 80px;
-    }
-  }
-  @media (max-width: 500px) {
-    .outer {
-      padding: 0 0.5rem;
-    }
-    .title {
-      font-size: 1.1rem;
-    }
-  }
-
-  @media (max-width: 900px) {
-    .lastUpdated {
-      position: relative;
-      left: 0;
-    }
-    .title {
-      margin-left: 0 !important;
-    }
-    .tags {
-      position: relative;
-      left: 0;
-    }
+    border-color: var(--professionColorLight);
   }
 </style>

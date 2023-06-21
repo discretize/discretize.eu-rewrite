@@ -83,7 +83,7 @@ const guides = await getGuides();
 <div class="topArea bg-sky-50 dark:bg-zinc-900">
   <div class="topButtonArea flex items-center justify-between">
     <Link href="/" label="Home">
-      <Discretize className="h-12" />
+      <Discretize className="h-12" animate={false} />
     </Link>
 
     <div class="max-md:hidden">
@@ -131,7 +131,7 @@ const guides = await getGuides();
       label="Discord Link"
     >
       <button
-        class={`rounded-full ${BORDER} p-[2px] border-[0.0626rem] p-0 w-10 h-10 mx-2`}
+        class={`rounded-full ${BORDER} p-[2px] border-[0.0626rem] w-10 h-10 mx-2`}
         aria-label="Discord Link"
       >
         <Discord className="w-8 h-8" />
@@ -175,7 +175,7 @@ const guides = await getGuides();
         label="Discord Link"
       >
         <button
-          class={`rounded-full ${BORDER} p-[2px] border-[0.0626rem] p-0 w-10 h-10 mx-2`}
+          class={`rounded-full ${BORDER} p-[2px] border-[0.0626rem] w-10 h-10 mx-2`}
           aria-label="Discord Link"
         >
           <Discord className="w-8 h-8" />

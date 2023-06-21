@@ -54,33 +54,35 @@ tabs.forEach((tab, index) => {
 </script>
 
 <tabs-component>
-  <div
-    class="tabs tabs-boxed max-w-[calc(100%-4rem)] m-auto relative mb-[-2rem] border-2 dark:border-none border-gray-200"
-  >
-    {
-      tabs.map((tab, index) => (
-        <div
-          data-ui={tab.id}
-          class={(index === 0 ? "tab-active" : "") + ` tab !h-12`}
-        >
-          {tab.title ? (
-            tab.title
-          ) : (
-            <div class="flex flex-col">
-              <Profession
-                name={tab.specialization}
-                disableLink
-                disableText
-                size="medium"
-              />
-            </div>
-          )}
-        </div>
-      ))
-    }
-  </div>
+  <div class="mb-6">
+    <div
+      class="tabs tabs-boxed w-fit ml-8 relative mb-[-2rem] border-2 dark:border-none border-gray-200"
+    >
+      {
+        tabs.map((tab, index) => (
+          <div
+            data-ui={tab.id}
+            class={(index === 0 ? "tab-active" : "") + ` tab !h-12`}
+          >
+            {tab.title ? (
+              tab.title
+            ) : (
+              <div class="flex flex-col">
+                <Profession
+                  name={tab.specialization}
+                  disableLink
+                  disableText
+                  size="medium"
+                />
+              </div>
+            )}
+          </div>
+        ))
+      }
+    </div>
 
-  <div class="embossed p-4 pt-12 rounded shadow">
-    <slot />
+    <div class="embossed p-4 pt-12 rounded shadow-lg">
+      <slot />
+    </div>
   </div>
 </tabs-component>

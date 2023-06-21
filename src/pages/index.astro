@@ -63,7 +63,7 @@ import Button from "src/components/html-components/button.astro";
     </div>
   </div>
 
-  <div class="page2 relative">
+  <div class="relative">
     <div class="heroImageWrapper">
       <Picture
         src={heroShattered}
@@ -74,24 +74,27 @@ import Button from "src/components/html-components/button.astro";
         class="heroImage"
       />
     </div>
-    <div class="shadowBg"></div>
+    <div class="shadowBgLeft"></div>
 
-    <div class="aboutText">
-      <p>
-        Welcome to Discretize, the premier high-end fractal guild for the Guild
-        Wars 2 community. Since 2017, we have been dedicated to sharing our
-        knowledge and expertise to help players of all skill levels excel in
-        fractals and discover new depths of gameplay.
+    <div
+      class="absolute text-blue-50 max-w-3xl text-center z-10 top-1/2 md:text-xl -translate-y-1/2 md:ml-12 p-4"
+    >
+      <h2>Welcome to Discretize</h2>
+      <p class="mb-8">
+        We are a premier high-end fractal guild for the MMORPG Guild Wars 2.
+        Since 2017, we have been dedicated to sharing our knowledge and
+        expertise to help players of all skill levels excel in fractals and
+        discover new depths of gameplay.
       </p>
-      <p>
-        Our infamous roster of top-tier players is a beacon for the fractal
+      <p class="mb-8">
+        Our renowned roster of top-tier players is a beacon for the fractal
         community, and we pride ourselves on providing detailed builds, guides,
         and resources that are invaluable for both new players and veterans
         alike. Through our work, we strive to encourage a more well-informed
         player base, sparking innovation and progress within the community.
       </p>
-      <p>
-        Join us and discover why Discretize is the go-to guild for those seeking
+      <p class="mb-8">
+        Join us and discover why Discretize is the go-to site for those seeking
         to master fractals in Guild Wars 2.
       </p>
     </div>
@@ -125,26 +128,6 @@ import Button from "src/components/html-components/button.astro";
   .logo .chip {
     color: #dddddd;
   }
-  .aboutText {
-    color: #dddddd;
-    position: absolute;
-    max-width: 700px;
-    text-align: center;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1;
-  }
-  @media (max-width: 600px) {
-    .aboutText {
-      padding: 1rem;
-      left: 0;
-      transform: translate(0, -50%);
-    }
-  }
-  .aboutText p {
-    margin-bottom: 2rem;
-  }
   .shadowBg {
     background: radial-gradient(
       circle,
@@ -157,6 +140,26 @@ import Button from "src/components/html-components/button.astro";
     z-index: 1;
     inset: 0;
   }
+
+  .shadowBgLeft {
+    background: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 0.75) 40%,
+      rgba(0, 0, 0, 0.5) 50%,
+      rgba(0, 0, 0, 0) 60%
+    );
+    position: absolute;
+
+    z-index: 1;
+    inset: 0;
+  }
+  @media screen and (max-width: 1400px) {
+    .shadowBgLeft {
+      background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
+    }
+  }
+
   .heroImage {
     bottom: 0;
     height: 100%;
