@@ -170,9 +170,11 @@ mainClasses = mainClasses.trim();
         ) {
           document.documentElement.classList.add("dark");
           document.documentElement.setAttribute("data-theme", "discretizeDark");
+          localStorage.theme = "dark";
         } else {
           document.documentElement.classList.remove("dark");
           document.documentElement.setAttribute("data-theme", "light");
+          localStorage.theme = "light";
         }
       }
       reloadTheme();

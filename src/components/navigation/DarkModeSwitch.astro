@@ -33,12 +33,13 @@
     }
 
     toggleTheme() {
+      // reload tailwind theme
       if (localStorage.theme === "dark") {
         localStorage.theme = "light";
       } else {
         localStorage.theme = "dark";
       }
-      // reload tailwind theme
+
       if (
         localStorage.theme === "dark" ||
         (!("theme" in localStorage) &&
