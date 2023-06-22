@@ -67,16 +67,26 @@ const guides = await getGuides();
   const overlay = document.querySelector("#overlay");
   const drawer = document.querySelector("#mobileDrawer");
 
+  function toggleVisbilility() {
+    if (drawer.classList.contains("swoosh-div-animation")) {
+      drawer.classList.remove("swoosh-div-animation");
+    } else {
+      drawer.classList.add("swoosh-div-animation");
+    }
+  }
+
   button.addEventListener("click", () => {
-    drawer.classList.toggle("hidden");
+    toggleVisbilility();
 
     overlay.classList.toggle("hidden");
+    document.body.classList.toggle("overflow-hidden");
   });
 
   overlay.addEventListener("click", () => {
-    drawer.classList.toggle("hidden");
+    toggleVisbilility();
 
     overlay.classList.toggle("hidden");
+    document.body.classList.toggle("overflow-hidden");
   });
 </script>
 
@@ -97,14 +107,15 @@ const guides = await getGuides();
 
 <div
   id="overlay"
-  class="hidden z-10 fixed right-auto bottom-auto top-0 left-0 w-full h-full opacity-50 bg-black dark:bg-black-900"
+  class="hidden z-10 fixed right-auto bottom-auto top-0 left-0 w-full h-[100vh] opacity-50 bg-black dark:bg-black-900"
 >
 </div>
+
 <div
   id="mobileDrawer"
-  class={`${BACKGROUND} drawer hidden right-auto bottom-auto top-0 left-0 fixed inset w-[300px] h-full z-50 overflow-x-hidden p-4`}
+  class={`${BACKGROUND} drawer right-auto bottom-auto top-0 fixed inset w-64 h-[100vh] z-50 p-4 swoosh-div`}
 >
-  <div class="flex justify-between items-center flex-col gap-4">
+  <div class="flex flex-col gap-4">
     <Link href="/" label="Home">
       <Discretize className="h-12" />
     </Link>
@@ -126,9 +137,18 @@ const guides = await getGuides();
     </Link>
 
     <Link
+      className="discretizeNavButton"
+      disablePrefetch
+      href="https://optimizer.discretize.eu"
+    >
+      Optimizer
+    </Link>
+
+    <Link
       href="https://discord.gg/TGrhn8qjYT"
       disablePrefetch
       label="Discord Link"
+      className="flex-grow"
     >
       <button
         class={`rounded-full ${BORDER} p-[2px] border-[0.0626rem] w-10 h-10 mx-2`}
@@ -195,6 +215,9 @@ const guides = await getGuides();
     font-size: 1.3rem;
     font-family: Muli;
   }
+  :global(.discretizeNavButton:hover) {
+    color: #00cccc;
+  }
 
   .topButtonArea {
     max-height: 4rem;
@@ -222,5 +245,22 @@ const guides = await getGuides();
     padding-top: 0.7rem;
     padding-bottom: 0.7rem;
     width: 100%;
+  }
+
+  .swoosh-div {
+    position: relative;
+    left: -100%; /* Start off-screen */
+  }
+  .swoosh-div-animation {
+    animation: swoosh 0.3s forwards; /* Animation duration and fill mode */
+  }
+
+  @keyframes swoosh {
+    0% {
+      left: -100%; /* Start position */
+    }
+    100% {
+      left: 0; /* End position */
+    }
   }
 </style>
