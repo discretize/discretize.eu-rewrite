@@ -1,6 +1,22 @@
 ---
 import { Icon } from "astro-icon";
-const { caption, url } = Astro.props;
+
+interface Props {
+  caption: string;
+  url: string;
+  sourceId: string;
+}
+
+const SOURCE_URL = "https://pub-80c25841bf1e4cbda246ab1b42798500.r2.dev/";
+
+const { caption, url, sourceId } = Astro.props;
+
+const sources_list = ["av1", "vp9", "x264"].map((codec) => {
+  return {
+    src: `${SOURCE_URL}${sourceId}/${sourceId}.${codec}.mp4`,
+    codec: codec.startsWith("av1") ? "av01.0.05M.08" : codec,
+  };
+});
 ---
 
 <script>
@@ -59,7 +75,11 @@ const { caption, url } = Astro.props;
   </div>
 
   <video loop preload="auto" class="w-full h-auto rounded">
-    <source src={url} type="video/webm" />
+    {
+      sources_list.map(({ src, codec }) => (
+        <source src={src} type={`video/mp4; codecs="${codec}"`} />
+      ))
+    }
   </video>
   <figcaption class="text-sm m-0 text-center pt-1 px-2 mb-4">
     {caption}
