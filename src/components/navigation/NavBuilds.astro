@@ -6,16 +6,14 @@ import { BACKGROUND } from "src/styles";
 import Link from "../Link.astro";
 import TextDivider from "../TextDivider.astro";
 
+export type NavBuild = {
+  title: string;
+  url: string;
+  rating: string;
+  specialization: ProfessionTypes | EliteSpecTypes;
+};
 interface Props {
-  builds: Record<
-    ProfessionTypes,
-    {
-      title: string;
-      url: string;
-      rating: string;
-      specialization: ProfessionTypes | EliteSpecTypes;
-    }[]
-  >;
+  builds: Record<ProfessionTypes, NavBuild[]>;
 }
 
 const RATINGS = ["Discretize LFG", "Current"];

@@ -8,8 +8,8 @@ import Discord from "../../icons/discord.astro";
 import Discretize from "../../icons/discretize.astro";
 import Link from "../Link.astro";
 import DarkModeSwitch from "./DarkModeSwitch.astro";
-import NavBuilds from "./NavBuilds.astro";
-import NavDropdown from "./NavDropdown.astro";
+import NavBuilds, { NavBuild } from "./NavBuilds.astro";
+import NavDropdown, { NavItem } from "./NavDropdown.astro";
 
 async function getBuilds() {
   // load markdown files and return the frontmatter
@@ -30,13 +30,14 @@ async function getBuilds() {
       url: build.url.replace("discretize-guides", "").replace("/index.mdx", ""),
     }));
 
-  const data = {};
-  navigationData.forEach((build) => {
-    if (!data[build.profession]) {
-      data[build.profession] = [];
-    }
-    data[build.profession].push(build);
-  });
+  const data: Record<ProfessionTypes, NavBuild[]> = navigationData.reduce(
+    (acc, build) => {
+      if (!acc[build.profession]) acc[build.profession] = [];
+      acc[build.profession].push(build);
+      return acc;
+    },
+    {} as Record<ProfessionTypes, NavBuild[]>
+  );
 
   return data;
 }
@@ -50,10 +51,13 @@ async function getGuides() {
     )
   );
 
-  const navigationData = guides.map((guide) => ({
-    title: guide.frontmatter.title,
-    url: guide.url.replace("discretize-guides", "").replace("/index.mdx", ""),
-  }));
+  const navigationData: NavItem[] = guides
+    .map((guide) => ({
+      title: guide.frontmatter.title,
+      url: guide.url.replace("discretize-guides", "").replace("/index.mdx", ""),
+      priority: guide.frontmatter.priority ?? 50,
+    }))
+    .sort((a, b) => b.priority - a.priority);
 
   return navigationData;
 }
