@@ -36,11 +36,8 @@ const sources_list = ["av1", "vp9", "x264"].map((codec) => {
 
       // Target Edge on Windows with UserAgent and Platform strings
       if (window.navigator.userAgent.toLowerCase().includes("edg")) {
-        // Select the video element
-        const video = document.querySelector("video");
-
         // Select the playable source file and set video src
-        video.src = video
+        this.video.src = this.video
           .querySelector("source[type='video/mp4; codecs=vp9']")
           .getAttribute("src");
       }
