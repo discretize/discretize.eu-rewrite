@@ -33,6 +33,17 @@ const sources_list = ["av1", "vp9", "x264"].map((codec) => {
           this.pause();
         }
       });
+
+      // Target Edge on Windows with UserAgent and Platform strings
+      if (window.navigator.userAgent.toLowerCase().includes("edg")) {
+        // Select the video element
+        const video = document.querySelector("video");
+
+        // Select the playable source file and set video src
+        video.src = video
+          .querySelector("source[type='video/mp4; codecs=vp9']")
+          .getAttribute("src");
+      }
     }
 
     get video() {
@@ -77,7 +88,7 @@ const sources_list = ["av1", "vp9", "x264"].map((codec) => {
   <video loop preload="auto" class="w-full h-auto rounded">
     {
       sources_list.map(({ src, codec }) => (
-        <source src={src} type={`video/mp4; codecs="${codec}"`} />
+        <source src={src} type={`video/mp4; codecs=${codec}`} />
       ))
     }
   </video>
