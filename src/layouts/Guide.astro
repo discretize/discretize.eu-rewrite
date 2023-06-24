@@ -4,6 +4,7 @@ import Layout, { SEOProps } from "./Layout.astro";
 import type { Props as GuideProps } from "src/components/frontmatter/GuideFrontmatter.astro";
 import { guideHeaders } from "src/utils/cache";
 import imageFetch from "src/utils/imageFetch";
+import { getImage } from "@astrojs/image";
 
 export interface Props {
   frontmatter: GuideProps;
@@ -13,9 +14,26 @@ const { title } = Astro.props.frontmatter;
 
 const headerImage = imageFetch(Object.keys(guideHeaders), Astro.url.pathname);
 
-const seo: SEOProps = {
-  title,
-};
+let seo: SEOProps = { title };
+
+if (headerImage) {
+  const thumbnail = (await Object.entries(guideHeaders).find(
+    ([k, v]) => k === headerImage
+  )[1]()) as ImageMetadata;
+
+  const ogImage = await getImage({
+    src: thumbnail.src,
+    width: 512,
+    height: 512,
+    format: "png",
+    alt: "OG Image",
+  });
+
+  seo = {
+    title,
+    image: ogImage?.src,
+  };
+}
 ---
 
 <Layout seo={seo}>

@@ -16,7 +16,7 @@ export interface Props {
   }[];
   url: string;
 }
-const { title, image } = Astro.props.frontmatter;
+const { title } = Astro.props.frontmatter;
 
 const headerImage = imageFetch(Object.keys(fractalHeaders), Astro.url.pathname);
 
@@ -38,7 +38,7 @@ if (headerImage) {
   seo = {
     title,
     description: Astro.props.frontmatter.long_description || undefined,
-    image: import.meta.env.CF_PAGES_URL + ogImage?.src,
+    image: ogImage?.src,
   };
 }
 ---
