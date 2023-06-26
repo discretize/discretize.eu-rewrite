@@ -11,12 +11,19 @@ const SOURCE_URL = "https://pub-80c25841bf1e4cbda246ab1b42798500.r2.dev/";
 
 const { caption, url, sourceId } = Astro.props;
 
-const sources_list = ["av1", "vp9", "x264"].map((codec) => {
-  return {
-    src: `${SOURCE_URL}${sourceId}/${sourceId}.${codec}.mp4`,
-    codec: codec.startsWith("av1") ? "av01.0.05M.08" : codec,
-  };
-});
+const sources_list = [
+  {
+    src: `${SOURCE_URL}${sourceId}/${sourceId}.av1.mp4`,
+    codec: "av01.0.05M.08",
+  },
+  {
+    src: `${SOURCE_URL}${sourceId}/${sourceId}.vp9.mp4`,
+    codec: "vp09.00.31.08",
+  },
+  {
+    src: `${SOURCE_URL}${sourceId}/${sourceId}.x264.mp4`,
+  },
+];
 ---
 
 <script>
@@ -33,14 +40,6 @@ const sources_list = ["av1", "vp9", "x264"].map((codec) => {
           this.pause();
         }
       });
-
-      // Target Edge on Windows with UserAgent and Platform strings
-      if (window.navigator.userAgent.toLowerCase().includes("edg")) {
-        // Select the playable source file and set video src
-        this.video.src = this.video
-          .querySelector("source[type='video/mp4; codecs=vp9']")
-          .getAttribute("src");
-      }
     }
 
     get video() {
@@ -74,22 +73,32 @@ const sources_list = ["av1", "vp9", "x264"].map((codec) => {
   customElements.define("video-figure", VideoFigure);
 </script>
 
-<video-figure class="relative pb-[56.25%] pt-[25px]">
-  <div
-    id="playButton"
-    class="absolute top-2/4 left-2/4 -translate-x-1/2 -translate-y-1/2 cursor-pointer z-10 text-blue-500"
-  >
+<video-figure class="relative table-row-group pb-[56.25%] pt-[25px]">
+  <div id="playButton" class="cursor-pointer z-10 text-blue-500">
     <Icon name="mdi:play-circle-outline" size="4rem" />
   </div>
 
   <video loop preload="auto" class="w-full h-auto rounded">
     {
       sources_list.map(({ src, codec }) => (
-        <source src={src} type={`video/mp4; codecs=${codec}`} />
+        <source
+          src={src}
+          type={`video/mp4${codec ? `; codecs=${codec}` : ""}`}
+        />
       ))
     }
+    Your browser does not support videos :(
   </video>
   <figcaption class="text-sm m-0 text-center pt-1 px-2 mb-4">
     {caption}
   </figcaption>
 </video-figure>
+
+<style>
+  #playButton {
+    transform: translate(-50%, -100%);
+    left: 50%;
+    top: 50%;
+    position: absolute;
+  }
+</style>
