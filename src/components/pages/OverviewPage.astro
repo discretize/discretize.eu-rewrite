@@ -1,5 +1,5 @@
 ---
-import { Picture } from "@astrojs/image/components";
+import { Image, Picture } from "@astrojs/image/components";
 
 interface Props {
   items: Array<{
@@ -19,14 +19,26 @@ const { items } = Astro.props;
     items.map((item) => (
       <a href={item.slug} class="w-full mb-8 inline-flex">
         <article class="border-blue-700 hover:border-blue-300 border-2 border-solid rounded-xl flex w-full gap-4 max-sm:gap-2 max-sm:flex-col sm:max-h-[173px] embossed shadow-lg">
-          <Picture
-            src={"../../../" + item.imageUrl}
-            alt={item.title}
-            sizes="(max-width: 639px) 100vh, 300px"
-            widths={[300, 600]}
-            aspectRatio="16:9"
-            class="sm:rounded-l-xl max-sm:rounded-t-xl sm:max-w-none"
-          />
+          <figure>
+            <Picture
+              src={"../../../" + item.imageUrl}
+              alt={item.title}
+              aspectRatio="16:9"
+              sizes="300px"
+              widths={[300]}
+              width={300}
+              height={169}
+              class="rounded-l-xl max-w-none hidden sm:block"
+            />
+            <Picture
+              src={"../../../" + item.imageUrl}
+              alt={item.title}
+              aspectRatio="16:9"
+              sizes="100vw"
+              widths={[600]}
+              class="rounded-t-xl w-full block sm:hidden"
+            />
+          </figure>
           <div class="p-4 flex flex-col justify-between w-full">
             <div class="flex justify-between max-sm:flex-col max-sm:mb-2">
               <h2 class="max-sm:mb-1">{item.title}</h2>
@@ -37,7 +49,9 @@ const { items } = Astro.props;
               </span>
             </div>
 
-            <p class="font-light">{item.description}</p>
+            <p class="font-light sm:hidden min-[700px]:block">
+              {item.description}
+            </p>
           </div>
         </article>
       </a>
