@@ -14,7 +14,7 @@ const { type, headings } = Astro.props;
 
 const map = getMapImage(type);
 
-const { src, width, height, SVG, encounters } = map || {};
+const { src, width, height, SVG, encounters = [] } = map || {};
 
 const encounter_buttons = encounters.map((elem, index) => ({
     ...elem,
