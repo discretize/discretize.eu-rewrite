@@ -1,0 +1,81 @@
+---
+import { Picture } from "@astrojs/image/components";
+import { getMapImage } from "./mapImages";
+import Tooltip from "../Tooltip.astro";
+import Card from "../Card.astro";
+import TableOfContents, { Heading } from "../TableOfContents.astro";
+
+interface Props {
+    type: string;
+    headings: Heading[];
+}
+
+const { type, headings } = Astro.props;
+
+const map = getMapImage(type);
+
+const { src, width, height, SVG, encounters } = map || {};
+
+const encounter_buttons = encounters.map((elem, index) => ({
+    ...elem,
+    ...headings[index],
+}));
+---
+
+{
+    src ? (
+        <div
+            class={`relative`}
+            style={{ maxWidth: width + "px", maxHeight: height + "px" }}
+        >
+            <Picture
+                widths={[width]}
+                sizes={`${width}px`}
+                src={src}
+                alt="Map"
+                aspectRatio={width / height}
+            />
+
+            <SVG width={width} height={height} />
+
+            {encounter_buttons.map(
+                ({ depth, isMajor, text, slug, xPercent, yPercent }, index) => (
+                    <div
+                        class="absolute z-20"
+                        style={{
+                            top: `${xPercent}%`,
+                            left: `${yPercent}%`,
+                        }}
+                    >
+                        <Tooltip>
+                            <button
+                                slot="target"
+                                class={`btn btn-circle ${
+                                    isMajor
+                                        ? "btn-primary"
+                                        : "btn-secondary w-8 h-8 !min-h-fit"
+                                }`}
+                                onclick={`
+                                window.scrollTo({ top: document.querySelector('#${slug}').offsetTop - 70, behavior: 'smooth' });
+                                `}
+                            >
+                                {index + 1}
+                            </button>
+                            <div slot="tooltip" aria-label="Tooltip">
+                                <h4 class="!mb-2">{text}</h4>
+                                <span class="!text-xs">
+                                    Click to go to{" "}
+                                    {isMajor ? "encounter" : "path"}
+                                </span>
+                            </div>
+                        </Tooltip>
+                    </div>
+                )
+            )}
+        </div>
+    ) : (
+        <Card title="Table of contents" className="!mt-0">
+            <TableOfContents headings={headings} offset={-1} />
+        </Card>
+    )
+}

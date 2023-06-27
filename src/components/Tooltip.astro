@@ -5,7 +5,7 @@ const { className } = Astro.props;
 <span class={`group relative w-max ${className || ""}`}>
   <slot name="target" />
   <span
-    class={`text-zinc-50 z-20 pointer-events-none bg-black p-2 text-xs absolute -top-8 left-0 w-max opacity-0 transition-opacity group-hover:opacity-100`}
+    class={`text-zinc-50 pointer-events-none bg-black p-2 text-xs absolute bottom-8 left-0 w-max opacity-0 rounded transition-opacity group-hover:opacity-100`}
   >
     <slot name="tooltip" />
   </span>

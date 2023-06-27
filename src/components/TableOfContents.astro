@@ -1,11 +1,13 @@
 ---
 import TOC from "./TOC.astro";
+
+export type Heading = {
+    text: string;
+    slug: string;
+    depth: number;
+};
 interface Props {
-    headings: {
-        text: string;
-        slug: string;
-        depth: number;
-    }[];
+    headings: Heading[];
     offset?: number;
 }
 

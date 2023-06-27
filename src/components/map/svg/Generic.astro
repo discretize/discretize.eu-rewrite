@@ -1,0 +1,30 @@
+---
+interface Props {
+    width: number;
+    height: number;
+}
+
+const { width, height } = Astro.props;
+---
+
+<svg
+    class="absolute top-0 left-0 z-10 stroke-blue-500"
+    viewBox=`0 0 ${width} ${height}`
+>
+    <slot />
+</svg>
+
+<style>
+    :global(#animated-path) {
+        stroke-dasharray: 5;
+        animation: dash 10s linear;
+        animation-iteration-count: infinite;
+        animation-direction: reverse;
+    }
+
+    @keyframes dash {
+        to {
+            stroke-dashoffset: 100;
+        }
+    }
+</style>
