@@ -1,8 +1,18 @@
 ---
+import { Placement } from "@floating-ui/react-dom";
+import { StyleHTMLAttributes } from "react";
+interface Props {
+    tooltipDirection?: Placement;
+    className?: string;
+    style?: StyleHTMLAttributes<HTMLDivElement>["style"];
+}
+
+const { tooltipDirection = "top", className, style } = Astro.props;
 ---
 
 <script>
     import {
+        Placement,
         arrow,
         computePosition,
         flip,
@@ -22,9 +32,10 @@
             });
         }
 
-        update() {
-            computePosition(this.target, this.tooltip, {
-                placement: "top",
+        update(elem) {
+            computePosition(this.target, elem, {
+                placement: this.dataset.tooltipDirection as Placement,
+                strategy: "absolute",
                 middleware: [
                     offset(5),
                     flip(),
@@ -32,7 +43,7 @@
                     arrow({ element: this.arrow }),
                 ],
             }).then(({ x, y, placement, middlewareData }) => {
-                Object.assign(this.tooltip.style, {
+                Object.assign(elem.style, {
                     left: `${x}px`,
                     top: `${y}px`,
                 });
@@ -57,12 +68,15 @@
         }
 
         showTooltip = () => {
-            this.tooltip.style.display = "block";
-            this.update();
+            const cloned = this.tooltip.cloneNode(true) as HTMLDivElement;
+            cloned.style.display = "block";
+
+            this.update(cloned);
+            this.portal.appendChild(cloned);
         };
 
         hideTooltip = () => {
-            this.tooltip.style.display = "";
+            this.portal.innerHTML = "";
         };
 
         get target() {
@@ -74,21 +88,30 @@
         }
 
         get arrow() {
-            return this.querySelector<HTMLDivElement>("#arrow");
+            // we target the arrow in the portal - not clean but it works
+            return document.querySelector<HTMLDivElement>("#arrow");
+        }
+
+        get portal() {
+            return document.querySelector<HTMLDivElement>("#floating-portal");
         }
     }
 
     customElements.define("tooltip-component", TooltipComponent);
 </script>
 
-<tooltip-component>
+<tooltip-component
+    data-tooltip-direction={tooltipDirection}
+    class={className}
+    style={style}
+>
     <div id="target">
         <slot name="target" />
     </div>
     <div
         id="tooltip"
         role="tooltip"
-        class={`embossed w-max absolute top-0 left-0 p-2 rounded hidden`}
+        class={`embossed w-max absolute top-0 left-0 p-2 rounded hidden z-50`}
     >
         <slot name="tooltip" />
         <div id="arrow" class={`embossed rotate-45 w-2 h-2 absolute`}></div>

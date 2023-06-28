@@ -2,13 +2,14 @@
 interface Props {
     width: number;
     height: number;
+    color?: string;
 }
 
-const { width, height } = Astro.props;
+const { width, height, color = "stroke-blue-500" } = Astro.props;
 ---
 
 <svg
-    class="absolute z-10 top-0 left-0 w-full stroke-blue-500"
+    class={`absolute z-10 top-0 left-0 ${color}`}
     viewBox=`0 0 ${width} ${height}`
 >
     <slot />

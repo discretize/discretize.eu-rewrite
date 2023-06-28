@@ -1,11 +1,15 @@
 import snowblindImage from "../../assets/images/maps/snowblind.jpeg";
 import SnowblindPathSVG from "./path-svg/Snowblind.astro";
+import ThaumanovaReactorSVG from "./path-svg/ThaumanovaReactor.astro";
+import thaumnovaReactorIamge from "../../assets/images/maps/thaumanovaReactor.jpg";
+import { Placement } from "@floating-ui/react-dom";
 
 export type Encounter = {
   xPercent: number;
   yPercent: number;
   isMajor: boolean;
   area: string;
+  tooltipDirection?: Placement;
 };
 
 const mapsData: Record<
@@ -28,7 +32,7 @@ const mapsData: Record<
         xPercent: 25,
         yPercent: 30,
         isMajor: true,
-        area: '<polygon class={CLASSES} points="66,98 235,98 235,194 66,194 66,98"></polygon>',
+        area: '<polygon points="66,98 235,98 235,194 66,194 66,98"></polygon>',
       },
       {
         xPercent: 65,
@@ -47,6 +51,54 @@ const mapsData: Record<
         yPercent: 80,
         isMajor: true,
         area: '<circle cx="425" cy="264" r="49"></circle>',
+      },
+    ],
+  },
+  "thaumanova-reactor": {
+    src: thaumnovaReactorIamge,
+    width: 3352,
+    height: 3348,
+    PathSVG: ThaumanovaReactorSVG,
+    encounters: [
+      {
+        xPercent: 65,
+        yPercent: 68,
+        isMajor: false,
+        tooltipDirection: "bottom",
+        area: '<rect height="43.07688" width="87.69221" y="1479.84276" x="1465.53477" />',
+      },
+      {
+        xPercent: 75,
+        yPercent: 50,
+        isMajor: true,
+        area: '<rect height="416.92263" width="603.07628" y="2799.84122" x="1293.22729" />',
+      },
+      {
+        xPercent: 50,
+        yPercent: 80,
+        isMajor: true,
+        tooltipDirection: "left",
+        area: '<rect height="929.22984" width="378.46113" y="1141.38159" x="2556.30285" />',
+      },
+      {
+        xPercent: 48.5,
+        yPercent: 25,
+        isMajor: true,
+        tooltipDirection: "right",
+        area: '<rect height="281.53816" width="749.22997" y="1601.38109" x="151.69004" />',
+      },
+      {
+        xPercent: 18,
+        yPercent: 66,
+        isMajor: true,
+        tooltipDirection: "bottom",
+        area: '<ellipse ry="323.84583" rx="366.15344" id="svg_20" cy="408.30542" cx="2665.53352" />',
+      },
+      {
+        xPercent: 35,
+        yPercent: 48,
+        isMajor: true,
+        area: '<ellipse ry="153.846" rx="158.46136" id="svg_17" cy="1499.84274" cx="1745.53448" />',
       },
     ],
   },

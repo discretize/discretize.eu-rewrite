@@ -11,8 +11,6 @@ interface Props {
     headings: Heading[];
 }
 
-const HOVER_COLOR = "fill-blue-200/30";
-
 const { type, headings } = Astro.props;
 
 const map = getMapData(type);
@@ -23,13 +21,14 @@ const encounter_list = encounters.map((elem, index) => ({
     ...elem,
     ...headings[index],
     onclick: `window.scrollTo({ top: document.querySelector('#${headings[index].slug}').offsetTop - 70, behavior: 'smooth' });`,
+    area: elem.area, // todo add hover class to area
 }));
 ---
 
 {
     src ? (
         <div
-            class={`relative`}
+            class={`relative w-full h-full`}
             style={{ maxWidth: width + "px", maxHeight: height + "px" }}
         >
             <Image src={src} alt="Map" width={width} height={height} />
@@ -46,7 +45,7 @@ const encounter_list = encounters.map((elem, index) => ({
                     <a
                         id={`area-${slug}`}
                         onclick={onclick}
-                        class={`hover:${HOVER_COLOR} cursor-pointer`}
+                        class={`hover:fill-blue-200/30 cursor-pointer`}
                     >
                         <Fragment set:html={area} />
                     </a>
@@ -55,39 +54,45 @@ const encounter_list = encounters.map((elem, index) => ({
 
             {encounter_list.map(
                 (
-                    { isMajor, text, slug, xPercent, yPercent, onclick },
+                    {
+                        isMajor,
+                        text,
+                        slug,
+                        xPercent,
+                        yPercent,
+                        onclick,
+                        tooltipDirection,
+                    },
                     index
                 ) => (
-                    <div
-                        class="absolute z-20"
+                    <Tooltip2
+                        tooltipDirection={tooltipDirection}
+                        className="absolute z-20"
                         style={{
                             top: `${xPercent}%`,
                             left: `${yPercent}%`,
                         }}
                     >
-                        <Tooltip2>
-                            <button
-                                slot="target"
-                                class={`btn btn-circle ${
-                                    isMajor
-                                        ? "btn-primary"
-                                        : "btn-secondary w-8 h-8 !min-h-fit"
-                                }`}
-                                onclick={onclick}
-                                onmouseenter={`document.querySelector('#area-${slug}')?.classList.add("${HOVER_COLOR}")`}
-                                onmouseleave={`document.querySelector('#area-${slug}')?.classList.remove("${HOVER_COLOR}")`}
-                            >
-                                {index + 1}
-                            </button>
-                            <div slot="tooltip" aria-label="Tooltip">
-                                <h4 class="!mb-2">{text}</h4>
-                                <span class="!text-xs">
-                                    Click to go to{" "}
-                                    {isMajor ? "encounter" : "path"}
-                                </span>
-                            </div>
-                        </Tooltip2>
-                    </div>
+                        <button
+                            slot="target"
+                            class={`btn btn-circle ${
+                                isMajor
+                                    ? "btn-primary"
+                                    : "btn-secondary w-8 h-8 !min-h-fit"
+                            }`}
+                            onclick={onclick}
+                            onmouseenter={`document.querySelector('#area-${slug}')?.classList.add("fill-blue-200/30")`}
+                            onmouseleave={`document.querySelector('#area-${slug}')?.classList.remove("fill-blue-200/30")`}
+                        >
+                            {index + 1}
+                        </button>
+                        <div slot="tooltip" aria-label="Tooltip">
+                            <h4 class="!mb-2">{text}</h4>
+                            <span class="!text-xs">
+                                Click to go to {isMajor ? "encounter" : "path"}
+                            </span>
+                        </div>
+                    </Tooltip2>
                 )
             )}
         </div>

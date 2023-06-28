@@ -1,0 +1,21 @@
+---
+import Generic from "./GenericPath.astro";
+
+interface Props {
+    width: number;
+    height: number;
+}
+
+const { width, height } = Astro.props;
+---
+
+<Generic width={width} height={height} color="stroke-white">
+    <path
+        id="animated-path"
+        stroke-width="20"
+        stroke-dasharray="20,20"
+        fill="none"
+        style="animation-direction: normal;stroke-dasharray: 20;"
+        d="m1504.00573,1500.55112l66.90616,-0.54844c0.36669,0.54844 -8.72424,149.63962 164.00335,167.82147c172.72758,18.18185 185.45488,-167.27303 185.08819,-167.82147c0.36669,0.54844 314.91271,4.18481 314.54602,3.63637c0.3667,0.54844 -3.26967,516.91301 -3.63637,516.36456c0.3667,0.54845 -75.99707,86.00315 -76.36377,85.4547c0.3667,0.54845 127.63965,106.00319 127.27295,105.45473"
+    ></path>
+</Generic>
