@@ -1,0 +1,96 @@
+---
+---
+
+<script>
+    import {
+        arrow,
+        computePosition,
+        flip,
+        offset,
+        shift,
+    } from "@floating-ui/react-dom";
+
+    class TooltipComponent extends HTMLElement {
+        connectedCallback() {
+            [
+                ["mouseenter", this.showTooltip],
+                ["mouseleave", this.hideTooltip],
+                ["focus", this.showTooltip],
+                ["blur", this.hideTooltip],
+            ].forEach(([event, listener]: [string, () => void]) => {
+                this.target.addEventListener(event, listener);
+            });
+        }
+
+        update() {
+            computePosition(this.target, this.tooltip, {
+                placement: "top",
+                middleware: [
+                    offset(5),
+                    flip(),
+                    shift({ padding: 2 }),
+                    arrow({ element: this.arrow }),
+                ],
+            }).then(({ x, y, placement, middlewareData }) => {
+                Object.assign(this.tooltip.style, {
+                    left: `${x}px`,
+                    top: `${y}px`,
+                });
+
+                const { x: arrowX, y: arrowY } = middlewareData.arrow;
+
+                const staticSide = {
+                    top: "bottom",
+                    right: "left",
+                    bottom: "top",
+                    left: "right",
+                }[placement.split("-")[0]];
+
+                Object.assign(this.arrow.style, {
+                    left: arrowX != null ? `${arrowX}px` : "",
+                    top: arrowY != null ? `${arrowY}px` : "",
+                    right: "",
+                    bottom: "",
+                    [staticSide]: "-4px",
+                });
+            });
+        }
+
+        showTooltip = () => {
+            this.tooltip.style.display = "block";
+            this.update();
+        };
+
+        hideTooltip = () => {
+            this.tooltip.style.display = "";
+        };
+
+        get target() {
+            return this.querySelector<HTMLDivElement>("#target");
+        }
+
+        get tooltip() {
+            return this.querySelector<HTMLDivElement>("#tooltip");
+        }
+
+        get arrow() {
+            return this.querySelector<HTMLDivElement>("#arrow");
+        }
+    }
+
+    customElements.define("tooltip-component", TooltipComponent);
+</script>
+
+<tooltip-component>
+    <div id="target">
+        <slot name="target" />
+    </div>
+    <div
+        id="tooltip"
+        role="tooltip"
+        class={`embossed w-max absolute top-0 left-0 p-2 rounded hidden`}
+    >
+        <slot name="tooltip" />
+        <div id="arrow" class={`embossed rotate-45 w-2 h-2 absolute`}></div>
+    </div>
+</tooltip-component>

@@ -4,11 +4,14 @@ import { getMapData } from "./mapData";
 import Tooltip from "../Tooltip.astro";
 import Card from "../Card.astro";
 import TableOfContents, { Heading } from "../TableOfContents.astro";
+import Tooltip2 from "../Tooltip2.astro";
 
 interface Props {
     type: string;
     headings: Heading[];
 }
+
+const HOVER_COLOR = "fill-blue-200/30";
 
 const { type, headings } = Astro.props;
 
@@ -34,14 +37,16 @@ const encounter_list = encounters.map((elem, index) => ({
             <PathSVG width={width} height={height} />
 
             <svg
+                id="areas"
                 class="absolute z-20 top-0 left-0 w-full"
                 fill="transparent"
                 viewBox={`0 0 ${width} ${height}`}
             >
                 {encounter_list.map(({ area, slug, onclick }) => (
                     <a
+                        id={`area-${slug}`}
                         onclick={onclick}
-                        class="hover:fill-blue-200/30 cursor-pointer"
+                        class={`hover:${HOVER_COLOR} cursor-pointer`}
                     >
                         <Fragment set:html={area} />
                     </a>
@@ -60,7 +65,7 @@ const encounter_list = encounters.map((elem, index) => ({
                             left: `${yPercent}%`,
                         }}
                     >
-                        <Tooltip>
+                        <Tooltip2>
                             <button
                                 slot="target"
                                 class={`btn btn-circle ${
@@ -69,6 +74,8 @@ const encounter_list = encounters.map((elem, index) => ({
                                         : "btn-secondary w-8 h-8 !min-h-fit"
                                 }`}
                                 onclick={onclick}
+                                onmouseenter={`document.querySelector('#area-${slug}')?.classList.add("${HOVER_COLOR}")`}
+                                onmouseleave={`document.querySelector('#area-${slug}')?.classList.remove("${HOVER_COLOR}")`}
                             >
                                 {index + 1}
                             </button>
@@ -79,7 +86,7 @@ const encounter_list = encounters.map((elem, index) => ({
                                     {isMajor ? "encounter" : "path"}
                                 </span>
                             </div>
-                        </Tooltip>
+                        </Tooltip2>
                     </div>
                 )
             )}
