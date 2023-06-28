@@ -21,7 +21,7 @@ const encounter_list = encounters.map((elem, index) => ({
     ...elem,
     ...headings[index],
     onclick: `window.scrollTo({ top: document.querySelector('#${headings[index].slug}').offsetTop - 70, behavior: 'smooth' });`,
-    area: elem.area, // todo add hover class to area
+    area: elem?.area, // todo add hover class to area
 }));
 ---
 
@@ -41,15 +41,17 @@ const encounter_list = encounters.map((elem, index) => ({
                 fill="transparent"
                 viewBox={`0 0 ${width} ${height}`}
             >
-                {encounter_list.map(({ area, slug, onclick }) => (
-                    <a
-                        id={`area-${slug}`}
-                        onclick={onclick}
-                        class={`hover:fill-blue-200/30 cursor-pointer`}
-                    >
-                        <Fragment set:html={area} />
-                    </a>
-                ))}
+                {encounter_list
+                    .filter((a) => a)
+                    .map(({ area, slug, onclick }) => (
+                        <a
+                            id={`area-${slug}`}
+                            onclick={onclick}
+                            class={`hover:fill-blue-200/30 cursor-pointer`}
+                        >
+                            <Fragment set:html={area} />
+                        </a>
+                    ))}
             </svg>
 
             {encounter_list.map(
@@ -62,38 +64,44 @@ const encounter_list = encounters.map((elem, index) => ({
                         yPercent,
                         onclick,
                         tooltipDirection,
+                        index: renamedIndex,
                     },
                     index
-                ) => (
-                    <Tooltip2
-                        tooltipDirection={tooltipDirection}
-                        className="absolute z-20"
-                        style={{
-                            top: `${xPercent}%`,
-                            left: `${yPercent}%`,
-                        }}
-                    >
-                        <button
-                            slot="target"
-                            class={`btn btn-circle ${
-                                isMajor
-                                    ? "btn-primary"
-                                    : "btn-secondary w-8 h-8 !min-h-fit"
-                            }`}
-                            onclick={onclick}
-                            onmouseenter={`document.querySelector('#area-${slug}')?.classList.add("fill-blue-200/30")`}
-                            onmouseleave={`document.querySelector('#area-${slug}')?.classList.remove("fill-blue-200/30")`}
-                        >
-                            {index + 1}
-                        </button>
-                        <div slot="tooltip" aria-label="Tooltip">
-                            <h4 class="!mb-2">{text}</h4>
-                            <span class="!text-xs">
-                                Click to go to {isMajor ? "encounter" : "path"}
-                            </span>
-                        </div>
-                    </Tooltip2>
-                )
+                ) => {
+                    if (!xPercent) return undefined;
+                    else
+                        return (
+                            <Tooltip2
+                                tooltipDirection={tooltipDirection}
+                                className="absolute z-20"
+                                style={{
+                                    top: `${xPercent}%`,
+                                    left: `${yPercent}%`,
+                                }}
+                            >
+                                <button
+                                    slot="target"
+                                    class={`btn btn-circle ${
+                                        isMajor
+                                            ? "btn-primary"
+                                            : "btn-secondary w-8 h-8 !min-h-fit"
+                                    }`}
+                                    onclick={onclick}
+                                    onmouseenter={`document.querySelector('#area-${slug}')?.classList.add("fill-blue-200/30")`}
+                                    onmouseleave={`document.querySelector('#area-${slug}')?.classList.remove("fill-blue-200/30")`}
+                                >
+                                    {renamedIndex || index + 1}
+                                </button>
+                                <div slot="tooltip" aria-label="Tooltip">
+                                    <h4 class="!mb-2">{text}</h4>
+                                    <span class="!text-xs">
+                                        Click to go to{" "}
+                                        {isMajor ? "encounter" : "path"}
+                                    </span>
+                                </div>
+                            </Tooltip2>
+                        );
+                }
             )}
         </div>
     ) : (

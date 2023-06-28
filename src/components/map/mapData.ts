@@ -1,10 +1,12 @@
 import { Placement } from "@floating-ui/react-dom";
+import captainMaiTrinBossImage from "../../assets/images/maps/captainMaiTrinBoss.png";
 import snowblindImage from "../../assets/images/maps/snowblind.jpeg";
-import thaumnovaReactorIamge from "../../assets/images/maps/thaumanovaReactor.jpg";
+import thaumnovaReactorImage from "../../assets/images/maps/thaumanovaReactor.jpg";
+import CaptainMaiTrinBossPathSVG from "./path-svg/CaptainMaiTrinBoss.astro";
 import SnowblindPathSVG from "./path-svg/Snowblind.astro";
 import ThaumanovaReactorSVG from "./path-svg/ThaumanovaReactor.astro";
-import captainMaiTrinBossImage from "../../assets/images/maps/captainMaiTrinBoss.png";
-import CaptainMaiTrinBossPathSVG from "./path-svg/CaptainMaiTrinBoss.astro";
+import deepstoneImage from "../../assets/images/maps/deepstone.jpeg";
+import Deepstone from "./path-svg/Deepstone.astro";
 
 export type Encounter = {
   xPercent: number;
@@ -12,6 +14,7 @@ export type Encounter = {
   isMajor: boolean;
   area: string;
   tooltipDirection?: Placement;
+  index?: number;
 };
 
 const mapsData: Record<
@@ -57,7 +60,7 @@ const mapsData: Record<
     ],
   },
   "thaumanova-reactor": {
-    src: thaumnovaReactorIamge,
+    src: thaumnovaReactorImage,
     width: 3352,
     height: 3348,
     PathSVG: ThaumanovaReactorSVG,
@@ -123,6 +126,58 @@ const mapsData: Record<
         isMajor: true,
         tooltipDirection: "bottom",
         area: '<ellipse ry="365.45455" rx="512.72728"  cy="1460.53168" cx="1152.11618" />',
+      },
+    ],
+  },
+  deepstone: {
+    src: deepstoneImage,
+    width: 2034,
+    height: 2634,
+    PathSVG: Deepstone,
+    encounters: [
+      {
+        xPercent: 50,
+        yPercent: 30,
+        isMajor: true,
+        tooltipDirection: "right",
+        area: "",
+      },
+      {
+        xPercent: 70,
+        yPercent: 80,
+        isMajor: true,
+        tooltipDirection: "bottom",
+        area: "",
+      },
+      undefined,
+      {
+        xPercent: 70,
+        yPercent: 41.5,
+        isMajor: true,
+        tooltipDirection: "bottom",
+        area: "",
+        index: 3,
+      },
+      {
+        xPercent: 55,
+        yPercent: 42.5,
+        isMajor: false,
+        index: 4,
+        area: '<rect height="390.66675" width="340.00008" y="1281.67197" x="748.20416" />',
+      },
+      {
+        xPercent: 35,
+        yPercent: 42.5,
+        isMajor: false,
+        index: 5,
+        area: "",
+      },
+      {
+        xPercent: 8,
+        yPercent: 41.5,
+        isMajor: true,
+        index: 6,
+        area: '<rect height="268.00006" width="534.66679" y="379.4496" x="656.20414" />',
       },
     ],
   },
