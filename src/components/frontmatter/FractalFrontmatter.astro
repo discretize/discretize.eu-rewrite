@@ -121,7 +121,10 @@ const headerImage =
     </GridItem>
     <GridItem>
       <div class="md:flex md:flex-row-reverse">
-        <Map type={title.toLowerCase().replace(" ", "-")} headings={headings} />
+        <Map
+          type={title.toLowerCase().replaceAll(" ", "-")}
+          headings={headings}
+        />
       </div>
     </GridItem>
   </Grid>
