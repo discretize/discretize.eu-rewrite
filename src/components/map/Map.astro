@@ -1,6 +1,6 @@
 ---
 import { Image, Picture } from "@astrojs/image/components";
-import { getMapImage } from "./mapImages";
+import { getMapData } from "./mapData";
 import Tooltip from "../Tooltip.astro";
 import Card from "../Card.astro";
 import TableOfContents, { Heading } from "../TableOfContents.astro";
@@ -12,13 +12,14 @@ interface Props {
 
 const { type, headings } = Astro.props;
 
-const map = getMapImage(type);
+const map = getMapData(type);
 
-const { src, width, height, SVG, encounters = [] } = map || {};
+const { src, width, height, PathSVG, encounters = [] } = map || {};
 
-const encounter_buttons = encounters.map((elem, index) => ({
+const encounter_list = encounters.map((elem, index) => ({
     ...elem,
     ...headings[index],
+    onclick: `window.scrollTo({ top: document.querySelector('#${headings[index].slug}').offsetTop - 70, behavior: 'smooth' });`,
 }));
 ---
 
@@ -28,51 +29,30 @@ const encounter_buttons = encounters.map((elem, index) => ({
             class={`relative`}
             style={{ maxWidth: width + "px", maxHeight: height + "px" }}
         >
-            <svg
-                class="absolute z-20"
-                version="1.1"
-                xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-                width="500"
-                height="518"
-                fill="transparent"
-            >
-                <a href={"#" + encounter_buttons[3].slug}>
-                    <polygon
-                        class="hover:fill-blue-200/30"
-                        points="227,450 369,452 373,157 255,165 257,334 227,450"
-                    />
-                </a>
-                <a xlink:href="">
-                    <circle
-                        class="hover:fill-blue-200/30"
-                        cx="425"
-                        cy="264"
-                        r="49"
-                    />
-                </a>
-                <a xlink:href="">
-                    <circle
-                        class="hover:fill-blue-200/30"
-                        cx="123"
-                        cy="346"
-                        r="58"
-                    />
-                </a>
-                <a xlink:href="">
-                    <polygon
-                        class="hover:fill-blue-200/30"
-                        points="66,98 235,98 235,194 66,194 66,98"
-                    />
-                </a>
-            </svg>
             <Image src={src} alt="Map" width={width} height={height} />
 
-            <div class="absolute z-10 top-0 left-0 w-full">
-                <SVG width={width} height={height} />
-            </div>
-            {encounter_buttons.map(
-                ({ depth, isMajor, text, slug, xPercent, yPercent }, index) => (
+            <PathSVG width={width} height={height} />
+
+            <svg
+                class="absolute z-20 top-0 left-0 w-full"
+                fill="transparent"
+                viewBox={`0 0 ${width} ${height}`}
+            >
+                {encounter_list.map(({ area, slug, onclick }) => (
+                    <a
+                        onclick={onclick}
+                        class="hover:fill-blue-200/30 cursor-pointer"
+                    >
+                        <Fragment set:html={area} />
+                    </a>
+                ))}
+            </svg>
+
+            {encounter_list.map(
+                (
+                    { isMajor, text, slug, xPercent, yPercent, onclick },
+                    index
+                ) => (
                     <div
                         class="absolute z-20"
                         style={{
@@ -88,9 +68,7 @@ const encounter_buttons = encounters.map((elem, index) => ({
                                         ? "btn-primary"
                                         : "btn-secondary w-8 h-8 !min-h-fit"
                                 }`}
-                                onclick={`
-                                window.scrollTo({ top: document.querySelector('#${slug}').offsetTop - 70, behavior: 'smooth' });
-                                `}
+                                onclick={onclick}
                             >
                                 {index + 1}
                             </button>
