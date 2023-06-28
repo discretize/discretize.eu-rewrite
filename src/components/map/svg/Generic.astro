@@ -7,10 +7,7 @@ interface Props {
 const { width, height } = Astro.props;
 ---
 
-<svg
-    class="absolute top-0 left-0 z-10 stroke-blue-500"
-    viewBox=`0 0 ${width} ${height}`
->
+<svg class="stroke-blue-500" viewBox=`0 0 ${width} ${height}`>
     <slot />
 </svg>
 
