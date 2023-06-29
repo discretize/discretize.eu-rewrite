@@ -31,7 +31,15 @@ const encounter_list = encounters.map((elem, index) => ({
             class={`relative w-full h-full`}
             style={{ maxWidth: width + "px", maxHeight: height + "px" }}
         >
-            <Image src={src} alt="Map" width={width} height={height} />
+            <Picture
+                src={src}
+                alt="Map"
+                width={width}
+                height={height}
+                aspectRatio={width / height}
+                sizes="100vh"
+                widths={[650]}
+            />
 
             <PathSVG width={width} height={height} />
 
