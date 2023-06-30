@@ -42,7 +42,7 @@ for f in "$FILENAME"/*; do
     echo "Uploading $f file..."
     $WRANGLER r2 object put "$BUCKET_NAME/$FILENAME/$(basename -- "$f")" --file "$f"
 done
-
+$WRANGLER r2 object put "$BUCKET_NAME/$FILENAME/$1" --file "$1"
 
 # output the video component
 echo "======================================="
