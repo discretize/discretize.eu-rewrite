@@ -2,14 +2,15 @@
 import { Icon } from "astro-icon";
 
 interface Props {
-  caption: string;
-  url: string;
-  sourceId: string;
+  caption?: string;
+  url?: string;
+  sourceId?: string;
+  autoplay?: boolean;
 }
 
 const SOURCE_URL = "https://pub-80c25841bf1e4cbda246ab1b42798500.r2.dev/";
 
-const { caption, url, sourceId } = Astro.props;
+const { caption, url, sourceId, autoplay = false } = Astro.props;
 
 const sources_list = [
   {
@@ -24,6 +25,9 @@ const sources_list = [
     src: `${SOURCE_URL}${sourceId}/${sourceId}.x264.mp4`,
   },
 ];
+if (url) {
+  sources_list.length = 0;
+}
 ---
 
 <script>
@@ -74,11 +78,20 @@ const sources_list = [
 </script>
 
 <video-figure class="relative table-row-group pb-[56.25%] pt-[25px]">
-  <div id="playButton" class="cursor-pointer z-10 text-blue-500">
+  <div
+    id="playButton"
+    class={`cursor-pointer z-10 text-blue-500 ${autoplay ? "hidden" : ""}`}
+  >
     <Icon name="mdi:play-circle-outline" size="4rem" />
   </div>
 
-  <video loop preload="auto" class="w-full h-auto rounded">
+  <video
+    loop
+    preload="auto"
+    autoplay={autoplay}
+    muted
+    class="w-full h-auto rounded"
+  >
     {
       sources_list.map(({ src, codec }) => (
         <source
@@ -90,9 +103,13 @@ const sources_list = [
     {url && <source src={url} type="video/webm" />}
     Your browser does not support videos :(
   </video>
-  <figcaption class="text-sm m-0 text-center pt-1 px-2 mb-4">
-    {caption}
-  </figcaption>
+  {
+    caption && (
+      <figcaption class="text-sm m-0 text-center pt-1 px-2 mb-4">
+        {caption}
+      </figcaption>
+    )
+  }
 </video-figure>
 
 <style>

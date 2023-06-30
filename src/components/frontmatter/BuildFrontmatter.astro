@@ -4,6 +4,16 @@ import TextDivider from "../TextDivider.astro";
 import Label from "../Label.astro";
 import { Icon } from "astro-icon";
 import { EliteSpecTypes, ProfessionTypes } from "@gw2-ui/data/professions";
+import GifPlayer from "../GifPlayer.astro";
+import Table from "../html-components/table.astro";
+import Tbody from "../html-components/tbody.astro";
+import Tr from "../html-components/tr.astro";
+import Th from "../html-components/th.astro";
+import Td from "../html-components/td.astro";
+import Boon from "../gw2-ui/Boon.astro";
+import Condition from "../gw2-ui/Condition.astro";
+import { condition } from "discretize-ui/globals/src/styles/professionThemes";
+import { BACKGROUND } from "src/styles";
 
 export interface Props {
   title: string;
@@ -19,6 +29,10 @@ export interface Props {
     uptime: string;
     variant: string;
   }[];
+  conditions: {
+    name: string;
+    uptime: string;
+  }[];
   code: string;
   cmGuide?: string;
   uptodate?: {
@@ -33,7 +47,9 @@ const {
   role,
   hasBeginner,
   date,
+  boons,
   cmGuide,
+  conditions,
   uptodate: { guide = true, gear = true } = {},
 } = Astro.props;
 ---
@@ -52,28 +68,81 @@ const {
   }
 </script>
 
-<div class="flex items-center mb-2">
-  <div class="flex flex-grow">
-    <Profession disableLink disableText name={specialization} size="big" />
-    <div class="ml-4 self-center">
-      <h1 class="mb-2">{title}</h1>
-      <p>{role}</p>
+<div
+  class="relative h-full mx-[-1.4rem] mt-[-1.393rem] mb-4 max-sm:hidden max-[1439px]:mt-[-1rem] max-[1439px]:mx-[-1rem]"
+>
+  <GifPlayer url="/firebrand_cool.webm" autoplay />
+
+  <div
+    class="transform translate-y-[-50%] absolute top-1/2 left-0 max-w-full h-[120px] flex justify-between flex-col items-start p-4 bg-blue-500"
+  >
+    <div class="flex flex-grow text-black">
+      <Profession disableLink disableText name={specialization} size="big" />
+      <div class="ml-4 self-center">
+        <h1 class="mb-2">{title}</h1>
+        <p>{role}</p>
+      </div>
     </div>
   </div>
-  <Label className="!p-2">
+
+  <div
+    class={`flex gap-4 absolute bottom-0 right-0 p-4 rounded-tl-md ${BACKGROUND}`}
+  >
+    <Table>
+      <Tbody>
+        <Tr>
+          <Th>Boons</Th>
+          <Td>
+            {
+              boons.map(({ name }) => (
+                <>
+                  <Boon name={name} />
+                  <br />
+                </>
+              ))
+            }
+          </Td>
+        </Tr>
+      </Tbody>
+    </Table>
+    <Table>
+      <Tbody>
+        <Tr>
+          <Th>Conditions</Th>
+          <Td>
+            {
+              conditions.map(({ name }) => (
+                <>
+                  <Condition name={name} />
+                  <br />
+                </>
+              ))
+            }
+          </Td>
+        </Tr>
+      </Tbody>
+    </Table>
+  </div>
+
+  <div class="absolute top-0 right-0 p-1 text-sm bg-blue-500 text-black">
     <ul>
-      <li class="flex">
-        <Icon name="mdi:calendar-range" height="0.8rem" class="mr-2" />
-        {new Date(date).toLocaleDateString()}
+      <li class="flex gap-1 items-center">
+        <Icon name="mdi:calendar" height="0.8rem" /> last updated on {
+          new Date(date).toDateString()
+        }
+      </li>
+      <li class="flex gap-1 items-center">
+        <Icon name="mdi:account" height="0.8rem" /> Gear: {!gear ? "not" : ""} up-to-date
+      </li>
+      <li class="flex gap-1 items-center">
+        <Icon name="mdi:account" height="0.8rem" /> Guide: {!guide ? "not" : ""}
+        up-to-date
       </li>
     </ul>
-  </Label>
+  </div>
 </div>
 
 <div class="flex items-center gap-4 mb-4">
-  <span>Gear: {!gear ? "not" : ""} updated</span>
-  <span class="flex-grow">Guide: {!gear ? "not" : ""} updated</span>
-
   {
     cmGuide && (
       <button class="btn btn-primary ">
