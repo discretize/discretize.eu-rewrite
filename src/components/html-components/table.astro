@@ -1,5 +1,15 @@
+---
+interface Props {
+  noMargin?: boolean;
+}
+
+const { noMargin } = Astro.props;
+---
+
 <div
-  class="overflow-x-auto mb-4 shadow-xl border-stone-900 border-[1px] rounded-lg h-fit"
+  class={`overflow-x-auto shadow-xl border-stone-900 border-[1px] rounded-lg h-fit ${
+    noMargin ? "mb-0" : "mb-8"
+  }`}
 >
   <table class="table w-full border-collapse border-spacing-0 font-normal">
     <slot />

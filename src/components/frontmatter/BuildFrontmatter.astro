@@ -86,42 +86,46 @@ const {
   </div>
 
   <div
-    class={`flex gap-4 absolute bottom-0 right-0 p-4 rounded-tl-md ${BACKGROUND}`}
+    class={`flex gap-4 absolute bottom-0 right-0 px-4 pt-4 rounded-tl-md ${BACKGROUND}`}
   >
-    <Table>
-      <Tbody>
-        <Tr>
-          <Th>Boons</Th>
-          <Td>
-            {
-              boons.map(({ name }) => (
-                <>
-                  <Boon name={name} />
-                  <br />
-                </>
-              ))
-            }
-          </Td>
-        </Tr>
-      </Tbody>
-    </Table>
-    <Table>
-      <Tbody>
-        <Tr>
-          <Th>Conditions</Th>
-          <Td>
-            {
-              conditions.map(({ name }) => (
-                <>
-                  <Condition name={name} />
-                  <br />
-                </>
-              ))
-            }
-          </Td>
-        </Tr>
-      </Tbody>
-    </Table>
+    {
+      boons && (
+        <Table noMargin>
+          <Tbody>
+            <Tr>
+              <Th>Boons</Th>
+              <Td>
+                {boons.map(({ name }) => (
+                  <>
+                    <Boon name={name} />
+                    <br />
+                  </>
+                ))}
+              </Td>
+            </Tr>
+          </Tbody>
+        </Table>
+      )
+    }
+    {
+      conditions && (
+        <Table noMargin>
+          <Tbody>
+            <Tr>
+              <Th>Conditions</Th>
+              <Td>
+                {conditions.map(({ name }) => (
+                  <>
+                    <Condition name={name} />
+                    <br />
+                  </>
+                ))}
+              </Td>
+            </Tr>
+          </Tbody>
+        </Table>
+      )
+    }
   </div>
 
   <div class="absolute top-0 right-0 p-1 text-sm bg-blue-500 text-black">
