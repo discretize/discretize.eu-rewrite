@@ -1,1 +1,9 @@
-<th class="font-bold text-xs text-start px-4"><slot /></th>
+---
+interface Props {
+    className?: string;
+}
+
+const { className = "" } = Astro.props;
+---
+
+<th class={`font-bold text-xs text-start px-4 ${className}`}><slot /></th>

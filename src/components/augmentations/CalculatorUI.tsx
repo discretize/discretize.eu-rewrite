@@ -284,7 +284,9 @@ export function CalculatorUI(props: Props): React.ReactElement {
           <div className="flex space-between flex-col gap-10">
             <div
               className={`alert shadow-lg mb-4 ${
-                result?.mistAttunements.length ? "alert-info" : "alert-success"
+                result?.mistAttunements.length
+                  ? "dark:bg-blue-700 bg-blue-500 dark:text-neutral-100"
+                  : "alert-success"
               }`}
             >
               <div className="flex gap-4">

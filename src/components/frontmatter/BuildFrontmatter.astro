@@ -1,19 +1,16 @@
 ---
-import Profession from "../gw2-ui/Profession.astro";
-import TextDivider from "../TextDivider.astro";
-import Label from "../Label.astro";
-import { Icon } from "astro-icon";
 import { EliteSpecTypes, ProfessionTypes } from "@gw2-ui/data/professions";
+import { Icon } from "astro-icon";
+import Card from "../Card.astro";
 import GifPlayer from "../GifPlayer.astro";
-import Table from "../html-components/table.astro";
-import Tbody from "../html-components/tbody.astro";
-import Tr from "../html-components/tr.astro";
-import Th from "../html-components/th.astro";
-import Td from "../html-components/td.astro";
+import TextDivider from "../TextDivider.astro";
 import Boon from "../gw2-ui/Boon.astro";
 import Condition from "../gw2-ui/Condition.astro";
-import { condition } from "discretize-ui/globals/src/styles/professionThemes";
-import { BACKGROUND } from "src/styles";
+import Profession from "../gw2-ui/Profession.astro";
+import Li from "../html-components/li.astro";
+import Ul from "../html-components/ul.astro";
+import { ConditionTypes } from "@gw2-ui/data/conditions";
+import { BoonsTypes } from "@gw2-ui/data/boons";
 
 export interface Props {
   title: string;
@@ -25,12 +22,12 @@ export interface Props {
   rating: string;
   profession: ProfessionTypes;
   boons: {
-    name: string;
+    name: BoonsTypes;
     uptime: string;
     variant: string;
   }[];
   conditions: {
-    name: string;
+    name: ConditionTypes;
     uptime: string;
   }[];
   code: string;
@@ -39,6 +36,7 @@ export interface Props {
     guide?: boolean;
     gear?: boolean;
   };
+  headerVideoId?: string;
 }
 
 const {
@@ -46,11 +44,14 @@ const {
   specialization,
   role,
   hasBeginner,
+  profession,
   date,
   boons,
+  rating,
   cmGuide,
   conditions,
   uptodate: { guide = true, gear = true } = {},
+  headerVideoId,
 } = Astro.props;
 ---
 
@@ -68,85 +69,120 @@ const {
   }
 </script>
 
-<div
-  class="relative h-full mx-[-1.4rem] mt-[-1.393rem] mb-4 max-sm:hidden max-[1439px]:mt-[-1rem] max-[1439px]:mx-[-1rem]"
->
-  <GifPlayer url="/firebrand_cool.webm" autoplay />
+{
+  headerVideoId ? (
+    <div class="relative h-full mx-[-1.4rem] mt-[-1.393rem] mb-4 max-sm:hidden max-[1439px]:mt-[-1rem] max-[1439px]:mx-[-1rem]">
+      <GifPlayer url={`/${headerVideoId}`} autoplay />
 
-  <div
-    class="transform translate-y-[-50%] absolute top-1/2 left-0 max-w-full h-[120px] flex justify-between flex-col items-start p-4 bg-blue-500"
-  >
-    <div class="flex flex-grow text-black">
-      <Profession disableLink disableText name={specialization} size="big" />
-      <div class="ml-4 self-center">
-        <h1 class="mb-2">{title}</h1>
-        <p>{role}</p>
+      <div
+        class={`transform absolute top-0 left-0 max-w-full h-[105px] flex justify-between flex-col items-start px-4 text-neutral-800`}
+        style={{
+          backgroundColor:
+            "var(--gw2-color-" + profession.toLowerCase() + "-main)",
+        }}
+      >
+        <div class="flex flex-grow">
+          <Profession
+            disableLink
+            disableText
+            name={specialization}
+            size="gigantic"
+            className="self-center"
+          />
+          <div class="ml-4 self-center">
+            <h1 class="mb-0 font-bold">{title}</h1>
+            <div class="text-lg">{rating}</div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class={`flex absolute bottom-0 left-0 px-4 pt-4 rounded-tl-md flex-col`}
+      >
+        {boons && (
+          <Card>
+            <div class="text-xs font-bold m-auto text-center">Boons</div>
+            <Ul className="list-none !m-0 !pl-0">
+              {boons.map(({ name }) => (
+                <Li>
+                  <Boon name={name} />
+                </Li>
+              ))}
+            </Ul>
+          </Card>
+        )}
+        {conditions && (
+          <Card>
+            <div class="text-xs font-bold m-auto text-center">Conditions</div>
+            <Ul className="list-none !m-0 !pl-0">
+              {conditions.map(({ name }) => (
+                <Li>
+                  <Condition name={name} />
+                </Li>
+              ))}
+            </Ul>
+          </Card>
+        )}
+      </div>
+
+      <div
+        class="absolute top-0 right-0 p-1 text-sm bg-blue-600 text-neutral-800"
+        style={{
+          backgroundColor:
+            "var(--gw2-color-" + profession.toLowerCase() + "-main)",
+        }}
+      >
+        <ul>
+          <li class="flex gap-1 items-center">
+            <Icon name="mdi:calendar" height="0.8rem" /> last updated on{" "}
+            {new Date(date).toDateString()}
+          </li>
+          <li class="flex gap-1 items-center">
+            <Icon name="mdi:account" height="0.8rem" /> Gear:{" "}
+            {!gear ? "not" : ""} up-to-date
+          </li>
+          <li class="flex gap-1 items-center">
+            <Icon name="mdi:television-guide" height="0.8rem" /> Guide:{" "}
+            {!guide ? "not" : ""}
+            up-to-date
+          </li>
+        </ul>
       </div>
     </div>
-  </div>
+  ) : (
+    <div class="flex">
+      <Profession
+        disableLink
+        disableText
+        name={specialization}
+        size="gigantic"
+        className="self-center"
+      />
+      <div class="ml-4 self-center flex-grow">
+        <h1 class="mb-0 font-bold">{title}</h1>
+        <div class="text-lg">{rating}</div>
+      </div>
 
-  <div
-    class={`flex gap-4 absolute bottom-0 right-0 px-4 pt-4 rounded-tl-md ${BACKGROUND}`}
-  >
-    {
-      boons && (
-        <Table noMargin>
-          <Tbody>
-            <Tr>
-              <Th>Boons</Th>
-              <Td>
-                {boons.map(({ name }) => (
-                  <>
-                    <Boon name={name} />
-                    <br />
-                  </>
-                ))}
-              </Td>
-            </Tr>
-          </Tbody>
-        </Table>
-      )
-    }
-    {
-      conditions && (
-        <Table noMargin>
-          <Tbody>
-            <Tr>
-              <Th>Conditions</Th>
-              <Td>
-                {conditions.map(({ name }) => (
-                  <>
-                    <Condition name={name} />
-                    <br />
-                  </>
-                ))}
-              </Td>
-            </Tr>
-          </Tbody>
-        </Table>
-      )
-    }
-  </div>
+      <ul>
+        <li class="flex gap-1 items-center">
+          <Icon name="mdi:calendar" height="0.8rem" /> last updated on{" "}
+          {new Date(date).toDateString()}
+        </li>
+        <li class="flex gap-1 items-center">
+          <Icon name="mdi:account" height="0.8rem" /> Gear: {!gear ? "not" : ""}{" "}
+          up-to-date
+        </li>
+        <li class="flex gap-1 items-center">
+          <Icon name="mdi:television-guide" height="0.8rem" /> Guide:{" "}
+          {!guide ? "not" : ""}
+          up-to-date
+        </li>
+      </ul>
+    </div>
+  )
+}
 
-  <div class="absolute top-0 right-0 p-1 text-sm bg-blue-500 text-black">
-    <ul>
-      <li class="flex gap-1 items-center">
-        <Icon name="mdi:calendar" height="0.8rem" /> last updated on {
-          new Date(date).toDateString()
-        }
-      </li>
-      <li class="flex gap-1 items-center">
-        <Icon name="mdi:account" height="0.8rem" /> Gear: {!gear ? "not" : ""} up-to-date
-      </li>
-      <li class="flex gap-1 items-center">
-        <Icon name="mdi:account" height="0.8rem" /> Guide: {!guide ? "not" : ""}
-        up-to-date
-      </li>
-    </ul>
-  </div>
-</div>
-
-<div class="flex items-center gap-4 mb-4">
+<div class="flex items-center mb-4">
   {
     cmGuide && (
       <button class="btn btn-primary ">

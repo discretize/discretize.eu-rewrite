@@ -190,7 +190,7 @@ function RelicsCalculatorImport(props) {
       <div className="flex gap-4 mb-4">
         <button
           onClick={handleClickToggle}
-          className={`btn btn-outline btn-info ${
+          className={`btn btn-outline btn-primary ${
             state.isSubmitting ? "loading" : ""
           }`}
         >

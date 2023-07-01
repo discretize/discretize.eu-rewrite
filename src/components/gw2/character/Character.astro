@@ -7,6 +7,7 @@ import BackAndTrinkets from "./backAndTrinkets/BackAndTrinkets.astro";
 import Consumables from "./consumables/Consumables.astro";
 import Skills from "./skills/Skills.astro";
 import Weapons from "./weapons/Weapons.astro";
+import { BACKGROUND } from "src/styles";
 
 interface Props {
   title: string;
@@ -74,7 +75,10 @@ Object.keys(data.consumables).forEach((key) =>
 );
 ---
 
-<div class={`page character ${isFirst ? "active" : "hidden"}`} id={id}>
+<div
+  class={`page character embossed p-4 ${isFirst ? "active" : "hidden"}`}
+  id={id}
+>
   <div class="wrapper">
     <div class="side">
       <div class="section">
