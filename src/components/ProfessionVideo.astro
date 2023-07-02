@@ -1,0 +1,21 @@
+---
+interface Props {
+    src: string;
+    // todo, add more props
+}
+
+const { src } = Astro.props;
+---
+
+<div class="flex items-center mb-2 border">
+    this should correspond to this:
+    https://github.com/ManuelHaag/discretize.eu/blob/master/src/components/ProfessionVideo.tsx#L32
+
+    <br />
+
+    selected source {src}
+
+    <br />
+    insert the profession icon here with a button, that opens the video in a modal
+    like in the old implmentation
+</div>

@@ -6,6 +6,7 @@ import Grid from "./Grid.astro";
 import GridItem from "./GridItem.astro";
 import Information from "./Information.astro";
 import Label from "./Label.astro";
+import ProfessionVideo from "./ProfessionVideo.astro";
 import Tab from "./Tab.astro";
 import Tabs from "./Tabs.astro";
 import TextDivider from "./TextDivider.astro";
@@ -79,7 +80,7 @@ export const components = {
   Instability: MistlockInstability,
   Item,
   Label,
-  ProfessionVideo: () => undefined,
+  ProfessionVideo,
   Skill,
   Skills: () => undefined,
   SpecialActionKey: () => undefined,
