@@ -68,7 +68,7 @@ const COMPONENTS = [
     resolvers: [
       {
         target_prop: "data",
-        resolve: (attr) => resolve(skills)(attr.id),
+        resolve: (attr) => resolve(skills)(attr.id) || {},
       },
     ],
   },
