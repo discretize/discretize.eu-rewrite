@@ -59,12 +59,30 @@ const {
   // get nanostore
   import { isBeginner } from "../../state/beginner";
 
+  const urlSearchParams = new URLSearchParams(window.location.search);
+
+  let initialState = true;
+  if (urlSearchParams.get("variant") === "advanced") {
+    isBeginner.set(false);
+    initialState = false;
+  }
+
   const switchElement = document.querySelector<HTMLInputElement>(
     "[id='switchBeginner']"
   );
   if (switchElement) {
-    switchElement.addEventListener("change", (e: InputEvent) => {
-      isBeginner.set(!e.target.checked);
+    switchElement.checked = !initialState;
+    switchElement.addEventListener("change", (e: Event) => {
+      const newState: boolean = (e.target as HTMLInputElement).checked;
+
+      window.history.replaceState(
+        {},
+        "",
+        `${window.location.pathname}?variant=${
+          newState ? "advanced" : "beginner"
+        }`
+      );
+      isBeginner.set(!newState);
     });
   }
 </script>
