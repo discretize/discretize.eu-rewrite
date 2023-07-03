@@ -24,6 +24,11 @@
   * > p {
     @apply mb-4;
   }
+
+  * > p + ol,
+  * > p + ul {
+    @apply !-mt-2;
+  }
   /* * > p:last-child {
     @apply mb-0;
   } */

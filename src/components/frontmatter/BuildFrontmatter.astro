@@ -88,12 +88,14 @@ const {
 </script>
 
 {
-  headerVideoId ? (
-    <div class="relative h-full mx-[-1.4rem] mt-[-1.393rem] mb-4 max-sm:hidden max-[1439px]:mt-[-1rem] max-[1439px]:mx-[-1rem]">
-      <GifPlayer url={`/${headerVideoId}`} autoplay />
+  headerVideoId && (
+    <div class="relative h-full mx-[-1.4rem] mt-[-1.393rem] mb-4 max-xl:hidden max-[1439px]:mt-[-1rem] max-[1439px]:mx-[-1rem]">
+      <video muted autoplay loop width="1440" height="810">
+        <source src={`/${headerVideoId}`} type="video/mp4" />
+      </video>
 
       <div
-        class={`transform absolute top-0 left-0 max-w-full h-[105px] flex justify-between flex-col items-start px-4 text-neutral-800`}
+        class={`transform absolute top-0 left-0 max-w-full h-[105px] flex justify-between flex-col items-start px-4 text-neutral-800 rounded-br`}
         style={{
           backgroundColor:
             "var(--gw2-color-" + profession.toLowerCase() + "-main)",
@@ -144,7 +146,7 @@ const {
       </div>
 
       <div
-        class="absolute top-0 right-0 p-1 text-sm bg-blue-600 text-neutral-800"
+        class="absolute top-0 right-0 p-1 text-sm bg-blue-600 text-neutral-800 rounded-bl"
         style={{
           backgroundColor:
             "var(--gw2-color-" + profession.toLowerCase() + "-main)",
@@ -153,7 +155,7 @@ const {
         <ul>
           <li class="flex gap-1 items-center">
             <Icon name="mdi:calendar" height="0.8rem" /> last updated on{" "}
-            {new Date(date).toDateString()}
+            {new Date(date.trim()).toDateString()}
           </li>
           <li class="flex gap-1 items-center">
             <Icon name="mdi:account" height="0.8rem" /> Gear:{" "}
@@ -167,38 +169,40 @@ const {
         </ul>
       </div>
     </div>
-  ) : (
-    <div class="flex">
-      <Profession
-        disableLink
-        disableText
-        name={specialization}
-        size="gigantic"
-        className="self-center"
-      />
-      <div class="ml-4 self-center flex-grow">
-        <h1 class="mb-0 font-bold">{title}</h1>
-        <div class="text-lg">{rating}</div>
-      </div>
-
-      <ul>
-        <li class="flex gap-1 items-center">
-          <Icon name="mdi:calendar" height="0.8rem" /> last updated on{" "}
-          {new Date(date).toDateString()}
-        </li>
-        <li class="flex gap-1 items-center">
-          <Icon name="mdi:account" height="0.8rem" /> Gear: {!gear ? "not" : ""}{" "}
-          up-to-date
-        </li>
-        <li class="flex gap-1 items-center">
-          <Icon name="mdi:television-guide" height="0.8rem" /> Guide:{" "}
-          {!guide ? "not" : ""}
-          up-to-date
-        </li>
-      </ul>
-    </div>
   )
 }
+<div class={`flex max-md:flex-col ${headerVideoId ? "xl:hidden" : ""}`.trim()}>
+  <div class="flex flex-grow">
+    <Profession
+      disableLink
+      disableText
+      name={specialization}
+      size="gigantic"
+      className="self-center"
+    />
+    <div class="ml-4 self-center">
+      <h1 class="mb-0 font-bold">{title}</h1>
+      <div class="text-lg">{rating}</div>
+    </div>
+  </div>
+  <ul>
+    <li class="flex gap-1 items-center">
+      <Icon name="mdi:calendar" height="0.8rem" /> last updated on{" "}
+      {new Date(date.trim()).toDateString()}
+    </li>
+    <li class="flex gap-1 items-center">
+      <Icon name="mdi:account" height="0.8rem" /> Gear: {!gear ? "not" : ""}{
+        " "
+      }
+      up-to-date
+    </li>
+    <li class="flex gap-1 items-center">
+      <Icon name="mdi:television-guide" height="0.8rem" /> Guide:{" "}
+      {!guide ? "not" : ""}
+      up-to-date
+    </li>
+  </ul>
+</div>
 
 <div class="flex items-center mb-4">
   {
