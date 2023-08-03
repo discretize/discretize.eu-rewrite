@@ -35,7 +35,7 @@ import catalyst from "../assets/images/professions/catalyst.png";
 import virtuoso from "../assets/images/professions/virtuoso.png";
 import harbinger from "../assets/images/professions/harbinger.png";
 import { EliteSpecTypes } from "@gw2-ui/data/professions";
-import { getImage } from "@astrojs/image";
+import { getImage, getPicture } from "@astrojs/image";
 import { OutputFormat } from "@astrojs/image/dist/loaders";
 
 export async function getOptimizedImage(

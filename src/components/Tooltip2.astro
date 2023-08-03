@@ -2,118 +2,120 @@
 import { Placement } from "@floating-ui/react-dom";
 import { StyleHTMLAttributes } from "react";
 interface Props {
-    tooltipDirection?: Placement;
-    className?: string;
-    style?: StyleHTMLAttributes<HTMLDivElement>["style"];
+  tooltipDirection?: Placement;
+  className?: string;
+  style?: StyleHTMLAttributes<HTMLDivElement>["style"];
 }
 
 const { tooltipDirection = "top", className, style } = Astro.props;
+
+const COLOR = "bg-neutral-300 dark:bg-neutral-700";
 ---
 
 <script>
-    import {
-        Placement,
-        arrow,
-        computePosition,
-        flip,
-        offset,
-        shift,
-    } from "@floating-ui/react-dom";
+  import {
+    Placement,
+    arrow,
+    computePosition,
+    flip,
+    offset,
+    shift,
+  } from "@floating-ui/react-dom";
 
-    class TooltipComponent extends HTMLElement {
-        connectedCallback() {
-            [
-                ["mouseenter", this.showTooltip],
-                ["mouseleave", this.hideTooltip],
-                ["focus", this.showTooltip],
-                ["blur", this.hideTooltip],
-            ].forEach(([event, listener]: [string, () => void]) => {
-                this.target.addEventListener(event, listener);
-            });
-        }
-
-        update(elem) {
-            computePosition(this.target, elem, {
-                placement: this.dataset.tooltipDirection as Placement,
-                strategy: "absolute",
-                middleware: [
-                    offset(5),
-                    flip(),
-                    shift({ padding: 2 }),
-                    arrow({ element: this.arrow }),
-                ],
-            }).then(({ x, y, placement, middlewareData }) => {
-                Object.assign(elem.style, {
-                    left: `${x}px`,
-                    top: `${y}px`,
-                });
-
-                const { x: arrowX, y: arrowY } = middlewareData.arrow;
-
-                const staticSide = {
-                    top: "bottom",
-                    right: "left",
-                    bottom: "top",
-                    left: "right",
-                }[placement.split("-")[0]];
-
-                Object.assign(this.arrow.style, {
-                    left: arrowX != null ? `${arrowX}px` : "",
-                    top: arrowY != null ? `${arrowY}px` : "",
-                    right: "",
-                    bottom: "",
-                    [staticSide]: "-4px",
-                });
-            });
-        }
-
-        showTooltip = () => {
-            const cloned = this.tooltip.cloneNode(true) as HTMLDivElement;
-            cloned.style.display = "block";
-
-            this.update(cloned);
-            this.portal.appendChild(cloned);
-        };
-
-        hideTooltip = () => {
-            this.portal.innerHTML = "";
-        };
-
-        get target() {
-            return this.querySelector<HTMLDivElement>("#target");
-        }
-
-        get tooltip() {
-            return this.querySelector<HTMLDivElement>("#tooltip");
-        }
-
-        get arrow() {
-            // we target the arrow in the portal - not clean but it works
-            return document.querySelector<HTMLDivElement>("#arrow");
-        }
-
-        get portal() {
-            return document.querySelector<HTMLDivElement>("#floating-portal");
-        }
+  class TooltipComponent extends HTMLElement {
+    connectedCallback() {
+      [
+        ["mouseenter", this.showTooltip],
+        ["mouseleave", this.hideTooltip],
+        ["focus", this.showTooltip],
+        ["blur", this.hideTooltip],
+      ].forEach(([event, listener]: [string, () => void]) => {
+        this.target.addEventListener(event, listener);
+      });
     }
 
-    customElements.define("tooltip-component", TooltipComponent);
+    update(elem) {
+      computePosition(this.target, elem, {
+        placement: this.dataset.tooltipDirection as Placement,
+        strategy: "absolute",
+        middleware: [
+          offset(5),
+          flip(),
+          shift({ padding: 2 }),
+          arrow({ element: this.arrow }),
+        ],
+      }).then(({ x, y, placement, middlewareData }) => {
+        Object.assign(elem.style, {
+          left: `${x}px`,
+          top: `${y}px`,
+        });
+
+        const { x: arrowX, y: arrowY } = middlewareData.arrow;
+
+        const staticSide = {
+          top: "bottom",
+          right: "left",
+          bottom: "top",
+          left: "right",
+        }[placement.split("-")[0]];
+
+        Object.assign(this.arrow.style, {
+          left: arrowX != null ? `${arrowX}px` : "",
+          top: arrowY != null ? `${arrowY}px` : "",
+          right: "",
+          bottom: "",
+          [staticSide]: "-4px",
+        });
+      });
+    }
+
+    showTooltip = () => {
+      const cloned = this.tooltip.cloneNode(true) as HTMLDivElement;
+      cloned.style.display = "block";
+
+      this.update(cloned);
+      this.portal.appendChild(cloned);
+    };
+
+    hideTooltip = () => {
+      this.portal.innerHTML = "";
+    };
+
+    get target() {
+      return this.querySelector<HTMLDivElement>("#target");
+    }
+
+    get tooltip() {
+      return this.querySelector<HTMLDivElement>("#tooltip");
+    }
+
+    get arrow() {
+      // we target the arrow in the portal - not clean but it works
+      return document.querySelector<HTMLDivElement>("#arrow");
+    }
+
+    get portal() {
+      return document.querySelector<HTMLDivElement>("#floating-portal");
+    }
+  }
+
+  customElements.define("tooltip-component", TooltipComponent);
 </script>
 
 <tooltip-component
-    data-tooltip-direction={tooltipDirection}
-    class={className}
-    style={style}
+  data-tooltip-direction={tooltipDirection}
+  class={className}
+  style={style}
 >
-    <div id="target">
-        <slot name="target" />
-    </div>
-    <div
-        id="tooltip"
-        role="tooltip"
-        class={`embossed w-max absolute top-0 left-0 p-2 rounded hidden z-50`}
-    >
-        <slot name="tooltip" />
-        <div id="arrow" class={`embossed rotate-45 w-2 h-2 absolute`}></div>
-    </div>
+  <div id="target">
+    <slot name="target" />
+  </div>
+  <div
+    id="tooltip"
+    role="tooltip"
+    class={`${COLOR} w-max absolute top-0 left-0 p-2 rounded hidden z-50 shadow`}
+  >
+    <slot name="tooltip" />
+    <div id="arrow" class={`${COLOR} rotate-45 w-2 h-2 absolute`}></div>
+  </div>
 </tooltip-component>

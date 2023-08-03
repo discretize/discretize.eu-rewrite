@@ -10,6 +10,7 @@ import type { ProfessionTypes } from "@gw2-ui/data/professions";
 import { Icon } from "astro-icon";
 import Tooltip from "../Tooltip.astro";
 import { BACKGROUND } from "src/styles";
+import Tooltip2 from "@components/Tooltip2.astro";
 
 interface Props {
   professions: ProfessionTypes[];
@@ -65,9 +66,9 @@ const SHARED =
 ---
 
 <Layout seo={seo} disableBackground>
-  <div class="max-w-[1000px] m-auto md:mt-4">
+  <div class="max-w-4xl m-auto md:mt-4">
     <div class="flex rounded-md shadow-sm h-[46px]" role="group">
-      <Tooltip className="flex-auto">
+      <Tooltip2 className="flex-auto">
         <button
           slot="target"
           type="button"
@@ -78,8 +79,8 @@ const SHARED =
           <span>Current</span>
         </button>
         <div slot="tooltip">Viable builds for the current patch</div>
-      </Tooltip>
-      <Tooltip className="flex-auto">
+      </Tooltip2>
+      <Tooltip2 className="flex-auto">
         <button
           slot="target"
           type="button"
@@ -87,21 +88,15 @@ const SHARED =
           id="button-dtlfg"
           aria-label="Discretize LFG Builds"
         >
-          <span class="whitespace-nowrap"
-            >[dT] LFG <Icon
-              name="mdi:information"
-              height="1rem"
-              class="inline"
-            /></span
-          >
+          <span class="whitespace-nowrap"> [dT] LFG</span>
         </button>
         <div slot="tooltip">Builds used by the Discretize Guild</div>
-      </Tooltip>
-      <Tooltip className="flex-auto">
+      </Tooltip2>
+      <Tooltip2 className="flex-auto">
         <button
           slot="target"
           type="button"
-          class={`${SHARED} border rounded-r-md" ${UNSELECTED.join(" ")}`}
+          class={`${SHARED} border rounded-r-lg ${UNSELECTED.join(" ")}`}
           id="button-archived"
           aria-label="Archived Builds"
         >
@@ -110,32 +105,16 @@ const SHARED =
         <div slot="tooltip" class="tooltip up">
           Not updated, potentially outdated builds
         </div>
-      </Tooltip>
+      </Tooltip2>
     </div>
 
     <div class="w-full flex flex-col mt-4">
       {
         PROFESSIONS.map(({ profession, builds }) => (
           <>
-            <div
-              tabindex="0"
-              class={`collapse collapse-arrow border border-base-300 ${BACKGROUND} mb-4 builds`}
-            >
-              <input type="checkbox" />
-
-              <div class="collapse-title text-xl font-medium">
-                <Profession
-                  name={profession}
-                  disableLink
-                  style={{ fontSize: 20 }}
-                />
-              </div>
-              <div class="collapse-content">
-                {builds.map((build) => (
-                  <BuildCard {...build} />
-                ))}
-              </div>
-            </div>
+            {builds.map((build) => (
+              <BuildCard {...build} />
+            ))}
           </>
         ))
       }
