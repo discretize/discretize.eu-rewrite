@@ -1,0 +1,39 @@
+---
+import { Icon } from "astro-icon";
+---
+
+<script>
+  class ScrollUpButtonComponent extends HTMLElement {
+    connectedCallback() {
+      this.button.addEventListener("click", () => {
+        document.documentElement.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      });
+
+      document.addEventListener("scroll", () => {
+        if (document.documentElement.scrollTop > 1000) {
+          this.button.classList.remove("hidden");
+        } else {
+          this.button.classList.add("hidden");
+        }
+      });
+    }
+
+    get button() {
+      return this.querySelector("#button");
+    }
+  }
+
+  customElements.define("scroll-up-button", ScrollUpButtonComponent);
+</script>
+
+<scroll-up-button>
+  <button
+    id="button"
+    class="btn btn-primary rounded-full fixed right-4 bottom-4 h-14 w-14 px-3 hidden"
+  >
+    <Icon pack="mdi" name="arrow-up" size="48px" color="black" />
+  </button>
+</scroll-up-button>

@@ -1,12 +1,13 @@
 ---
-import "typeface-raleway";
-import "typeface-muli";
-import backgroundImage from "src/assets/images/backgrounds/lobby.png";
-import NavBar from "../components/navigation/NavBar.astro";
 import { Picture } from "@astrojs/image/components";
-import "./overrides.css";
-import "../main.css";
+import ScrollUpButton from "@components/ScrollUpButton.astro";
+import backgroundImage from "src/assets/images/backgrounds/lobby.png";
 import { BACKGROUND, TEXT } from "src/styles";
+import "typeface-muli";
+import "typeface-raleway";
+import NavBar from "../components/navigation/NavBar.astro";
+import "../main.css";
+import "./overrides.css";
 
 export interface SEOProps {
   title?: string;
@@ -204,6 +205,8 @@ mainClasses = mainClasses.trim();
         <slot />
       </div>
     </main>
+
+    <ScrollUpButton />
 
     <div class={(!disablePadding ? "mt-10 " : "") + "embossed"}>
       <footer class="footer p-10 embossed text-neutral-content main">
