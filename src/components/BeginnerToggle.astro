@@ -1,0 +1,58 @@
+<script>
+  const urlSearchParams = new URLSearchParams(window.location.search);
+
+  let isBeginner = true;
+
+  if (urlSearchParams.get("variant") === "advanced") {
+    isBeginner = false;
+  }
+
+  const switchElement = document.querySelector<HTMLInputElement>(
+    "[id='switchBeginner']"
+  );
+  const beginner = document.querySelectorAll<HTMLDivElement>(".beginner");
+  const advanced = document.querySelectorAll<HTMLDivElement>(".advanced");
+
+  function setState(isAdvanced: boolean) {
+    window.history.replaceState(
+      {},
+      "",
+      `${window.location.pathname}?variant=${
+        isAdvanced ? "advanced" : "beginner"
+      }`
+    );
+    isBeginner = !isAdvanced;
+
+    if (isAdvanced) {
+      beginner.forEach((entry) => (entry.style.display = "none"));
+      advanced.forEach((entry) => (entry.style.display = "block"));
+    } else {
+      beginner.forEach((entry) => (entry.style.display = "block"));
+      advanced.forEach((entry) => (entry.style.display = "none"));
+    }
+  }
+
+  if (switchElement) {
+    switchElement.checked = !isBeginner;
+    // set initial state so that in case advanced is selected on page load, the beginner elements are hidden
+    setState(!isBeginner);
+
+    switchElement.addEventListener("change", (e: Event) => {
+      const newState: boolean = (e.target as HTMLInputElement).checked;
+
+      setState(newState);
+    });
+  }
+</script>
+
+<div class="form-control">
+  <label class="label cursor-pointer">
+    <span class="label-text mr-4">Advanced mode</span>
+    <input
+      id="switchBeginner"
+      type="checkbox"
+      class="checkbox"
+      aria-label="Switch between Beginner and Advanced"
+    />
+  </label>
+</div>

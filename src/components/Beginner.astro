@@ -1,17 +1,3 @@
-<script>
-  import { isBeginner } from "src/state/beginner";
-
-  const beginner = document.querySelectorAll<HTMLDivElement>(".beginner");
-
-  isBeginner.subscribe((value) => {
-    if (value) {
-      beginner.forEach((entry) => (entry.style.display = "block"));
-    } else {
-      beginner.forEach((entry) => (entry.style.display = "none"));
-    }
-  });
-</script>
-
 <div class="beginner">
   <slot />
 </div>

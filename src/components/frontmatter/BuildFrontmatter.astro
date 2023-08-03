@@ -2,7 +2,6 @@
 import { EliteSpecTypes, ProfessionTypes } from "@gw2-ui/data/professions";
 import { Icon } from "astro-icon";
 import Card from "../Card.astro";
-import GifPlayer from "../GifPlayer.astro";
 import TextDivider from "../TextDivider.astro";
 import Boon from "../gw2-ui/Boon.astro";
 import Condition from "../gw2-ui/Condition.astro";
@@ -11,6 +10,7 @@ import Li from "../html-components/li.astro";
 import Ul from "../html-components/ul.astro";
 import { ConditionTypes } from "@gw2-ui/data/conditions";
 import { BoonsTypes } from "@gw2-ui/data/boons";
+import BeginnerToggle from "@components/BeginnerToggle.astro";
 
 export interface Props {
   title: string;
@@ -54,38 +54,6 @@ const {
   headerVideoId,
 } = Astro.props;
 ---
-
-<script>
-  // get nanostore
-  import { isBeginner } from "../../state/beginner";
-
-  const urlSearchParams = new URLSearchParams(window.location.search);
-
-  let initialState = true;
-  if (urlSearchParams.get("variant") === "advanced") {
-    isBeginner.set(false);
-    initialState = false;
-  }
-
-  const switchElement = document.querySelector<HTMLInputElement>(
-    "[id='switchBeginner']"
-  );
-  if (switchElement) {
-    switchElement.checked = !initialState;
-    switchElement.addEventListener("change", (e: Event) => {
-      const newState: boolean = (e.target as HTMLInputElement).checked;
-
-      window.history.replaceState(
-        {},
-        "",
-        `${window.location.pathname}?variant=${
-          newState ? "advanced" : "beginner"
-        }`
-      );
-      isBeginner.set(!newState);
-    });
-  }
-</script>
 
 {
   headerVideoId && (
@@ -215,20 +183,6 @@ const {
     )
   }
 
-  {
-    hasBeginner && (
-      <div class="form-control">
-        <label class="label cursor-pointer">
-          <span class="label-text mr-4">Advanced mode</span>
-          <input
-            id="switchBeginner"
-            type="checkbox"
-            class="checkbox"
-            aria-label="Switch between Beginner and Advanced"
-          />
-        </label>
-      </div>
-    )
-  }
+  {hasBeginner && <BeginnerToggle />}
 </div>
 <TextDivider text="Overview" />

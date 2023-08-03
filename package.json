@@ -33,7 +33,6 @@
     "estree-util-value-to-estree": "^2.1.0",
     "frontmatter": "^0.0.3",
     "hast-util-select": "^5.0.5",
-    "nanostores": "^0.7.4",
     "postcss": "^8.4.23",
     "postcss-preset-env": "^8.4.1",
     "react": "^18.0.0",
