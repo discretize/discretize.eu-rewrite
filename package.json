@@ -4,9 +4,10 @@
   "version": "0.0.1",
   "license": "AGPL-3.0-only",
   "scripts": {
-    "dev": "node scripts/syncGuides.js && astro dev --host",
+    "extraScripts": "node scripts/syncGuides.js && node scripts/patches/defaultLanguage.js",
+    "dev": "yarn extraScripts && astro dev --host",
     "start": "astro dev",
-    "build": "node scripts/syncGuides.js && CF_PAGES_URL=http://localhost:3000 astro build",
+    "build": "yarn extraScripts && CF_PAGES_URL=http://localhost:3000 astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
