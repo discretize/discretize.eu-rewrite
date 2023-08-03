@@ -1,21 +1,142 @@
 ---
+import { ProfessionTypes } from "@gw2-ui/data/professions";
+import Profession from "./gw2-ui/Profession.astro";
+import Video from "./Video.astro";
 interface Props {
-    src: string;
-    // todo, add more props
+  src: string;
+  title: string;
+  timestamp: number;
+  profession: ProfessionTypes;
 }
-
-const { src } = Astro.props;
+const { src, title, timestamp, profession } = Astro.props;
 ---
 
-<div class="flex items-center mb-2 border">
-    this should correspond to this:
-    https://github.com/ManuelHaag/discretize.eu/blob/master/src/components/ProfessionVideo.tsx#L32
+<script>
+  class ProfessionVideoComponent extends HTMLElement {
+    isOpen = false;
 
-    <br />
+    connectedCallback() {
+      this.videoButton.addEventListener("click", () => this.showTooltip());
 
-    selected source {src}
+      // add click away listener
+      document.addEventListener("click", (e) => {
+        if (
+          this.isOpen &&
+          !this.videoButton.contains(e.target as Node) &&
+          !this.portal.contains(e.target as Node)
+        ) {
+          this.hideTooltip();
+        }
+      });
 
-    <br />
-    insert the profession icon here with a button, that opens the video in a modal
-    like in the old implmentation
-</div>
+      // add esc listener
+      document.addEventListener("keydown", (e) => {
+        if (this.isOpen && e.key === "Escape") {
+          this.hideTooltip();
+        }
+      });
+    }
+
+    showTooltip = () => {
+      this.isOpen = true;
+
+      const cloned = this.video.cloneNode(true) as HTMLDivElement;
+      cloned.style.display = "block";
+
+      this.portal.innerHTML = "";
+      this.portal.appendChild(cloned);
+
+      document.body.classList.add("overflow-hidden");
+      // dim background
+      document.body.style.backgroundColor = "rgba(0,0,0)";
+
+      this.closeButton.addEventListener("click", this.hideTooltip);
+    };
+
+    hideTooltip = () => {
+      this.closeButton.removeEventListener("click", this.hideTooltip);
+
+      this.portal.innerHTML = "";
+      document.body.classList.remove("overflow-hidden");
+      // revert background
+      document.body.style.backgroundColor = null;
+      this.isOpen = false;
+    };
+
+    get video() {
+      return this.querySelector<HTMLDivElement>("[date-content]");
+    }
+
+    get portal() {
+      return document.querySelector<HTMLDivElement>("#floating-portal");
+    }
+
+    get videoButton() {
+      return this.querySelector<HTMLButtonElement>("#videoButton");
+    }
+
+    get closeButton() {
+      return this.portal.querySelector<HTMLButtonElement>("#closeButton");
+    }
+  }
+
+  customElements.define("profession-video", ProfessionVideoComponent);
+</script>
+
+<profession-video>
+  <div class="flex items-center mb-2 gap-4">
+    <button id="videoButton" class="hover:bg-slate-400/20 rounded-full p-4">
+      <svg
+        width="2em"
+        height="2em"
+        viewBox="0 -7 48 48"
+        version="1.1"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      >
+        <g
+          id="Icons"
+          stroke="none"
+          stroke-width="1"
+          fill="none"
+          fill-rule="evenodd"
+        >
+          <g
+            id="Color-"
+            transform="translate(-200.000000, -368.000000)"
+            fill="#CE1312"
+          >
+            <path
+              d="M219.044,391.269916 L219.0425,377.687742 L232.0115,384.502244 L219.044,391.269916 Z M247.52,375.334163 C247.52,375.334163 247.0505,372.003199 245.612,370.536366 C243.7865,368.610299 241.7405,368.601235 240.803,368.489448 C234.086,368 224.0105,368 224.0105,368 L223.9895,368 C223.9895,368 213.914,368 207.197,368.489448 C206.258,368.601235 204.2135,368.610299 202.3865,370.536366 C200.948,372.003199 200.48,375.334163 200.48,375.334163 C200.48,375.334163 200,379.246723 200,383.157773 L200,386.82561 C200,390.73817 200.48,394.64922 200.48,394.64922 C200.48,394.64922 200.948,397.980184 202.3865,399.447016 C204.2135,401.373084 206.612,401.312658 207.68,401.513574 C211.52,401.885191 224,402 224,402 C224,402 234.086,401.984894 240.803,401.495446 C241.7405,401.382148 243.7865,401.373084 245.612,399.447016 C247.0505,397.980184 247.52,394.64922 247.52,394.64922 C247.52,394.64922 248,390.73817 248,386.82561 L248,383.157773 C248,379.246723 247.52,375.334163 247.52,375.334163 L247.52,375.334163 Z"
+              id="Youtube"
+            >
+            </path>
+          </g>
+        </g>
+      </svg>
+    </button>
+
+    <div class="flex flex-col">
+      <Profession name={profession} text={title} disableLink />
+      <span class="text-xs">Click to play!</span>
+    </div>
+  </div>
+
+  <div
+    date-content
+    class="hidden fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11/12 max-w-[1500px] z-50 embossed p-4"
+  >
+    <div class="flex">
+      <h2 class="flex-grow">{title}</h2>
+
+      <button id="closeButton" class="btn btn-error">close</button>
+    </div>
+    <Video youtube={src} timestamp={timestamp} />
+  </div>
+</profession-video>
+
+<style>
+  :global(lite-youtube) {
+    max-width: 100%;
+  }
+</style>
