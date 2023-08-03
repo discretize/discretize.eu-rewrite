@@ -24,3 +24,7 @@ pnpm-debug.log*
 
 *.mkv
 *.mp4
+
+src/pages/fractals/*/
+src/pages/builds/*/
+src/pages/guides/*/

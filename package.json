@@ -4,16 +4,16 @@
   "version": "0.0.1",
   "license": "AGPL-3.0-only",
   "scripts": {
-    "dev": "astro dev --host",
+    "dev": "node scripts/syncGuides.js && astro dev --host",
     "start": "astro dev",
-    "build": "CF_PAGES_URL=http://localhost:3000 astro build",
+    "build": "node scripts/syncGuides.js && CF_PAGES_URL=http://localhost:3000 astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
     "@astro-community/astro-embed-youtube": "^0.2.2",
     "@astrojs/image": "^0.17.2",
-    "@astrojs/mdx": "^0.19.2",
+    "@astrojs/mdx": "^0.19.7",
     "@astrojs/prefetch": "^0.2.3",
     "@astrojs/react": "^2.2.0",
     "@astrojs/tailwind": "^3.1.3",

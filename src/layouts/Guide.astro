@@ -1,10 +1,12 @@
 ---
-import GuideFrontmatter from "src/components/frontmatter/GuideFrontmatter.astro";
-import Layout, { SEOProps } from "./Layout.astro";
+import { getImage } from "@astrojs/image";
+import "@discretize/typeface-menomonia";
+import "@gw2-ui/default_style.css";
 import type { Props as GuideProps } from "src/components/frontmatter/GuideFrontmatter.astro";
+import GuideFrontmatter from "src/components/frontmatter/GuideFrontmatter.astro";
 import { guideHeaders } from "src/utils/cache";
 import imageFetch from "src/utils/imageFetch";
-import { getImage } from "@astrojs/image";
+import Layout, { SEOProps } from "./Layout.astro";
 
 export interface Props {
   frontmatter: GuideProps;

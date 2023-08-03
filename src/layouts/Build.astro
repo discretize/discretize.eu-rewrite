@@ -1,9 +1,13 @@
 ---
-import BuildFrontmatter from "../components/frontmatter/BuildFrontmatter.astro";
-import Layout, { SEOProps } from "./Layout.astro";
-import type { Props as BuildProps } from "../components/frontmatter/BuildFrontmatter.astro";
 import { getImage } from "@astrojs/image";
+import "@discretize/typeface-menomonia";
+import "@gw2-ui/default_style.css";
+import type { Props as BuildProps } from "../components/frontmatter/BuildFrontmatter.astro";
+import BuildFrontmatter from "../components/frontmatter/BuildFrontmatter.astro";
 import images from "../components/images";
+import Layout, { SEOProps } from "./Layout.astro";
+
+export { components } from "../components/components";
 
 export interface Props {
   frontmatter: BuildProps;

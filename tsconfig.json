@@ -11,7 +11,8 @@
       "@discretize/gw2-ui-new": ["discretize-ui/gw2-ui/src/index"],
       "@discretize/react-discretize-components": [
         "discretize-ui/react-discretize-components/src/index"
-      ]
+      ],
+      "@components/*": ["src/components/*"],
     }
   }
 }

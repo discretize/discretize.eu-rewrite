@@ -1,10 +1,12 @@
 ---
-import FractalFrontmatter from "src/components/frontmatter/FractalFrontmatter.astro";
-import Layout, { SEOProps } from "./Layout.astro";
-import type { Props as FractalProps } from "src/components/frontmatter/FractalFrontmatter.astro";
 import { getImage } from "@astrojs/image";
-import imageFetch from "src/utils/imageFetch";
+import "@discretize/typeface-menomonia";
+import "@gw2-ui/default_style.css";
+import type { Props as FractalProps } from "src/components/frontmatter/FractalFrontmatter.astro";
+import FractalFrontmatter from "src/components/frontmatter/FractalFrontmatter.astro";
 import { fractalHeaders } from "src/utils/cache";
+import imageFetch from "src/utils/imageFetch";
+import Layout, { SEOProps } from "./Layout.astro";
 
 export interface Props {
   frontmatter: FractalProps;
