@@ -1,9 +1,8 @@
 ---
 import { Icon } from "astro-icon";
-import Profession from "./gw2-ui/Profession.astro";
-import { getOptimizedImage } from "./images";
-import Tooltip from "./Tooltip.astro";
-import Tooltip2 from "./Tooltip2.astro";
+import Tooltip2 from "../../Tooltip2.astro";
+import Profession from "../../gw2-ui/Profession.astro";
+import { getOptimizedImage } from "../../images";
 
 export interface BuildCardProps {
   title: string;
@@ -46,13 +45,12 @@ const image = await getOptimizedImage(specialization.toLowerCase(), {
   href={`/builds/${slug}`}
   class={`mb-4 block ${rating === "archive" ? "hidden" : ""}`}
   data-rating={rating.toLowerCase().replace(" ", "")}
+  data-profession={profession}
 >
   <article
-    class={`outer h-20 py-0 px-8 w-full grid rounded-xl items-center embossed border-[1px] border-solid grid-flow-col-dense`}
+    class={`outer h-20 py-0 px-8 w-full grid rounded-xl items-center border-[1px] border-solid grid-flow-col-dense bg-cover bg-center`}
     style={{
-      backgroundImage: `linear-gradient(0.25turn, rgba(38,41,46), rgba(38,41,46, .97), rgba(0,0,0,0.5)), url(${image.src})`,
-      backgroundSize: "cover",
-      backgroundPosition: "center",
+      backgroundImage: `linear-gradient(0.25turn, rgb(38,41,46), rgba(38,41,46, .97), rgba(0,0,0,0.4)), url(${image.src})`,
     }}
   >
     <div class="text-2xl">

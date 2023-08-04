@@ -1,0 +1,95 @@
+---
+import { ProfessionTypes } from "@gw2-ui/data/professions";
+import BuildCard, { BuildCardProps } from "./BuildCard.astro";
+import SelectProfession from "../../SelectProfession.astro";
+import RatingsSelect from "./RatingsSelect.astro";
+
+interface Props {
+  professionBuilds: {
+    profession: ProfessionTypes;
+    builds: BuildCardProps[];
+  }[];
+}
+
+const { professionBuilds } = Astro.props;
+---
+
+<script>
+  const FILTER_PROFESSION = "profession";
+  const FILTER_RATING = "rating";
+
+  class BuildsDisplayClass extends HTMLElement {
+    currentFilters: Record<string, (elem) => boolean> = {};
+
+    constructor() {
+      super();
+
+      // event listener for the Profession Select
+      this.addEventListener("changeOption", (e: CustomEvent) => {
+        const selected = e.detail.option;
+
+        // add new filter
+        this.currentFilters[FILTER_PROFESSION] =
+          this.filterProfession(selected);
+
+        this.applyFilters();
+      });
+
+      this.addEventListener("changeSelectedRating", (e: CustomEvent) => {
+        const selected = e.detail.rating;
+
+        // add new filter
+        this.currentFilters[FILTER_RATING] = this.filterRating(selected);
+
+        this.applyFilters();
+      });
+    }
+
+    get allBuilds() {
+      return this.querySelectorAll<HTMLAnchorElement>("section a");
+    }
+
+    filterProfession = (profToFilter) => (elem) => {
+      if (profToFilter === "all") return true;
+      return elem.dataset.profession === profToFilter;
+    };
+
+    filterRating = (ratingToFilter) => (elem) => {
+      if (ratingToFilter === "current") return true;
+      return elem.dataset.rating === ratingToFilter;
+    };
+
+    applyFilters() {
+      this.allBuilds.forEach((elem) => {
+        const show = Object.values(this.currentFilters).every((filter) =>
+          filter(elem)
+        );
+        console.log(show);
+
+        elem.classList.toggle("hidden", !show);
+      });
+    }
+  }
+
+  customElements.define("builds-display", BuildsDisplayClass);
+</script>
+
+<builds-display>
+  <RatingsSelect />
+
+  <div class="flex">
+    <SelectProfession />
+  </div>
+
+  <section class="w-full flex flex-col mt-4">
+    {
+      professionBuilds.map(({ profession, builds }) => (
+        <>
+          {builds.map((build) => (
+            <BuildCard {...build} />
+          ))}
+        </>
+      ))
+    }
+  </section>
+</builds-display>

@@ -1,6 +1,6 @@
 ---
 import PROFESSIONS from "@gw2-ui/data/professions";
-import BuildsPage from "src/components/pages/BuildsPage.astro";
+import BuildsPage from "@components/pages/BuildsPage/BuildsPage.astro";
 
 export async function getStaticPaths() {
   return Object.keys(PROFESSIONS).map((prof) => ({

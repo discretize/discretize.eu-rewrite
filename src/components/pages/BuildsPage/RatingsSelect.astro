@@ -1,0 +1,162 @@
+---
+import Tooltip2 from "../../Tooltip2.astro";
+
+const SELECTED = [
+  "hover:bg-blue-700",
+  "dark:hover:bg-blue-300",
+  "bg-blue-500",
+  "dark:bg-blue-500",
+  "text-black",
+];
+const UNSELECTED = [
+  "bg-stone-100",
+  "dark:bg-zinc-800",
+  "dark:hover:bg-gray-700",
+  "hover:bg-gray-200",
+];
+
+const SHARED =
+  "px-4 py-2 text-sm w-full h-full font-medium border-black focus:ring-0";
+---
+
+<script>
+  const SELECTED = [
+    "hover:bg-blue-700",
+    "dark:hover:bg-blue-300",
+    "bg-blue-500",
+    "dark:bg-blue-500",
+    "text-black",
+  ];
+  const UNSELECTED = [
+    "bg-stone-100",
+    "dark:bg-zinc-800",
+    "dark:hover:bg-gray-700",
+    "hover:bg-gray-200",
+  ];
+
+  const RATING_CURRENT = "current";
+  const RATING_DTLFG = "dtlfg";
+  const RATING_ARCHIVED = "archived";
+
+  class RatingsSelect extends HTMLElement {
+    changeSelectedRatingEvent: CustomEvent;
+
+    constructor() {
+      super();
+
+      this.buttonCurrent.addEventListener("click", () =>
+        this.onSelectCurrent()
+      );
+      this.buttonDtlfg.addEventListener("click", () => this.onSelectDtlfg());
+      this.buttonArchived.addEventListener("click", () =>
+        this.onSelectArchived()
+      );
+
+      this.changeSelectedRatingEvent = new CustomEvent("changeSelectedRating", {
+        bubbles: true,
+        detail: {
+          rating: RATING_CURRENT,
+        },
+      });
+    }
+
+    get buttonCurrent() {
+      return this.querySelector("#button-current");
+    }
+
+    get buttonDtlfg() {
+      return this.querySelector("#button-dtlfg");
+    }
+
+    get buttonArchived() {
+      return this.querySelector("#button-archived");
+    }
+
+    onSelectCurrent() {
+      this.buttonCurrent.classList.add(...SELECTED);
+      this.buttonCurrent.classList.remove(...UNSELECTED);
+
+      this.buttonDtlfg.classList.remove(...SELECTED);
+      this.buttonDtlfg.classList.add(...UNSELECTED);
+
+      this.buttonArchived.classList.remove(...SELECTED);
+      this.buttonArchived.classList.add(...UNSELECTED);
+
+      this.changeSelectedRatingEvent.detail.rating = RATING_CURRENT;
+      this.dispatchEvent(this.changeSelectedRatingEvent);
+    }
+
+    onSelectDtlfg() {
+      this.buttonCurrent.classList.remove(...SELECTED);
+      this.buttonCurrent.classList.add(...UNSELECTED);
+
+      this.buttonDtlfg.classList.add(...SELECTED);
+      this.buttonDtlfg.classList.remove(...UNSELECTED);
+
+      this.buttonArchived.classList.remove(...SELECTED);
+      this.buttonArchived.classList.add(...UNSELECTED);
+
+      this.changeSelectedRatingEvent.detail.rating = RATING_DTLFG;
+      this.dispatchEvent(this.changeSelectedRatingEvent);
+    }
+
+    onSelectArchived() {
+      this.buttonCurrent.classList.remove(...SELECTED);
+      this.buttonCurrent.classList.add(...UNSELECTED);
+
+      this.buttonDtlfg.classList.remove(...SELECTED);
+      this.buttonDtlfg.classList.add(...UNSELECTED);
+
+      this.buttonArchived.classList.add(...SELECTED);
+      this.buttonArchived.classList.remove(...UNSELECTED);
+
+      this.changeSelectedRatingEvent.detail.rating = RATING_ARCHIVED;
+      this.dispatchEvent(this.changeSelectedRatingEvent);
+    }
+  }
+
+  customElements.define("ratings-select", RatingsSelect);
+</script>
+
+<ratings-select>
+  <div class="flex rounded-md shadow-sm h-[46px]" role="group">
+    <Tooltip2 className="flex-auto">
+      <button
+        slot="target"
+        type="button"
+        class:list={[SHARED, "border", "rounded-l-lg", ...SELECTED]}
+        id="button-current"
+        aria-label="Current Builds"
+      >
+        <span>Current</span>
+      </button>
+      <div slot="tooltip">Viable builds for the current patch</div>
+    </Tooltip2>
+    <Tooltip2 className="flex-auto">
+      <button
+        slot="target"
+        type="button"
+        class:list={[SHARED, "border-t", "border-b", ...UNSELECTED]}
+        id="button-dtlfg"
+        aria-label="Discretize LFG Builds"
+      >
+        <span class="whitespace-nowrap"> [dT] LFG</span>
+      </button>
+      <div slot="tooltip">Builds used by the Discretize Guild</div>
+    </Tooltip2>
+    <Tooltip2 className="flex-auto">
+      <button
+        slot="target"
+        type="button"
+        class:list={[SHARED, "border", "rounded-r-lg", ...UNSELECTED]}
+        id="button-archived"
+        aria-label="Archived Builds"
+      >
+        <span>Archive</span>
+      </button>
+      <div slot="tooltip" class="tooltip up">
+        Not updated, potentially outdated builds
+      </div>
+    </Tooltip2>
+  </div>
+</ratings-select>

@@ -1,0 +1,57 @@
+---
+import BuildsDisplay from "@components/pages/BuildsPage/BuildsDisplay.astro";
+import "@discretize/typeface-menomonia";
+import type { ProfessionTypes } from "@gw2-ui/data/professions";
+import "@gw2-ui/default_style.css";
+import { BuildCardProps } from "@components/pages/BuildsPage/BuildCard.astro";
+import Layout, { SEOProps } from "src/layouts/Layout.astro";
+
+interface Props {
+  professions: ProfessionTypes[];
+}
+
+const PROFESSIONS: {
+  profession: ProfessionTypes;
+  builds: BuildCardProps[];
+}[] = Astro.props.professions.map((profession) => ({
+  profession,
+  builds: [],
+}));
+
+const buildsRaw = await Astro.glob(
+  `../../../../discretize-guides/builds/**/index.mdx`
+);
+
+const builds: BuildCardProps[] = buildsRaw.map((build) => ({
+  title: build.frontmatter.title,
+  role: build.frontmatter.role,
+  date: build.frontmatter.date,
+  profession: build.frontmatter.profession,
+  specialization: build.frontmatter.specialization,
+  cmGuide: build.frontmatter.cmGuide,
+  uptodate: build.frontmatter.uptodate,
+  rating: build.frontmatter.rating,
+  archive: build.frontmatter.archive,
+  slug: build.file
+    .split("discretize-guides/builds/")[1]
+    .replace("/index.mdx", ""),
+}));
+builds.forEach((build) => {
+  const profession = PROFESSIONS.find(
+    ({ profession }) => profession === build.profession
+  );
+  if (profession) {
+    profession.builds.push(build);
+  }
+});
+
+const seo: SEOProps = {
+  title: "Builds",
+};
+---
+
+<Layout seo={seo} disableBackground>
+  <div class="max-w-4xl m-auto md:mt-4">
+    <BuildsDisplay professionBuilds={PROFESSIONS} />
+  </div>
+</Layout>

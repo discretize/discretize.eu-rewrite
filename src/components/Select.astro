@@ -1,0 +1,32 @@
+---
+import { Icon } from "astro-icon";
+interface Props {
+  class: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<div class:list={["dropdown"]}>
+  <label
+    tabindex="0"
+    class:list={[
+      "btn",
+      "flex",
+      "justify-between",
+      "bg-stone-100",
+      "dark:bg-zinc-800",
+      "border-black",
+      className,
+    ]}
+  >
+    <slot name="label" />
+    <Icon pack="mdi" size="1.5rem" name="menu-down" />
+  </label>
+  <ul
+    tabindex="0"
+    class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+  >
+    <slot name="dropdown" />
+  </ul>
+</div>

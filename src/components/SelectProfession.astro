@@ -1,0 +1,66 @@
+---
+import PROFESSIONS, { ProfessionTypes } from "@gw2-ui/data/professions";
+import Select from "./Select.astro";
+import Profession from "./gw2-ui/Profession.astro";
+---
+
+<script>
+  class SelectProfessionClass extends HTMLElement {
+    selected = null;
+    changeOptionEvent: CustomEvent;
+
+    constructor() {
+      super();
+      this.options.forEach((option) => {
+        option.addEventListener("click", () =>
+          this.setSelected(option.dataset.option)
+        );
+      });
+
+      this.changeOptionEvent = new CustomEvent("changeOption", {
+        detail: {
+          option: this.selected,
+        },
+        bubbles: true,
+        cancelable: false,
+      });
+    }
+
+    get options() {
+      return this.querySelectorAll("a");
+    }
+
+    get label() {
+      return this.querySelector("label span");
+    }
+
+    setSelected(target) {
+      this.selected = target;
+      this.label.textContent = target;
+      this.changeOptionEvent.detail.option = target;
+      this.dispatchEvent(this.changeOptionEvent);
+    }
+  }
+
+  customElements.define("select-profession", SelectProfessionClass);
+</script>
+
+<select-profession>
+  <Select class="w-52">
+    <span slot="label">Select Profession</span>
+    <Fragment slot="dropdown">
+      <li>
+        <a data-option="all">---</a>
+      </li>
+      {
+        Object.keys(PROFESSIONS).map((profession) => (
+          <li>
+            <a data-option={profession}>
+              <Profession name={profession as ProfessionTypes} disableLink />
+            </a>
+          </li>
+        ))
+      }
+    </Fragment>
+  </Select>
+</select-profession>
