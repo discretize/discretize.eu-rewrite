@@ -30,6 +30,9 @@ export default defineConfig({
   //     noExternal: ["@floating-ui/react-dom"],
   //   },
   // },
+  experimental: {
+    middleware: true,
+  },
   vite: {
     build: {
       assetsInlineLimit: 0,
