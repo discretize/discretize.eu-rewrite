@@ -1,6 +1,5 @@
 ---
 import { Icon } from "astro-icon";
-import { TEXT } from "src/styles";
 
 interface Props {
   href: string;
@@ -19,7 +18,6 @@ const {
 } = Astro.props;
 
 const isInternal = !href.startsWith("http");
-let finalClassName = className || "";
 
 const linkProps = {
   href,
@@ -30,15 +28,17 @@ const linkProps = {
 if (disablePrefetch && isInternal) {
   linkProps.rel = "";
 }
-
-if (enableDecoration) {
-  finalClassName += ` text-blue-500 hover:underline`;
-}
-
-finalClassName = finalClassName.trim();
 ---
 
-<a {...linkProps} aria-label={label} class={finalClassName}>
+<a
+  {...linkProps}
+  aria-label={label}
+  class:list={[
+    "whitespace-nowrap",
+    className,
+    { "text-blue-500": enableDecoration, "hover:underline": enableDecoration },
+  ]}
+>
   <slot />
   {
     enableDecoration && !isInternal ? (
