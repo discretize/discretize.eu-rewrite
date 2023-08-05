@@ -22,55 +22,42 @@ characters.forEach((title, index) => {
 //   await Astro.glob("../../assets/data/optimizer-state/ranger/*.json")
 // ).map((d) => d.default);
 const templates = [];
-
-const activeClasses = ["text-blue-500", "border-b-2", "border-blue-500"];
-const nonActiveClasses = [
-  "text-gray-500",
-  "dark:text-gray-400",
-  "border-transparent",
-];
 ---
 
-<div id={id}>
-  <div class="border-b border-gray-200 dark:border-gray-700 mb-4">
-    <ul class="flex flex-wrap -mb-px" id="myTab" role="tablist">
+<div id={id} class="">
+  <div class="join hidden sm:block">
+    {
+      characters.map((character, index) => (
+        <button
+          data-tab-ui={character.id}
+          aria-controls={character.title}
+          class:list={[
+            "btn btn-sm join-item",
+            { "btn-primary": index === 0, embossed: index !== 0 },
+          ]}
+        >
+          {character.title}
+        </button>
+      ))
+    }
+  </div>
+  <div class="form-control w-full max-w-xs sm:hidden">
+    <label class="label">
+      <span class="label-text">Pick a gear variant</span>
+    </label>
+    <select class="select select-bordered" id="mobileCharacterSelect">
       {
         characters.map((character, index) => (
-          <li
-            class="mr-2"
-            role="presentation"
-            data-tab-ui={character.id}
-            class={index === 0 ? "" : "hidden"}
+          <option
+            value={character.id}
+            aria-controls={character.title}
+            selected={index === 0}
           >
-            <button
-              class={`inline-block hover:text-gray-600 hover:border-gray-300 rounded-t-lg py-4 px-4 text-sm font-medium text-center border-b-2 dark:hover:text-gray-300 ${
-                index === 0
-                  ? activeClasses.join(" ")
-                  : nonActiveClasses.join(" ")
-              }`}
-              type="button"
-              role="tab"
-              aria-controls={character.title}
-              aria-selected="false"
-            >
-              {character.title}
-            </button>
-          </li>
+            {character.title}
+          </option>
         ))
       }
-      <div class="flex-grow"></div>
-      <li class="mr-2" role="presentation" data-tab-ui="#peepoptimizer">
-        <button
-          class="inline-block text-gray-500 hover:text-gray-600 hover:border-gray-300 rounded-t-lg py-4 px-4 text-sm font-medium text-center border-transparent border-b-2 dark:text-gray-400 dark:hover:text-gray-300"
-          type="button"
-          role="tab"
-          aria-controls="peepoptimizer"
-          aria-selected="false"
-        >
-          Peepoptimizer
-        </button>
-      </li>
-    </ul>
+    </select>
   </div>
 
   <noscript>To display the character, please enable JavaScript :)</noscript>
@@ -82,9 +69,8 @@ const nonActiveClasses = [
   </div>
 </div>
 
-<script define:vars={{ activeClasses, nonActiveClasses }}>
-  const tabButtons = document.querySelectorAll("[data-tab-ui]");
-
+<script>
+  const tabButtons = document.querySelectorAll("button[data-tab-ui]");
   tabButtons.forEach((button) => {
     button.addEventListener("click", (event) => {
       const target = button.getAttribute("data-tab-ui");
@@ -102,17 +88,36 @@ const nonActiveClasses = [
       element.classList.remove("hidden");
 
       tabButtons.forEach((button) => {
-        const childElem = button.children[0];
-        childElem.classList.remove(...activeClasses);
-
         if (button.getAttribute("data-tab-ui") === target) {
-          childElem.classList.remove(...nonActiveClasses);
-          childElem.classList.add(...activeClasses);
+          button.classList.add("btn-primary");
+          button.classList.remove("embossed");
         } else {
-          childElem.classList.add(...nonActiveClasses);
+          button.classList.remove("btn-primary");
+          button.classList.add("embossed");
         }
       });
     });
+  });
+
+  const mobileCharacterSelect = document.getElementById(
+    "mobileCharacterSelect"
+  ) as HTMLSelectElement;
+
+  mobileCharacterSelect.addEventListener("change", (event) => {
+    if (!event || !event.target.value) return;
+    const target = event.target.value;
+    const element = document.querySelector(target);
+
+    // hide page elements
+    const pages = document.querySelectorAll(".page");
+    pages.forEach((page) => {
+      if (page.id !== target.replace("#", "")) {
+        page.classList.add("hidden");
+      }
+    });
+
+    // show element
+    element.classList.remove("hidden");
   });
 </script>
 
