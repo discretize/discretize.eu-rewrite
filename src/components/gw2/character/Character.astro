@@ -74,12 +74,18 @@ Object.keys(data.backAndTrinket).forEach((key) =>
 Object.keys(data.consumables).forEach((key) =>
   addParam(data.consumables[key], 60)
 );
+
+const hasText = Astro.slots.has("default");
 ---
 
 <div class={`page character ${isFirst ? "active" : "hidden"}`} id={id}>
-  <Information>
-    <slot />
-  </Information>
+  {
+    hasText && (
+      <Information>
+        <slot />
+      </Information>
+    )
+  }
 
   <div class="wrapper">
     <div class="side">
