@@ -159,7 +159,7 @@ const {
       </div>
     </div>
   </div>
-  <ul>
+  <ul class="mb-4 md:mt-2">
     <li class="flex gap-1 items-center text-xs font-light">
       <Icon name="mdi:calendar" height="0.8rem" /> last updated on{" "}
       {new Date(date.trim()).toDateString()}
@@ -233,31 +233,33 @@ const {
 
   <div class="flex-grow"></div>
 
-  <Tooltip2>
-    <div
-      class:list={[
-        "badge",
-        "p-3",
-        { "badge-success": gear, "badge-error": !gear },
-      ]}
-      slot="target"
-    >
-      <Gear width="1rem" height="1rem" /> Gear
-    </div>
-    <span slot="tooltip">Gear is {!gear ? "not" : ""} up-to-date</span>
-  </Tooltip2>
-  <Tooltip2>
-    <div
-      class:list={[
-        "badge",
-        "p-3",
-        { "badge-success": guide, "badge-error": !guide },
-      ]}
-      slot="target"
-    >
-      <Icon pack="mdi" name="tune" size="1rem" /> Guide
-    </div>
-    <span slot="tooltip">Guide is {!guide ? "not" : ""} up-to-date</span>
-  </Tooltip2>
+  <div class="flex gap-4">
+    <Tooltip2>
+      <div
+        class:list={[
+          "badge",
+          "p-3",
+          { "badge-success": gear, "badge-error": !gear },
+        ]}
+        slot="target"
+      >
+        <Gear width="1rem" height="1rem" /> Gear
+      </div>
+      <span slot="tooltip">Gear is {!gear ? "not" : ""} up-to-date</span>
+    </Tooltip2>
+    <Tooltip2>
+      <div
+        class:list={[
+          "badge",
+          "p-3",
+          { "badge-success": guide, "badge-error": !guide },
+        ]}
+        slot="target"
+      >
+        <Icon pack="mdi" name="tune" size="1rem" /> Guide
+      </div>
+      <span slot="tooltip">Guide is {!guide ? "not" : ""} up-to-date</span>
+    </Tooltip2>
+  </div>
 </div>
 <TextDivider text="Overview" />
