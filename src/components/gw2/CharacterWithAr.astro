@@ -103,22 +103,24 @@ const templates = [];
     "mobileCharacterSelect"
   ) as HTMLSelectElement;
 
-  mobileCharacterSelect.addEventListener("change", (event) => {
-    if (!event || !event.target.value) return;
-    const target = event.target.value;
-    const element = document.querySelector(target);
+  if (mobileCharacterSelect) {
+    mobileCharacterSelect.addEventListener("change", (event) => {
+      if (!event || !event.target.value) return;
+      const target = event.target.value;
+      const element = document.querySelector(target);
 
-    // hide page elements
-    const pages = document.querySelectorAll(".page");
-    pages.forEach((page) => {
-      if (page.id !== target.replace("#", "")) {
-        page.classList.add("hidden");
-      }
+      // hide page elements
+      const pages = document.querySelectorAll(".page");
+      pages.forEach((page) => {
+        if (page.id !== target.replace("#", "")) {
+          page.classList.add("hidden");
+        }
+      });
+
+      // show element
+      element.classList.remove("hidden");
     });
-
-    // show element
-    element.classList.remove("hidden");
-  });
+  }
 </script>
 
 <style>
