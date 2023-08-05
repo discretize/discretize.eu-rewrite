@@ -1,3 +1,7 @@
+---
+import Tooltip2 from "./Tooltip2.astro";
+---
+
 <script>
   const urlSearchParams = new URLSearchParams(window.location.search);
 
@@ -7,9 +11,13 @@
     isBeginner = false;
   }
 
-  const switchElement = document.querySelector<HTMLInputElement>(
-    "[id='switchBeginner']"
-  );
+  const switchBeginner = document.getElementById(
+    "switchBeginner"
+  ) as HTMLInputElement;
+  const switchAdvanced = document.getElementById(
+    "switchAdvanced"
+  ) as HTMLInputElement;
+
   const beginner = document.querySelectorAll<HTMLDivElement>(".beginner");
   const advanced = document.querySelectorAll<HTMLDivElement>(".advanced");
 
@@ -32,27 +40,41 @@
     }
   }
 
-  if (switchElement) {
-    switchElement.checked = !isBeginner;
-    // set initial state so that in case advanced is selected on page load, the beginner elements are hidden
-    setState(!isBeginner);
-
-    switchElement.addEventListener("change", (e: Event) => {
-      const newState: boolean = (e.target as HTMLInputElement).checked;
-
-      setState(newState);
-    });
+  setState(!isBeginner);
+  if (isBeginner) {
+    switchBeginner.checked = true;
+  } else {
+    switchAdvanced.checked = true;
   }
+
+  switchBeginner.addEventListener("click", (e: Event) => {
+    setState(false);
+  });
+  switchAdvanced.addEventListener("click", (e: Event) => {
+    setState(true);
+  });
 </script>
 
-<div class="form-control">
-  <label class="label cursor-pointer">
-    <span class="label-text mr-4">Advanced mode</span>
+<div class="join">
+  <Tooltip2>
     <input
       id="switchBeginner"
-      type="checkbox"
-      class="checkbox"
-      aria-label="Switch between Beginner and Advanced"
+      class="join-item btn"
+      type="radio"
+      name="options"
+      aria-label="Easy"
+      slot="target"
     />
-  </label>
+    <span slot="tooltip">
+      Beginner friendly version focused on the most important parts.
+    </span>
+  </Tooltip2>
+  <input
+    id="switchAdvanced"
+    class="join-item btn"
+    type="radio"
+    name="options"
+    aria-label="Advanced"
+    slot="target"
+  />
 </div>
