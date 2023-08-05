@@ -18,41 +18,43 @@ import Tooltip2 from "./Tooltip2.astro";
     "switchAdvanced"
   ) as HTMLInputElement;
 
-  const beginner = document.querySelectorAll<HTMLDivElement>(".beginner");
-  const advanced = document.querySelectorAll<HTMLDivElement>(".advanced");
+  if (switchBeginner && switchAdvanced) {
+    const beginner = document.querySelectorAll<HTMLDivElement>(".beginner");
+    const advanced = document.querySelectorAll<HTMLDivElement>(".advanced");
 
-  function setState(isAdvanced: boolean) {
-    window.history.replaceState(
-      {},
-      "",
-      `${window.location.pathname}?variant=${
-        isAdvanced ? "advanced" : "beginner"
-      }`
-    );
-    isBeginner = !isAdvanced;
+    function setState(isAdvanced: boolean) {
+      window.history.replaceState(
+        {},
+        "",
+        `${window.location.pathname}?variant=${
+          isAdvanced ? "advanced" : "beginner"
+        }`
+      );
+      isBeginner = !isAdvanced;
 
-    if (isAdvanced) {
-      beginner.forEach((entry) => (entry.style.display = "none"));
-      advanced.forEach((entry) => (entry.style.display = "block"));
-    } else {
-      beginner.forEach((entry) => (entry.style.display = "block"));
-      advanced.forEach((entry) => (entry.style.display = "none"));
+      if (isAdvanced) {
+        beginner.forEach((entry) => (entry.style.display = "none"));
+        advanced.forEach((entry) => (entry.style.display = "block"));
+      } else {
+        beginner.forEach((entry) => (entry.style.display = "block"));
+        advanced.forEach((entry) => (entry.style.display = "none"));
+      }
     }
-  }
 
-  setState(!isBeginner);
-  if (isBeginner) {
-    switchBeginner.checked = true;
-  } else {
-    switchAdvanced.checked = true;
-  }
+    setState(!isBeginner);
+    if (isBeginner) {
+      switchBeginner.checked = true;
+    } else {
+      switchAdvanced.checked = true;
+    }
 
-  switchBeginner.addEventListener("click", (e: Event) => {
-    setState(false);
-  });
-  switchAdvanced.addEventListener("click", (e: Event) => {
-    setState(true);
-  });
+    switchBeginner.addEventListener("click", (e: Event) => {
+      setState(false);
+    });
+    switchAdvanced.addEventListener("click", (e: Event) => {
+      setState(true);
+    });
+  }
 </script>
 
 <div class="join">

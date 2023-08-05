@@ -198,7 +198,7 @@ const {
 
   <div class="flex flex-row">
     {
-      boons.map((boon) => (
+      boons?.map((boon) => (
         <Tooltip2>
           <Boon
             name={boon.name}
@@ -215,7 +215,7 @@ const {
       ))
     }
     {
-      conditions.map(({ name, uptime }) => (
+      conditions?.map(({ name, uptime }) => (
         <Tooltip2>
           <Condition
             name={name}
