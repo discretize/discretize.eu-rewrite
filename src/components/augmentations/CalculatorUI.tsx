@@ -1,5 +1,3 @@
-// react functional component
-import { TextDivider } from "@discretize/react-discretize-components";
 import { AugmentationsTypes } from "@gw2-ui/data/augmentations";
 import React, { useEffect, useState } from "react";
 import initialState from "./initialState.json";
@@ -54,9 +52,10 @@ export function CalculatorUI(props: Props): React.ReactElement {
     augment: 0,
     journals: 0,
     pages: 0,
-    cm100: true,
+    cm100: false,
     cm99: true,
     cm98: true,
+    cm97: true,
     t4s: true,
     recs: true,
     weekly: true,
@@ -129,21 +128,25 @@ export function CalculatorUI(props: Props): React.ReactElement {
       value: state.pages,
       stateName: "pages",
     },
-
     {
-      label: "Sunqua Peak CM",
+      label: "Silent Surf CM",
       value: state.cm100,
       stateName: "cm100",
     },
     {
-      label: "Shattered Observatory CM",
+      label: "Sunqua Peak CM",
       value: state.cm99,
       stateName: "cm99",
     },
     {
-      label: "Nightmare CM",
+      label: "Shattered Observatory CM",
       value: state.cm98,
       stateName: "cm98",
+    },
+    {
+      label: "Nightmare CM",
+      value: state.cm97,
+      stateName: "cm97",
     },
     {
       label: "Daily T4 Fractals",

@@ -53,6 +53,7 @@ const calculate = ({
   cm100,
   cm99,
   cm98,
+  cm97,
   t4s,
   recs,
   weekly,
@@ -68,20 +69,26 @@ const calculate = ({
   let pagesPerDay = 0;
 
   if (cm100) {
-    relicsPerDay += 120 + 19 + augment * 5;
+    relicsPerDay += 80 + 19 + augment * 5;
     pristinesPerDay += 2;
     matricesPerDay += 1;
-    pagesPerDay += 1;
   }
 
   if (cm99) {
+    relicsPerDay += 80 + 19 + augment * 5;
+    pristinesPerDay += 2;
+    matricesPerDay += 1;
+  }
+
+  if (cm98) {
+    // 20 per boss + 80 on completion relics
     relicsPerDay += 140 + 19 + augment * 5;
     pristinesPerDay += 2;
     matricesPerDay += 1;
     pagesPerDay += 1;
   }
 
-  if (cm98) {
+  if (cm97) {
     relicsPerDay += 140 + 19 + augment * 5;
     pristinesPerDay += 2;
     matricesPerDay += 1;
