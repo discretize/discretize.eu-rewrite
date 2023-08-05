@@ -3,6 +3,7 @@ import "@discretize/typeface-menomonia";
 import { components } from '../../components/components.ts';
 import { ConsumableEffect, Boon } from '@discretize/gw2-ui-new';
 import Layout from '../../layouts/Layout.astro';
+import ApplyForm from '../../components/pages/apply/ApplyForm.tsx';
 
 export { components };
 
@@ -87,5 +88,8 @@ We are currently recruiting the following roles. One Power and one Condi build a
 <Divider text="Apply form" />
 
 After carefully reading through all the information we encourage you to apply.
+
+
+<ApplyForm client:visible />
 
 </Layout>
