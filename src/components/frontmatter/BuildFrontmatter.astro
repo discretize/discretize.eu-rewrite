@@ -11,6 +11,7 @@ import Ul from "../html-components/ul.astro";
 import { ConditionTypes } from "@gw2-ui/data/conditions";
 import { BoonsTypes } from "@gw2-ui/data/boons";
 import BeginnerToggle from "@components/BeginnerToggle.astro";
+import CopyTemplate from "@components/gw2/CopyTemplate.astro";
 
 export interface Props {
   title: string;
@@ -43,6 +44,7 @@ const {
   title,
   specialization,
   role,
+  code,
   hasBeginner,
   profession,
   date,
@@ -172,16 +174,17 @@ const {
   </ul>
 </div>
 
-<div class="flex items-center mb-4">
+<div class="flex items-center mb-4 gap-4">
   {
     cmGuide && (
-      <button class="btn btn-primary ">
+      <button class="btn btn-primary">
         <a href={cmGuide} target="_blank" rel="noopener noreferrer">
           CM Guide
         </a>
       </button>
     )
   }
+  {code && <CopyTemplate code={code} />}
 
   {hasBeginner && <BeginnerToggle />}
 </div>

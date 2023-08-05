@@ -1,0 +1,39 @@
+---
+interface Props {
+  code: string;
+}
+
+const { code } = Astro.props;
+---
+
+<script>
+  class CopyTemplate extends HTMLElement {
+    constructor() {
+      super();
+      this.button.addEventListener("click", () => this.copyTemplate());
+    }
+
+    copyTemplate() {
+      const code = this.dataset.code;
+      navigator.clipboard.writeText(code);
+
+      this.button.classList.add("btn-success");
+      this.button.innerHTML = "Copied!";
+
+      setTimeout(() => {
+        this.button.classList.remove("btn-success");
+        this.button.innerHTML = "Copy Template";
+      }, 3000);
+    }
+
+    get button() {
+      return this.querySelector("button");
+    }
+  }
+
+  customElements.define("copy-template", CopyTemplate);
+</script>
+
+<copy-template data-code={code}>
+  <button class:list={["btn", "btn-primary", "w-48"]}> Copy Template</button>
+</copy-template>
