@@ -51,4 +51,7 @@
   .table :where(th, td) {
     white-space: inherit;
   }
+  .btn-sm {
+    @apply h-8 min-h-full;
+  }
 }

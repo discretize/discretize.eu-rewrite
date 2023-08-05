@@ -12,6 +12,8 @@ import { ConditionTypes } from "@gw2-ui/data/conditions";
 import { BoonsTypes } from "@gw2-ui/data/boons";
 import BeginnerToggle from "@components/BeginnerToggle.astro";
 import CopyTemplate from "@components/gw2/CopyTemplate.astro";
+import Tooltip2 from "@components/Tooltip2.astro";
+import Gear from "src/icons/gear.astro";
 
 export interface Props {
   title: string;
@@ -152,15 +154,19 @@ const {
     />
     <div class="ml-4 self-center">
       <h1 class="mb-0 font-bold">{title}</h1>
-      <div class="text-lg">{rating}</div>
+      <div class="text-lg">
+        <span>{rating}</span>
+      </div>
     </div>
   </div>
   <ul>
-    <li class="flex gap-1 items-center">
+    <li class="flex gap-1 items-center text-xs font-light">
       <Icon name="mdi:calendar" height="0.8rem" /> last updated on{" "}
       {new Date(date.trim()).toDateString()}
     </li>
-    <li class="flex gap-1 items-center">
+    <!-- 
+      
+      <li class="flex gap-1 items-center">
       <Icon name="mdi:account" height="0.8rem" /> Gear: {!gear ? "not" : ""}{
         " "
       }
@@ -170,14 +176,16 @@ const {
       <Icon name="mdi:television-guide" height="0.8rem" /> Guide:{" "}
       {!guide ? "not" : ""}
       up-to-date
-    </li>
+    </li> 
+  
+  -->
   </ul>
 </div>
 
-<div class="flex items-center mb-4 gap-4">
+<div class="flex items-center mb-4 gap-4 flex-wrap">
   {
     cmGuide && (
-      <button class="btn btn-primary">
+      <button class="btn btn-primary btn-sm">
         <a href={cmGuide} target="_blank" rel="noopener noreferrer">
           CM Guide
         </a>
@@ -187,5 +195,69 @@ const {
   {code && <CopyTemplate code={code} />}
 
   {hasBeginner && <BeginnerToggle />}
+
+  <div class="flex flex-row">
+    {
+      boons.map((boon) => (
+        <Tooltip2>
+          <Boon
+            name={boon.name}
+            disableLink
+            disableText
+            size="medium"
+            disableTooltip
+            slot="target"
+          />
+          <span slot="tooltip">
+            {boon.uptime} uptime {boon.variant}
+          </span>
+        </Tooltip2>
+      ))
+    }
+    {
+      conditions.map(({ name, uptime }) => (
+        <Tooltip2>
+          <Condition
+            name={name}
+            disableLink
+            disableText
+            size="medium"
+            disableTooltip
+            slot="target"
+          />
+          <span slot="tooltip">{uptime || "some"} uptime</span>
+        </Tooltip2>
+      ))
+    }
+  </div>
+
+  <div class="flex-grow"></div>
+
+  <Tooltip2>
+    <div
+      class:list={[
+        "badge",
+        "p-3",
+        { "badge-success": gear, "badge-error": !gear },
+      ]}
+      slot="target"
+    >
+      <Gear width="1rem" height="1rem" /> Gear
+    </div>
+    <span slot="tooltip">Gear is {!gear ? "not" : ""} up-to-date</span>
+  </Tooltip2>
+  <Tooltip2>
+    <div
+      class:list={[
+        "badge",
+        "p-3",
+        { "badge-success": guide, "badge-error": !guide },
+      ]}
+      slot="target"
+    >
+      <Icon pack="mdi" name="tune" size="1rem" /> Guide
+    </div>
+    <span slot="tooltip">Guide is {!guide ? "not" : ""} up-to-date</span>
+  </Tooltip2>
 </div>
 <TextDivider text="Overview" />
