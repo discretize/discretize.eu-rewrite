@@ -64,7 +64,6 @@ const { professionBuilds } = Astro.props;
         const show = Object.values(this.currentFilters).every((filter) =>
           filter(elem)
         );
-        console.log(show);
 
         elem.classList.toggle("hidden", !show);
       });

@@ -45,6 +45,13 @@ builds.forEach((build) => {
   }
 });
 
+PROFESSIONS.sort((a, b) => a.profession.localeCompare(b.profession));
+PROFESSIONS.forEach((profession) => {
+  profession.builds.sort((a, b) =>
+    a.specialization.localeCompare(b.specialization)
+  );
+});
+
 const seo: SEOProps = {
   title: "Builds",
 };
