@@ -1,6 +1,5 @@
 ---
 import "discretize-ui/react-discretize-components/src/styles/defaultTheme.css";
-import { Icon } from "astro-icon";
 import Peepoptimizer from "./peepoptimizer/Peepoptimizer";
 
 const id = Math.random().toString(16).slice(2);
@@ -24,104 +23,127 @@ characters.forEach((title, index) => {
 const templates = [];
 ---
 
-<div id={id} class="">
-  <div class="join hidden sm:block">
-    {
-      characters.map((character, index) => (
-        <button
-          data-tab-ui={character.id}
-          aria-controls={character.title}
-          class:list={[
-            "btn btn-sm join-item",
-            { "btn-primary": index === 0, embossed: index !== 0 },
-          ]}
-        >
-          {character.title}
-        </button>
-      ))
+<script>
+  class CharacterWithAr extends HTMLElement {
+    constructor() {
+      super();
+
+      this.initDesktop();
+      this.initMobileSelect();
     }
-  </div>
-  <div class="form-control w-full max-w-xs sm:hidden">
-    <label class="label">
-      <span class="label-text">Pick a gear variant</span>
-    </label>
-    <select class="select select-bordered" id="mobileCharacterSelect">
+
+    initDesktop() {
+      this.buttons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const target = button.getAttribute("data-tab-ui");
+          const element = this.querySelector(target);
+
+          // hide page elements
+          this.pages.forEach((page) => {
+            if (page.id !== target.replace("#", "")) {
+              page.classList.add("hidden");
+            }
+          });
+
+          // show element
+          element.classList.remove("hidden");
+
+          this.buttons.forEach((button) => {
+            if (button.getAttribute("data-tab-ui") === target) {
+              button.classList.add("btn-primary");
+              button.classList.remove("embossed");
+            } else {
+              button.classList.remove("btn-primary");
+              button.classList.add("embossed");
+            }
+          });
+        });
+      });
+    }
+
+    initMobileSelect() {
+      const mobileCharacterSelect = this.querySelector<HTMLSelectElement>(
+        "#mobileCharacterSelect"
+      );
+
+      if (mobileCharacterSelect) {
+        mobileCharacterSelect.addEventListener("change", (event) => {
+          if (!event || !event.target.value) return;
+          const target = event.target.value;
+          const element = document.querySelector(target);
+
+          // hide page elements
+          const pages = document.querySelectorAll(".page");
+          pages.forEach((page) => {
+            if (page.id !== target.replace("#", "")) {
+              page.classList.add("hidden");
+            }
+          });
+
+          // show element
+          element.classList.remove("hidden");
+        });
+      }
+    }
+
+    get pages() {
+      return this.querySelectorAll(".page");
+    }
+
+    get buttons() {
+      return this.querySelectorAll("button[data-tab-ui]");
+    }
+  }
+
+  customElements.define("character-with-ar", CharacterWithAr);
+</script>
+
+<character-with-ar>
+  <div id={id} class="">
+    <div class="join hidden sm:block">
       {
         characters.map((character, index) => (
-          <option
-            value={character.id}
+          <button
+            data-tab-ui={character.id}
             aria-controls={character.title}
-            selected={index === 0}
+            class:list={[
+              "btn btn-sm join-item",
+              { "btn-primary": index === 0, embossed: index !== 0 },
+            ]}
           >
             {character.title}
-          </option>
+          </button>
         ))
       }
-    </select>
+    </div>
+    <div class="form-control w-full max-w-xs sm:hidden">
+      <label class="label">
+        <span class="label-text">Pick a gear variant</span>
+      </label>
+      <select class="select select-bordered" id="mobileCharacterSelect">
+        {
+          characters.map((character, index) => (
+            <option
+              value={character.id}
+              aria-controls={character.title}
+              selected={index === 0}
+            >
+              {character.title}
+            </option>
+          ))
+        }
+      </select>
+    </div>
+
+    <noscript>To display the character, please enable JavaScript :)</noscript>
+
+    <slot />
+
+    <div class="page hidden" id="peepoptimizer">
+      <Peepoptimizer client:visible templates={templates} />
+    </div>
   </div>
-
-  <noscript>To display the character, please enable JavaScript :)</noscript>
-
-  <slot />
-
-  <div class="page hidden" id="peepoptimizer">
-    <Peepoptimizer client:visible templates={templates} />
-  </div>
-</div>
-
-<script>
-  const tabButtons = document.querySelectorAll("button[data-tab-ui]");
-  tabButtons.forEach((button) => {
-    button.addEventListener("click", (event) => {
-      const target = button.getAttribute("data-tab-ui");
-      const element = document.querySelector(target);
-
-      // hide page elements
-      const pages = document.querySelectorAll(".page");
-      pages.forEach((page) => {
-        if (page.id !== target.replace("#", "")) {
-          page.classList.add("hidden");
-        }
-      });
-
-      // show element
-      element.classList.remove("hidden");
-
-      tabButtons.forEach((button) => {
-        if (button.getAttribute("data-tab-ui") === target) {
-          button.classList.add("btn-primary");
-          button.classList.remove("embossed");
-        } else {
-          button.classList.remove("btn-primary");
-          button.classList.add("embossed");
-        }
-      });
-    });
-  });
-
-  const mobileCharacterSelect = document.getElementById(
-    "mobileCharacterSelect"
-  ) as HTMLSelectElement;
-
-  if (mobileCharacterSelect) {
-    mobileCharacterSelect.addEventListener("change", (event) => {
-      if (!event || !event.target.value) return;
-      const target = event.target.value;
-      const element = document.querySelector(target);
-
-      // hide page elements
-      const pages = document.querySelectorAll(".page");
-      pages.forEach((page) => {
-        if (page.id !== target.replace("#", "")) {
-          page.classList.add("hidden");
-        }
-      });
-
-      // show element
-      element.classList.remove("hidden");
-    });
-  }
-</script>
+</character-with-ar>
 
 <style>
   :global(.gw2item) {
