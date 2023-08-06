@@ -46,7 +46,7 @@ const headerImage =
 ---
 
 <Header
-  title={difficulties.map((d) => d.level).join(", ") + " " + title}
+  title={title}
   description={description}
   date={date}
   image={headerImage}
@@ -67,11 +67,16 @@ const headerImage =
               {
                 difficulties.map((d) => (
                   <>
-                    Level {d.level} -{" "}
-                    <Attribute
-                      name="Agony Resistance"
-                      text={d.ar + " Agony Resistance"}
-                    />
+                    Level {d.level}
+                    {d.ar > 0 && (
+                      <>
+                        -{" "}
+                        <Attribute
+                          name="Agony Resistance"
+                          text={d.ar + " Agony Resistance"}
+                        />
+                      </>
+                    )}
                     <br />
                   </>
                 ))

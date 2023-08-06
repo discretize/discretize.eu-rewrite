@@ -7,10 +7,7 @@ const guides = (
 )
   ?.map((guide) => {
     return {
-      title:
-        guide.frontmatter.difficulties.map((diff) => diff.level).join(", ") +
-        " - " +
-        guide.frontmatter.title,
+      title: guide.frontmatter.title,
       date: guide.frontmatter.date,
       slug:
         "/" +
@@ -28,9 +25,9 @@ const guides = (
   });
 
 const seo = {
-  title: "Guides Overview",
+  title: "Fractals Overview",
   description:
-    "Explore our comprehensive collection of general GW2 guides, meticulously crafted to enhance your understanding and mastery of the game.",
+    "Enhance your GW2 Fractal runs with effective tactics and strategies - elevate your daily Guild Wars 2 fractal runs with battle-tested tactics and valuable strategies for success.",
 };
 ---
 
