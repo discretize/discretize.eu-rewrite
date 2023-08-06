@@ -26,8 +26,14 @@ const guides = (
   .sort((a, b) => {
     return b.level - a.level;
   });
+
+const seo = {
+  title: "Guides Overview",
+  description:
+    "Explore our comprehensive collection of general GW2 guides, meticulously crafted to enhance your understanding and mastery of the game.",
+};
 ---
 
-<Layout seo={{ title: "Guides" }} disableBackground>
+<Layout seo={seo} disableBackground>
   <OverviewPage items={guides} />
 </Layout>

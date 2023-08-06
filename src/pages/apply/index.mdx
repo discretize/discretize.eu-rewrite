@@ -1,18 +1,15 @@
-import "@gw2-ui/default_style.css";
-import "@discretize/typeface-menomonia";
+---
+title: Apply to Discretize
+description: Tired of PuGs? Look at the requirements and apply to join Discretize to meet like minded players and participate in fast, clean daily runs.
+layout: ../../layouts/Default.astro
+---
+
 import { components } from '../../components/components.ts';
-import { ConsumableEffect, Boon } from '@discretize/gw2-ui-new';
-import Layout from '../../layouts/Layout.astro';
+import { ConsumableEffect } from '@discretize/gw2-ui-new';
 import ApplyForm from '../../components/pages/apply/ApplyForm.tsx';
 
 export { components };
 
-export const seo = {
-  title: 'Apply to Discretize',
-  description: 'Join the Discretize guild by completing the application forms.',
-};
-
-<Layout seo={seo}>
 
 # Apply to Discretize
 
@@ -91,5 +88,3 @@ After carefully reading through all the information we encourage you to apply.
 
 
 <ApplyForm client:visible />
-
-</Layout>

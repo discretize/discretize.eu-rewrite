@@ -5,29 +5,34 @@ import "@discretize/typeface-menomonia";
 import TableOfContents from "src/components/TableOfContents.astro";
 
 interface Props {
-    headings: {
-        depth: number;
-        slug: string;
-        image: string;
-        text: string;
-    }[];
-    frontmatter: {
-        toc: boolean;
-    };
+  headings: {
+    depth: number;
+    slug: string;
+    image: string;
+    text: string;
+  }[];
+  frontmatter: {
+    toc: boolean;
+    title: string;
+    description?: string;
+  };
 }
 
 const { headings, frontmatter } = Astro.props;
+
+const seo = {
+  title: frontmatter?.title,
+  description: frontmatter?.description,
+};
 ---
 
-<Layout seo={{}}>
-    {
-        frontmatter.toc && (
-            <TableOfContents
-                headings={headings.filter(
-                    (heading) => !heading.slug.match("heading-")
-                )}
-            />
-        )
-    }
-    <slot />
+<Layout seo={seo}>
+  {
+    frontmatter.toc && (
+      <TableOfContents
+        headings={headings.filter((heading) => !heading.slug.match("heading-"))}
+      />
+    )
+  }
+  <slot />
 </Layout>

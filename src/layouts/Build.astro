@@ -13,7 +13,8 @@ export interface Props {
   frontmatter: BuildProps;
 }
 
-const { title, specialization } = Astro.props.frontmatter;
+const { title, specialization, profession, role, rating } =
+  Astro.props.frontmatter;
 
 const ogImage = await getImage({
   src: images[specialization?.toLowerCase()],
@@ -26,6 +27,7 @@ const ogImage = await getImage({
 const seo: SEOProps = {
   title,
   image: ogImage?.src,
+  description: `The ${title} is a ${role} build for ${profession} in fractals. It is considered a ${rating} build.`,
 };
 ---
 

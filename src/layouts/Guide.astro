@@ -12,11 +12,14 @@ export interface Props {
   frontmatter: GuideProps;
 }
 
-const { title } = Astro.props.frontmatter;
+const { title, description } = Astro.props.frontmatter;
 
 const headerImage = imageFetch(Object.keys(guideHeaders), Astro.url.pathname);
 
 let seo: SEOProps = { title };
+
+const createDefaultDescription = (title) =>
+  `Learn everything about ${title} in Guild Wars 2. Our general guides are designed to improve your knowledge of game basics.`;
 
 if (headerImage) {
   const thumbnail = (await Object.entries(guideHeaders).find(
@@ -34,6 +37,7 @@ if (headerImage) {
   seo = {
     title,
     image: ogImage?.src,
+    description: description || createDefaultDescription(title),
   };
 }
 ---

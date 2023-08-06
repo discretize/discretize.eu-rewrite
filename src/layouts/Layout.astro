@@ -28,7 +28,7 @@ const {
   seo: {
     title:
       titleRaw = "GW2 | Discretize [dT] - Fractal, Profession and Mechanics Guides",
-    description = "Discretize is a high-end Guild Wars 2 fractal guild. Our guides strive for improving your knowledge of game mechanics, professions and fractals.",
+    description = "Master Guild Wars 2 fractals with Discretize, a top-tier guild. Discover expert strategies, builds, and mechanics to dominate every challenge in fractals.",
     image = "/logo.png",
     url = "https://discretize.eu",
   } = {},
@@ -40,15 +40,6 @@ const {
 const title = titleRaw.startsWith("GW2 | Discretize [dT]")
   ? titleRaw
   : titleTemplate.replace("%s", titleRaw);
-
-let mainClasses = "";
-if (!disableBackground) {
-  mainClasses += " " + BACKGROUND;
-}
-if (!disablePadding) {
-  mainClasses += " main";
-}
-mainClasses = mainClasses.trim();
 ---
 
 <!DOCTYPE html>
@@ -102,7 +93,12 @@ mainClasses = mainClasses.trim();
     <meta name="generator" content={Astro.generator} />
 
     <title>{title}</title>
+    <meta
+      name="keywords"
+      content="Guild Wars 2, GW2, Discretize, PvE guides, Fractal guides, fractals, mechanics, tutorial, builds, optimal builds, gameplay tips"
+    />
     <meta name="description" content={description} />
+
     <link rel="canonical" href={url} />
     <meta item-prop="name" content={title} />
     <meta item-prop="description" content={description} />
@@ -117,17 +113,6 @@ mainClasses = mainClasses.trim();
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={image} />
-    <!-- <script data-rh="true" type="application/ld+json">
-    [
-      {
-        "@context": "http://schema.org",
-        "@type": "WebSite",
-        url: "https://staging.discretize.eu/builds/engineer/power-mechanist/",
-        name: "Discretize",
-        alternateName: "Power (Alac) Mechanist - GW2 | Discretize [dT]",
-      },
-    ];
-  </script> -->
 
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="website" />
@@ -181,11 +166,11 @@ mainClasses = mainClasses.trim();
       reloadTheme();
     </script>
   </head>
-  <body class={TEXT + " " + BACKGROUND}>
+  <body class:list={[TEXT, BACKGROUND]}>
     <NavBar />
     <div id="floating-portal"></div>
 
-    <main class={disablePadding ? "" : "mainWrapper"}>
+    <main class:list={[{ mainWrapper: !disablePadding }]}>
       {
         !disableBackgroundImage && (
           <div class="backgroundImage">
@@ -201,14 +186,18 @@ mainClasses = mainClasses.trim();
           </div>
         )
       }
-      <div class={mainClasses}>
+      <div
+        class:list={[
+          { [BACKGROUND]: !disableBackground, main: !disablePadding },
+        ]}
+      >
         <slot />
       </div>
     </main>
 
     <ScrollUpButton />
 
-    <div class={(!disablePadding ? "mt-10 " : "") + "embossed"}>
+    <div class:list={["embossed", { "mt-10": !disablePadding }]}>
       <footer class="footer p-10 embossed text-neutral-content main">
         <div>
           <span class="footer-title">Discretize</span>

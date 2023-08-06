@@ -4,12 +4,28 @@ import "@gw2-ui/default_style.css";
 import "discretize-ui/react-discretize-components/src/styles/defaultTheme.css";
 import { CalculatorUI } from "src/components/augmentations/CalculatorUI";
 import Augmentation from "src/components/gw2-ui/Augmentation.astro";
-import Information from "src/components/Information.astro";
 import TextDivider from "src/components/TextDivider.astro";
 import Layout from "src/layouts/Layout.astro";
+
+import augcalc from "src/assets/images/preview/augcalc.png";
+import { getImage } from "@astrojs/image";
+
+const previewImage = await getImage({
+  src: augcalc,
+  alt: "Augmentations Calculator",
+  width: 1070,
+  height: 943,
+  format: "png",
+});
 ---
 
-<Layout seo={{ title: "Augmentations Calculator" }}>
+<Layout
+  seo={{
+    title: "Augmentations Calculator",
+    description: "Calculate how long it will take you to become a Fractal God.",
+    image: previewImage.src,
+  }}
+>
   <h1>Augmentations Calculator</h1>
 
   <p>
