@@ -143,7 +143,7 @@ const {
     </div>
   )
 }
-<div class={`flex max-md:flex-col ${headerVideoId ? "xl:hidden" : ""}`.trim()}>
+<div class:list={["flex", "max-md:flex-col", { "xl:hidden": headerVideoId }]}>
   <div class="flex flex-grow">
     <Profession
       disableLink
