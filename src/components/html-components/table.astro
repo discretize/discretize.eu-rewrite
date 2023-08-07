@@ -7,9 +7,16 @@ const { noMargin } = Astro.props;
 ---
 
 <div
-  class={`overflow-x-auto shadow-xl border-stone-900 border-[1px] rounded-lg h-fit ${
-    noMargin ? "mb-0" : "mb-8"
-  }`}
+  class:list={[
+    "overflow-x-auto",
+    "shadow-xl",
+    "border-stone-900",
+    "border-[1px]",
+    "rounded-lg",
+    "h-fit",
+    noMargin ? "mb-0" : "mb-8",
+  ]}
+  style={{ "--gw2-line-height-body": 1 }}
 >
   <table class="table w-full border-collapse border-spacing-0 font-normal">
     <slot />
