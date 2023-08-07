@@ -7,6 +7,8 @@ import SnowblindPathSVG from "./path-svg/Snowblind.astro";
 import ThaumanovaReactorSVG from "./path-svg/ThaumanovaReactor.astro";
 import deepstoneImage from "../../assets/images/maps/deepstone.jpeg";
 import Deepstone from "./path-svg/Deepstone.astro";
+import Nightmare from "./path-svg/Nightmare.astro";
+import nightmareImage from "../../assets/images/maps/nightmare.jpg";
 
 export type Encounter = {
   xPercent: number;
@@ -178,6 +180,42 @@ const mapsData: Record<
         isMajor: true,
         index: 6,
         area: '<rect height="268.00006" width="534.66679" y="379.4496" x="656.20414" />',
+      },
+    ],
+  },
+  nightmare: {
+    src: nightmareImage,
+    width: 2400,
+    height: 2400,
+    PathSVG: Nightmare,
+    encounters: [
+      undefined,
+      {
+        xPercent: 15,
+        yPercent: 50,
+        isMajor: true,
+        tooltipDirection: "bottom",
+        area: '<ellipse cx="1289.3022" cy="440.93018" rx="281.44348" ry="218.18765" />',
+        index: 1,
+      },
+      undefined,
+      undefined,
+
+      {
+        xPercent: 80,
+        yPercent: 35,
+        isMajor: true,
+        tooltipDirection: "bottom",
+        area: '<rect width="381.51031" height="426.16144" x="730.17511" y="1738.5471" />',
+        index: 2,
+      },
+      {
+        xPercent: 47,
+        yPercent: 35,
+        isMajor: true,
+        tooltipDirection: "bottom",
+        area: '<ellipse cx="918.65125" cy="1211.3024" rx="191.20929" ry="193.06975" />',
+        index: 3,
       },
     ],
   },
