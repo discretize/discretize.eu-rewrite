@@ -1,0 +1,108 @@
+---
+import Tooltip2 from "./Tooltip2.astro";
+
+interface Props {
+  dataTags: string[];
+  tooltipTexts: string[];
+  labels: string[];
+}
+
+const { dataTags, tooltipTexts, labels } = Astro.props;
+---
+
+<script>
+  class SectionsToggle extends HTMLElement {
+    tags: string[] = [];
+
+    constructor() {
+      super();
+      this.tags = this.dataset.sections.split(",");
+
+      // initialize state from url search params
+      const urlSearchParams = new URLSearchParams(window.location.search);
+      const variantParam = urlSearchParams.get("variant");
+      if (
+        variantParam &&
+        variantParam !== this.tags[0] &&
+        this.tags.includes(variantParam)
+      ) {
+        this.setState(variantParam);
+        // set checked property
+        const button = this.querySelector<HTMLInputElement>(
+          `input[type="radio"][name="options"][data-section="${variantParam}"]`
+        );
+        if (button) {
+          button.checked = true;
+        }
+      }
+
+      // event listener
+      this.sectionSelectButtons.forEach((button) => {
+        button.addEventListener("click", (e: Event) => {
+          const target = e.target as HTMLInputElement;
+          const tag = target.dataset.section;
+          this.setState(tag);
+        });
+      });
+    }
+
+    get sectionSelectButtons() {
+      return this.querySelectorAll<HTMLInputElement>(
+        'input[type="radio"][name="options"]'
+      );
+    }
+
+    setState = (showTag: string) => {
+      // set url search params
+      window.history.replaceState(
+        {},
+        "",
+        `${window.location.pathname}?variant=${showTag}`
+      );
+
+      // tag should be shown, everything else disabled
+      this.tags.forEach((tag) => {
+        const sections = document.querySelectorAll(
+          `div[data-section="${tag}"]`
+        );
+
+        if (tag === showTag) {
+          sections.forEach((section) => {
+            section.classList.remove("hidden");
+          });
+        } else {
+          sections.forEach((section) => {
+            section.classList.add("hidden");
+          });
+        }
+      });
+    };
+  }
+
+  customElements.define("sections-toggle", SectionsToggle);
+</script>
+
+<sections-toggle data-sections={dataTags}>
+  <div class="join">
+    {
+      labels.map((label, index) => (
+        <Tooltip2>
+          <input
+            id={"switch" + label}
+            data-section={dataTags[index]}
+            class:list={[
+              "join-item btn btn-sm embossed",
+              { "!rounded-r-lg": index === labels.length - 1 },
+            ]}
+            type="radio"
+            name="options"
+            aria-label={label}
+            slot="target"
+            checked={index === 0}
+          />
+          <span slot="tooltip" set:html={tooltipTexts[index]} />
+        </Tooltip2>
+      ))
+    }
+  </div>
+</sections-toggle>
