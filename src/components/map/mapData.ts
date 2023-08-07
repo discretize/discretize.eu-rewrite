@@ -1,5 +1,6 @@
 import { Placement } from "@floating-ui/react-dom";
 import captainMaiTrinBossImage from "../../assets/images/maps/captainMaiTrinBoss.png";
+import chaosIslesImage from "../../assets/images/maps/chaosIsles.jpeg";
 import deepstoneImage from "../../assets/images/maps/deepstone.jpeg";
 import nightmareImage from "../../assets/images/maps/nightmare.jpg";
 import snowblindImage from "../../assets/images/maps/snowblind.jpeg";
@@ -7,6 +8,7 @@ import sunquaPeakImage from "../../assets/images/maps/sunquaPeak.jpeg";
 import thaumnovaReactorImage from "../../assets/images/maps/thaumanovaReactor.jpg";
 import volcanicImage from "../../assets/images/maps/volcanic.jpeg";
 import CaptainMaiTrinBossPathSVG from "./path-svg/CaptainMaiTrinBoss.astro";
+import ChaosIsles from "./path-svg/ChaosIsles.astro";
 import Deepstone from "./path-svg/Deepstone.astro";
 import Nightmare from "./path-svg/Nightmare.astro";
 import SnowblindPathSVG from "./path-svg/Snowblind.astro";
@@ -294,6 +296,38 @@ const mapsData: Record<
       {
         xPercent: 70,
         yPercent: 60,
+        isMajor: true,
+        area: "",
+      },
+    ],
+  },
+  "chaos-isles": {
+    src: chaosIslesImage,
+    width: 2600,
+    height: 1600,
+    PathSVG: ChaosIsles,
+    encounters: [
+      {
+        xPercent: 50,
+        yPercent: 12,
+        isMajor: false,
+        area: "",
+      },
+      {
+        xPercent: 60,
+        yPercent: 45,
+        isMajor: true,
+        area: "",
+      },
+      {
+        xPercent: 45,
+        yPercent: 70,
+        isMajor: false,
+        area: "",
+      },
+      {
+        xPercent: 15,
+        yPercent: 55,
         isMajor: true,
         area: "",
       },
