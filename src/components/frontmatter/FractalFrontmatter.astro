@@ -14,6 +14,7 @@ import Th from "../html-components/th.astro";
 import Tr from "../html-components/tr.astro";
 import Map from "../map/Map.astro";
 import Header from "./Header.astro";
+import SectionsToggle from "@components/sections/SectionsToggle.astro";
 
 export interface Props {
   title: string;
@@ -43,6 +44,8 @@ const {
 
 const headerImage =
   "../" + (await imageFetch(Object.keys(fractalHeaders), Astro.url.pathname));
+
+const hasChallengeMode = difficulties.some((d) => d.level >= 97);
 ---
 
 <Header
@@ -51,6 +54,17 @@ const headerImage =
   date={date}
   image={headerImage}
 />
+
+{
+  hasChallengeMode && (
+    <SectionsToggle
+      labels={["Normal Mode", "Challenge Mode"]}
+      dataTags={["normalmode", "challengemode"]}
+      tooltipTexts={["Show only normal mode", "Show only challenge mode"]}
+      class="mb-4"
+    />
+  )
+}
 
 {long_description && <p class="mb-4">{long_description}</p>}
 

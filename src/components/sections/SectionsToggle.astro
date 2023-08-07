@@ -1,13 +1,14 @@
 ---
-import Tooltip2 from "./Tooltip2.astro";
+import Tooltip2 from "../Tooltip2.astro";
 
 interface Props {
   dataTags: string[];
   tooltipTexts: string[];
   labels: string[];
+  class?: string;
 }
 
-const { dataTags, tooltipTexts, labels } = Astro.props;
+const { dataTags, tooltipTexts, labels, class: className } = Astro.props;
 ---
 
 <script>
@@ -83,7 +84,7 @@ const { dataTags, tooltipTexts, labels } = Astro.props;
 </script>
 
 <sections-toggle data-sections={dataTags}>
-  <div class="join">
+  <div class:list={["join", className]}>
     {
       labels.map((label, index) => (
         <Tooltip2>

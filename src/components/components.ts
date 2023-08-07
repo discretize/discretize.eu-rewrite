@@ -1,5 +1,5 @@
-import Advanced from "./Advanced.astro";
-import Beginner from "./Beginner.astro";
+import Advanced from "./sections/Advanced.astro";
+import Beginner from "./sections/Beginner.astro";
 import Card from "./Card.astro";
 import GifPlayer from "./GifPlayer.astro";
 import Grid from "./Grid.astro";
@@ -41,6 +41,8 @@ import tbody from "./html-components/tbody.astro";
 import th from "./html-components/th.astro";
 import tr from "./html-components/tr.astro";
 import ul from "./html-components/ul.astro";
+import ChallengeMode from "./sections/ChallengeMode.astro";
+import NormalMode from "./sections/NormalMode.astro";
 
 export const components = {
   hr,
@@ -66,6 +68,7 @@ export const components = {
   Card,
   Character,
   CharacterWithAr,
+  ChallengeMode,
   Composition: () => undefined,
   Condition,
   Control: ControlEffect,
@@ -80,6 +83,7 @@ export const components = {
   Instability: MistlockInstability,
   Item,
   Label,
+  NormalMode,
   ProfessionVideo,
   Skill,
   Skills: () => undefined,
