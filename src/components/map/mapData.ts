@@ -1,14 +1,16 @@
 import { Placement } from "@floating-ui/react-dom";
 import captainMaiTrinBossImage from "../../assets/images/maps/captainMaiTrinBoss.png";
+import deepstoneImage from "../../assets/images/maps/deepstone.jpeg";
+import nightmareImage from "../../assets/images/maps/nightmare.jpg";
 import snowblindImage from "../../assets/images/maps/snowblind.jpeg";
+import sunquaPeakImage from "../../assets/images/maps/sunquaPeak.jpeg";
 import thaumnovaReactorImage from "../../assets/images/maps/thaumanovaReactor.jpg";
 import CaptainMaiTrinBossPathSVG from "./path-svg/CaptainMaiTrinBoss.astro";
-import SnowblindPathSVG from "./path-svg/Snowblind.astro";
-import ThaumanovaReactorSVG from "./path-svg/ThaumanovaReactor.astro";
-import deepstoneImage from "../../assets/images/maps/deepstone.jpeg";
 import Deepstone from "./path-svg/Deepstone.astro";
 import Nightmare from "./path-svg/Nightmare.astro";
-import nightmareImage from "../../assets/images/maps/nightmare.jpg";
+import SnowblindPathSVG from "./path-svg/Snowblind.astro";
+import ThaumanovaReactorSVG from "./path-svg/ThaumanovaReactor.astro";
+import SunquaPeak from "./path-svg/SunquaPeak.astro";
 
 export type Encounter = {
   xPercent: number;
@@ -216,6 +218,56 @@ const mapsData: Record<
         tooltipDirection: "bottom",
         area: '<ellipse cx="918.65125" cy="1211.3024" rx="191.20929" ry="193.06975" />',
         index: 3,
+      },
+    ],
+  },
+  "sunqua-peak": {
+    src: sunquaPeakImage,
+    width: 4800,
+    height: 4800,
+    PathSVG: SunquaPeak,
+    encounters: [
+      {
+        xPercent: 80,
+        yPercent: 50,
+        isMajor: false,
+        area: "",
+      },
+      {
+        xPercent: 80,
+        yPercent: 25,
+        isMajor: true,
+        area: '<ellipse cx="1544.6663" cy="3969.1394" rx="198.28958" ry="168.29329" />',
+      },
+      {
+        xPercent: 70,
+        yPercent: 25,
+        isMajor: false,
+        area: "",
+      },
+      {
+        xPercent: 50,
+        yPercent: 30,
+        isMajor: true,
+        area: '<ellipse cx="1765.2515" cy="2671.8787" rx="181.35222" ry="172.52216" />',
+      },
+      {
+        xPercent: 50,
+        yPercent: 55,
+        isMajor: false,
+        area: "",
+      },
+      {
+        xPercent: 30,
+        yPercent: 40,
+        isMajor: true,
+        area: '<ellipse cx="2225.3352" cy="1661.2903" rx="166.17421" ry="155.61528" />',
+      },
+      {
+        xPercent: 40,
+        yPercent: 70,
+        isMajor: true,
+        area: '<ellipse cx="3689.6628" cy="2146.1562" rx="267.4957" ry="269.25656"',
       },
     ],
   },
