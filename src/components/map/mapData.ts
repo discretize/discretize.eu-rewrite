@@ -5,12 +5,14 @@ import nightmareImage from "../../assets/images/maps/nightmare.jpg";
 import snowblindImage from "../../assets/images/maps/snowblind.jpeg";
 import sunquaPeakImage from "../../assets/images/maps/sunquaPeak.jpeg";
 import thaumnovaReactorImage from "../../assets/images/maps/thaumanovaReactor.jpg";
+import volcanicImage from "../../assets/images/maps/volcanic.jpeg";
 import CaptainMaiTrinBossPathSVG from "./path-svg/CaptainMaiTrinBoss.astro";
 import Deepstone from "./path-svg/Deepstone.astro";
 import Nightmare from "./path-svg/Nightmare.astro";
 import SnowblindPathSVG from "./path-svg/Snowblind.astro";
-import ThaumanovaReactorSVG from "./path-svg/ThaumanovaReactor.astro";
 import SunquaPeak from "./path-svg/SunquaPeak.astro";
+import ThaumanovaReactorSVG from "./path-svg/ThaumanovaReactor.astro";
+import Volcanic from "./path-svg/Volcanic.astro";
 
 export type Encounter = {
   xPercent: number;
@@ -268,6 +270,32 @@ const mapsData: Record<
         yPercent: 70,
         isMajor: true,
         area: '<ellipse cx="3689.6628" cy="2146.1562" rx="267.4957" ry="269.25656"',
+      },
+    ],
+  },
+  volcanic: {
+    src: volcanicImage,
+    width: 1398,
+    height: 1080,
+    PathSVG: Volcanic,
+    encounters: [
+      {
+        xPercent: 50,
+        yPercent: 85,
+        isMajor: false,
+        area: "",
+      },
+      {
+        xPercent: 40,
+        yPercent: 50,
+        isMajor: true,
+        area: "",
+      },
+      {
+        xPercent: 70,
+        yPercent: 60,
+        isMajor: true,
+        area: "",
       },
     ],
   },
