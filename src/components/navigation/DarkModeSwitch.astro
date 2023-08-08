@@ -11,7 +11,8 @@
 
   // create web componetn
   class DarkModeSwitch extends HTMLElement {
-    connectedCallback() {
+    constructor() {
+      super();
       this.button.addEventListener("click", () => this.toggleTheme());
       this.switchTailwindTheme();
     }

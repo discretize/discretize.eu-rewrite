@@ -25,7 +25,8 @@ tabs.forEach((tab, index) => {
 
 <script>
   class TabsComponent extends HTMLElement {
-    connectedCallback() {
+    constructor() {
+      super();
       this.allTabs.forEach((tab) => {
         tab.addEventListener("click", () => {
           this.allTabs.forEach((tab) => tab.classList.remove("tab-active"));

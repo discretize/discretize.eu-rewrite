@@ -4,7 +4,8 @@ import { Icon } from "astro-icon";
 
 <script>
   class ScrollUpButtonComponent extends HTMLElement {
-    connectedCallback() {
+    constructor() {
+      super();
       this.button.addEventListener("click", () => {
         document.documentElement.scrollTo({
           top: 0,

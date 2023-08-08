@@ -15,7 +15,8 @@ const { src, title, timestamp, profession } = Astro.props;
   class ProfessionVideoComponent extends HTMLElement {
     isOpen = false;
 
-    connectedCallback() {
+    constructor() {
+      super();
       this.videoButton.addEventListener("click", () => this.showTooltip());
 
       // add click away listener

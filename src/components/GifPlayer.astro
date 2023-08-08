@@ -32,7 +32,8 @@ if (url) {
 
 <script>
   class VideoFigure extends HTMLElement {
-    connectedCallback() {
+    constructor() {
+      super();
       this.video.addEventListener("mouseover", () => this.play());
       this.video.addEventListener("mouseout", () => this.pause());
 
@@ -51,7 +52,7 @@ if (url) {
     }
 
     get playButton() {
-      return this.querySelector("#playButton");
+      return this.querySelector(".playButton");
     }
 
     async play() {
@@ -79,8 +80,9 @@ if (url) {
 
 <video-figure class="relative table-row-group pb-[56.25%] pt-[25px] mb-4">
   <div
-    id="playButton"
-    class={`cursor-pointer z-10 text-blue-500 ${autoplay ? "hidden" : ""}`}
+    class={`playButton cursor-pointer z-10 text-blue-500 ${
+      autoplay ? "hidden" : ""
+    }`}
   >
     <Icon name="mdi:play-circle-outline" size="4rem" />
   </div>
@@ -113,7 +115,7 @@ if (url) {
 </video-figure>
 
 <style>
-  #playButton {
+  .playButton {
     transform: translate(-50%, -50%);
     left: 50%;
     top: 50%;

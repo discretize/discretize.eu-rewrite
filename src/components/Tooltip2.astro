@@ -23,7 +23,8 @@ const COLOR = "bg-neutral-300 dark:bg-neutral-700";
   } from "@floating-ui/react-dom";
 
   class TooltipComponent extends HTMLElement {
-    connectedCallback() {
+    constructor() {
+      super();
       [
         ["mouseenter", this.showTooltip],
         ["mouseleave", this.hideTooltip],
