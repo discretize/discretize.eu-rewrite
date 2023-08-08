@@ -78,11 +78,15 @@ if (url) {
   customElements.define("video-figure", VideoFigure);
 </script>
 
-<video-figure class="relative table-row-group pb-[56.25%] pt-[25px] mb-4">
+<video-figure class="relative table-row-group pb-[56.25%] pt-[25px]">
   <div
-    class={`playButton cursor-pointer z-10 text-blue-500 ${
-      autoplay ? "hidden" : ""
-    }`}
+    class:list={[
+      "playButton",
+      "cursor-pointer",
+      "z-10",
+      "text-blue-500",
+      { hidden: autoplay },
+    ]}
   >
     <Icon name="mdi:play-circle-outline" size="4rem" />
   </div>
@@ -92,7 +96,7 @@ if (url) {
     preload="auto"
     autoplay={autoplay}
     muted
-    class="w-full h-auto rounded"
+    class:list={["w-full h-auto rounded", { "mb-4": !caption }]}
   >
     {
       sources_list.map(({ src, codec }) => (
@@ -107,7 +111,7 @@ if (url) {
   </video>
   {
     caption && (
-      <figcaption class="text-sm m-0 text-center pt-1 px-2">
+      <figcaption class="text-sm m-0 text-center pt-1 px-2 mb-4">
         {caption}
       </figcaption>
     )
