@@ -1,0 +1,33 @@
+---
+import { fstat } from "fs";
+import TinaEditor from "../../components/TinaEditor";
+import fs from "fs";
+
+export async function getStaticPaths() {
+  const modules = import.meta.glob(
+    `../../../discretize-guides/builds/**/index.mdx`
+  );
+
+  const builds = Object.keys(modules).map((file) => {
+    const build = fs.readFileSync(file.replace("../../../", ""), "utf-8");
+
+    return {
+      slug: file
+        .replace("../../../discretize-guides/", "")
+        .replace("/index.mdx", ""),
+      content: build,
+    };
+  });
+
+  return builds.map((build) => ({
+    params: {
+      slug: build.slug,
+    },
+    props: {
+      ...build,
+    },
+  }));
+}
+---
+
+<TinaEditor content={Astro.props.content} client:load />

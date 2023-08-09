@@ -28,3 +28,4 @@ pnpm-debug.log*
 src/pages/fractals/*/
 src/pages/builds/*/
 src/pages/guides/*/
+node_modules
