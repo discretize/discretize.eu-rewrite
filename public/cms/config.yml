@@ -1,0 +1,249 @@
+# Open authoring: https://www.netlifycms.org/docs/open-authoring/
+backend:
+  name: proxy
+  proxy_url: http://localhost:8081/api/v1
+  #name: github
+  repo: discretize/discretize-guides
+  branch: staging
+  open_authoring: true
+  base_url: https://auth.princeps.biz
+  commit_messages:
+    create: 'Create {{collection}} “{{slug}}”'
+    update: 'Update {{collection}} “{{slug}}”'
+    delete: 'Delete {{collection}} “{{slug}}”'
+    uploadMedia: '[skip ci] Upload “{{path}}”'
+    deleteMedia: '[skip ci] Delete “{{path}}”'
+
+# IMPORTANT: comment this line out for local dev
+#publish_mode: editorial_workflow
+
+media_folder: static/img
+public_folder: /img
+
+logo_url: 'https://discretize.eu/logo.png'
+
+collections:
+  - name: 'builds'
+    label: 'Builds'
+    folder: builds/
+    create: true
+    delete: false
+    extension: mdx
+    format: frontmatter
+    slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
+    nested:
+      depth: 100
+    fields:
+      - label: Title
+        name: title
+        widget: string
+      - label: Hidden
+        name: hidden
+        widget: boolean
+        required: false
+      - label: Archive
+        name: archive
+        widget: boolean
+        required: false
+      - label: Beginner version available?
+        name: hasBeginner
+        widget: boolean
+        required: false
+      - label: Guide (Press Ctrl+Space for auto-completion)
+        name: body
+        widget: mdx
+        hint: Press Ctrl+Space for auto-completion
+      - label: Rating
+        name: rating
+        widget: string
+      - label: Role
+        name: role
+        widget: select
+        options:
+          - Condi Damage
+          - Power Damage
+          - Hybrid
+          - Support
+      - label: Author
+        name: author
+        widget: string
+        required: false
+      - label: Profession
+        name: profession
+        widget: string
+      - label: Specialization
+        name: specialization
+        widget: string
+      - label: Skills
+        name: skills
+        widget: list
+        field: { label: Skill ID, name: skill, widget: number }
+      - label: Traits
+        name: traits
+        widget: list
+        field: { label: Trait ID, name: trait, widget: number }
+      - label: Conditions
+        name: conditions
+        widget: list
+      - label: Boons
+        name: boons
+        widget: list
+        fields:
+          - { label: Boon name, name: name, widget: string }
+          - {
+              label: Uptime,
+              name: uptime,
+              hint: percent uptime or amount of stacks,
+              widget: string,
+            }
+          - { label: variant, name: variant, hint: party/self, widget: string }
+
+      - label: Template-Code
+        name: code
+        widget: string
+      - label: Path to cm-guide
+        hint: 'only enter the name of the file for the cm guide. Example: static.md -> enter static. index.md -> enter a space'
+        name: cmGuide
+        widget: string
+        required: false
+      - label: Classifications
+        name: classification
+        widget: list
+        field: { label: Classification, name: classifi, widget: number }
+        required: false
+
+  - name: 'guides'
+    label: 'Guides'
+    folder: guides/
+    create: true
+    delete: false
+    slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
+    nested:
+      depth: 100
+    fields:
+      - label: Title
+        name: title
+        widget: string
+      - label: Guide (Press Ctrl+Space for auto-completion)
+        name: body
+        widget: mdx
+        hint: Press Ctrl+Space for auto-completion
+      - label: Image
+        name: image
+        widget: string
+      - label: description
+        name: description
+        widget: string
+      - label: Author
+        name: author
+        widget: string
+        required: false
+
+  - name: 'fractals'
+    label: 'Fractals'
+    folder: fractals/
+    create: true
+    delete: false
+    slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
+    nested:
+      depth: 100
+    fields:
+      - label: Title
+        name: title
+        widget: string
+      - label: Guide (Press Ctrl+Space for auto-completion)
+        name: body
+        widget: mdx
+        hint: Press Ctrl+Space for auto-completion
+      - label: Image
+        name: image
+        widget: string
+      - label: Group
+        name: group
+        widget: string
+      - label: API-ID
+        name: api
+        widget: number
+      - label: Amount of bosses
+        name: bosses
+        widget: number
+      - label: Difficulties
+        name: difficulties
+        widget: list
+        fields:
+          - { label: Level, name: level, widget: number }
+          - { label: AR required, name: ar, widget: number }
+      - label: Cycle
+        name: cycle
+        widget: string
+      - label: Potions
+        name: potions
+        widget: list
+        required: false
+        field: { label: ID, name: id, widget: number }
+      - label: Sigils
+        name: sigils
+        widget: list
+        required: false
+        field: { label: ID, name: id, widget: number }
+      - label: Consumables
+        name: consumables
+        widget: list
+        required: false
+        field: { label: ID, name: id, widget: number }
+      - label: Record
+        name: record
+        widget: object
+        required: false
+        fields:
+          - { label: Time, name: time, widget: string, required: false }
+          - label: Guilds participated
+            name: by
+            widget: list
+            required: false
+            fields:
+              - { label: Name, name: name, widget: string }
+              - { label: Guild tag, name: tag, widget: string }
+          - label: Youtube videos
+            name: youtube
+            widget: list
+            required: false
+            fields:
+              - { label: Link, name: id, widget: string }
+              - { label: Name, name: name, widget: string }
+              - { label: Specialization, name: specialization, widget: string }
+
+  - name: 'cm-guides'
+    label: 'CM-Guides'
+    folder: cm-guides/
+    create: true
+    delete: false
+    slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
+    nested:
+      depth: 100
+    fields:
+      - label: Title
+        name: title
+        widget: string
+      - label: Type
+        name: type
+        widget: string
+        required: false
+      - label: Guide (Press Ctrl+Space for auto-completion)
+        name: body
+        widget: mdx
+        hint: Press Ctrl+Space for auto-completion
+      - label: Author
+        name: author
+        widget: string
+        required: false
+      - label: Profession
+        name: profession
+        widget: string
+      - label: Specialization
+        name: specialization
+        widget: string
+      - label: disableBosses
+        name: disableBosses
+        widget: list
+        required: false
