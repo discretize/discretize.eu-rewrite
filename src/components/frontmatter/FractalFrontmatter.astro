@@ -8,10 +8,6 @@ import { Heading } from "../TableOfContents.astro";
 import TextDivider from "../TextDivider.astro";
 import Attribute from "../gw2-ui/Attribute.astro";
 import Table from "../html-components/table.astro";
-import Tbody from "../html-components/tbody.astro";
-import Td from "../html-components/td.astro";
-import Th from "../html-components/th.astro";
-import Tr from "../html-components/tr.astro";
 import Map from "../map/Map.astro";
 import Header from "./Header.astro";
 import SectionsToggle from "@components/sections/SectionsToggle.astro";
@@ -74,10 +70,10 @@ const hasChallengeMode = difficulties.some((d) => d.level >= 97);
   <Grid>
     <GridItem>
       <Table>
-        <Tbody>
-          <Tr>
-            <Th>Difficulties</Th>
-            <Td>
+        <tbody>
+          <tr>
+            <th>Difficulties</th>
+            <td>
               {
                 difficulties.map((d) => (
                   <>
@@ -95,18 +91,18 @@ const hasChallengeMode = difficulties.some((d) => d.level >= 97);
                   </>
                 ))
               }
-            </Td>
-          </Tr>
-          <Tr>
-            <Th>Cycle</Th>
-            <Td>{cycle}</Td>
-          </Tr>
+            </td>
+          </tr>
+          <tr>
+            <th>Cycle</th>
+            <td>{cycle}</td>
+          </tr>
 
           {
             potions ? (
-              <Tr>
-                <Th>Potions</Th>
-                <Td>
+              <tr>
+                <th>Potions</th>
+                <td>
                   <ul>
                     {potions.map((p) => (
                       <li>
@@ -114,16 +110,16 @@ const hasChallengeMode = difficulties.some((d) => d.level >= 97);
                       </li>
                     ))}
                   </ul>
-                </Td>
-              </Tr>
+                </td>
+              </tr>
             ) : null
           }
 
           {
             sigils ? (
-              <Tr>
-                <Th>Sigils</Th>
-                <Td>
+              <tr>
+                <th>Sigils</th>
+                <td>
                   <ul>
                     {sigils.map((s) => (
                       <li>
@@ -131,11 +127,11 @@ const hasChallengeMode = difficulties.some((d) => d.level >= 97);
                       </li>
                     ))}
                   </ul>
-                </Td>
-              </Tr>
+                </td>
+              </tr>
             ) : null
           }
-        </Tbody>
+        </tbody>
       </Table>
     </GridItem>
     <GridItem>

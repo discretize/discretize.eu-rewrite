@@ -36,6 +36,33 @@
   ul li p {
     @apply inline;
   }
+
+  tr {
+    @apply border-b-neutral-700 border-b-[0.1rem] last:border-b-0;
+  }
+
+  th {
+    @apply font-bold text-xs text-start px-4;
+  }
+
+  td {
+    @apply p-4;
+  }
+
+  ul {
+    @apply list-disc list-outside ml-4 pl-4;
+  }
+  ul:not(ul ul) {
+    margin-bottom: 1rem;
+  }
+
+  code {
+    @apply py-[2px] px-[6px] border border-solid border-gray-900 rounded-md shadow-sm text-base;
+  }
+
+  tbody {
+    @apply table-row-group;
+  }
 }
 
 @layer components {
@@ -53,5 +80,30 @@
   }
   .btn-sm {
     @apply h-8 min-h-full;
+  }
+
+  @media (min-width: 600px) {
+    blockquote {
+      margin-left: 24px;
+      margin-right: 24px;
+    }
+  }
+  blockquote {
+    border-left: 2px solid #00cccc;
+    padding: 16px;
+    margin: 16px 16px;
+  }
+
+  pre {
+    @apply p-4 bg-gray-800 rounded shadow mb-4;
+  }
+
+  pre :global(code) {
+    box-shadow: none !important;
+    border: none;
+    border-style: none;
+    border-width: 0 !important;
+    padding: 0 !important;
+    white-space: pre-wrap;
   }
 }

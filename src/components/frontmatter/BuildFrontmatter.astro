@@ -7,7 +7,6 @@ import Boon from "../gw2-ui/Boon.astro";
 import Condition from "../gw2-ui/Condition.astro";
 import Profession from "../gw2-ui/Profession.astro";
 import Li from "../html-components/li.astro";
-import Ul from "../html-components/ul.astro";
 import { ConditionTypes } from "@gw2-ui/data/conditions";
 import { BoonsTypes } from "@gw2-ui/data/boons";
 import SectionsToggle from "@components/sections/SectionsToggle.astro";
@@ -94,25 +93,25 @@ const {
         {boons && (
           <Card>
             <div class="text-xs font-bold m-auto text-center">Boons</div>
-            <Ul className="list-none !m-0 !pl-0">
+            <ul class="list-none !m-0 !pl-0">
               {boons.map(({ name }) => (
                 <Li>
                   <Boon name={name} />
                 </Li>
               ))}
-            </Ul>
+            </ul>
           </Card>
         )}
         {conditions && (
           <Card>
             <div class="text-xs font-bold m-auto text-center">Conditions</div>
-            <Ul className="list-none !m-0 !pl-0">
+            <ul class="list-none !m-0 !pl-0">
               {conditions.map(({ name }) => (
                 <Li>
                   <Condition name={name} />
                 </Li>
               ))}
-            </Ul>
+            </ul>
           </Card>
         )}
       </div>

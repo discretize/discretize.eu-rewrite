@@ -13,7 +13,7 @@ const formats: OutputFormat[] = ["avif", "webp", "jpeg"];
   // attach on click listener to image
 
   for (const img of document.querySelectorAll("img")) {
-    if (!img.classList.contains("maximizable")) continue;
+    if (!Object.keys(img.dataset).includes("maximizable")) continue;
     img.addEventListener("click", () => {
       if (isEnhanced) {
         img.classList.remove("maximized");
@@ -36,7 +36,7 @@ const formats: OutputFormat[] = ["avif", "webp", "jpeg"];
       alt={caption}
       formats={formats}
       loading={"lazy"}
-      class="maximizable"
+      data-maximizable
       sizes="(max-width: 400px) 10vw, (max-width: 800px) 50vw, 100vw"
     />
   </span>

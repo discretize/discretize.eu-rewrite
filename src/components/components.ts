@@ -1,5 +1,3 @@
-import Advanced from "./sections/Advanced.astro";
-import Beginner from "./sections/Beginner.astro";
 import Card from "./Card.astro";
 import GifPlayer from "./GifPlayer.astro";
 import Grid from "./Grid.astro";
@@ -30,32 +28,20 @@ import CharacterWithAr from "./gw2/CharacterWithAr.astro";
 import Character from "./gw2/character/Character.astro";
 import Image from "./html-components/Image.astro";
 import MDLink from "./html-components/MDLink.astro";
-import blockquote from "./html-components/blockquote.astro";
-import code from "./html-components/code.astro";
 import hr from "./html-components/hr.astro";
 import li from "./html-components/li.astro";
 import ol from "./html-components/ol.astro";
-import pre from "./html-components/pre.astro";
 import table from "./html-components/table.astro";
-import tbody from "./html-components/tbody.astro";
-import th from "./html-components/th.astro";
-import tr from "./html-components/tr.astro";
-import ul from "./html-components/ul.astro";
+import Advanced from "./sections/Advanced.astro";
+import Beginner from "./sections/Beginner.astro";
 import ChallengeMode from "./sections/ChallengeMode.astro";
 import NormalMode from "./sections/NormalMode.astro";
 
 export const components = {
   hr,
-  tr,
-  th,
-  ul,
   li,
   ol,
-  code,
-  pre,
-  blockquote,
   a: MDLink,
-  tbody,
   table,
   Achievement,
   Augmentation,

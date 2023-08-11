@@ -4,7 +4,6 @@ import mdxInjectData from "./src/utils/remark/remark-inject-data/index";
 import remarkInjectCharacterUi from "./src/utils/remark/remark-inject-character-ui";
 import removeEmptyThead from "./src/utils/rehype/rehype-remove-empty-thead";
 
-// https://astro.build/config
 import mdx from "@astrojs/mdx";
 
 // https://astro.build/config
@@ -16,11 +15,13 @@ import yaml from "@rollup/plugin-yaml";
 
 // https://astro.build/config
 import prefetch from "@astrojs/prefetch";
-
 import injectTabs from "./src/utils/remark/inject-tabs";
 
 // https://astro.build/config
 import tailwind from "@astrojs/tailwind";
+
+// https://astro.build/config
+import lit from "@astrojs/lit";
 
 // https://astro.build/config
 export default defineConfig({
@@ -32,36 +33,28 @@ export default defineConfig({
   // },
   vite: {
     build: {
-      assetsInlineLimit: 0,
+      assetsInlineLimit: 0
     },
-    plugins: [yaml()],
+    plugins: [yaml()]
     // build: {
     //   rollupOptions: {
     //     external: ["@reduxjs/toolkit"],
     //   },
     // },
   },
+
   compressHTML: true,
-
-  integrations: [
-    react(),
-    mdx({
-      remarkPlugins: [
-        mdxgw2ui,
-        mdxInjectData,
-        remarkInjectCharacterUi,
-        injectTabs,
-      ],
-      rehypePlugins: [removeEmptyThead],
-      gfm: true,
-      extendMarkdownConfig: {},
-    }),
-    image({
-      serviceEntryPoint: "@astrojs/image/sharp",
-      cacheDir: ".cache",
-    }),
-    prefetch(),
-
-    tailwind({ config: { applyBaseStyles: false } }),
-  ],
+  integrations: [react(), mdx({
+    remarkPlugins: [mdxgw2ui, mdxInjectData, remarkInjectCharacterUi, injectTabs],
+    rehypePlugins: [removeEmptyThead],
+    gfm: true,
+    extendMarkdownConfig: {}
+  }), image({
+    serviceEntryPoint: "@astrojs/image/sharp",
+    cacheDir: ".cache"
+  }), prefetch(), tailwind({
+    config: {
+      applyBaseStyles: false
+    }
+  }), lit()]
 });
