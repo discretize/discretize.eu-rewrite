@@ -15,5 +15,13 @@
       "@components/*": ["src/components/*"],
       "@gw2api/*": ["gw2-api-extended/data/api-extended/*"],
     }
-  }
+  },
+  "exclude": [
+    "node_modules",
+    "gw2-api-extended",
+    ".cache",
+    ".git",
+    "dist",
+    "**/node_modules/*",
+  ]
 }
