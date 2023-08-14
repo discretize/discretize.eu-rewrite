@@ -72,12 +72,14 @@ const calculate = ({
     relicsPerDay += 80 + 19 + augment * 5;
     pristinesPerDay += 2;
     matricesPerDay += 1;
+    pagesPerDay += 1;
   }
 
   if (cm99) {
     relicsPerDay += 80 + 19 + augment * 5;
     pristinesPerDay += 2;
     matricesPerDay += 1;
+    pagesPerDay += 1;
   }
 
   if (cm98) {
@@ -127,10 +129,10 @@ const calculate = ({
 
   if (weekly) {
     relicsPerDay += 48 / 7;
+    pagesPerDay += 2 / 7;
   }
 
   if (extraRelicsEnable) {
-    console.log(Number(extraRelicsValue));
     relicsPerDay += Number(extraRelicsValue);
   }
 
