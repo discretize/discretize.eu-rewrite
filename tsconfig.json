@@ -13,6 +13,7 @@
         "discretize-ui/react-discretize-components/src/index"
       ],
       "@components/*": ["src/components/*"],
+      "@gw2api/*": ["gw2-api-extended/data/api-extended/*"],
     }
   }
 }

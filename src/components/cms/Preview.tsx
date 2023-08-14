@@ -1,6 +1,9 @@
+import "@discretize/typeface-menomonia";
+import "@gw2-ui/default_style.css";
 import React from "react";
-import { Markup, Markdown } from "astro-remote";
-import { components } from "@components/components";
+import "typeface-muli";
+import "typeface-raleway";
+import MemoizedSection from "./MemoizedSection";
 
 class MDXPreview extends React.Component {
   state = {
@@ -64,7 +67,6 @@ class MDXPreview extends React.Component {
   }
 
   render() {
-    // console.log('renderMain');
     // render has been called - this means either there is new text or there is an error
     // this.setState({ ...this.state, error: null });
 
@@ -74,11 +76,10 @@ class MDXPreview extends React.Component {
     const profession = entry.getIn(["data", "profession"]);
     const hasBeginner = entry.getIn(["data", "hasBeginner"]);
 
-    let content = null;
-    console.log("here");
+    let content = text;
 
     if (this.state.error) {
-      content = (
+      return (
         <div>
           <h1>ERROR: {this.state.error.message} </h1>
           {this.state.error.location && (
@@ -89,13 +90,11 @@ class MDXPreview extends React.Component {
           )}
         </div>
       );
-    } else {
-      content = text;
     }
 
     return (
       <>
-        <div data-content={content} />
+        <MemoizedSection content={content} profession={profession} />
       </>
     );
   }

@@ -21,9 +21,6 @@ import injectTabs from "./src/utils/remark/inject-tabs";
 import tailwind from "@astrojs/tailwind";
 
 // https://astro.build/config
-import lit from "@astrojs/lit";
-
-// https://astro.build/config
 export default defineConfig({
   cacheDir: ".cache",
   // vite: {
@@ -33,9 +30,9 @@ export default defineConfig({
   // },
   vite: {
     build: {
-      assetsInlineLimit: 0
+      assetsInlineLimit: 0,
     },
-    plugins: [yaml()]
+    plugins: [yaml()],
     // build: {
     //   rollupOptions: {
     //     external: ["@reduxjs/toolkit"],
@@ -44,17 +41,28 @@ export default defineConfig({
   },
 
   compressHTML: true,
-  integrations: [react(), mdx({
-    remarkPlugins: [mdxgw2ui, mdxInjectData, remarkInjectCharacterUi, injectTabs],
-    rehypePlugins: [removeEmptyThead],
-    gfm: true,
-    extendMarkdownConfig: {}
-  }), image({
-    serviceEntryPoint: "@astrojs/image/sharp",
-    cacheDir: ".cache"
-  }), prefetch(), tailwind({
-    config: {
-      applyBaseStyles: false
-    }
-  }), lit()]
+  integrations: [
+    react(),
+    mdx({
+      remarkPlugins: [
+        mdxgw2ui,
+        mdxInjectData,
+        remarkInjectCharacterUi,
+        injectTabs,
+      ],
+      rehypePlugins: [removeEmptyThead],
+      gfm: true,
+      extendMarkdownConfig: {},
+    }),
+    image({
+      serviceEntryPoint: "@astrojs/image/sharp",
+      cacheDir: ".cache",
+    }),
+    prefetch(),
+    tailwind({
+      config: {
+        applyBaseStyles: false,
+      },
+    }),
+  ],
 });

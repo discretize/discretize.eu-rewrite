@@ -43,7 +43,8 @@
     "tailwindcss": "^3.0.24",
     "typeface-muli": "^1.1.13",
     "typeface-raleway": "^1.1.13",
-    "unist-util-remove": "^3.1.1"
+    "unist-util-remove": "^3.1.1",
+    "react-ace": "^10.1.0"
   },
   "devDependencies": {
     "@reduxjs/toolkit": "^1.9.5",
