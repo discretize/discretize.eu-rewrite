@@ -35,6 +35,9 @@ import Profession from "./gw2-ui/Profession.astro";
     }
 
     setSelected(target) {
+      // set focus false to close the dropdown
+      document.activeElement.blur();
+
       this.selected = target;
       this.label.textContent = target;
       this.changeOptionEvent.detail.option = target;
