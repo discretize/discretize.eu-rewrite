@@ -55,5 +55,7 @@ if (headerImage) {
     {...Astro.props.frontmatter}
     headings={Astro.props.headings}
   />
-  <slot />
+  <article>
+    <slot />
+  </article>
 </Layout>

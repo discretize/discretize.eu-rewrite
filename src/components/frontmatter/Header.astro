@@ -5,7 +5,7 @@ import { Icon } from "astro-icon";
 const { title, description, image: headerImage, date } = Astro.props;
 ---
 
-<div class="sm:hidden mb-4">
+<header id="mobileHeader" class="sm:hidden mb-4">
   <h1>{title}</h1>
 
   <Picture
@@ -17,9 +17,10 @@ const { title, description, image: headerImage, date } = Astro.props;
     aspectRatio={1280 / 500}
     sizes="100vw"
   />
-</div>
+</header>
 
-<div
+<header
+  id="desktopHeader"
   class="relative h-full mx-[-1.4rem] mt-[-1.393rem] mb-4 max-sm:hidden max-[1439px]:mt-[-1rem] max-[1439px]:mx-[-1rem]"
 >
   <Picture
@@ -47,4 +48,4 @@ const { title, description, image: headerImage, date } = Astro.props;
       }
     </small>
   </div>
-</div>
+</header>

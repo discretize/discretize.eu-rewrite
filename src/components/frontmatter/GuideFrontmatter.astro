@@ -14,7 +14,7 @@ export interface Props {
 const { title, author, date } = Astro.props;
 ---
 
-<div class="flex items-center mb-2">
+<header class="flex items-center mb-2">
   <div class="flex flex-grow">
     <div class="self-center">
       <h1>{title}</h1>
@@ -38,6 +38,6 @@ const { title, author, date } = Astro.props;
       }
     </ul>
   </Label>
-</div>
+</header>
 
 <TextDivider text="Guide" />

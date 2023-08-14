@@ -62,7 +62,11 @@ const hasChallengeMode = difficulties.some((d) => d.level >= 97);
   )
 }
 
-{long_description && <p class="mb-4">{long_description}</p>}
+{
+  long_description && (
+    <summary class="mb-4 list-none">{long_description}</summary>
+  )
+}
 
 <TextDivider text="Details" />
 

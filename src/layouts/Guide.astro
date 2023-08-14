@@ -44,5 +44,7 @@ if (headerImage) {
 
 <Layout seo={seo}>
   <GuideFrontmatter {...Astro.props.frontmatter} />
-  <slot />
+  <article>
+    <slot />
+  </article>
 </Layout>
