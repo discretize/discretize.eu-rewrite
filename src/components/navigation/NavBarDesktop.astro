@@ -1,0 +1,127 @@
+---
+import type { EliteSpecTypes, ProfessionTypes } from "@gw2-ui/data/professions";
+import { mdxBuilds, mdxGuides } from "src/utils/cache";
+import frontmatterReader from "src/utils/frontmatterReader";
+import Link from "../Link.astro";
+import NavBuilds, { NavBuild } from "./NavBuilds.astro";
+import NavDropdown, { NavItem } from "./NavDropdown.astro";
+import Discord from "src/icons/discord.astro";
+import { BORDER, TEXT } from "src/styles";
+
+async function getBuilds() {
+  // load markdown files and return the frontmatter
+  const builds = await Promise.all(
+    Object.keys(mdxBuilds).map(
+      async (buildUrl) =>
+        await frontmatterReader(buildUrl.replace("../../", ""))
+    )
+  );
+
+  const navigationData = builds
+    .filter((build) => build.frontmatter.archive !== true)
+    .map((build) => ({
+      title: build.frontmatter.title,
+      rating: build.frontmatter.rating,
+      profession: build.frontmatter.profession as ProfessionTypes,
+      specialization: build.frontmatter.specialization as EliteSpecTypes,
+      url: build.url.replace("discretize-guides", "").replace("/index.mdx", ""),
+    }));
+
+  const data: Record<ProfessionTypes, NavBuild[]> = navigationData.reduce(
+    (acc, build) => {
+      if (!acc[build.profession]) acc[build.profession] = [];
+      acc[build.profession].push(build);
+      return acc;
+    },
+    {} as Record<ProfessionTypes, NavBuild[]>
+  );
+
+  return data;
+}
+
+async function getGuides() {
+  // load markdown files and return the frontmatter
+  const guides = await Promise.all(
+    Object.keys(mdxGuides).map(
+      async (guideUrl) =>
+        await frontmatterReader(guideUrl.replace("../../", ""))
+    )
+  );
+
+  const navigationData: NavItem[] = guides
+    .map((guide) => ({
+      title: guide.frontmatter.title,
+      url: guide.url.replace("discretize-guides", "").replace("/index.mdx", ""),
+      priority: guide.frontmatter.priority ?? 50,
+    }))
+    .sort((a, b) => b.priority - a.priority);
+
+  return navigationData;
+}
+
+const builds = await getBuilds();
+const guides = await getGuides();
+---
+
+<div
+  id="desktopNav"
+  class=`shadow z-50 top-0 mt-0 sticky bg-stone-100 dark:bg-zinc-800 max-md:hidden`
+>
+  <div class="lowerArea border-t-4 border-blue-500">
+    <nav class={`buttonArea flex items-center ${TEXT} max-h-[40px]`}>
+      <NavBuilds builds={builds} />
+      <NavDropdown title="Guides" content={guides} slug="/guides" />
+      <Link className="discretizeNavButton" disablePrefetch href="/fractals">
+        Fractals
+      </Link>
+
+      <Link
+        className="discretizeNavButton"
+        disablePrefetch
+        href="/augmentations"
+      >
+        Augmentations Calc
+      </Link>
+
+      <Link
+        className="discretizeNavButton flex-grow"
+        disablePrefetch
+        href="https://optimizer.discretize.eu"
+      >
+        Optimizer
+      </Link>
+
+      <Link
+        href="https://discord.gg/TGrhn8qjYT"
+        disablePrefetch
+        label="Discord Link"
+      >
+        <button
+          class={`rounded-full ${BORDER} p-[2px] border-[0.0626rem] w-10 h-10 mx-2`}
+          aria-label="Discord Link"
+        >
+          <Discord className="w-8 h-8" />
+        </button>
+      </Link>
+    </nav>
+  </div>
+</div>
+
+<style>
+  .buttonArea {
+    width: 100%;
+    gap: 2.2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .lowerArea {
+    border-left: 0px;
+    border-right: 0px;
+    border-bottom: 0px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+    width: 100%;
+  }
+</style>

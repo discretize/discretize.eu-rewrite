@@ -1,0 +1,54 @@
+---
+import { Icon } from "astro-icon";
+import Discretize from "../../icons/discretize.astro";
+import Link from "../Link.astro";
+import DarkModeSwitch from "./DarkModeSwitch.astro";
+import NavBarDesktop from "./NavBarDesktop.astro";
+import NavBarMobile from "./NavBarMobile.astro";
+---
+
+<header>
+  <div class="topArea bg-sky-50 dark:bg-zinc-900">
+    <div class="topButtonArea flex items-center justify-between">
+      <Link href="/" label="Home">
+        <Discretize className="h-12" animate={false} />
+      </Link>
+
+      <div class="max-md:hidden mr-4">
+        <DarkModeSwitch />
+      </div>
+      <button id="toggleMobileNav" class="rounded md:hidden hamburgerButton">
+        <Icon name="mdi:menu" size="2rem" />
+      </button>
+    </div>
+  </div>
+
+  <NavBarMobile />
+  <NavBarDesktop />
+</header>
+
+<style>
+  header {
+    display: unset;
+  }
+  :global(.discretizeNavButton) {
+    font-weight: 500;
+    font-size: 1.3rem;
+    font-family: Muli;
+  }
+  :global(.discretizeNavButton:hover) {
+    color: #00cccc;
+  }
+
+  .topButtonArea {
+    max-height: 4rem;
+    padding: 2rem 0rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  @media (max-width: 1400px) {
+    .topButtonArea {
+      padding: 2rem 1rem;
+    }
+  }
+</style>

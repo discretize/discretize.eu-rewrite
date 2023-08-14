@@ -5,7 +5,7 @@ import backgroundImage from "src/assets/images/backgrounds/lobby.png";
 import { BACKGROUND, TEXT } from "src/styles";
 import "typeface-muli";
 import "typeface-raleway";
-import NavBar from "../components/navigation/NavBar.astro";
+import TopBar from "../components/navigation/TopBar.astro";
 import "../main.css";
 import "./overrides.css";
 
@@ -167,7 +167,7 @@ const title = titleRaw.startsWith("GW2 | Discretize [dT]")
     </script>
   </head>
   <body class:list={[TEXT, BACKGROUND]}>
-    <NavBar />
+    <TopBar />
     <div id="floating-portal"></div>
 
     <main class:list={[{ mainWrapper: !disablePadding }]}>
