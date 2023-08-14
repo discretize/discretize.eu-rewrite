@@ -27,8 +27,8 @@ const formats: OutputFormat[] = ["avif", "webp", "jpeg"];
   }
 </script>
 
-<figure class="imgFig">
-  <span class="imgWrapper">
+<figure class="mb-4">
+  <div class="relative block ml-auto mr-auto max-w-2xl">
     <Picture
       src={src}
       widths={[400, 800, 1200]}
@@ -38,35 +38,13 @@ const formats: OutputFormat[] = ["avif", "webp", "jpeg"];
       loading={"lazy"}
       data-maximizable
       sizes="(max-width: 400px) 10vw, (max-width: 800px) 50vw, 100vw"
+      class="cursor-zoom-in rounded w-full"
     />
-  </span>
+  </div>
   <figcaption class="text-sm m-0 text-center pt-1 px-2">{caption}</figcaption>
 </figure>
 
 <style>
-  .imgFig {
-    margin-bottom: 1rem;
-  }
-  img,
-  picture :global(img),
-  svg {
-    border-radius: 4px;
-    width: 100%;
-  }
-
-  .imgWrapper {
-    position: relative;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 627px;
-  }
-
-  img {
-    transition: transform 0.25s ease;
-    cursor: zoom-in;
-  }
-
   .maximized {
     position: fixed;
     top: 0;
