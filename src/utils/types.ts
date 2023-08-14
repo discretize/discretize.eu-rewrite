@@ -1,9 +1,10 @@
+import { IconWithTextProps } from "@gw2-ui/components/IconWithText/IconWithText";
 import GW2ApiItem from "gw2-api-extended/types/items/item";
 
-export type GenericGw2Component = {
+export interface GenericGw2Component extends IconWithTextProps {
   size?: string;
-  text?: string;
-  className?: string;
-};
+  disableLink?: boolean;
+  disableTooltip?: boolean;
+}
 
 export type ItemUpgrades = [GW2ApiItem, number][];
