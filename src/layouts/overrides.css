@@ -55,3 +55,13 @@ h6 {
 .table :where(thead, tfoot) {
   color: hsl(var(--bc) / 1) !important;
 }
+
+h1 a img,
+h2 a img,
+h3 a img,
+h4 a img,
+h5 a img,
+h6 a img {
+  display: unset;
+  margin-right: 0.75rem;
+}

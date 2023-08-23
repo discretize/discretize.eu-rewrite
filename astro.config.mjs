@@ -3,7 +3,8 @@ import mdxgw2ui from "./src/utils/remark/remark-mdx-gw2ui/index";
 import mdxInjectData from "./src/utils/remark/remark-inject-data/index";
 import remarkInjectCharacterUi from "./src/utils/remark/remark-inject-character-ui";
 import removeEmptyThead from "./src/utils/rehype/rehype-remove-empty-thead";
-
+import remarkSlug from "remark-slug";
+import remarkSlugAnchor from "remark-slug-anchor";
 import mdx from "@astrojs/mdx";
 
 // https://astro.build/config
@@ -49,6 +50,8 @@ export default defineConfig({
         mdxInjectData,
         remarkInjectCharacterUi,
         injectTabs,
+        remarkSlug,
+        [remarkSlugAnchor, { color: "#0cc" }],
       ],
       rehypePlugins: [removeEmptyThead],
       gfm: true,
