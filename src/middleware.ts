@@ -1,4 +1,4 @@
-import { getImage } from "@astrojs/image";
+import { getImage } from "astro:assets";
 
 /**
  * The input array might contain multiple urls with the same href, but different query params.

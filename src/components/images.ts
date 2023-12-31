@@ -34,9 +34,9 @@ import specter from "../assets/images/professions/specter.png";
 import catalyst from "../assets/images/professions/catalyst.png";
 import virtuoso from "../assets/images/professions/virtuoso.png";
 import harbinger from "../assets/images/professions/harbinger.png";
-import { EliteSpecTypes } from "@gw2-ui/data/professions";
-import { getImage, getPicture } from "@astrojs/image";
-import { OutputFormat } from "@astrojs/image/dist/loaders";
+import type { EliteSpecTypes } from "@gw2-ui/data/professions";
+import { getImage } from "astro:assets";
+import type { ImageOutputFormat } from "astro";
 
 export async function getOptimizedImage(
   specialization: EliteSpecTypes,
@@ -44,11 +44,11 @@ export async function getOptimizedImage(
     width: 100,
     height: 100,
     alt: "Profession",
-    format: "webp" as OutputFormat,
+    format: "webp" as ImageOutputFormat,
   }
 ) {
   const image = specializationImages[specialization.toLowerCase()];
-  const optimzed = await getImage({ src: image.src, ...options });
+  const optimzed = await getImage({ src: image, ...options });
 
   return optimzed;
 }

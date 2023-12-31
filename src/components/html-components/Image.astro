@@ -1,10 +1,10 @@
 ---
-import { Picture } from "@astrojs/image/components";
-import { OutputFormat } from "@astrojs/image/dist/loaders";
+import type { ImageOutputFormat } from "astro";
+import { Picture } from "astro:assets";
 
 const { src, caption, ...attrs } = Astro.props;
 
-const formats: OutputFormat[] = ["avif", "webp", "jpeg"];
+const formats: ImageOutputFormat[] = ["avif", "webp", "jpeg"];
 ---
 
 <script>
@@ -33,7 +33,7 @@ const formats: OutputFormat[] = ["avif", "webp", "jpeg"];
       src={src}
       widths={[400, 800, 1200]}
       {...attrs}
-      alt={caption}
+      alt={caption || "Image"}
       formats={formats}
       loading={"lazy"}
       data-maximizable

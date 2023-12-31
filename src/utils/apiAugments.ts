@@ -1,6 +1,7 @@
 import type { ItemCategoryName } from "@gw2-ui/builder/itemCategoryNames";
-import ITEM_MODIFIERS, { ItemModifiers } from "@gw2-ui/builder/itemModifiers";
-import { ItemStatName } from "@gw2-ui/builder/itemStatNames";
+import ITEM_MODIFIERS from "@gw2-ui/builder/itemModifiers";
+import type { ItemModifiers } from "@gw2-ui/builder/itemModifiers";
+import type { ItemStatName } from "@gw2-ui/builder/itemStatNames";
 import itemStats from "@gw2-ui/builder/itemStats";
 import type GW2ApiItem from "gw2-api-extended/types/items/item";
 

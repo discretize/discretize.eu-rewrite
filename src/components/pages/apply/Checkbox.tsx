@@ -1,5 +1,5 @@
 import { Profession } from "@gw2-ui/components";
-import { EliteSpecTypes, ProfessionTypes } from "@gw2-ui/data/professions";
+import type { EliteSpecTypes } from "@gw2-ui/data/professions";
 
 export default function Checkbox({
   inputs,

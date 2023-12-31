@@ -1,5 +1,5 @@
 ---
-import { getPicture } from "@astrojs/image";
+import { getImage } from "astro:assets";
 import { Attributes } from "@discretize/react-discretize-components";
 import images from "../../images";
 import Armor from "./armor/Armor.astro";
@@ -9,6 +9,7 @@ import Skills from "./skills/Skills.astro";
 import Weapons from "./weapons/Weapons.astro";
 import { BACKGROUND } from "src/styles";
 import Information from "@components/Information.astro";
+import { Picture } from "astro:assets";
 
 interface Props {
   title: string;
@@ -26,36 +27,36 @@ const id = `page_${title
   .replaceAll(/\/|[^a-zA-Z0-9]+/gm, "")}`;
 const specialization = parsedGear.attributes.specialization;
 
-const imageData = await getPicture({
+const imageData = await getImage({
   src: images[specialization.toLowerCase()],
   widths: [360, 480, 620],
   alt: "Profession",
   formats: ["avif", "webp"],
 });
 
-const modifiedSources = imageData.sources
-  .map((oneSource) =>
-    oneSource.srcset.split(",").map((srcset, index) => {
-      const src = srcset.split(" ")[0];
-      // dont add a media query for the last source
-      // media query should be offset by 1 in the array of imageData.sources[i]
-      let width = oneSource.srcset
-        .split(",")
-        [index + 1]?.split(" ")[1]
-        .replace("w", "");
+// const modifiedSources = imageData.sources
+//   .map((oneSource) =>
+//     oneSource.srcset.split(",").map((srcset, index) => {
+//       const src = srcset.split(" ")[0];
+//       // dont add a media query for the last source
+//       // media query should be offset by 1 in the array of imageData.sources[i]
+//       let width = oneSource.srcset
+//         .split(",")
+//         [index + 1]?.split(" ")[1]
+//         .replace("w", "");
 
-      let media = `(max-width: ${width}px)`;
-      if (index === oneSource.srcset.split(",").length - 1) {
-        media = null;
-      }
-      return {
-        media,
-        srcset: src,
-        type: oneSource.type,
-      };
-    })
-  )
-  .flat(1);
+//       let media = `(max-width: ${width}px)`;
+//       if (index === oneSource.srcset.split(",").length - 1) {
+//         media = null;
+//       }
+//       return {
+//         media,
+//         srcset: src,
+//         type: oneSource.type,
+//       };
+//     })
+//   )
+//   .flat(1);
 
 const addParam = (data, pixel) => {
   if (!data) return;
@@ -106,7 +107,7 @@ const hasText = Astro.slots.has("default");
     </div>
 
     <div class="middleSection">
-      <picture>
+      <!-- <picture>
         {
           modifiedSources.map(({ media, srcset, type }) => (
             <source media={media} srcset={srcset} type={type} />
@@ -116,10 +117,12 @@ const hasText = Astro.slots.has("default");
         <img
           decoding="async"
           loading="eager"
-          src={imageData.image.src}
-          alt={imageData.image.alt}
+          src={imageData.src}
+          alt="Profession"
         />
-      </picture>
+      </picture> -->
+
+      <Picture src={images[specialization.toLowerCase()]} formats={["avif", "webp"]} alt="Profession" />
 
       <div class="skillsLegends">
         <Skills {...data.skills} />

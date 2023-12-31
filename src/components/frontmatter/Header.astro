@@ -1,20 +1,29 @@
 ---
-import { Picture } from "@astrojs/image/components";
+import { Picture } from "astro:assets";
 import { Icon } from "astro-icon";
 
-const { title, description, image: headerImage, date } = Astro.props;
+interface Props {
+  title: string;
+  description: string;
+  image: {
+    type: string;
+    slug: string;
+    file: string;
+  };
+  date: string;
+}
+
+const { title, description, image, date } = Astro.props;
 ---
 
 <header id="mobileHeader" class="sm:hidden mb-4">
   <h1>{title}</h1>
 
   <Picture
-    src={headerImage}
+    src={import(`../../../discretize-guides/${image.type}/${image.slug}/images/${image.file}.jpg`)}
     alt="Header"
     width={1280}
     height={500}
-    widths={[640]}
-    aspectRatio={1280 / 500}
     sizes="100vw"
   />
 </header>
@@ -24,13 +33,10 @@ const { title, description, image: headerImage, date } = Astro.props;
   class="relative h-full mx-[-1.4rem] mt-[-1.393rem] mb-4 max-sm:hidden max-[1439px]:mt-[-1rem] max-[1439px]:mx-[-1rem]"
 >
   <Picture
-    src={headerImage}
+    src={import(`../../../discretize-guides/${image.type}/${image.slug}/images/${image.file}.jpg`)}
     alt="Header"
-    width={1280}
-    height={500}
-    widths={[1440]}
-    aspectRatio={1280 / 500}
-    sizes="1440px"
+    width={1440}
+    height={562.5}
     class="w-full"
   />
 

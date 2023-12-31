@@ -1,4 +1,4 @@
-import { Placement } from "@floating-ui/react-dom";
+import type { Placement } from "@floating-ui/react-dom";
 import captainMaiTrinBossImage from "../../assets/images/maps/captainMaiTrinBoss.png";
 import chaosIslesImage from "../../assets/images/maps/chaosIsles.jpeg";
 import deepstoneImage from "../../assets/images/maps/deepstone.jpeg";

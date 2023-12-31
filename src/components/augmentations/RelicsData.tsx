@@ -1,5 +1,5 @@
 import { ItemInternal } from "@gw2-ui/components";
-import GW2ApiItem from "gw2-api-extended/types/items/item";
+import type GW2ApiItem from "gw2-api-extended/types/items/item";
 import component_data from "./component-data.json";
 
 export const MIST_ATTUNEMENTS = [

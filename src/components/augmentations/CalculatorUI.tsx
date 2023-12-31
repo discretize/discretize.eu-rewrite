@@ -1,4 +1,4 @@
-import { AugmentationsTypes } from "@gw2-ui/data/augmentations";
+import type { AugmentationsTypes } from "@gw2-ui/data/augmentations";
 import React, { useEffect, useState } from "react";
 import initialState from "./initialState.json";
 import { Matrix, MIST_ATTUNEMENTS, Page, Pristine, Relic } from "./RelicsData";

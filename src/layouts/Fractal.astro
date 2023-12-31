@@ -1,5 +1,5 @@
 ---
-import { getImage } from "@astrojs/image";
+import { getImage } from "astro:assets";
 import "@discretize/typeface-menomonia";
 import "@gw2-ui/default_style.css";
 import type { Props as FractalProps } from "src/components/frontmatter/FractalFrontmatter.astro";
@@ -33,7 +33,7 @@ if (headerImage) {
   )[1]()) as ImageMetadata;
 
   const ogImage = await getImage({
-    src: thumbnail.src,
+    src: thumbnail,
     height: 512,
     width: 512,
     format: "png",

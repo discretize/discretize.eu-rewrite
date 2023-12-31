@@ -1,5 +1,5 @@
 ---
-import { getImage } from "@astrojs/image";
+import { getImage } from "astro:assets";
 import "@discretize/typeface-menomonia";
 import "@gw2-ui/default_style.css";
 import type { Props as GuideProps } from "src/components/frontmatter/GuideFrontmatter.astro";
@@ -27,7 +27,7 @@ if (headerImage) {
   )[1]()) as ImageMetadata;
 
   const ogImage = await getImage({
-    src: thumbnail.src,
+    src: thumbnail,
     width: 512,
     height: 512,
     format: "png",

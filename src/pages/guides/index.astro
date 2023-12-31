@@ -12,14 +12,10 @@ const guides = (
     return {
       title: guide.frontmatter.title,
       date: guide.frontmatter.date,
-      slug:
-        "/" +
-        guide.file.split("discretize-guides/")[1].replace("/index.mdx", ""),
       description: guide.frontmatter.description,
-      imageUrl:
-        "discretize-guides/" +
-        guide.file.split("discretize-guides/")[1].replace("index.mdx", "") +
-        guide.frontmatter.image,
+      header: guide.frontmatter.image.replace(".jpg", "").replace("images/", ""),
+      fractal: guide.file.split("/").reverse()[1], // name of the guide as it is in the folder structure
+      type: "guides"
     };
   });
 

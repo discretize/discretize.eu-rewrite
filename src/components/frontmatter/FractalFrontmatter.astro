@@ -38,8 +38,11 @@ const {
   headings,
 } = Astro.props;
 
-const headerImage =
-  "../" + (await imageFetch(Object.keys(fractalHeaders), Astro.url.pathname));
+const imageData = {
+  type: "fractals",
+  slug: Astro.url.pathname.replace("fractals/", "").replaceAll("/", ""),
+  file: "header"
+}
 
 const hasChallengeMode = difficulties.some((d) => d.level >= 97);
 ---
@@ -48,7 +51,7 @@ const hasChallengeMode = difficulties.some((d) => d.level >= 97);
   title={title}
   description={description}
   date={date}
-  image={headerImage}
+  image={imageData}
 />
 
 {

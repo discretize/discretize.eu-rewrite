@@ -10,8 +10,6 @@ import mdx from "@astrojs/mdx";
 // https://astro.build/config
 import react from "@astrojs/react";
 
-// https://astro.build/config
-import image from "@astrojs/image";
 import yaml from "@rollup/plugin-yaml";
 
 // https://astro.build/config
@@ -56,10 +54,6 @@ export default defineConfig({
       rehypePlugins: [removeEmptyThead],
       gfm: true,
       extendMarkdownConfig: {},
-    }),
-    image({
-      serviceEntryPoint: "@astrojs/image/sharp",
-      cacheDir: ".cache",
     }),
     prefetch(),
     tailwind({

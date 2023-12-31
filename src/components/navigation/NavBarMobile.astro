@@ -23,6 +23,7 @@ import DarkModeSwitch from "./DarkModeSwitch.astro";
     toggleVisbilility();
 
     overlay.classList.toggle("hidden");
+    drawer.classList.toggle("hidden");
     document.body.classList.toggle("overflow-hidden");
   });
 
@@ -30,6 +31,8 @@ import DarkModeSwitch from "./DarkModeSwitch.astro";
     toggleVisbilility();
 
     overlay.classList.toggle("hidden");
+        drawer.classList.toggle("hidden");
+
     document.body.classList.toggle("overflow-hidden");
   });
 </script>
@@ -42,7 +45,7 @@ import DarkModeSwitch from "./DarkModeSwitch.astro";
 
 <div
   id="mobileDrawer"
-  class={`${BACKGROUND} drawer right-auto bottom-auto top-0 fixed inset w-64 h-[100vh] z-50 p-4 swoosh-div`}
+  class={`hidden ${BACKGROUND} drawer right-auto bottom-auto top-0 !fixed inset w-64 h-[100vh] z-50 p-4 swoosh-div`}
 >
   <nav class="flex flex-col gap-4">
     <Link href="/" label="Home">

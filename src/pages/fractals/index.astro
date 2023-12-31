@@ -6,18 +6,19 @@ const guides = (
   await Astro.glob(`../../../discretize-guides/fractals/**/index.mdx`)
 )
   ?.map((guide) => {
+
+    if (!guide.frontmatter.image.endsWith(".jpg")) {
+      throw new Error(`Guide ${guide.file} has no valid header image! Header image must be in jpg format.`);
+    }
+
     return {
       title: guide.frontmatter.title,
       date: guide.frontmatter.date,
-      slug:
-        "/" +
-        guide.file.split("discretize-guides/")[1].replace("/index.mdx", ""),
       description: guide.frontmatter.description,
-      imageUrl:
-        "discretize-guides/" +
-        guide.file.split("discretize-guides/")[1].replace("index.mdx", "") +
-        guide.frontmatter.image,
       level: guide.frontmatter.difficulties[0].level,
+      header: guide.frontmatter.image.replace(".jpg", "").replace("images/", ""),
+      fractal: guide.file.split("/").reverse()[1], // name of the fractal as it is in the folder structure
+      type: "fractals"
     };
   })
   .sort((a, b) => {
