@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# This script is not meant to be executed by people other than princeps, unless you know what you are doing and have wrangler setup correctly.
+
 set -x
 set -e
 

@@ -1,10 +1,10 @@
 # 🌌 Discretize.eu
 
-Welcome to the source repository of the [discretize.eu](https://discretize.eu) website.
+Welcome to the source repository of the [discretize.eu](https://discretize.eu) website. Due to Astro requiring direct access to the React source code, we submodule discretize-ui and other repositories into this repository.
 
 ## Requirements
 
-- yarn
+- yarn v1
 - node 18 +
 - git
 
@@ -19,14 +19,13 @@ yarn install
 
 ## Development
 
-The dev server is slow when working directly on the guides. That is because for every refresh it has to rebuild all the guides. To speed up the process, I recommend to work on the /docs pages, which are much smaller and load fast.
-
-For example, there is `/docs/index.mdx` which is the component documentation page.
-It is recommended to test smaller components on that page.
-
 ```
 yarn dev
 ```
+
+Note: This command will execute extra scripts that are necessary to prepare the file system. Astro expects one .astro file per page that imports the md(x) file. For each build/guide/fractal, these scripts will create the necessary files.
+
+Why not use dynamic imports? Astro has to reload all pages included in the dynamic set such that the dev server becomes unbearably slow.
 
 ## Build
 
