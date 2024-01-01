@@ -38,6 +38,7 @@ export default defineConfig({
     //   },
     // },
   },
+  image: { domains: ["render.guildwars2.com"], },
 
   compressHTML: true,
   integrations: [
