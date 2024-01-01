@@ -15,6 +15,7 @@ import SnowblindPathSVG from "./path-svg/Snowblind.astro";
 import SunquaPeak from "./path-svg/SunquaPeak.astro";
 import ThaumanovaReactorSVG from "./path-svg/ThaumanovaReactor.astro";
 import Volcanic from "./path-svg/Volcanic.astro";
+import { getImage } from "astro:assets";
 
 export type Encounter = {
   xPercent: number;
@@ -335,4 +336,18 @@ const mapsData: Record<
   },
 };
 
-export const getMapData = (map: string) => mapsData[map];
+const mapsDataOptimized = Object.fromEntries(
+  await Promise.all(
+    Object.entries(mapsData).map(async ([map, data]) => {
+      const optimized = await getImage({
+        src: data.src,
+        width: data.width,
+        height: data.height,
+        format: "webp",
+      });
+      return [map, { src: optimized, ...data }];
+    })
+  )
+);
+
+export const getMapData = (map: string) => mapsDataOptimized[map];
