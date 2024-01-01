@@ -1,6 +1,6 @@
 ---
 import type { Placement } from "@floating-ui/react-dom";
-import { StyleHTMLAttributes } from "react";
+import type { StyleHTMLAttributes } from "react";
 interface Props {
   tooltipDirection?: Placement;
   className?: string;
@@ -13,8 +13,8 @@ const COLOR = "bg-neutral-300 dark:bg-neutral-700";
 ---
 
 <script>
+  import type { Placement } from "@floating-ui/react-dom";
   import {
-    Placement,
     arrow,
     computePosition,
     flip,

@@ -1,18 +1,18 @@
 ---
-import { EliteSpecTypes, ProfessionTypes } from "@gw2-ui/data/professions";
+import Tooltip2 from "@components/Tooltip2.astro";
+import CopyTemplate from "@components/gw2/CopyTemplate.astro";
+import SectionsToggle from "@components/sections/SectionsToggle.astro";
+import type { BoonsTypes } from "@gw2-ui/data/boons";
+import type { ConditionTypes } from "@gw2-ui/data/conditions";
+import type { EliteSpecTypes, ProfessionTypes } from "@gw2-ui/data/professions";
 import { Icon } from "astro-icon";
+import Gear from "src/icons/gear.astro";
 import Card from "../Card.astro";
 import TextDivider from "../TextDivider.astro";
 import Boon from "../gw2-ui/Boon.astro";
 import Condition from "../gw2-ui/Condition.astro";
 import Profession from "../gw2-ui/Profession.astro";
 import Li from "../html-components/li.astro";
-import { ConditionTypes } from "@gw2-ui/data/conditions";
-import { BoonsTypes } from "@gw2-ui/data/boons";
-import SectionsToggle from "@components/sections/SectionsToggle.astro";
-import CopyTemplate from "@components/gw2/CopyTemplate.astro";
-import Tooltip2 from "@components/Tooltip2.astro";
-import Gear from "src/icons/gear.astro";
 
 export interface Props {
   title: string;
