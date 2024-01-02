@@ -38,7 +38,7 @@ export default defineConfig({
     //   },
     // },
   },
-  image: { domains: ["render.guildwars2.com"], },
+  image: { domains: ["render.guildwars2.com"] },
 
   compressHTML: true,
   integrations: [
@@ -50,7 +50,6 @@ export default defineConfig({
         remarkInjectCharacterUi,
         injectTabs,
         remarkSlug,
-        [remarkSlugAnchor, { color: "#0cc" }],
       ],
       rehypePlugins: [removeEmptyThead],
       gfm: true,

@@ -1,5 +1,5 @@
-import { IconWithTextProps } from "@gw2-ui/components/IconWithText/IconWithText";
-import GW2ApiItem from "gw2-api-extended/types/items/item";
+import type { IconWithTextProps } from "@gw2-ui/components/IconWithText/IconWithText";
+import type GW2ApiItem from "gw2-api-extended/types/items/item";
 
 export interface GenericGw2Component extends IconWithTextProps {
   size?: string;
