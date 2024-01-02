@@ -1,14 +1,14 @@
 ---
 import { Picture } from "astro:assets";
-import { getMapData } from "./mapData";
-import Tooltip from "../Tooltip.astro";
 import Card from "../Card.astro";
-import TableOfContents, { Heading } from "../TableOfContents.astro";
+import type { Heading } from "../TableOfContents.astro";
+import TableOfContents from "../TableOfContents.astro";
 import Tooltip2 from "../Tooltip2.astro";
+import { getMapData } from "./mapData";
 
 interface Props {
-    type: string;
-    headings: Heading[];
+  type: string;
+  headings: Heading[];
 }
 
 const { type, headings } = Astro.props;
@@ -18,103 +18,100 @@ const map = getMapData(type);
 const { src, width, height, PathSVG, encounters = [] } = map || {};
 
 const encounter_list = encounters.map((elem, index) => ({
-    ...elem,
-    ...headings[index],
-    onclick: `window.scrollTo({ top: document.querySelector('#${headings[index].slug}').offsetTop - 70, behavior: 'smooth' });`,
-    area: elem?.area, // todo add hover class to area
+  ...elem,
+  ...headings[index],
+  onclick: `window.scrollTo({ top: document.querySelector('#${headings[index].slug}').offsetTop - 70, behavior: 'smooth' });`,
+  area: elem?.area, // todo add hover class to area
 }));
 ---
 
 {
-    src ? (
-        <div
-            class={`relative w-full h-full`}
-            style={{ maxWidth: width + "px", maxHeight: height + "px" }}
-        >
-            <Picture
-                src={src}
-                alt="Map"
-                width={width}
-                height={height}
-                aspectRatio={width / height}
-                sizes="100vh"
-                widths={[650]}
-            />
+  src ? (
+    <div
+      class={`relative w-full h-full`}
+      style={{ maxWidth: width + "px", maxHeight: height + "px" }}
+    >
+      <Picture
+        src={src}
+        alt="Map"
+        width={width}
+        height={height}
+        sizes="100vh"
+        formats={["avif", "webp", "jpeg"]}
+        widths={[650]}
+      />
 
-            <PathSVG width={width} height={height} />
+      <PathSVG width={width} height={height} />
 
-            <svg
-                id="areas"
-                class="absolute z-20 top-0 left-0 w-full"
-                fill="transparent"
-                viewBox={`0 0 ${width} ${height}`}
+      <svg
+        id="areas"
+        class="absolute z-20 top-0 left-0 w-full"
+        fill="transparent"
+        viewBox={`0 0 ${width} ${height}`}
+      >
+        {encounter_list
+          .filter((a) => a)
+          .map(({ area, slug, onclick }) => (
+            <a
+              id={`area-${slug}`}
+              onclick={onclick}
+              class={`hover:fill-blue-200/30 cursor-pointer`}
             >
-                {encounter_list
-                    .filter((a) => a)
-                    .map(({ area, slug, onclick }) => (
-                        <a
-                            id={`area-${slug}`}
-                            onclick={onclick}
-                            class={`hover:fill-blue-200/30 cursor-pointer`}
-                        >
-                            <Fragment set:html={area} />
-                        </a>
-                    ))}
-            </svg>
+              <Fragment set:html={area} />
+            </a>
+          ))}
+      </svg>
 
-            {encounter_list.map(
-                (
-                    {
-                        isMajor,
-                        text,
-                        slug,
-                        xPercent,
-                        yPercent,
-                        onclick,
-                        tooltipDirection,
-                        index: renamedIndex,
-                    },
-                    index
-                ) => {
-                    if (!xPercent) return undefined;
-                    else
-                        return (
-                            <Tooltip2
-                                tooltipDirection={tooltipDirection}
-                                className="absolute z-20"
-                                style={{
-                                    top: `${xPercent}%`,
-                                    left: `${yPercent}%`,
-                                }}
-                            >
-                                <button
-                                    slot="target"
-                                    class={`btn btn-circle ${
-                                        isMajor
-                                            ? "btn-primary"
-                                            : "btn-secondary w-8 h-8 !min-h-fit"
-                                    }`}
-                                    onclick={onclick}
-                                    onmouseenter={`document.querySelector('#area-${slug}')?.classList.add("fill-blue-200/30")`}
-                                    onmouseleave={`document.querySelector('#area-${slug}')?.classList.remove("fill-blue-200/30")`}
-                                >
-                                    {renamedIndex || index + 1}
-                                </button>
-                                <div slot="tooltip" aria-label="Tooltip">
-                                    <h4 class="!mb-2">{text}</h4>
-                                    <span class="!text-xs">
-                                        Click to go to{" "}
-                                        {isMajor ? "encounter" : "path"}
-                                    </span>
-                                </div>
-                            </Tooltip2>
-                        );
-                }
-            )}
-        </div>
-    ) : (
-        <Card title="Table of contents" className="!mt-0">
-            <TableOfContents headings={headings} offset={-1} />
-        </Card>
-    )
+      {encounter_list.map(
+        (
+          {
+            isMajor,
+            text,
+            slug,
+            xPercent,
+            yPercent,
+            onclick,
+            tooltipDirection,
+            index: renamedIndex,
+          },
+          index
+        ) => {
+          if (!xPercent) return undefined;
+          else
+            return (
+              <Tooltip2
+                tooltipDirection={tooltipDirection}
+                className="absolute z-20"
+                style={{
+                  top: `${xPercent}%`,
+                  left: `${yPercent}%`,
+                }}
+              >
+                <button
+                  slot="target"
+                  class={`btn btn-circle ${
+                    isMajor ? "btn-primary" : "btn-secondary w-8 h-8 !min-h-fit"
+                  }`}
+                  onclick={onclick}
+                  onmouseenter={`document.querySelector('#area-${slug}')?.classList.add("fill-blue-200/30")`}
+                  onmouseleave={`document.querySelector('#area-${slug}')?.classList.remove("fill-blue-200/30")`}
+                >
+                  {renamedIndex || index + 1}
+                </button>
+                <div slot="tooltip" aria-label="Tooltip">
+                  <h4 class="!mb-2">{text}</h4>
+                  <span class="!text-xs">
+                    Click to go to {isMajor ? "encounter" : "path"}
+                  </span>
+                </div>
+              </Tooltip2>
+            );
+        }
+      )}
+    </div>
+  ) : (
+    <Card title="Table of contents" className="!mt-0">
+      <TableOfContents headings={headings} offset={-1} />
+    </Card>
+  )
 }
