@@ -6,12 +6,14 @@ interface Props {
 }
 
 const { text, disableContent = false, className } = Astro.props;
+
+const displayText = !disableContent && text;
 ---
 
 <div class:list={["root", className]}>
   <div class="textdivider"></div>
   {
-    !disableContent ? (
+    displayText ? (
       <div class="content">
         <slot>{text}</slot>
       </div>
