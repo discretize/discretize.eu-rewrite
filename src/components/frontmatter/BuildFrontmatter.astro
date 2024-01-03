@@ -5,7 +5,7 @@ import SectionsToggle from "@components/sections/SectionsToggle.astro";
 import type { BoonsTypes } from "@gw2-ui/data/boons";
 import type { ConditionTypes } from "@gw2-ui/data/conditions";
 import type { EliteSpecTypes, ProfessionTypes } from "@gw2-ui/data/professions";
-import { Icon } from "astro-icon";
+import { Icon } from "astro-icon/components";
 import Gear from "src/icons/gear.astro";
 import Card from "../Card.astro";
 import TextDivider from "../TextDivider.astro";
@@ -266,7 +266,7 @@ const {
         ]}
         slot="target"
       >
-        <Icon pack="mdi" name="tune" size="1rem" /> Guide
+        <Icon name="mdi:tune" size="1rem" /> Guide
       </div>
       <span slot="tooltip">Guide is {!guide ? "not" : ""} up-to-date</span>
     </Tooltip2>

@@ -1,5 +1,5 @@
 ---
-import { Icon } from "astro-icon";
+import { Icon } from "astro-icon/components";
 interface Props {
   class: string;
 }
@@ -21,7 +21,7 @@ const { class: className } = Astro.props;
     ]}
   >
     <slot name="label" />
-    <Icon pack="mdi" size="1.5rem" name="menu-down" />
+    <Icon size="1.5rem" name="mdi:menu-down" />
   </label>
   <ul
     tabindex="0"

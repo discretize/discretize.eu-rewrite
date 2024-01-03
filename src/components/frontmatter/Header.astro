@@ -1,6 +1,6 @@
 ---
 import { Picture } from "astro:assets";
-import { Icon } from "astro-icon";
+import { Icon } from "astro-icon/components";
 
 interface Props {
   title: string;
@@ -20,7 +20,9 @@ const { title, description, image, date } = Astro.props;
   <h1>{title}</h1>
 
   <Picture
-    src={import(`../../../discretize-guides/${image.type}/${image.slug}/images/${image.file}.jpg`)}
+    src={import(
+      `../../../discretize-guides/${image.type}/${image.slug}/images/${image.file}.jpg`
+    )}
     alt="Header"
     width={1280}
     height={500}
@@ -33,7 +35,9 @@ const { title, description, image, date } = Astro.props;
   class="relative h-full mx-[-1.4rem] mt-[-1.393rem] mb-4 max-sm:hidden max-[1439px]:mt-[-1rem] max-[1439px]:mx-[-1rem]"
 >
   <Picture
-    src={import(`../../../discretize-guides/${image.type}/${image.slug}/images/${image.file}.jpg`)}
+    src={import(
+      `../../../discretize-guides/${image.type}/${image.slug}/images/${image.file}.jpg`
+    )}
     alt="Header"
     width={1440}
     height={562.5}

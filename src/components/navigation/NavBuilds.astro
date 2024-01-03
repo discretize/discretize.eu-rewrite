@@ -1,7 +1,7 @@
 ---
 import { Profession } from "@gw2-ui/components";
 import type { EliteSpecTypes, ProfessionTypes } from "@gw2-ui/data/professions";
-import { Icon } from "astro-icon";
+import { Icon } from "astro-icon/components";
 import { BACKGROUND } from "src/styles";
 import Link from "../Link.astro";
 import TextDivider from "../TextDivider.astro";
@@ -21,20 +21,23 @@ const RATINGS = ["Discretize LFG", "Current"];
 const { builds } = Astro.props;
 
 // sort builds by rating
-const sortedBuilds = Object.keys(builds).reduce((acc, profession) => {
-  acc[profession] = builds[profession].sort((a, b) => {
-    const aRating = RATINGS.indexOf(a.rating);
-    const bRating = RATINGS.indexOf(b.rating);
+const sortedBuilds = Object.keys(builds).reduce(
+  (acc, profession) => {
+    acc[profession] = builds[profession].sort((a, b) => {
+      const aRating = RATINGS.indexOf(a.rating);
+      const bRating = RATINGS.indexOf(b.rating);
 
-    if (aRating === bRating) {
-      return 0;
-    }
+      if (aRating === bRating) {
+        return 0;
+      }
 
-    return aRating > bRating ? -1 : 1;
-  });
+      return aRating > bRating ? -1 : 1;
+    });
 
-  return acc;
-}, {} as Props["builds"]);
+    return acc;
+  },
+  {} as Props["builds"]
+);
 
 // parition builds by rating
 const partitionedBuilds = Object.keys(sortedBuilds).reduce(
@@ -53,7 +56,7 @@ const partitionedBuilds = Object.keys(sortedBuilds).reduce(
       },
       [[], []] as [
         (typeof sortedBuilds)[ProfessionTypes],
-        (typeof sortedBuilds)[ProfessionTypes]
+        (typeof sortedBuilds)[ProfessionTypes],
       ]
     );
 
@@ -63,7 +66,7 @@ const partitionedBuilds = Object.keys(sortedBuilds).reduce(
     ProfessionTypes,
     [
       (typeof sortedBuilds)[ProfessionTypes],
-      (typeof sortedBuilds)[ProfessionTypes]
+      (typeof sortedBuilds)[ProfessionTypes],
     ]
   >
 );

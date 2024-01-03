@@ -1,5 +1,5 @@
 ---
-import { Icon } from "astro-icon";
+import { Icon } from "astro-icon/components";
 import Tooltip2 from "../../Tooltip2.astro";
 import Profession from "../../gw2-ui/Profession.astro";
 import { getOptimizedImage } from "../../images";
@@ -97,7 +97,7 @@ const image = await getOptimizedImage(specialization.toLowerCase(), {
           </span>
           <div slot="tooltip">
             Gear: {uptodate.gear ? "up-to-date" : "not updated"}<br />
-            Guide: {uptodate.guide ? "up-to-date" : "not updated"}
+             Guide: {uptodate.guide ? "up-to-date" : "not updated"}
           </div>
         </Tooltip2>
       </div>

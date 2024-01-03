@@ -1,5 +1,5 @@
 ---
-import { Icon } from "astro-icon";
+import { Icon } from "astro-icon/components";
 
 interface Props {
   caption?: string;
@@ -107,7 +107,7 @@ if (url) {
       ))
     }
     {url && <source src={url} type="video/webm" />}
-    Your browser does not support videos :(
+     Your browser does not support videos :(
   </video>
   {
     caption && (

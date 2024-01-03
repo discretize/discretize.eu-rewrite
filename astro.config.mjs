@@ -4,8 +4,8 @@ import mdxInjectData from "./src/utils/remark/remark-inject-data/index";
 import remarkInjectCharacterUi from "./src/utils/remark/remark-inject-character-ui";
 import removeEmptyThead from "./src/utils/rehype/rehype-remove-empty-thead";
 import remarkSlug from "remark-slug";
-import remarkSlugAnchor from "remark-slug-anchor";
 import mdx from "@astrojs/mdx";
+import icon from "astro-icon";
 
 // https://astro.build/config
 import react from "@astrojs/react";
@@ -59,6 +59,11 @@ export default defineConfig({
     tailwind({
       config: {
         applyBaseStyles: false,
+      },
+    }),
+    icon({
+      include: {
+        mdi: ["*"],
       },
     }),
   ],
