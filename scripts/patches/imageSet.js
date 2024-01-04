@@ -24,6 +24,11 @@ const callback = (err, info) => {
 for (const cssFile of cssFiles) {
   const css = fs.readFileSync(rootDir + "components/" + cssFile, "utf-8");
 
+  if (css.indexOf("image-set") !== -1) {
+    console.log("Skipping", cssFile);
+    continue;
+  }
+
   const regex = /url\(([^)]+)\)/g;
 
   const newCss = css.replace(regex, (match, p1) => {
