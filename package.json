@@ -3,6 +3,7 @@
   "type": "module",
   "version": "0.0.1",
   "license": "AGPL-3.0-only",
+  "packageManager": "yarn@1.22.19",
   "scripts": {
     "extraScripts": "node scripts/syncGuides.js && node scripts/patches/defaultLanguage.js",
     "dev": "yarn extraScripts && astro dev --host",
