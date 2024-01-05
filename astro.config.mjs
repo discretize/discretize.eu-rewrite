@@ -6,6 +6,7 @@ import removeEmptyThead from "./src/utils/rehype/rehype-remove-empty-thead";
 import remarkSlug from "remark-slug";
 import mdx from "@astrojs/mdx";
 import icon from "astro-icon";
+import { FontaineTransform } from "fontaine";
 
 // https://astro.build/config
 import react from "@astrojs/react";
@@ -31,7 +32,13 @@ export default defineConfig({
     build: {
       assetsInlineLimit: 0,
     },
-    plugins: [yaml()],
+    plugins: [
+      yaml(),
+      FontaineTransform.vite({
+        fallbacks: ["Arial"],
+        resolvePath: (id) => new URL(`./public${id}`, import.meta.url), // id is the font src value in the CSS
+      }),
+    ],
     // build: {
     //   rollupOptions: {
     //     external: ["@reduxjs/toolkit"],
