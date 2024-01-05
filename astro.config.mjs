@@ -22,7 +22,6 @@ import tailwind from "@astrojs/tailwind";
 
 // https://astro.build/config
 export default defineConfig({
-  cacheDir: ".cache",
   // vite: {
   //   ssr: {
   //     noExternal: ["@floating-ui/react-dom"],
