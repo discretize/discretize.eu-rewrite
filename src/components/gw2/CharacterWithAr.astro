@@ -105,7 +105,7 @@ const templates = [];
         characters.map((character, index) => (
           <button
             data-tab-ui={character.id}
-            aria-controls={character.title}
+            aria-label={character.title}
             class:list={[
               "btn btn-sm join-item",
               { "btn-primary": index === 0, embossed: index !== 0 },
@@ -120,12 +120,16 @@ const templates = [];
       <label class="label">
         <span class="label-text">Pick a gear variant</span>
       </label>
-      <select class="select select-bordered" id="mobileCharacterSelect">
+      <select
+        class="select select-bordered"
+        id="mobileCharacterSelect"
+        aria-label="Character Variant"
+      >
         {
           characters.map((character, index) => (
             <option
               value={character.id}
-              aria-controls={character.title}
+              aria-label={character.title}
               selected={index === 0}
             >
               {character.title}

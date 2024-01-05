@@ -17,7 +17,11 @@ import NavBarMobile from "./NavBarMobile.astro";
       <div class="max-md:hidden mr-4">
         <DarkModeSwitch />
       </div>
-      <button id="toggleMobileNav" class="rounded md:hidden hamburgerButton">
+      <button
+        id="toggleMobileNav"
+        class="rounded md:hidden hamburgerButton"
+        aria-label="Toggle Menu"
+      >
         <Icon name="mdi:menu" size="2rem" />
       </button>
     </div>
