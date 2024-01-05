@@ -43,7 +43,7 @@ const title = titleRaw.startsWith("GW2 | Discretize [dT]")
   : titleTemplate.replace("%s", titleRaw);
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="dark" data-theme="discretizeDark">
   <head>
     <meta charset="utf-8" />
@@ -121,33 +121,6 @@ const title = titleRaw.startsWith("GW2 | Discretize [dT]")
 
     <meta name="twitter:card" content="summary_large_image" />
 
-    {
-      import.meta.env.PROD && (
-        <>
-          <link
-            rel="preload"
-            as="font"
-            type="font/woff2"
-            href="/_astro/raleway-latin-500.789a5712.woff2"
-            crossorigin="anonymous"
-          />
-          <link
-            rel="preload"
-            as="font"
-            type="font/woff2"
-            href="/_astro/raleway-latin-400.1d94fd1a.woff2"
-            crossorigin="anonymous"
-          />
-          <link
-            rel="preload"
-            as="font"
-            type="font/woff2"
-            href="/_astro/menomonia.04300bc6.woff"
-            crossorigin="anonymous"
-          />
-        </>
-      )
-    }
     <script>
       function reloadTheme() {
         if (

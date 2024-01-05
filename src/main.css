@@ -109,4 +109,8 @@
     padding: 0 !important;
     white-space: pre-wrap;
   }
+
+  .btn {
+    @apply font-bold;
+  }
 }

@@ -14,7 +14,9 @@ const { title, specialization, className = "" } = Astro.props;
   {
     (title || specialization) && (
       <div>
-        <h4 class="mb-1 font-medium">{title || specialization}</h4>
+        <h4 class="mb-1 font-normal">
+          <b>{title || specialization}</b>
+        </h4>
         <div class="delimiter" />
       </div>
     )
