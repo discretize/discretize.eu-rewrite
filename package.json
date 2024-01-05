@@ -8,7 +8,9 @@
     "extraScripts": "node scripts/syncGuides.js && node scripts/patches/defaultLanguage.js",
     "dev": "yarn extraScripts && astro dev --host",
     "start": "astro dev",
-    "build": "node scripts/patches/imageSet.js && yarn extraScripts && CF_PAGES_URL=http://localhost:3000 NODE_ENV=production astro build",
+    "prebuild": "node scripts/patches/imageSet.js && yarn extraScripts",
+    "build": "CF_PAGES_URL=http://localhost:3000 NODE_ENV=production astro build",
+    "postbuild": "node scripts/generateFontPreloads.js",
     "preview": "astro preview --host",
     "astro": "astro",
     "cmsProxy": "cd discretize-guides && npx netlify-cms-proxy-server"
