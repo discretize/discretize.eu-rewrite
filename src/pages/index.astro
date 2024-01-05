@@ -52,10 +52,11 @@ import Button from "src/components/html-components/button.astro";
       <Picture
         src={hero1}
         sizes="(max-width: 3840px) 100vw, 3840px"
+        formats={["avif", "webp", "jpg"]}
         widths={[3840, 1920, 720, 480]}
-        aspectRatio="16:9"
         alt="Background Hero Image"
         class="heroImage"
+        loading="eager"
       />
     </div>
     <div class="squigglyDown">
@@ -69,7 +70,7 @@ import Button from "src/components/html-components/button.astro";
         src={heroShattered}
         sizes="(max-width: 3840px) 100vw, 3840px"
         widths={[3840, 1920, 720, 480]}
-        aspectRatio="16:9"
+        formats={["avif", "webp", "jpg"]}
         alt="Background Hero Image"
         class="heroImage"
       />
