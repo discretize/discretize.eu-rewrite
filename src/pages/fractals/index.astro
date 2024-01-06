@@ -20,7 +20,7 @@ const guides = (
       header: guide.frontmatter.image
         .replace(".jpg", "")
         .replace("images/", ""),
-      fractal: guide.file.split("/guides/").pop().replace("/index.mdx", ""), // name of the fractal as it is in the folder structure
+      fractal: guide.file.split("/fractals/").pop().replace("/index.mdx", ""), // name of the fractal as it is in the folder structure
       type: "fractals",
     };
   })
