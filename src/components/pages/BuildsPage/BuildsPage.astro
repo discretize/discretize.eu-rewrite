@@ -3,8 +3,8 @@ import BuildsDisplay from "@components/pages/BuildsPage/BuildsDisplay.astro";
 import "@discretize/typeface-menomonia";
 import type { ProfessionTypes } from "@gw2-ui/data/professions";
 import "@gw2-ui/default_style.css";
-import { BuildCardProps } from "@components/pages/BuildsPage/BuildCard.astro";
-import Layout, { SEOProps } from "src/layouts/Layout.astro";
+import type { BuildCardProps } from "@components/pages/BuildsPage/BuildCard.astro";
+import Layout, { type SEOProps } from "src/layouts/Layout.astro";
 
 interface Props {
   professions: ProfessionTypes[];

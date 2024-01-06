@@ -13,9 +13,11 @@ const guides = (
       title: guide.frontmatter.title,
       date: guide.frontmatter.date,
       description: guide.frontmatter.description,
-      header: guide.frontmatter.image.replace(".jpg", "").replace("images/", ""),
-      fractal: guide.file.split("/").reverse()[1], // name of the guide as it is in the folder structure
-      type: "guides"
+      header: guide.frontmatter.image
+        .replace(".jpg", "")
+        .replace("images/", ""),
+      fractal: guide.file.split("/guides/").pop().replace("/index.mdx", ""), // name of the guide as it is in the folder structure
+      type: "guides",
     };
   });
 
