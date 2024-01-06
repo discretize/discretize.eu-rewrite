@@ -30,6 +30,24 @@ export default defineConfig({
   // },
   vite: {
     build: {
+      rollupOptions: {
+        onwarn: (warning, warn) => {
+          if (
+            warning.code === "PLUGIN_WARNING" &&
+            warning.plugin === "vite:reporter"
+          ) {
+            // dont warn about dynamic and static imports
+            return;
+          } else if (
+            warning.code === "PLUGIN_WARNING" &&
+            warning.plugin === "vite:resolve"
+          ) {
+            // dont warn about  'Module "events" has been externalized for browser compatibility, imported by "/home/alex/repos/discretize.eu-rewrite/node_modules/sharp/lib/utility.js". See https://vitejs.dev/guide/troubleshooting.html#module-externalized-for-browser-compatibility for more details.',
+            return;
+          }
+          warn(warning);
+        },
+      },
       assetsInlineLimit: 0,
     },
     plugins: [yaml()],
