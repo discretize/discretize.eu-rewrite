@@ -3,8 +3,8 @@ import type { EliteSpecTypes, ProfessionTypes } from "@gw2-ui/data/professions";
 import { mdxBuilds, mdxGuides } from "src/utils/cache";
 import frontmatterReader from "src/utils/frontmatterReader";
 import Link from "../Link.astro";
-import NavBuilds, { NavBuild } from "./NavBuilds.astro";
-import NavDropdown, { NavItem } from "./NavDropdown.astro";
+import NavBuilds, { type NavBuild } from "./NavBuilds.astro";
+import NavDropdown, { type NavItem } from "./NavDropdown.astro";
 import Discord from "src/icons/discord.astro";
 import { BORDER, TEXT } from "src/styles";
 
@@ -111,7 +111,7 @@ const guides = await getGuides();
   .buttonArea {
     width: 100%;
     gap: 2.2rem;
-    max-width: 1400px;
+    max-width: 1000px;
     margin: 0 auto;
   }
   .lowerArea {
