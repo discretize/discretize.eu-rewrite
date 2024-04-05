@@ -58,6 +58,7 @@
     "@reduxjs/toolkit": "^1.9.7",
     "@rollup/plugin-yaml": "^4.1.2",
     "@types/node": "^20.10.6",
+    "ace-builds": "^1.32.9",
     "astro-fontaine": "^1.0.1",
     "axios": "^1.4.0",
     "daisyui": "^3.9.4",
@@ -65,6 +66,7 @@
     "fontaine": "^0.4.1",
     "prettier": "^3.1.1",
     "prettier-plugin-astro": "^0.12.3",
+    "remark-gfm": "^4.0.0",
     "wrangler": "^3.1.1"
   }
 }

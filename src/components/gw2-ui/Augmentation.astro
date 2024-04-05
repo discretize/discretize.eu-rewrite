@@ -1,5 +1,5 @@
 ---
-import { default as UIAugmentation } from "@gw2-ui/components/Augmentation/Augmentation";
+import Augmentation from "@gw2-ui/components/Augmentation/Augmentation";
 import type { AugmentationsTypes } from "@gw2-ui/data/augmentations";
 import { getSizeStyle } from "src/utils/styles";
 import type { GenericGw2Component } from "src/utils/types";
@@ -9,7 +9,7 @@ interface Props extends GenericGw2Component {
 }
 ---
 
-<UIAugmentation
+<Augmentation
   client:visible
   {...Astro.props}
   className={`whitespace-nowrap ${Astro.props.className || ""}`.trim()}
