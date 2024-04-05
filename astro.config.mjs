@@ -13,8 +13,6 @@ import react from "@astrojs/react";
 
 import yaml from "@rollup/plugin-yaml";
 
-// https://astro.build/config
-import prefetch from "@astrojs/prefetch";
 import injectTabs from "./src/utils/remark/inject-tabs";
 
 // https://astro.build/config
@@ -73,7 +71,6 @@ export default defineConfig({
       gfm: true,
       extendMarkdownConfig: {},
     }),
-    prefetch(),
     tailwind({
       config: {
         applyBaseStyles: false,

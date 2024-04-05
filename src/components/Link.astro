@@ -22,11 +22,12 @@ const isInternal = !href.startsWith("http");
 const linkProps = {
   href,
   target: isInternal ? undefined : "_blank",
-  rel: isInternal ? "prefetch" : "noopener noreferrer nofollow",
+  rel: "noopener noreferrer nofollow",
+  "data-astro-prefetch": isInternal ? "viewport" : "none",
 };
 
 if (disablePrefetch && isInternal) {
-  linkProps.rel = "";
+  delete linkProps["data-astro-prefetch"];
 }
 ---
 
