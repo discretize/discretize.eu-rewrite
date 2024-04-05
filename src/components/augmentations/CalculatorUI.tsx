@@ -209,8 +209,8 @@ export function CalculatorUI(props: Props): React.ReactElement {
         }}
       />
 
-      <div className="grid grid-cols-12 gap-8 mt-8">
-        <div className="row-auto col-end-auto col-span-12 md:col-span-3">
+      <div className="flex gap-2 flex-col mt-8">
+        <div className="flex gap-8">
           <div className={""}>
             <h2>Account values</h2>
 
@@ -252,8 +252,8 @@ export function CalculatorUI(props: Props): React.ReactElement {
               ))}
           </div>
 
-          <div className={"mt-8"}>
-            <h4>Your daily routine</h4>
+          <div className={""}>
+            <h2>Your daily routine</h2>
             <ul className={`m-0 p-0 list-none`}>
               {inputs
                 .filter((augInput) => typeof augInput.value === "boolean")
@@ -280,11 +280,34 @@ export function CalculatorUI(props: Props): React.ReactElement {
                 ))}
             </ul>
           </div>
+          <aside>
+            <div className="card w-80 bg-base-100 shadow-xl">
+              <div className="card-body">
+                <h2 className="card-title">Daily earnings</h2>
+                <p>
+                  <ul style={{ marginBottom: 0 }}>
+                    <li>
+                      {Math.ceil(result?.daily.relics)} <Relic />
+                    </li>
+                    <li>
+                      {Math.ceil(result?.daily.pristines)} <Pristine />
+                    </li>
+                    <li>
+                      {Math.ceil(result?.daily.matrices)} <Matrix />
+                    </li>
+                    <li>
+                      {Math.ceil(result?.daily.pages)} <Page />
+                    </li>
+                  </ul>
+                </p>
+              </div>
+            </div>
+          </aside>
         </div>
 
-        <div className="row-auto col-end-auto col-span-12 md:col-span-9 md:ml-4 xl:ml-16">
+        <div className="">
           <h2>Results</h2>
-          <div className="flex space-between flex-col gap-10">
+          <div className="flex space-between flex-col gap-2">
             <div
               className={`alert shadow-lg mb-4 ${
                 result?.mistAttunements.length
@@ -316,28 +339,6 @@ export function CalculatorUI(props: Props): React.ReactElement {
                     </>
                   )}
                 </span>
-              </div>
-            </div>
-
-            <div className="card w-96 bg-base-100 shadow-xl">
-              <div className="card-body">
-                <h2 className="card-title">Daily earnings</h2>
-                <p>
-                  <ul style={{ marginBottom: 0 }}>
-                    <li>
-                      {Math.ceil(result?.daily.relics)} <Relic />
-                    </li>
-                    <li>
-                      {Math.ceil(result?.daily.pristines)} <Pristine />
-                    </li>
-                    <li>
-                      {Math.ceil(result?.daily.matrices)} <Matrix />
-                    </li>
-                    <li>
-                      {Math.ceil(result?.daily.pages)} <Page />
-                    </li>
-                  </ul>
-                </p>
               </div>
             </div>
 
