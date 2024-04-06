@@ -1,13 +1,14 @@
 ---
-import { Picture } from "astro:assets";
 import ScrollUpButton from "@components/ScrollUpButton.astro";
+import Footer from "@components/navigation/Footer.astro";
+import { Picture } from "astro:assets";
 import backgroundImage from "src/assets/images/backgrounds/lobby.png";
 import { BACKGROUND, TEXT } from "src/styles";
+import "typeface-muli";
 import "typeface-raleway";
 import TopBar from "../components/navigation/TopBar.astro";
 import "../main.css";
 import "./overrides.css";
-import Footer from "@components/navigation/Footer.astro";
 
 export interface SEOProps {
   title?: string;
