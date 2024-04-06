@@ -111,26 +111,24 @@ const duplicateSkills = skills.filter(
 );
 
 // eslint-disable-next-line import/prefer-default-export
-export const AUTO_COMPLETIONS = [];
-
-/*
+export const AUTO_COMPLETIONS = [
   ...skills.map((skill) => {
     const hasDuplicate = duplicateSkills.includes(skill);
-    const professionAddition = hasDuplicate
+    const professionAddition = hasDuplicate && skill.profession
       ? ` profession="${skill.profession}"`
       : "";
     return {
       label: skill.name,
       type: "Skill",
       name: `<Skill name="${skill.name}"${professionAddition} />`,
-      description: `${skill.profession.slice(0, 4)}-${skill.id}`,
+      description: `${skill?.profession?.slice(0, 4) ||  "generic"}-${skill.id}`,
     };
   }),
   ...traits.map((trait) => ({
     label: trait.name,
     type: "Trait",
     name: `<Trait name="${trait.name}" />`,
-    description: `${trait.profession.slice(0, 4)}-${trait.id}`,
+    description: `${trait?.profession?.slice(0, 4) || "generic"}-${trait.id}`,
   })),
   ...items.map((item) => ({
     label: item.name,
@@ -223,4 +221,3 @@ export const AUTO_COMPLETIONS = [];
   meta: "local",
 }));
 
-*/

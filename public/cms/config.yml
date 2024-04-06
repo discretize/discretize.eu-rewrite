@@ -8,29 +8,34 @@ backend:
   open_authoring: true
   base_url: https://auth.princeps.biz
   commit_messages:
-    create: 'Create {{collection}} “{{slug}}”'
-    update: 'Update {{collection}} “{{slug}}”'
-    delete: 'Delete {{collection}} “{{slug}}”'
-    uploadMedia: '[skip ci] Upload “{{path}}”'
-    deleteMedia: '[skip ci] Delete “{{path}}”'
+    create: "Create {{collection}} “{{slug}}”"
+    update: "Update {{collection}} “{{slug}}”"
+    delete: "Delete {{collection}} “{{slug}}”"
+    uploadMedia: "[skip ci] Upload “{{path}}”"
+    deleteMedia: "[skip ci] Delete “{{path}}”"
 
 # IMPORTANT: comment this line out for local dev
 #publish_mode: editorial_workflow
 
+local_backend:
+  # when using a custom proxy server port
+  url: http://localhost:8082/api/v1
+  # when accessing the local site from a host other than 'localhost' or '127.0.0.1'
+
 media_folder: static/img
 public_folder: /img
 
-logo_url: 'https://discretize.eu/logo.png'
+logo_url: "https://discretize.eu/logo.png"
 
 collections:
-  - name: 'builds'
-    label: 'Builds'
+  - name: "builds"
+    label: "Builds"
     folder: builds/
     create: true
     delete: false
     extension: mdx
     format: frontmatter
-    slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     nested:
       depth: 100
     fields:
@@ -102,7 +107,7 @@ collections:
         name: code
         widget: string
       - label: Path to cm-guide
-        hint: 'only enter the name of the file for the cm guide. Example: static.md -> enter static. index.md -> enter a space'
+        hint: "only enter the name of the file for the cm guide. Example: static.md -> enter static. index.md -> enter a space"
         name: cmGuide
         widget: string
         required: false
@@ -112,12 +117,12 @@ collections:
         field: { label: Classification, name: classifi, widget: number }
         required: false
 
-  - name: 'guides'
-    label: 'Guides'
+  - name: "guides"
+    label: "Guides"
     folder: guides/
     create: true
     delete: false
-    slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     nested:
       depth: 100
     fields:
@@ -139,12 +144,12 @@ collections:
         widget: string
         required: false
 
-  - name: 'fractals'
-    label: 'Fractals'
+  - name: "fractals"
+    label: "Fractals"
     folder: fractals/
     create: true
     delete: false
-    slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     nested:
       depth: 100
     fields:
@@ -213,12 +218,12 @@ collections:
               - { label: Name, name: name, widget: string }
               - { label: Specialization, name: specialization, widget: string }
 
-  - name: 'cm-guides'
-    label: 'CM-Guides'
+  - name: "cm-guides"
+    label: "CM-Guides"
     folder: cm-guides/
     create: true
     delete: false
-    slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     nested:
       depth: 100
     fields:

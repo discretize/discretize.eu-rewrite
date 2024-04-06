@@ -7,26 +7,30 @@ import "ace-builds/src-noconflict/ext-language_tools"; // needed for autocomplet
 import "ace-builds/src-noconflict/mode-markdown";
 import "ace-builds/src-noconflict/theme-twilight";
 
-const CodeEditor = ({ value, onChange }) => {
-  React.useEffect(() => {
+class CodeEditor extends React.Component {
+  constructor() {
+    super();
     const langTools = ace.require("ace/ext/language_tools");
     const autoCompletions = {
       getCompletions: (editor, session, pos, prefix, callback) => {
         callback(null, AUTO_COMPLETIONS);
       },
     };
-    langTools.addCompleter(autoCompletions);
-  }, []);
 
-  return (
-    <AceEditor
-      theme="twilight"
-      value={value}
-      onChange={onChange}
-      maxLines={100}
-      {...ACE_PROPS}
-    />
-  );
-};
+    langTools.addCompleter(autoCompletions);
+  }
+
+  render() {
+    return (
+      <AceEditor
+        theme="twilight"
+        value={this.props.value}
+        onChange={this.props.onChange}
+        maxLines={100}
+        {...ACE_PROPS}
+      />
+    );
+  }
+}
 
 export default CodeEditor;

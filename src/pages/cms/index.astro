@@ -1,53 +1,28 @@
 ---
+
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
     <title>Content Managment System</title>
     <link href="/cms/config.yml" type="text/yaml" rel="cms-config-url" />
   </head>
   <body>
     <script>
-      import cms from "netlify-cms-app";
-      import MDXPreview from "@components/cms/Preview";
       import CodeEditor from "@components/cms/CodeEditor";
-      import components from "@components/components";
-      import React from "react";
       import "@gw2-ui/default_style.css";
+      import cms from "decap-cms-app";
 
       cms.registerWidget("mdx", CodeEditor);
 
-      cms.registerMediaLibrary({
-        name: "disabled",
-        init: () => ({ show: () => undefined, enableStandalone: () => false }),
-      });
-
-      cms.registerPreviewTemplate("builds", MDXPreview);
+      //cms.registerPreviewTemplate("builds", MDXPreview);
       // cms.registerPreviewStyle(styles);
 
       cms.init();
-
-      // run on dom ready
-
-      document.addEventListener("DOMContentLoaded", moveStyles);
-
-      function moveStyles() {
-        // delay to make sure styles are loaded
-        setTimeout(() => {
-          const iframeHeadElem =
-            document.querySelector("#preview-pane").contentDocument.head;
-
-          const head = document.querySelector("head");
-          // move all styles fro head to iframehead
-          head.querySelectorAll("style").forEach((style) => {
-            console.log(style);
-            iframeHeadElem.appendChild(style.cloneNode(true));
-          });
-        }, 2000);
-      }
     </script>
   </body>
 </html>
