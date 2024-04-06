@@ -3,19 +3,6 @@ import items from "@gw2api/items.json";
 import skills from "@gw2api/skills.json";
 import traits from "@gw2api/traits.json";
 
-export const ACE_PROPS = {
-  width: "100%",
-  name: "MDEditor",
-  showPrintMargin: false,
-  tabSize: 2,
-  mode: "markdown",
-  wrapEnabled: true,
-  setOptions: {
-    enableBasicAutocompletion: true,
-    enableLiveAutocompletion: false,
-  },
-};
-
 const BOONS = [
   "Aegis",
   "Alacrity",
@@ -130,12 +117,12 @@ export const AUTO_COMPLETIONS = [
     name: `<Trait name="${trait.name}" />`,
     description: `${trait?.profession?.slice(0, 4) || "generic"}-${trait.id}`,
   })),
-  ...items.map((item) => ({
-    label: item.name,
-    type: "Item",
-    name: `<Item name="${item.name}" />`,
-    description: item.d,
-  })),
+  // ...items.map((item) => ({
+  //   label: item.name,
+  //   type: "Item",
+  //   name: `<Item name="${item.name}" />`,
+  //   description: item.d,
+  // })),
   ...Object.entries(SPECIALIZATIONS)
     .concat([...new Set(Object.values(SPECIALIZATIONS))].map((a) => [a, a]))
     .map(([spec, prof]) => ({

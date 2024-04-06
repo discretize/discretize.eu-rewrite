@@ -1,11 +1,24 @@
 import ace from "ace-builds";
 import AceEditor from "react-ace";
-import { ACE_PROPS, AUTO_COMPLETIONS } from "./aceEditorOptions";
 import React from "react";
+import { AUTO_COMPLETIONS } from "./aceEditorOptions";
 
 import "ace-builds/src-noconflict/ext-language_tools"; // needed for autocompletions
 import "ace-builds/src-noconflict/mode-markdown";
 import "ace-builds/src-noconflict/theme-twilight";
+
+const ACE_PROPS = {
+  width: "100%",
+  name: "MDEditor",
+  showPrintMargin: false,
+  tabSize: 2,
+  mode: "markdown",
+  wrapEnabled: true,
+  setOptions: {
+    enableBasicAutocompletion: true,
+    enableLiveAutocompletion: false,
+  },
+};
 
 class CodeEditor extends React.Component {
   constructor() {
