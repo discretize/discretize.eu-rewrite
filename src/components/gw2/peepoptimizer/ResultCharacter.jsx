@@ -4,8 +4,8 @@ import {
   Classes,
   INFUSION_IDS,
   WeaponTypes,
+  getWeight,
 } from "discretize-gear-optimizer/src/utils/gw2-data";
-import { getWeight } from "discretize-gear-optimizer/src/utils/usefulFunctions";
 import React from "react";
 import CharacterWrapper from "./CharacterWrapper";
 
