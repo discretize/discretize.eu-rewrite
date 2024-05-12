@@ -20,7 +20,7 @@ WRANGLER="../node_modules/.bin/wrangler"
 # strip ending from filename 
 filename=$(basename -- "$1")
 FILENAME="${filename%.*}"
-RESIZED="$FILENAME.resized.mkv"
+RESIZED="$FILENAME.resized.mp4"
 
 mkdir -p "$FILENAME"
 
@@ -29,10 +29,13 @@ mkdir -p "$FILENAME"
 # then downscale to 720p
 ffmpeg -i "$1" -r 25 -filter:v "crop=iw-880:ih,scale=1280:720" -an "$RESIZED" 
 
-av1an -i "$RESIZED" -v "--cpu-used=4 --threads=12 --target-bitrate=400 " --pix-format yuv420p -o "$FILENAME/$FILENAME.av1.mp4"
-ffmpeg -i "$RESIZED" -c:v libvpx-vp9 -b:v 400K "$FILENAME/$FILENAME.vp9.mp4"
+# av1an -i "$RESIZED" -v "--cpu-used=4 --threads=12 --target-bitrate=400 " --pix-format yuv420p -o "$FILENAME/$FILENAME.av1.mp4"
+ffmpeg -i "$RESIZED" -c:v libsvtav1 -pix_fmt yuv420p -crf 55 "$FILENAME/$FILENAME.av1.mp4" -y
+# crazy slow
+#ffmpeg -i "$RESIZED" -c:v libaom-av1 -b:v 400K "$FILENAME/$FILENAME.av1.mp4" -y
+ffmpeg -i "$RESIZED" -c:v libvpx-vp9 -b:v 400K "$FILENAME/$FILENAME.vp9.mp4" -y
 # iOS devices dont support VP9
-ffmpeg -i "$RESIZED" -c:v libx264 -b:v 600K "$FILENAME/$FILENAME.x264.mp4"
+ffmpeg -i "$RESIZED" -c:v libx264 -b:v 600K "$FILENAME/$FILENAME.x264.mp4" -y
 
 rm "$RESIZED"
 
