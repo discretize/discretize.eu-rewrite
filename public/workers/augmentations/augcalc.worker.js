@@ -50,10 +50,11 @@ const calculate = ({
   augment: rawAugment,
   journals,
   pages,
-  cm100,
-  cm99,
-  cm98,
-  cm97,
+  lonelyTower,
+  silentSurf,
+  sunquaPeak,
+  shatteredObservatory,
+  nightmare,
   t4s,
   recs,
   weekly,
@@ -68,21 +69,28 @@ const calculate = ({
   let matricesPerDay = 0;
   let pagesPerDay = 0;
 
-  if (cm100) {
+  if (lonelyTower) {
     relicsPerDay += 80 + 19 + augment * 5;
     pristinesPerDay += 2;
     matricesPerDay += 1;
     pagesPerDay += 1;
   }
 
-  if (cm99) {
+  if (silentSurf) {
     relicsPerDay += 80 + 19 + augment * 5;
     pristinesPerDay += 2;
     matricesPerDay += 1;
     pagesPerDay += 1;
   }
 
-  if (cm98) {
+  if (sunquaPeak) {
+    relicsPerDay += 80 + 19 + augment * 5;
+    pristinesPerDay += 2;
+    matricesPerDay += 1;
+    pagesPerDay += 1;
+  }
+
+  if (shatteredObservatory) {
     // 20 per boss + 80 on completion relics
     relicsPerDay += 140 + 19 + augment * 5;
     pristinesPerDay += 2;
@@ -90,7 +98,7 @@ const calculate = ({
     pagesPerDay += 1;
   }
 
-  if (cm97) {
+  if (nightmare) {
     relicsPerDay += 140 + 19 + augment * 5;
     pristinesPerDay += 2;
     matricesPerDay += 1;
@@ -101,12 +109,24 @@ const calculate = ({
     relicsPerDay += 3 * 18.2 + 3 * augment * 5;
     pristinesPerDay += 12;
 
-    if (cm100) {
-      relicsPerDay -= (2 * (19 + augment * 5)) / 15; // 100 is 2 times daily per 15 days
+    if (lonelyTower) {
+      relicsPerDay -= (1 * (19 + augment * 5)) / 15;
     }
 
-    if (cm99) {
-      relicsPerDay -= (3 * (19 + augment * 5)) / 15; // 99 is 3 times daily per 15 days
+    if (silentSurf) {
+      relicsPerDay -= (2 * (19 + augment * 5)) / 15;
+    }
+
+    if (sunquaPeak) {
+      relicsPerDay -= (1 * (19 + augment * 5)) / 15;
+    }
+
+    if (shatteredObservatory) {
+      relicsPerDay -= (1 * (19 + augment * 5)) / 15;
+    }
+
+    if (nightmare) {
+      relicsPerDay -= (3 * (19 + augment * 5)) / 15;
     }
   }
 
@@ -136,35 +156,36 @@ const calculate = ({
     relicsPerDay += Number(extraRelicsValue);
   }
 
-  const buyableMistAttunements = MIST_ATTUNEMENTS.filter(
-    (value, index) => index + 1 > augment
-  ).reduce((result, value, index) => {
-    const {
-      relics: relicsCost = 0,
-      pristines: pristinesCost = 0,
-      matrices: matricesCost = 0,
-      journals: journalsCost = 0,
-    } = value;
-    const {
-      total: {
-        relics: previousRelicsCost = 0,
-        pristines: previousPristinesCost = 0,
-        matrices: previousMatricesCost = 0,
-        journals: previousJournalsCost = 0,
-      },
-    } = result[index - 1] || { total: {} };
+  const buyableMistAttunements = MIST_ATTUNEMENTS.filter((value, index) => index + 1 > augment).reduce(
+    (result, value, index) => {
+      const {
+        relics: relicsCost = 0,
+        pristines: pristinesCost = 0,
+        matrices: matricesCost = 0,
+        journals: journalsCost = 0,
+      } = value;
+      const {
+        total: {
+          relics: previousRelicsCost = 0,
+          pristines: previousPristinesCost = 0,
+          matrices: previousMatricesCost = 0,
+          journals: previousJournalsCost = 0,
+        },
+      } = result[index - 1] || { total: {} };
 
-    result.push({
-      ...value,
-      total: {
-        relics: relicsCost + previousRelicsCost,
-        pristines: pristinesCost + previousPristinesCost,
-        matrices: matricesCost + previousMatricesCost,
-        journals: journalsCost + previousJournalsCost,
-      },
-    });
-    return result;
-  }, []);
+      result.push({
+        ...value,
+        total: {
+          relics: relicsCost + previousRelicsCost,
+          pristines: pristinesCost + previousPristinesCost,
+          matrices: matricesCost + previousMatricesCost,
+          journals: journalsCost + previousJournalsCost,
+        },
+      });
+      return result;
+    },
+    []
+  );
 
   const mistAttunements = buyableMistAttunements.map((value) => {
     const {
@@ -182,15 +203,10 @@ const calculate = ({
     let newPages = parseInt(pages, 10);
 
     let pristinesToRelics = 0;
-    if (
-      newPristines > rawPristinesCost &&
-      (newRelics < rawRelicsCost || newMatrices < rawMatricesCost)
-    ) {
+    if (newPristines > rawPristinesCost && (newRelics < rawRelicsCost || newMatrices < rawMatricesCost)) {
       pristinesToRelics = Math.min(
         (newRelics < rawRelicsCost ? (rawRelicsCost - newRelics) / 15 : 0) +
-          (newMatrices < rawMatricesCost
-            ? (rawMatricesCost - newMatrices) * 15
-            : 0),
+          (newMatrices < rawMatricesCost ? (rawMatricesCost - newMatrices) * 15 : 0),
         newPristines - rawPristinesCost
       );
       newRelics += pristinesToRelics * 15;
@@ -205,10 +221,7 @@ const calculate = ({
     // console.log('newMatrices: ' + newMatrices);
     if (newRelics - rawRelicsCost >= 15 && newMatrices < rawMatricesCost) {
       // console.log('inside');
-      relicsToMatrices = Math.min(
-        (rawMatricesCost - newMatrices) * 15,
-        Math.abs(newRelics - rawRelicsCost)
-      );
+      relicsToMatrices = Math.min((rawMatricesCost - newMatrices) * 15, Math.abs(newRelics - rawRelicsCost));
 
       // if relics are the bottleneck, you gotta take into account the amount of relics you make while filling up that bottleneck
       newRelics -= relicsToMatrices;
@@ -247,8 +260,7 @@ const calculate = ({
       // console.log('inside');
       days = Math.max(
         (15 * (pristinesCost + matricesCost) + relicsCost) /
-          (15 * (idealPristinesPerDay + idealMatricesPerDay) +
-            idealRelicsPerDay),
+          (15 * (idealPristinesPerDay + idealMatricesPerDay) + idealRelicsPerDay),
         daysForJournals
       );
       // console.log(days)
@@ -265,8 +277,7 @@ const calculate = ({
       if (idealMatricesPerDay < matricesPerDay) {
         invalidMatrices = true;
         days = Math.max(
-          (15 * pristinesCost + relicsCost) /
-            (15 * pristinesPerDay + relicsPerDay),
+          (15 * pristinesCost + relicsCost) / (15 * pristinesPerDay + relicsPerDay),
           daysForMatrices,
           daysForJournals
         );
@@ -285,9 +296,7 @@ const calculate = ({
       if (pristinesPerDay < idealPristinesPerDay) {
         invalidPristines = true;
         days = Math.max(
-          (days =
-            (15 * matricesCost + relicsCost) /
-            (15 * matricesPerDay + relicsPerDay)),
+          (days = (15 * matricesCost + relicsCost) / (15 * matricesPerDay + relicsPerDay)),
           daysForPristines,
           daysForJournals
         );
@@ -299,24 +308,14 @@ const calculate = ({
 
       if (invalidMatrices && invalidPristines) {
         // Sad, have to reset :(
-        days = Math.max(
-          daysForRelics,
-          daysForPristines,
-          daysForMatrices,
-          daysForJournals
-        );
+        days = Math.max(daysForRelics, daysForPristines, daysForMatrices, daysForJournals);
 
         idealRelicsPerDay = relicsPerDay;
         idealPristinesPerDay = pristinesPerDay;
         idealMatricesPerDay = matricesPerDay;
       }
     } else {
-      days = Math.max(
-        daysForRelics,
-        daysForPristines,
-        daysForMatrices,
-        daysForJournals
-      );
+      days = Math.max(daysForRelics, daysForPristines, daysForMatrices, daysForJournals);
     }
 
     return {
@@ -329,10 +328,8 @@ const calculate = ({
         daysForJournals,
       },
       convert: {
-        pristinesToRelics:
-          pristinesToRelics + (pristinesPerDay - idealPristinesPerDay) * days,
-        relicsToMatrices:
-          relicsToMatrices + (idealMatricesPerDay - matricesPerDay) * days * 15,
+        pristinesToRelics: pristinesToRelics + (pristinesPerDay - idealPristinesPerDay) * days,
+        relicsToMatrices: relicsToMatrices + (idealMatricesPerDay - matricesPerDay) * days * 15,
         pagesToJournals: (rawJournalsCost - newJournals) * 28,
       },
     };
