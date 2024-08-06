@@ -97,7 +97,6 @@ const duplicateSkills = skills.filter(
     skills.indexOf(skills.find((sk) => sk.name === skill.name)) !== index
 );
 
-// eslint-disable-next-line import/prefer-default-export
 export const AUTO_COMPLETIONS = [
   ...skills.map((skill) => {
     const hasDuplicate = duplicateSkills.includes(skill);
