@@ -4,7 +4,7 @@ Welcome to the source repository of the [discretize.eu](https://discretize.eu) w
 
 ## Requirements
 
-- yarn v1
+- pnpm v8
 - node 18 +
 - git
 
@@ -14,13 +14,13 @@ Welcome to the source repository of the [discretize.eu](https://discretize.eu) w
 git clone git@github.com:gw2princeps/discretize.eu-rewrite.git
 cd discretize.eu-rewrite
 git submodule update --init --recursive
-yarn install
+pnpm install
 ```
 
 ## Development
 
 ```
-yarn dev
+pnpm dev
 ```
 
 Note: This command will execute extra scripts that are necessary to prepare the file system. Astro expects one .astro file per page that imports the md(x) file. For each build/guide/fractal, these scripts will create the necessary files.
@@ -30,6 +30,6 @@ Why not use dynamic imports? Astro has to reload all pages included in the dynam
 ## Build
 
 ```
-yarn build
-yarn preview
+pnpm build
+pnpm preview
 ```
