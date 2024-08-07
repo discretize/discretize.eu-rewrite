@@ -6,7 +6,7 @@ import type { Props as GuideProps } from "src/components/frontmatter/GuideFrontm
 import GuideFrontmatter from "src/components/frontmatter/GuideFrontmatter.astro";
 import { guideHeaders } from "src/utils/cache";
 import imageFetch from "src/utils/imageFetch";
-import Layout, { SEOProps } from "./Layout.astro";
+import Layout, { type SEOProps } from "./Layout.astro";
 
 export interface Props {
   frontmatter: GuideProps;
