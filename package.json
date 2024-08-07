@@ -14,6 +14,7 @@
     "postbuild": "node scripts/generateFontPreloads.js",
     "preview": "astro preview --host",
     "astro": "astro",
+    "lint": "eslint .",
     "cmsProxy": "cd discretize-guides && npx decap-server"
   },
   "dependencies": {
@@ -52,20 +53,28 @@
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.8.0",
     "@reduxjs/toolkit": "^2.0.8",
     "@rollup/plugin-yaml": "^4.1.2",
+    "@types/eslint__js": "^8.42.3",
     "@types/node": "^20.12.5",
     "@types/react": "^18.2.46",
     "@types/react-dom": "^18.2.18",
+    "@typescript-eslint/parser": "^8.0.1",
     "ace-builds": "^1.32.9",
     "astro-fontaine": "^1.0.1",
     "axios": "^1.4.0",
     "daisyui": "^3.9.4",
-    "eslint-plugin-astro": "^0.34.0",
+    "eslint": "^9.8.0",
+    "eslint-plugin-astro": "^1.2.3",
+    "eslint-plugin-jsx-a11y": "^6.9.0",
     "fontaine": "^0.5.0",
+    "globals": "^15.9.0",
     "prettier": "^3.1.1",
     "prettier-plugin-astro": "^0.13.0",
     "remark-gfm": "^4.0.0",
+    "typescript": "^5.4.4",
+    "typescript-eslint": "^8.0.1",
     "wrangler": "^3.48.0"
   }
 }
