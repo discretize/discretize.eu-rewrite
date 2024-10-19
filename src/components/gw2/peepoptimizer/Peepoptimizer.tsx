@@ -266,23 +266,22 @@ const Component = ({ templates }) => {
   ]);
 
   async function calc() {
-    let value,
-      done = false;
-
     const { calculate } = await import(
       "discretize-gear-optimizer/src/state/optimizer/optimizer"
     );
 
     testState.optimizer.form.forcedSlots.slots = forcedSlots;
-    const resultGenerator = calculate(testState);
-    while (true) {
-      ({ value, done } = resultGenerator.next());
-      if (done) {
-        break;
+    const resultGenerator = calculate(testState, 1);
+
+    let result = [];
+
+    for await (const { percent, list } of resultGenerator) {
+      if (list) {
+        result = list;
       }
     }
-    setResult(value.list);
-    console.log(value);
+
+    setResult(result);
   }
 
   const onClick = () => {
