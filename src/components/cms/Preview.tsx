@@ -76,7 +76,7 @@ class MDXPreview extends React.Component {
     const profession = entry.getIn(["data", "profession"]);
     const hasBeginner = entry.getIn(["data", "hasBeginner"]);
 
-    let content = text;
+    const content = text;
 
     if (this.state.error) {
       return (

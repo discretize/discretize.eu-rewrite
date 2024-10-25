@@ -10,7 +10,7 @@ export default function CharacterWrapper(props) {
           const src = srcset.split(" ")[0];
           // dont add a media query for the last source
           // media query should be offset by 1 in the array of imageData.sources[i]
-          let width = img.srcset
+          const width = img.srcset
             .split(",")
             [index + 1]?.split(" ")[1]
             .replace("w", "");
