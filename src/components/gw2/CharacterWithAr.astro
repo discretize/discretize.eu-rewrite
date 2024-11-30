@@ -2,41 +2,56 @@
 import "discretize-ui/react-discretize-components/src/styles/defaultTheme.css";
 import Peepoptimizer from "./peepoptimizer/Peepoptimizer";
 
+interface Character {
+  title: string;
+  id: string;
+}
+
+interface Props {
+  characters: string[];
+}
+
 const id = Math.random().toString(16).slice(2);
-const { characters } = Astro.props;
+const { characters } = Astro.props as Props;
 
 // enrich data with escaped ids
-characters.forEach((title, index) => {
-  characters[index] = {
-    title,
-    id: `#page_${title
-      .toLowerCase()
-      .replaceAll(" ", "")
-      .replaceAll(/\/|[^a-zA-Z0-9]+/gm, "")}`,
-  };
-});
+const enrichedCharacters: Character[] = characters.map((title) => ({
+  title,
+  id: `#page_${title
+    .toLowerCase()
+    .replaceAll(" ", "")
+    .replaceAll(/\/|[^a-zA-Z0-9]+/gm, "")}`,
+}));
 
-// read out json templates for peepoptimizer
 // const templates = (
 //   await Astro.glob("../../assets/data/optimizer-state/ranger/*.json")
 // ).map((d) => d.default);
-const templates = [];
+const templates: any[] = [];
 ---
 
 <script>
   class CharacterWithAr extends HTMLElement {
+    private readonly pages: NodeListOf<Element>;
+    private readonly buttons: NodeListOf<HTMLButtonElement>;
+
     constructor() {
       super();
+
+      this.pages = this.querySelectorAll(".page");
+      this.buttons = this.querySelectorAll("button[data-tab-ui]");
 
       this.initDesktop();
       this.initMobileSelect();
     }
 
-    initDesktop() {
+    private initDesktop(): void {
       this.buttons.forEach((button) => {
         button.addEventListener("click", () => {
           const target = button.getAttribute("data-tab-ui");
-          const element = this.querySelector(target);
+          if (!target) return;
+
+          const element = this.querySelector<HTMLElement>(target);
+          if (!element) return;
 
           // hide page elements
           this.pages.forEach((page) => {
@@ -48,32 +63,35 @@ const templates = [];
           // show element
           element.classList.remove("hidden");
 
-          this.buttons.forEach((button) => {
-            if (button.getAttribute("data-tab-ui") === target) {
-              button.classList.add("btn-primary");
-              button.classList.remove("embossed");
+          this.buttons.forEach((btn) => {
+            const btnTarget = btn.getAttribute("data-tab-ui");
+            if (btnTarget === target) {
+              btn.classList.add("btn-primary");
+              btn.classList.remove("embossed");
             } else {
-              button.classList.remove("btn-primary");
-              button.classList.add("embossed");
+              btn.classList.remove("btn-primary");
+              btn.classList.add("embossed");
             }
           });
         });
       });
     }
 
-    initMobileSelect() {
+    private initMobileSelect(): void {
       const mobileCharacterSelect = this.querySelector<HTMLSelectElement>(
-        "#mobileCharacterSelect"
+        "#mobileCharacterSelect",
       );
 
       if (mobileCharacterSelect) {
-        mobileCharacterSelect.addEventListener("change", (event) => {
-          if (!event || !event.target.value) return;
-          const target = event.target.value;
-          const element = document.querySelector(target);
+        mobileCharacterSelect.addEventListener("change", (event: Event) => {
+          const target = (event.target as HTMLSelectElement).value;
+          if (!target) return;
+
+          const element = document.querySelector<HTMLElement>(target);
+          if (!element) return;
 
           // hide page elements
-          const pages = document.querySelectorAll(".page");
+          const pages = document.querySelectorAll<HTMLElement>(".page");
           pages.forEach((page) => {
             if (page.id !== target.replace("#", "")) {
               page.classList.add("hidden");
@@ -85,14 +103,6 @@ const templates = [];
         });
       }
     }
-
-    get pages() {
-      return this.querySelectorAll(".page");
-    }
-
-    get buttons() {
-      return this.querySelectorAll("button[data-tab-ui]");
-    }
   }
 
   customElements.define("character-with-ar", CharacterWithAr);
@@ -102,7 +112,7 @@ const templates = [];
   <div id={id} class="">
     <div class="join hidden sm:block">
       {
-        characters.map((character, index) => (
+        enrichedCharacters.map((character, index) => (
           <button
             data-tab-ui={character.id}
             aria-label={character.title}
@@ -126,7 +136,7 @@ const templates = [];
         aria-label="Character Variant"
       >
         {
-          characters.map((character, index) => (
+          enrichedCharacters.map((character, index) => (
             <option
               value={character.id}
               aria-label={character.title}

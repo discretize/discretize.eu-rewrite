@@ -6,15 +6,19 @@ import Profession from "./gw2-ui/Profession.astro";
 
 <script>
   class SelectProfessionClass extends HTMLElement {
-    selected = null;
-    changeOptionEvent: CustomEvent;
+    selected: string | null = null;
+    changeOptionEvent: CustomEvent<{ option: string | null }>;
 
     constructor() {
       super();
+
       this.options.forEach((option) => {
-        option.addEventListener("click", () =>
-          this.setSelected(option.dataset.option)
-        );
+        option.addEventListener("click", () => {
+          const optionValue = option.getAttribute("data-option");
+          if (optionValue) {
+            this.setSelected(optionValue);
+          }
+        });
       });
 
       this.changeOptionEvent = new CustomEvent("changeOption", {
@@ -26,20 +30,22 @@ import Profession from "./gw2-ui/Profession.astro";
       });
     }
 
-    get options() {
+    get options(): NodeListOf<HTMLAnchorElement> {
       return this.querySelectorAll("a");
     }
 
-    get label() {
+    get label(): HTMLSpanElement | null {
       return this.querySelector("label span");
     }
 
-    setSelected(target) {
+    setSelected(target: string): void {
       // set focus false to close the dropdown
-      document.activeElement.blur();
+      (document.activeElement as HTMLElement)?.blur();
 
       this.selected = target;
-      this.label.textContent = target;
+      if (this.label) {
+        this.label.textContent = target;
+      }
       this.changeOptionEvent.detail.option = target;
       this.dispatchEvent(this.changeOptionEvent);
     }

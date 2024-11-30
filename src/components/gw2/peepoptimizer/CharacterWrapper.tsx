@@ -1,6 +1,9 @@
 import { Character } from "discretize-ui/react-discretize-components/src";
+import type { CharacterProps } from "discretize-ui/react-discretize-components/src/character/Character/Character";
 
-export default function CharacterWrapper(props) {
+export default function CharacterWrapper(
+  props: CharacterProps & { imageData: any },
+) {
   const { imageData } = props;
 
   const Image = () => (
@@ -22,7 +25,7 @@ export default function CharacterWrapper(props) {
           return (
             <source key={index} media={media} srcSet={src} type={img.type} />
           );
-        })
+        }),
       )}
 
       <img

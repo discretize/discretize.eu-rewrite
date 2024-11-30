@@ -1,6 +1,10 @@
 ---
-import PROFESSIONS from "@gw2-ui/data/professions";
+import PROFESSIONS, { type ProfessionTypes } from "@gw2-ui/data/professions";
 import BuildsPage from "@components/pages/BuildsPage/BuildsPage.astro";
+
+interface Props {
+  profession: ProfessionTypes;
+}
 
 export async function getStaticPaths() {
   return Object.keys(PROFESSIONS).map((prof) => ({

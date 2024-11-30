@@ -1,17 +1,20 @@
 ---
-import Attribute from "@gw2-ui/components/Attribute/Attribute";
+import UIAttribute, {
+  type AttributeProps,
+} from "@gw2-ui/components/Attribute/Attribute";
 import type { AttributeTypes } from "@gw2-ui/data/attributes";
 import { getSizeStyle } from "src/utils/styles";
-import type { GenericGw2Component } from "src/utils/types";
+import type { GenericWebsiteComponent } from "src/utils/types";
 
-interface Props extends GenericGw2Component {
-  name: AttributeTypes;
-}
+type Props = AttributeProps & GenericWebsiteComponent;
+
+const { className } = Astro.props;
+
+const attributeProps = {
+  ...Astro.props,
+  className: `whitespace-nowrap ${className || ""}`.trim(),
+  style: getSizeStyle(Astro.props),
+};
 ---
 
-<Attribute
-  client:visible
-  {...Astro.props}
-  className={`whitespace-nowrap ${Astro.props.className || ""}`.trim()}
-  style={getSizeStyle(Astro.props)}
-/>
+<UIAttribute client:visible {...attributeProps} />

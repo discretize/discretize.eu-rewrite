@@ -17,7 +17,6 @@ export interface BuildCardProps {
   archive: boolean;
 }
 
-const UPDATED_LAST_X_DAYS = 30;
 const {
   title,
   specialization,
@@ -85,19 +84,19 @@ const image = await getOptimizedImage(specialization.toLowerCase(), {
           <span slot="target">
             <Icon
               name="mdi:clock-outline"
-              height="1.8rem"
+              height={28}
               class={`${
                 uptodate.guide && uptodate.gear
                   ? "text-green-500"
                   : uptodate.guide || uptodate.gear
-                  ? "yellow"
-                  : "red"
+                    ? "yellow"
+                    : "red"
               }`}
             />
           </span>
           <div slot="tooltip">
             Gear: {uptodate.gear ? "up-to-date" : "not updated"}<br />
-             Guide: {uptodate.guide ? "up-to-date" : "not updated"}
+            Guide: {uptodate.guide ? "up-to-date" : "not updated"}
           </div>
         </Tooltip2>
       </div>
@@ -107,7 +106,7 @@ const image = await getOptimizedImage(specialization.toLowerCase(), {
           <>
             <Tooltip2>
               <div class="text-blue-600" slot="target">
-                <Icon name="mdi:book-open" height="1.8rem" />
+                <Icon name="mdi:book-open" height={28} />
               </div>
               <span slot="tooltip">CM-Guide available</span>
             </Tooltip2>

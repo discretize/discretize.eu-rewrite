@@ -15,6 +15,7 @@ import SnowblindPathSVG from "./path-svg/Snowblind.astro";
 import SunquaPeak from "./path-svg/SunquaPeak.astro";
 import ThaumanovaReactorSVG from "./path-svg/ThaumanovaReactor.astro";
 import Volcanic from "./path-svg/Volcanic.astro";
+import type { ComponentInstance, Props } from "astro";
 
 export type Encounter = {
   xPercent: number;
@@ -28,10 +29,10 @@ export type Encounter = {
 const mapsData: Record<
   string,
   {
-    src: string;
+    src: ImageMetadata;
     width: number;
     height: number;
-    PathSVG: (props) => any;
+    PathSVG: (_props: { width: number; height: number }) => any;
     encounters: Encounter[];
   }
 > = {

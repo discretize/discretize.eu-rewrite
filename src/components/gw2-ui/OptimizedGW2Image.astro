@@ -2,8 +2,12 @@
 import sizes from "discretize-ui/react-discretize-components/src/helpers/iconSizes";
 
 interface Props {
-  dataProp?: string;
+  dataProp?: "data" | "dataItem";
   data?: {
+    icon?: string;
+    name?: string;
+  };
+  dataItem?: {
     icon?: string;
     name?: string;
   };

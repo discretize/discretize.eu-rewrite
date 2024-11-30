@@ -1,19 +1,17 @@
 ---
-import Profession, {
+import UIProfession, {
   type ProfessionProps,
 } from "@gw2-ui/components/Profession/Profession";
-import type { EliteSpecTypes, ProfessionTypes } from "@gw2-ui/data/professions";
 import { getSizeStyle } from "src/utils/styles";
-import type { GenericGw2Component } from "src/utils/types";
+import type { GenericWebsiteComponent } from "src/utils/types";
 
-interface Props extends GenericGw2Component, ProfessionProps {
-  name: EliteSpecTypes | ProfessionTypes;
-}
+type Props = ProfessionProps & GenericWebsiteComponent;
+
+const professionProps = {
+  ...Astro.props,
+  className: `whitespace-nowrap ${Astro.props.className || ""}`.trim(),
+  style: getSizeStyle(Astro.props),
+};
 ---
 
-<Profession
-  client:visible
-  {...Astro.props}
-  className={`whitespace-nowrap ${Astro.props.className || ""}`.trim()}
-  style={getSizeStyle(Astro.props)}
-/>
+<UIProfession client:visible {...professionProps} />

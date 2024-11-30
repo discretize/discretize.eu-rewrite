@@ -6,14 +6,30 @@ import {
   WeaponTypes,
   getWeight,
 } from "discretize-gear-optimizer/src/utils/gw2-data";
-import React from "react";
 import CharacterWrapper from "./CharacterWrapper";
+import type { BackAndTrinketsProps } from "discretize-ui/react-discretize-components/src/character/BackAndTrinkets/BackAndTrinkets";
+import type { ArmorProps } from "discretize-ui/react-discretize-components/src/character/Armor/Armor";
+import type { SkillsProps } from "discretize-ui/react-discretize-components/src/character/Skills/Skills";
+import type { WeaponsProps } from "discretize-ui/react-discretize-components/src/character/Weapons/Weapons";
+import type { Character } from "discretize-gear-optimizer/src/state/optimizer/optimizerCore";
+import type { AssumedBuffsProps } from "discretize-ui/react-discretize-components/src/character/AssumedBuffs/AssumedBuffs";
+import type { EliteSpecTypes, ProfessionTypes } from "@gw2-ui/data/professions";
 
 export default function ResultCharacter({
   character,
   weapons,
   skills,
   assumedBuffs,
+}: {
+  character: Character;
+  weapons?: {
+    mainhand1: number;
+    offhand1: number;
+    mainhand2: number;
+    offhand2: number;
+  };
+  skills?: SkillsProps;
+  assumedBuffs: AssumedBuffsProps["value"];
 }) {
   const {
     profession,
@@ -53,15 +69,24 @@ export default function ResultCharacter({
   const sigil1Id = allExtrasModifiersById[sigil1]?.gw2id;
   const sigil2Id = allExtrasModifiersById[sigil2]?.gw2id;
   const rune = runeStringId ? allExtrasModifiersById[runeStringId] : undefined;
-  const isExotic = (index) =>
+  const isExotic = (index: number) =>
     cachedFormState?.priorities?.exotics?.data?.[character.gear[index]]?.[
       index
     ];
-  const getRarity = (index) => (isExotic(index) ? "Exotic" : "Ascended");
+  const getRarity = (index: number) =>
+    isExotic(index) ? "Exotic" : "Ascended";
   // Calculate the props for the weapons component
-  let wea1;
-  let wea2;
-  let weaponPropsAPI;
+  let wea1: {
+    name: string;
+    type: string;
+    gw2id: number;
+  };
+  let wea2: {
+    name: string;
+    type: string;
+    gw2id: number;
+  };
+  let weaponPropsAPI: WeaponsProps;
 
   if (weapons) {
     weaponPropsAPI = {
@@ -136,7 +161,7 @@ export default function ResultCharacter({
   // Calculate armor props
   const { gear, attributes } = character;
   const runeId = rune ? rune.gw2id : undefined;
-  const armorPropsAPI = {
+  const armorPropsAPI: ArmorProps = {
     weight: firstUppercase(weight),
     helmAffix: gear[0],
     helmRarity: getRarity(0),
@@ -165,7 +190,7 @@ export default function ResultCharacter({
   };
 
   // Calculate back and trinkets props
-  const backAndTrinketPropsAPI = {
+  const backAndTrinketPropsAPI: BackAndTrinketsProps = {
     backItemAffix: gear[11],
     backItemRarity: getRarity(11),
     backItemInfusion1Id: isExotic(11) ? null : infusions[6],
@@ -190,14 +215,18 @@ export default function ResultCharacter({
     accessory2InfusionId: isExotic(10) ? null : infusions[15],
   };
 
-  let skillsPropsAPI;
+  let skillsPropsAPI: SkillsProps;
   if (skills) {
     skillsPropsAPI = skills;
   }
 
   return (
     <CharacterWrapper
-      attributes={{ profession, data: attributes }}
+      attributes={{
+        specialization: specialization as ProfessionTypes | EliteSpecTypes,
+        profession,
+        data: attributes,
+      }}
       armor={armorPropsAPI}
       weapon={weaponPropsAPI}
       backAndTrinket={backAndTrinketPropsAPI}

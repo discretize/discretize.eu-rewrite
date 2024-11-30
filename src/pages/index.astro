@@ -29,20 +29,16 @@ import Button from "src/components/html-components/button.astro";
       <p class="subtext">International high-end GW2 fractal guild</p>
       <span class="flex justify-center gap-4">
         <Button id="buttonGuild">
-          <span class="flex">
-            Guild <Icon name="mdi:arrow-down" className="ml-4" height="1rem" />
+          <span class="flex gap-4">
+            Guild <Icon name="mdi:arrow-down" height={16} />
           </span>
         </Button>
 
         <Link href="/builds" className="">
           <Button>
-            <span class="flex">
+            <span class="flex gap-4">
               Builds
-              <Icon
-                name="mdi:format-list-bulleted"
-                className="ml-4"
-                height="1rem"
-              />
+              <Icon name="mdi:format-list-bulleted" height={16} />
             </span>
           </Button>
         </Link>

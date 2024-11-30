@@ -18,51 +18,63 @@ const { professionBuilds } = Astro.props;
   const FILTER_PROFESSION = "profession";
   const FILTER_RATING = "rating";
 
+  type FilterFunction = (elem: HTMLAnchorElement) => boolean;
+
   class BuildsDisplayClass extends HTMLElement {
-    currentFilters: Record<string, (elem) => boolean> = {};
+    currentFilters: Record<string, FilterFunction> = {};
 
     constructor() {
       super();
 
       // event listener for the Profession Select
-      this.addEventListener("changeOption", (e: CustomEvent) => {
-        const selected = e.detail.option;
+      this.addEventListener(
+        "changeOption",
+        (e: CustomEvent<{ option: string }>) => {
+          const selected = e.detail.option;
 
-        // add new filter
-        this.currentFilters[FILTER_PROFESSION] =
-          this.filterProfession(selected);
+          // add new filter
+          this.currentFilters[FILTER_PROFESSION] =
+            this.filterProfession(selected);
 
-        this.applyFilters();
-      });
+          this.applyFilters();
+        },
+      );
 
-      this.addEventListener("changeSelectedRating", (e: CustomEvent) => {
-        const selected = e.detail.rating;
+      this.addEventListener(
+        "changeSelectedRating",
+        (e: CustomEvent<{ rating: string }>) => {
+          const selected = e.detail.rating;
 
-        // add new filter
-        this.currentFilters[FILTER_RATING] = this.filterRating(selected);
+          // add new filter
+          this.currentFilters[FILTER_RATING] = this.filterRating(selected);
 
-        this.applyFilters();
-      });
+          this.applyFilters();
+        },
+      );
     }
 
-    get allBuilds() {
+    get allBuilds(): NodeListOf<HTMLAnchorElement> {
       return this.querySelectorAll<HTMLAnchorElement>("section a");
     }
 
-    filterProfession = (profToFilter) => (elem) => {
-      if (profToFilter === "all") return true;
-      return elem.dataset.profession === profToFilter;
-    };
+    private filterProfession =
+      (profToFilter: string): FilterFunction =>
+      (elem: HTMLAnchorElement): boolean => {
+        if (profToFilter === "all") return true;
+        return elem.dataset.profession === profToFilter;
+      };
 
-    filterRating = (ratingToFilter) => (elem) => {
-      if (ratingToFilter === "current") return true;
-      return elem.dataset.rating === ratingToFilter;
-    };
+    private filterRating =
+      (ratingToFilter: string): FilterFunction =>
+      (elem: HTMLAnchorElement): boolean => {
+        if (ratingToFilter === "current") return true;
+        return elem.dataset.rating === ratingToFilter;
+      };
 
-    applyFilters() {
-      this.allBuilds.forEach((elem) => {
+    private applyFilters(): void {
+      this.allBuilds.forEach((elem: HTMLAnchorElement) => {
         const show = Object.values(this.currentFilters).every((filter) =>
-          filter(elem)
+          filter(elem),
         );
 
         elem.classList.toggle("hidden", !show);

@@ -125,15 +125,15 @@ const {
       >
         <ul>
           <li class="flex gap-1 items-center">
-            <Icon name="mdi:calendar" height="0.8rem" /> last updated on{" "}
+            <Icon name="mdi:calendar" height={12.8} /> last updated on{" "}
             {new Date(date.trim()).toDateString()}
           </li>
           <li class="flex gap-1 items-center">
-            <Icon name="mdi:account" height="0.8rem" /> Gear:{" "}
-            {!gear ? "not" : ""} up-to-date
+            <Icon name="mdi:account" height={12.8} /> Gear: {!gear ? "not" : ""}{" "}
+            up-to-date
           </li>
           <li class="flex gap-1 items-center">
-            <Icon name="mdi:television-guide" height="0.8rem" /> Guide:{" "}
+            <Icon name="mdi:television-guide" height={12.8} /> Guide:{" "}
             {!guide ? "not" : ""}
             up-to-date
           </li>
@@ -160,11 +160,11 @@ const {
   </div>
   <ul class="mb-4 md:mt-2">
     <li class="flex gap-1 items-center text-xs font-normal">
-      <Icon name="mdi:calendar" height="0.8rem" /> last updated on{" "}
+      <Icon name="mdi:calendar" height={13} /> last updated on{" "}
       {new Date(date.trim()).toDateString()}
     </li>
-    <!-- 
-      
+    <!--
+
       <li class="flex gap-1 items-center">
       <Icon name="mdi:account" height="0.8rem" /> Gear: {!gear ? "not" : ""}{
         " "
@@ -175,8 +175,8 @@ const {
       <Icon name="mdi:television-guide" height="0.8rem" /> Guide:{" "}
       {!guide ? "not" : ""}
       up-to-date
-    </li> 
-  
+    </li>
+
   -->
   </ul>
 </div>
@@ -266,7 +266,7 @@ const {
         ]}
         slot="target"
       >
-        <Icon name="mdi:tune" size="1rem" /> Guide
+        <Icon name="mdi:tune" size={16} /> Guide
       </div>
       <span slot="tooltip">Guide is {!guide ? "not" : ""} up-to-date</span>
     </Tooltip2>

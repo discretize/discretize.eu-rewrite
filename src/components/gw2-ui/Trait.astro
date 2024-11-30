@@ -1,20 +1,22 @@
 ---
 import TraitInternal from "@gw2-ui/components/Trait/TraitInternal";
-import type GW2ApiTrait from "@gw2-ui/gw2api/types/traits/trait";
+import { type TraitInternalProps } from "@gw2-ui/components/Trait/TraitInternal";
 import { getSizeStyle } from "src/utils/styles";
-import type { GenericGw2Component } from "src/utils/types";
 import OptimizedGW2Image from "./OptimizedGW2Image.astro";
+import { type GenericWebsiteComponent } from "src/utils/types";
 
-interface Props extends GenericGw2Component {
-  data: GW2ApiTrait;
-}
+type Props = TraitInternalProps & GenericWebsiteComponent;
+
+const { data, size, className } = Astro.props;
+
+// Create a props object with only the properties that TraitInternal expects
+const traitProps: TraitInternalProps = {
+  ...Astro.props,
+  className: `whitespace-nowrap ${className || ""}`.trim(),
+  style: getSizeStyle({ size }),
+};
 ---
 
-<OptimizedGW2Image {...Astro.props}>
-  <TraitInternal
-    client:visible
-    {...Astro.props}
-    className={`whitespace-nowrap ${Astro.props.className || ""}`.trim()}
-    style={getSizeStyle(Astro.props)}
-  />
+<OptimizedGW2Image data={data} size={size}>
+  <TraitInternal client:visible {...traitProps} />
 </OptimizedGW2Image>

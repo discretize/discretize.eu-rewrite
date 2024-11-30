@@ -1,6 +1,6 @@
 import React from "react";
 import Input from "./Input";
-import { Item, Profession, Spinner } from "@gw2-ui/components";
+import { Spinner } from "@gw2-ui/components";
 import Checkbox from "./Checkbox";
 
 export default function ApplyForm() {
@@ -16,7 +16,7 @@ export default function ApplyForm() {
     /** voluntary: killproof.me link DEPRECATED (uses account name now) */
     kpLink: "", //
     /** confirmation of age and valid answers */
-    requirements: "",
+    requirements: false,
     /** list of applicant's power builds (for 98/99CM) */
     powerBuilds: "",
     /** list of applicant's condi builds (for 100CM) */

@@ -24,12 +24,12 @@ const headerImage = imageFetch(Object.keys(fractalHeaders), Astro.url.pathname);
 
 let seo: SEOProps = { title };
 
-const generateDefaultDescription = (title) =>
+const generateDefaultDescription = (title: string) =>
   `Master the ${title} fractal in Guild Wars 2 with our in-depth guide.`;
 
 if (headerImage) {
   const thumbnail = (await Object.entries(fractalHeaders).find(
-    ([k, v]) => k === headerImage
+    ([k]) => k === headerImage,
   )[1]()) as ImageMetadata;
 
   const ogImage = await getImage({

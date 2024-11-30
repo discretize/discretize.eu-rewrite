@@ -1,5 +1,10 @@
 ---
 import Link from "../Link.astro";
+
+interface Props {
+  href: string;
+  className?: string;
+}
 ---
 
 <Link {...Astro.props} enableDecoration><slot /></Link>

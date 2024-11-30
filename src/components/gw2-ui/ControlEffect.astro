@@ -1,17 +1,19 @@
 ---
-import ControlEffect from "@gw2-ui/components/ControlEffect/ControlEffect";
-import type { ControlEffectTypes } from "@gw2-ui/data/controlEffects";
+import UIControlEffect, {
+  type ControlEffectProps,
+} from "@gw2-ui/components/ControlEffect/ControlEffect";
 import { getSizeStyle } from "src/utils/styles";
-import type { GenericGw2Component } from "src/utils/types";
+import type { GenericWebsiteComponent } from "src/utils/types";
 
-interface Props extends GenericGw2Component {
-  name: ControlEffectTypes;
-}
+type Props = ControlEffectProps & GenericWebsiteComponent;
+
+const { size, className } = Astro.props;
+
+const controlEffectProps = {
+  ...Astro.props,
+  className: `whitespace-nowrap ${className || ""}`.trim(),
+  style: getSizeStyle({ size }),
+};
 ---
 
-<ControlEffect
-  client:visible
-  {...Astro.props}
-  className={`whitespace-nowrap ${Astro.props.className || ""}`.trim()}
-  style={getSizeStyle(Astro.props)}
-/>
+<UIControlEffect client:visible {...controlEffectProps} />

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import "@discretize/typeface-menomonia";
 import "@gw2-ui/default_style.css";
 import React from "react";

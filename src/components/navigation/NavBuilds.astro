@@ -23,7 +23,7 @@ const { builds } = Astro.props;
 // sort builds by rating
 const sortedBuilds = Object.keys(builds).reduce(
   (acc, profession) => {
-    acc[profession] = builds[profession].sort((a, b) => {
+    acc[profession] = builds[profession].sort((a: NavBuild, b: NavBuild) => {
       const aRating = RATINGS.indexOf(a.rating);
       const bRating = RATINGS.indexOf(b.rating);
 
@@ -36,14 +36,14 @@ const sortedBuilds = Object.keys(builds).reduce(
 
     return acc;
   },
-  {} as Props["builds"]
+  {} as Props["builds"],
 );
 
 // parition builds by rating
 const partitionedBuilds = Object.keys(sortedBuilds).reduce(
   (acc, profession) => {
     acc[profession] = sortedBuilds[profession].reduce(
-      (acc, build) => {
+      (acc: Array<NavBuild[]>, build: NavBuild) => {
         const rating = RATINGS.indexOf(build.rating);
 
         if (rating === 0) {
@@ -57,7 +57,7 @@ const partitionedBuilds = Object.keys(sortedBuilds).reduce(
       [[], []] as [
         (typeof sortedBuilds)[ProfessionTypes],
         (typeof sortedBuilds)[ProfessionTypes],
-      ]
+      ],
     );
 
     return acc;
@@ -68,7 +68,7 @@ const partitionedBuilds = Object.keys(sortedBuilds).reduce(
       (typeof sortedBuilds)[ProfessionTypes],
       (typeof sortedBuilds)[ProfessionTypes],
     ]
-  >
+  >,
 );
 ---
 
@@ -85,40 +85,42 @@ const partitionedBuilds = Object.keys(sortedBuilds).reduce(
                 client:load
                 disableLink
               />
-              <Icon name="mdi:chevron-right" size="1.5rem" />
+              <Icon name="mdi:chevron-right" size={24} />
             </div>
 
             <ul class={`${BACKGROUND} shadow`}>
-              {partitionedBuilds[profession].map((partition, index) => {
-                if (partition.length === 0) {
-                  return null;
-                }
+              {partitionedBuilds[profession].map(
+                (partition: NavBuild[], index: number) => {
+                  if (partition.length === 0) {
+                    return null;
+                  }
 
-                return (
-                  <>
-                    <TextDivider>{RATINGS[index]}</TextDivider>
-                    {partition.map((build) => (
-                      <li class="dark:hover:bg-gray-100/20 hover:bg-gray-300">
-                        <Link
-                          href={build.url}
-                          className="w-full"
-                          label={build.title}
-                        >
-                          <div class="flex items-center h-[48px] whitespace-nowrap p-3 justify-between">
-                            <Profession
-                              name={build.specialization}
-                              client:load
-                              disableLink
-                              className="whitespace-nowrap"
-                              text={build.title}
-                            />
-                          </div>
-                        </Link>
-                      </li>
-                    ))}
-                  </>
-                );
-              })}
+                  return (
+                    <>
+                      <TextDivider>{RATINGS[index]}</TextDivider>
+                      {partition.map((build: NavBuild) => (
+                        <li class="dark:hover:bg-gray-100/20 hover:bg-gray-300">
+                          <Link
+                            href={build.url}
+                            className="w-full"
+                            label={build.title}
+                          >
+                            <div class="flex items-center h-[48px] whitespace-nowrap p-3 justify-between">
+                              <Profession
+                                name={build.specialization}
+                                client:load
+                                disableLink
+                                className="whitespace-nowrap"
+                                text={build.title}
+                              />
+                            </div>
+                          </Link>
+                        </li>
+                      ))}
+                    </>
+                  );
+                },
+              )}
             </ul>
           </li>
         ))

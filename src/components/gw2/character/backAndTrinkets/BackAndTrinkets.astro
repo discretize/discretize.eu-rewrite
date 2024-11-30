@@ -9,6 +9,14 @@ type Affix = ItemStatName;
 type Rarity = ItemRarity;
 
 interface Props {
+  data: {
+    backItemData: GW2ApiItem;
+    accessory1Data: GW2ApiItem;
+    accessory2Data: GW2ApiItem;
+    amuletData: GW2ApiItem;
+    ring1Data: GW2ApiItem;
+    ring2Data: GW2ApiItem;
+  };
   dataUpgrades?: {
     infusions: GW2ApiItem[];
   };
@@ -101,19 +109,19 @@ function createUpgrades(infusionIds: number[]): [GW2ApiItem, number][] {
 }
 
 const backItemUpgrades = createUpgrades(
-  [backItemInfusion1Id, backItemInfusion2Id].filter(Boolean)
+  [backItemInfusion1Id, backItemInfusion2Id].filter(Boolean),
 );
 const accessory1Upgrades = createUpgrades(
-  [accessory1InfusionId].filter(Boolean)
+  [accessory1InfusionId].filter(Boolean),
 );
 const accessory2Upgrades = createUpgrades(
-  [accessory2InfusionId].filter(Boolean)
+  [accessory2InfusionId].filter(Boolean),
 );
 const ring1Upgrades = createUpgrades(
-  [ring1Infusion1Id, ring1Infusion2Id, ring1Infusion3Id].filter(Boolean)
+  [ring1Infusion1Id, ring1Infusion2Id, ring1Infusion3Id].filter(Boolean),
 );
 const ring2Upgrades = createUpgrades(
-  [ring2Infusion1Id, ring2Infusion2Id, ring2Infusion3Id].filter(Boolean)
+  [ring2Infusion1Id, ring2Infusion2Id, ring2Infusion3Id].filter(Boolean),
 );
 
 // some gw2-items come with stat-selection. We need to add the affix to the item manually

@@ -53,7 +53,7 @@ const { title, description, image, date } = Astro.props;
 
   <div class="absolute top-0 right-0 p-1 text-sm bg-blue-500 text-black">
     <small class="flex gap-1 items-center">
-      <Icon name="mdi:calendar" height="0.8rem" /> last updated on {
+      <Icon name="mdi:calendar" height={12.8} /> last updated on {
         new Date(date).toDateString()
       }
     </small>

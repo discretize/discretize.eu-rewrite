@@ -13,15 +13,18 @@
         "discretize-ui/react-discretize-components/src/index"
       ],
       "@components/*": ["src/components/*"],
-      "@gw2api/*": ["gw2-api-extended/data/api-extended/*"],
+      "@gw2api/*": ["gw2-api-extended/data/api-extended/*"]
     }
   },
+  "include": ["src/**/*"],
   "exclude": [
     "node_modules",
     "gw2-api-extended",
+    "**/discretize-gear-optimizer/*",
+    "discretize-ui",
     ".cache",
     ".git",
     "dist",
-    "**/node_modules/*",
+    "**/node_modules/*"
   ]
 }

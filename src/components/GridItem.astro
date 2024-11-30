@@ -9,7 +9,7 @@ interface Props {
 
 const { xs = "12", sm = "6", md, lg, xl } = Astro.props;
 
-function parseSafeInt(value) {
+function parseSafeInt(value: string) {
   const parsed = parseInt(value, 10);
   if (isNaN(parsed)) {
     return 0;

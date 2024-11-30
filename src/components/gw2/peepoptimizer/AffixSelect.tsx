@@ -1,7 +1,12 @@
 import { Affix } from "discretize-gear-optimizer/src/utils/gw2-data";
 const AFFIXES = ["None", ...Object.keys(Affix).slice(1)];
 
-export default function AffixSelect({ title, onChange }) {
+interface AffixSelectProps {
+  title: string;
+  onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+}
+
+export default function AffixSelect({ title, onChange }: AffixSelectProps) {
   return (
     <div className="field suffix border">
       <select onChange={onChange}>
