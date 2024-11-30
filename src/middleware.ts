@@ -1,12 +1,13 @@
+import type { APIContext } from "astro";
 import { getImage } from "astro:assets";
 
 type SearchImage = { url: string; urlFull: string; w: number; h: number };
 
-const extractParams = (urls: string[]) =>
+const extractParams = (urls: string[]): SearchImage[] =>
   urls.reduce<SearchImage[]>((result, url) => {
     const urlWithoutParams = url.split("?")[0];
     const searchParams = new URLSearchParams(
-      url.split("?")[1]?.replace(/&amp;/g, "&")
+      url.split("?")[1]?.replace(/&amp;/g, "&"),
     );
     const wParam = searchParams.get("w");
     const hParam = searchParams.get("h");
@@ -31,7 +32,10 @@ const sortByQueryParamsCount = (a: SearchImage, b: SearchImage) => {
   return aParams.length - bParams.length;
 };
 
-async function onRequestProd({ locals, request }, next) {
+async function onRequestProd(
+  _context: APIContext,
+  next: () => Promise<Response>,
+): Promise<Response> {
   const response = await next();
 
   const html = await response.text();
@@ -46,7 +50,7 @@ async function onRequestProd({ locals, request }, next) {
 
   // deduplicate urls and sort by query params count; otherwise the replace later on will not work correctly.
   const gw2RenderApi = extractParams([...new Set(urls)]).sort(
-    sortByQueryParamsCount
+    sortByQueryParamsCount,
   );
 
   if (gw2RenderApi.length === 0) {
@@ -74,7 +78,7 @@ async function onRequestProd({ locals, request }, next) {
       });
 
       return { src: urlFull, images: [avif, webp] };
-    })
+    }),
   );
 
   let newHtml = html;
@@ -82,7 +86,7 @@ async function onRequestProd({ locals, request }, next) {
   // the params remain in the shipped html, but the browser will resolve the urls correctly
   fixedImages.forEach((image) => {
     const imgset = `image-set(${image.images.map(
-      (i) => `url('${i.src}') type('image/${i.options.format}')`
+      (i) => `url('${i.src}') type('image/${i.options.format}')`,
     )})`;
 
     const defaultImg = image.images[1].src;
@@ -94,7 +98,7 @@ async function onRequestProd({ locals, request }, next) {
     // insert image-set behind the fallback img
     newHtml = newHtml.replaceAll(
       `${defaultImg}&#x27;)`,
-      `${defaultImg}&#x27;);background-image:` + imgset + ``
+      `${defaultImg}&#x27;);background-image:` + imgset + ``,
     );
   });
 
@@ -102,7 +106,10 @@ async function onRequestProd({ locals, request }, next) {
 }
 
 // only apply to production build
-let onRequest;
+let onRequest: (
+  context: APIContext,
+  next: () => Promise<Response>,
+) => Promise<Response>;
 if (process.env.NODE_ENV === "development") {
   onRequest = (_, next) => {
     return next();
