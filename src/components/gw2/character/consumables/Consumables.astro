@@ -7,15 +7,17 @@ interface Props {
   foodId?: number;
   utilityId?: number;
   infusionId?: number;
+  relicId?: number;
   data?: {
     foodData?: GW2ApiItem;
     utilityData?: GW2ApiItem;
     infusionData?: GW2ApiItem;
+    relicData?: GW2ApiItem;
   };
 }
 
 const { data } = Astro.props;
-const { foodData, utilityData, infusionData } = data;
+const { foodData, utilityData, infusionData, relicData } = data;
 ---
 
 <div class="root">
@@ -67,6 +69,19 @@ const { foodData, utilityData, infusionData } = data;
       </div>
     )
   }
+    {
+      relicData && (
+        <div class="gridItem borderLeft">
+          <ItemInternal
+            dataItem={relicData}
+            className="gw2item"
+            disableText
+            client:visible
+          />
+          <span class="title">Relic</span>
+        </div>
+      )
+    }
 </div>
 
 <style>

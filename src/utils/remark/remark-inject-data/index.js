@@ -191,6 +191,7 @@ const COMPONENTS = [
             foodData: resolve(items)(parsed.consumables.foodId),
             utilityData: resolve(items)(parsed.consumables.utilityId),
             infusionData: resolve(items)(parsed.consumables.infusionId),
+            relicData: resolve(items)(parsed.consumables.relicId),
           };
 
           return {
