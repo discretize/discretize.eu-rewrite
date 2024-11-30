@@ -1,32 +1,43 @@
 ---
 // copied from here and slightly adjusted https://github.com/theisel/astro-toc/blob/main/packages/astro-toc/lib/TOC.astro
-interface ToC {
-  depth: number;
-  [k: string]: any;
-}
-interface BaseProps<T> {
-  toc: (T & ToC)[];
-  as?: "bullet" | "number" | "menu";
-  maxDepth?: number | string;
-}
-type ClassicProps = BaseProps<{
+
+interface Heading {
   title: string;
   url?: string;
-}>;
-interface UseComponentProps
-  extends BaseProps<{
-    [key: string]: any;
-  }> {
-  use: (props: any /* Can we do better than `any`? */) => any;
+  depth: number;
+  [key: string]: any;
 }
-export type Props = ClassicProps | UseComponentProps;
-const { toc, depth = 1, ...props } = Astro.props;
+
+type TocStyle = "bullet" | "number" | "menu";
+
+interface BaseProps {
+  toc: Heading[];
+  as?: TocStyle;
+  maxDepth?: number | string;
+  class?: string;
+}
+
+interface ClassicProps extends BaseProps {
+  use?: never;
+}
+
+interface ComponentProps extends BaseProps {
+  use: (props: Heading) => any; // Could be made more specific based on your needs
+}
+
+type Props = ClassicProps | ComponentProps;
+
+const { toc, depth = 1, ...props } = Astro.props as Props & { depth?: number };
 const { use: Cmp, class: className } = props;
-const as = props.as ?? props.style ?? "bullet";
+const as = props.as ?? "bullet";
 const maxDepth = Number(props.maxDepth);
 const hasMaxDepth = Number.isInteger(maxDepth);
 const headings = toc.filter((it) => it.depth === depth);
-const Tag = Cmp ?? "menu" === as ? "menu" : "number" === as ? "ol" : "ul";
+
+type TagType = "menu" | "ol" | "ul";
+const Tag: TagType = (
+  Cmp ?? "menu" === as ? "menu" : "number" === as ? "ol" : "ul"
+) as TagType;
 ---
 
 <Tag data-astro-toc={depth}>
@@ -34,8 +45,8 @@ const Tag = Cmp ?? "menu" === as ? "menu" : "number" === as ? "ol" : "ul";
     headings.map((it, idx) => {
       const nextHeading = headings[idx + 1];
       const subHeadings = toc.slice(
-        (toc as any).indexOf(it) + 1,
-        nextHeading ? (toc as any).indexOf(nextHeading) : undefined
+        toc.indexOf(it) + 1,
+        nextHeading ? toc.indexOf(nextHeading) : undefined,
       );
       const hasSubHeadings = subHeadings.length > 0;
       const shouldRenderSubHeadings = hasMaxDepth

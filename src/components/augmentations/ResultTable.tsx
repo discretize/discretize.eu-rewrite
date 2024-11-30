@@ -1,8 +1,9 @@
 import { Augmentation } from "@gw2-ui/components";
 import React from "react";
 import { Journal, Matrix, Page, Pristine, Relic } from "./RelicsData";
+import type { CalculationResult } from "./types";
 
-export default function ResultTable({ result }) {
+export default function ResultTable({ result }: { result: CalculationResult }) {
   return (
     <div className="overflow-x-auto shadow-xl">
       <table className="table w-full border-collapse border-spacing-0 font-normal">

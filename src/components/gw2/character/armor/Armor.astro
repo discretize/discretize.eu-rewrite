@@ -70,7 +70,6 @@ interface Props {
 const {
   data,
   dataUpgrades,
-  weight,
   helmId,
   helmRuneId,
   helmInfusionId,
@@ -117,15 +116,11 @@ const {
 
 /**
  * Creates an array of upgrades that can be passed on to the Item component. Undefined values will be filtered out.
- * @param {number | undefined} infusionId id of the infusion
- * @param {number | undefined} runeId id of the rune
- * @param {number | undefined} runeCount number of runes that should be highlighted
- * @returns
  */
 function createUpgrades(
   infusionData?: GW2ApiItem,
   runeData?: GW2ApiItem,
-  runeCount: number = 1
+  runeCount: number = 1,
 ): ItemUpgrades {
   let upgrades: ItemUpgrades = [];
   if (infusionData) upgrades = [[infusionData, 1]];
@@ -196,10 +191,10 @@ const armor = [
   },
 ].map((item) => {
   const runeData = dataUpgrades?.runes.find(
-    (ritem) => ritem.id === item.runeId
+    (ritem) => ritem.id === item.runeId,
   );
   const infusionData = dataUpgrades?.infusions.find(
-    (iitem) => iitem.id === item.infusionId
+    (iitem) => iitem.id === item.infusionId,
   );
 
   const upgrades = createUpgrades(infusionData, runeData, item.runeCount);

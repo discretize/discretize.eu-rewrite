@@ -25,7 +25,7 @@ class CodeEditor extends React.Component {
     super();
     const langTools = ace.require("ace/ext/language_tools");
     const autoCompletions = {
-      getCompletions: (editor, session, pos, prefix, callback) => {
+      getCompletions: (_editor, _session, _pos, _prefix, callback) => {
         callback(null, AUTO_COMPLETIONS);
       },
     };

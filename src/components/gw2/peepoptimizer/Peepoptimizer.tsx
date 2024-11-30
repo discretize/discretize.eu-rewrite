@@ -212,7 +212,7 @@ const testState = {
   },
 };
 
-const Component = ({ templates }) => {
+const Component = () => {
   const [result, setResult] = React.useState<Character[]>([]);
   const [forcedSlots, setForcedSlots] = React.useState([
     null,

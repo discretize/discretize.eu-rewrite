@@ -73,24 +73,19 @@ const {
     weapon2OffData,
   } = {},
   dataUpgrades,
-  showInfusions,
-  weapon1MainId,
   weapon1MainSigil1Id,
   weapon1MainSigil2Id,
-  weapon1MainType,
   weapon1MainAffix,
   weapon1MainSigil1,
   weapon1MainSigil2,
   weapon1MainInfusion1Id,
   weapon1MainInfusion2Id,
-  weapon1MainRarity,
   weapon1OffId,
   weapon1OffSigilId,
   weapon1OffType,
   weapon1OffAffix,
   weapon1OffSigil,
   weapon1OffInfusionId,
-  weapon1OffRarity,
   weapon2MainId,
   weapon2MainSigil1Id,
   weapon2MainSigil2Id,
@@ -100,14 +95,12 @@ const {
   weapon2MainSigil2,
   weapon2MainInfusion1Id,
   weapon2MainInfusion2Id,
-  weapon2MainRarity,
   weapon2OffId,
   weapon2OffSigilId,
   weapon2OffType,
   weapon2OffAffix,
   weapon2OffSigil,
   weapon2OffInfusionId,
-  weapon2OffRarity,
 } = Astro.props;
 
 function createUpgrades(array: (GW2ApiItem | undefined)[]): ItemUpgrades {
@@ -117,53 +110,53 @@ function createUpgrades(array: (GW2ApiItem | undefined)[]): ItemUpgrades {
 }
 
 const weapon1MainSigil1Data = dataUpgrades.sigils.find(
-  (sigil) => sigil.id === weapon1MainSigil1Id
+  (sigil) => sigil.id === weapon1MainSigil1Id,
 );
 const weapon1MainSigil2Data = dataUpgrades.sigils.find(
-  (sigil) => sigil.id === weapon1MainSigil2Id
+  (sigil) => sigil.id === weapon1MainSigil2Id,
 );
 const weapon1OffSigilData = dataUpgrades.sigils.find(
-  (sigil) => sigil.id === weapon1OffSigilId
+  (sigil) => sigil.id === weapon1OffSigilId,
 );
 const weapon2MainSigil1Data = dataUpgrades.sigils.find(
-  (sigil) => sigil.id === weapon2MainSigil1Id
+  (sigil) => sigil.id === weapon2MainSigil1Id,
 );
 const weapon2MainSigil2Data = dataUpgrades.sigils.find(
-  (sigil) => sigil.id === weapon2MainSigil2Id
+  (sigil) => sigil.id === weapon2MainSigil2Id,
 );
 const weapon2OffSigilData = dataUpgrades.sigils.find(
-  (sigil) => sigil.id === weapon2OffSigilId
+  (sigil) => sigil.id === weapon2OffSigilId,
 );
 const weapon1MainUpgrades = createUpgrades([
   weapon1MainSigil1Data,
   weapon1MainSigil2Data,
   dataUpgrades.infusions.find(
-    (infusion) => infusion.id === weapon1MainInfusion1Id
+    (infusion) => infusion.id === weapon1MainInfusion1Id,
   ),
   dataUpgrades.infusions.find(
-    (infusion) => infusion.id === weapon1MainInfusion2Id
+    (infusion) => infusion.id === weapon1MainInfusion2Id,
   ),
 ]);
 const weapon1OffUpgrades = createUpgrades([
   weapon1OffSigilData,
   dataUpgrades.infusions.find(
-    (infusion) => infusion.id === weapon1OffInfusionId
+    (infusion) => infusion.id === weapon1OffInfusionId,
   ),
 ]);
 const weapon2MainUpgrades = createUpgrades([
   dataUpgrades.sigils.find((sigil) => sigil.id === weapon2MainSigil1Id),
   dataUpgrades.sigils.find((sigil) => sigil.id === weapon2MainSigil2Id),
   dataUpgrades.infusions.find(
-    (infusion) => infusion.id === weapon2MainInfusion1Id
+    (infusion) => infusion.id === weapon2MainInfusion1Id,
   ),
   dataUpgrades.infusions.find(
-    (infusion) => infusion.id === weapon2MainInfusion2Id
+    (infusion) => infusion.id === weapon2MainInfusion2Id,
   ),
 ]);
 const weapon2OffUpgrades = createUpgrades([
   dataUpgrades.sigils.find((sigil) => sigil.id === weapon2OffSigilId),
   dataUpgrades.infusions.find(
-    (infusion) => infusion.id === weapon2OffInfusionId
+    (infusion) => infusion.id === weapon2OffInfusionId,
   ),
 ]);
 function fixData(data: GW2ApiItem | undefined, affix: Affix) {

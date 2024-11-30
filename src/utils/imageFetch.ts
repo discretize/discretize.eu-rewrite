@@ -1,5 +1,8 @@
-export default function imageFetch(images: string[], pathname: string) {
-  let headerImage;
+export default function imageFetch(
+  images: string[],
+  pathname: string,
+): string | undefined {
+  let headerImage: string | undefined = undefined;
   for (const image of images) {
     if (image.includes(pathname)) {
       headerImage = image;
@@ -13,7 +16,7 @@ export default function imageFetch(images: string[], pathname: string) {
         " " +
         pathname +
         " " +
-        JSON.stringify(images)
+        JSON.stringify(images),
     );
   }
   return headerImage;

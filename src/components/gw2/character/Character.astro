@@ -6,14 +6,26 @@ import images from "../../images";
 import Armor from "./armor/Armor.astro";
 import BackAndTrinkets from "./backAndTrinkets/BackAndTrinkets.astro";
 import Consumables from "./consumables/Consumables.astro";
-import Skills from "./skills/Skills.astro";
+import Skills, { type Props as SkillsProps } from "./skills/Skills.astro";
 import Weapons from "./weapons/Weapons.astro";
+import type GW2ApiItem from "gw2-api-extended/types/items/item";
 
 interface Props {
   title: string;
   isFirst?: boolean;
   gear: string;
-  data: any;
+  data: {
+    armor: Record<string, GW2ApiItem>;
+    weapon: Record<string, GW2ApiItem>;
+    backAndTrinket: Record<string, GW2ApiItem>;
+    consumables: Record<string, GW2ApiItem>;
+    upgrades: {
+      runes: GW2ApiItem[];
+      infusions: GW2ApiItem[];
+      sigils: GW2ApiItem[];
+    };
+    skills: SkillsProps;
+  };
 }
 
 const { title, gear, data, isFirst } = Astro.props;
@@ -25,7 +37,7 @@ const id = `page_${title
   .replaceAll(/\/|[^a-zA-Z0-9]+/gm, "")}`;
 const specialization = parsedGear.attributes.specialization;
 
-const addParam = (data, pixel) => {
+const addParam = (data: GW2ApiItem, pixel: number) => {
   if (!data) return;
   data.icon += `?w=${pixel}`;
 };
@@ -37,10 +49,10 @@ data.upgrades.sigils.forEach((data) => addParam(data, 16));
 Object.keys(data.armor).forEach((key) => addParam(data.armor[key], 60));
 Object.keys(data.weapon).forEach((key) => addParam(data.weapon[key], 60));
 Object.keys(data.backAndTrinket).forEach((key) =>
-  addParam(data.backAndTrinket[key], 60)
+  addParam(data.backAndTrinket[key], 60),
 );
 Object.keys(data.consumables).forEach((key) =>
-  addParam(data.consumables[key], 60)
+  addParam(data.consumables[key], 60),
 );
 
 const hasText = Astro.slots.has("default");

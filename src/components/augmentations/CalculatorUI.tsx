@@ -1,51 +1,13 @@
-import type { AugmentationsTypes } from "@gw2-ui/data/augmentations";
 import React, { useEffect, useState } from "react";
 import initialState from "./initialState.json";
 import { Matrix, MIST_ATTUNEMENTS, Page, Pristine, Relic } from "./RelicsData";
 import ResultTable from "./ResultTable";
 import confetti from "canvas-confetti";
 import RelicsCalculatorImport from "./Import";
+import type { CalculationResult, CalculatorInput } from "./types";
 
-interface Props {}
-
-interface CalculationResult {
-  daily: {
-    relics: number;
-    pristines: number;
-    matrices: number;
-    pages: number;
-  };
-  mistAttunements: Array<{
-    id: number;
-    name: AugmentationsTypes;
-    title: string;
-    days: number;
-    matrices: number;
-    pristines: number;
-    relics: number;
-    journals?: number;
-    convert: {
-      pristinesToRelics: number;
-      relicsToMatrices: number;
-      pagesToJournals: number;
-    };
-    standard: {
-      daysForRelics: number;
-      daysForPristines: number;
-      daysForMatrices: number;
-      daysForJournals: number;
-    };
-    total: {
-      relics: number;
-      pristines: number;
-      matrices: number;
-      journals: number;
-    };
-  }>;
-}
-
-export function CalculatorUI(props: Props): React.ReactElement {
-  const [state, setState] = useState({
+export function CalculatorUI(): React.ReactElement {
+  const [state, setState] = useState<CalculatorInput>({
     relics: 0,
     pristines: 0,
     matrices: 0,
@@ -66,15 +28,14 @@ export function CalculatorUI(props: Props): React.ReactElement {
   });
   const [webworker, setWebworker] = useState<Worker | null>(null);
   const [result, setResult] = useState<CalculationResult>(
-    initialState as CalculationResult
+    initialState as CalculationResult,
   );
-  const [showImport, setShowImport] = useState(false);
 
   useEffect(() => {
     const myWorker = new Worker("/workers/augmentations/augcalc.worker.js");
     setWebworker(myWorker);
 
-    myWorker.onmessage = (e) => {
+    myWorker.onmessage = (e: MessageEvent<CalculationResult>) => {
       console.log(e.data);
       if (e.data.mistAttunements.length === 0) {
         for (let index = 0; index < 30; index++) {
@@ -100,7 +61,11 @@ export function CalculatorUI(props: Props): React.ReactElement {
   }, []);
 
   useEffect(() => {
-    if (webworker) calculate();
+    if (!webworker) return;
+
+    // do calculations
+    console.log(state);
+    webworker.postMessage(state);
   }, [state]);
 
   const inputs = [
@@ -130,9 +95,9 @@ export function CalculatorUI(props: Props): React.ReactElement {
       stateName: "pages",
     },
     {
-      label: 'Lonely Tower CM',
+      label: "Lonely Tower CM",
       value: state.lonelyTower,
-      stateName: "lonelyTower"
+      stateName: "lonelyTower",
     },
     {
       label: "Silent Surf CM",
@@ -175,12 +140,6 @@ export function CalculatorUI(props: Props): React.ReactElement {
       stateName: "convertPots",
     },
   ];
-
-  function calculate() {
-    // do calculations
-    console.log(state);
-    webworker.postMessage(state);
-  }
 
   function onInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     // only allow numerical inputs

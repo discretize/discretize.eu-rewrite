@@ -1,7 +1,5 @@
 ---
 import { Item } from "@gw2-ui/components";
-import { fractalHeaders } from "src/utils/cache";
-import imageFetch from "src/utils/imageFetch";
 import Grid from "../Grid.astro";
 import GridItem from "../GridItem.astro";
 import type { Heading } from "../TableOfContents.astro";
@@ -33,7 +31,6 @@ const {
   description,
   date,
   difficulties,
-  image,
   long_description,
   headings,
 } = Astro.props;
@@ -41,18 +38,13 @@ const {
 const imageData = {
   type: "fractals",
   slug: Astro.url.pathname.replace("fractals/", "").replaceAll("/", ""),
-  file: "header"
-}
+  file: "header",
+};
 
 const hasChallengeMode = difficulties.some((d) => d.level >= 97);
 ---
 
-<Header
-  title={title}
-  description={description}
-  date={date}
-  image={imageData}
-/>
+<Header title={title} description={description} date={date} image={imageData} />
 
 {
   hasChallengeMode && (

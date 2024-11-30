@@ -13,7 +13,41 @@ const STORAGE_JOURNALS_ID = 75439;
 
 const LOCAL_STORAGE_KEY = "discretize:augmentationsCalculator:apiKey";
 
-function findLastIndex(array, predicate) {
+interface State {
+  open: boolean;
+  apiKey: string;
+  saveLocally: boolean;
+  isSubmitting: boolean;
+  error: string;
+}
+
+interface WalletItem {
+  id: number;
+  value: number;
+}
+
+interface StorageItem {
+  id: number;
+  count: number;
+}
+
+interface ImportData {
+  relics: number;
+  pristines: number;
+  matrices: number;
+  pages: number;
+  journals: number;
+  augment: number;
+}
+
+interface Props {
+  onImport: (data: ImportData) => void;
+}
+
+function findLastIndex<T>(
+  array: T[] | null,
+  predicate: (value: T, index: number, obj: T[]) => boolean,
+): number {
   const length = array == null ? 0 : array.length;
   if (!length) {
     return -1;
@@ -27,32 +61,31 @@ function findLastIndex(array, predicate) {
   return -1;
 }
 
-function RelicsCalculatorImport(props) {
-  const [state, setState] = React.useState({
+function RelicsCalculatorImport({ onImport }: Props): JSX.Element {
+  const [state, setState] = React.useState<State>({
     open: false,
     apiKey: "",
     saveLocally: true,
-
     isSubmitting: false,
     error: "",
   });
 
-  const handleSaveLocally = () => {
+  const handleSaveLocally = (): void => {
     setState({ ...state, saveLocally: !state.saveLocally });
     if (!state.saveLocally) {
       localStorage.removeItem(LOCAL_STORAGE_KEY);
     }
   };
 
-  const handleClickToggle = () => {
+  const handleClickToggle = (): void => {
     setState({ ...state, open: !state.open });
   };
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setState({ ...state, open: false });
   };
 
-  const relicsFromWallet = (wallet) => {
+  const relicsFromWallet = (wallet: WalletItem[]) => {
     const { value: relics = 0 } =
       wallet.find(({ id }) => id === WALLET_RELICS_ID) || {};
     const { value: pristines = 0 } =
@@ -61,38 +94,38 @@ function RelicsCalculatorImport(props) {
     return { relics: relics || 0, pristines: pristines || 0 };
   };
 
-  const augmentFromTitles = (titles) =>
+  const augmentFromTitles = (titles: number[]): number =>
     Math.max(
       findLastIndex(MIST_ATTUNEMENTS, ({ id }) => titles.includes(id)) + 1,
-      0
+      0,
     );
 
-  const readStorage = (bank, storage) => {
+  const readStorage = (bank: StorageItem[], storage: StorageItem[]) => {
     const matrices =
       ((
         bank
-          .filter((value) => !!value)
+          .filter((value): value is StorageItem => !!value)
           .find(({ id }) => id === STORAGE_MATRICES_ID) || {}
       ).count || 0) +
       ((
         storage
-          .filter((value) => !!value)
+          .filter((value): value is StorageItem => !!value)
           .find(({ id }) => id === STORAGE_MATRICES_ID) || {}
       ).count || 0);
     const pages =
       ((
         bank
-          .filter((value) => !!value)
+          .filter((value): value is StorageItem => !!value)
           .find(({ id }) => id === STORAGE_PAGES_ID) || {}
       ).count || 0) +
       ((
         storage
-          .filter((value) => !!value)
+          .filter((value): value is StorageItem => !!value)
           .find(({ id }) => id === STORAGE_PAGES_ID) || {}
       ).count || 0);
-    const { count: journals } =
+    const { count: journals = 0 } =
       bank
-        .filter((value) => !!value)
+        .filter((value): value is StorageItem => !!value)
         .find(({ id }) => id === STORAGE_JOURNALS_ID) || {};
 
     return {
@@ -102,8 +135,7 @@ function RelicsCalculatorImport(props) {
     };
   };
 
-  const importFromApi = async (apiKey) => {
-    const { onImport } = props;
+  const importFromApi = async (apiKey: string): Promise<void> => {
     const { isSubmitting } = state;
 
     if (isSubmitting) {
@@ -119,18 +151,10 @@ function RelicsCalculatorImport(props) {
       };
 
       const [titles, wallet, storage, bank] = await Promise.all([
-        axios.get(`${GW2_DOMAIN}account/titles`, {
-          ...authHeader,
-        }),
-        axios.get(`${GW2_DOMAIN}account/wallet`, {
-          ...authHeader,
-        }),
-        axios.get(`${GW2_DOMAIN}account/materials`, {
-          ...authHeader,
-        }),
-        axios.get(`${GW2_DOMAIN}account/bank`, {
-          ...authHeader,
-        }),
+        axios.get<number[]>(`${GW2_DOMAIN}account/titles`, authHeader),
+        axios.get<WalletItem[]>(`${GW2_DOMAIN}account/wallet`, authHeader),
+        axios.get<StorageItem[]>(`${GW2_DOMAIN}account/materials`, authHeader),
+        axios.get<StorageItem[]>(`${GW2_DOMAIN}account/bank`, authHeader),
       ]);
 
       onImport({
@@ -140,8 +164,8 @@ function RelicsCalculatorImport(props) {
       });
 
       setState({ ...state, isSubmitting: false, error: "" });
-    } catch (error) {
-      let message;
+    } catch (error: any) {
+      let message: string;
 
       if (error.response && error.response.status === 403) {
         message = "Insufficient permissions, check your API key";
@@ -150,8 +174,7 @@ function RelicsCalculatorImport(props) {
       } else if (error.response && error.response.status === 500) {
         message = "API error - maybe try again";
       } else {
-        const { message: msg } = error;
-        message = msg;
+        message = error.message || "Unknown error";
       }
 
       setState({ ...state, isSubmitting: false, error: message });
@@ -160,7 +183,7 @@ function RelicsCalculatorImport(props) {
     setState({ ...state, apiKey });
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: React.FormEvent): Promise<void> => {
     event.preventDefault();
 
     const { apiKey, saveLocally } = state;
@@ -178,7 +201,6 @@ function RelicsCalculatorImport(props) {
   };
 
   React.useEffect(() => {
-    // reimport in case there was a key stored on the disk
     const apiKey = localStorage.getItem(LOCAL_STORAGE_KEY);
     if (apiKey) {
       importFromApi(apiKey);
@@ -221,7 +243,7 @@ function RelicsCalculatorImport(props) {
           <input
             type="text"
             placeholder="API Key"
-            className={`input input-bordered w-full max-w-xs `}
+            className="input input-bordered w-full max-w-xs"
             onChange={(event) =>
               setState({ ...state, apiKey: event.target.value })
             }

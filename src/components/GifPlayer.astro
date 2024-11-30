@@ -37,8 +37,8 @@ if (url) {
       this.video.addEventListener("mouseover", () => this.play());
       this.video.addEventListener("mouseout", () => this.pause());
 
-      this.playButton.addEventListener("click", (e) => this.play());
-      this.video.addEventListener("click", (e) => {
+      this.playButton.addEventListener("click", () => this.play());
+      this.video.addEventListener("click", () => {
         if (this.video.paused) {
           this.play();
         } else {

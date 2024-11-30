@@ -26,7 +26,6 @@ const enrichedCharacters: Character[] = characters.map((title) => ({
 // const templates = (
 //   await Astro.glob("../../assets/data/optimizer-state/ranger/*.json")
 // ).map((d) => d.default);
-const templates: any[] = [];
 ---
 
 <script>
@@ -154,7 +153,7 @@ const templates: any[] = [];
     <slot />
 
     <div class="page hidden" id="peepoptimizer">
-      <Peepoptimizer client:visible templates={templates} />
+      <Peepoptimizer client:visible />
     </div>
   </div>
 </character-with-ar>

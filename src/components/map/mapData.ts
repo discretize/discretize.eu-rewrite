@@ -15,7 +15,6 @@ import SnowblindPathSVG from "./path-svg/Snowblind.astro";
 import SunquaPeak from "./path-svg/SunquaPeak.astro";
 import ThaumanovaReactorSVG from "./path-svg/ThaumanovaReactor.astro";
 import Volcanic from "./path-svg/Volcanic.astro";
-import type { ComponentInstance, Props } from "astro";
 
 export type Encounter = {
   xPercent: number;

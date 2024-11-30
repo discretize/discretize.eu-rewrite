@@ -35,7 +35,7 @@ const COLOR = "bg-neutral-300 dark:bg-neutral-700";
       });
     }
 
-    update(elem) {
+    update(elem: HTMLDivElement) {
       computePosition(this.target, elem, {
         placement: this.dataset.tooltipDirection as Placement,
         strategy: "absolute",

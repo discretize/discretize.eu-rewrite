@@ -23,7 +23,7 @@ const createDefaultDescription = (title: string) =>
 
 if (headerImage) {
   const thumbnail = (await Object.entries(guideHeaders).find(
-    ([k, v]) => k === headerImage,
+    ([k]) => k === headerImage,
   )[1]()) as ImageMetadata;
 
   const ogImage = await getImage({

@@ -1,5 +1,5 @@
 import SPECIALIZATIONS from "@gw2-ui/data/specializations";
-import items from "@gw2api/items.json";
+// import items from "@gw2api/items.json";
 import skills from "@gw2api/skills.json";
 import traits from "@gw2api/traits.json";
 
@@ -94,20 +94,21 @@ const SPECIAL_ACTION_KEY = ["hypernovalaunch", "lightofdeldrimor"];
 
 const duplicateSkills = skills.filter(
   (skill, index) =>
-    skills.indexOf(skills.find((sk) => sk.name === skill.name)) !== index
+    skills.indexOf(skills.find((sk) => sk.name === skill.name)) !== index,
 );
 
 export const AUTO_COMPLETIONS = [
   ...skills.map((skill) => {
     const hasDuplicate = duplicateSkills.includes(skill);
-    const professionAddition = hasDuplicate && skill.profession
-      ? ` profession="${skill.profession}"`
-      : "";
+    const professionAddition =
+      hasDuplicate && skill.profession
+        ? ` profession="${skill.profession}"`
+        : "";
     return {
       label: skill.name,
       type: "Skill",
       name: `<Skill name="${skill.name}"${professionAddition} />`,
-      description: `${skill?.profession?.slice(0, 4) ||  "generic"}-${skill.id}`,
+      description: `${skill?.profession?.slice(0, 4) || "generic"}-${skill.id}`,
     };
   }),
   ...traits.map((trait) => ({
@@ -206,4 +207,3 @@ export const AUTO_COMPLETIONS = [
   value: name,
   meta: "local",
 }));
-

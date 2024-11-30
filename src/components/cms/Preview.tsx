@@ -1,19 +1,30 @@
-// @ts-nocheck
 import "@discretize/typeface-menomonia";
 import "@gw2-ui/default_style.css";
-import React from "react";
+import React, { type ErrorInfo } from "react";
 import "typeface-muli";
 import "typeface-raleway";
 import MemoizedSection from "./MemoizedSection";
 
-class MDXPreview extends React.Component {
-  state = {
+interface Props {
+  entry: {
+    getIn: (path: string[]) => any;
+  };
+}
+
+interface State {
+  ready: boolean;
+  error: { message: string; location?: any } | null;
+  beginner: boolean;
+}
+
+class MDXPreview extends React.Component<Props, State> {
+  state: State = {
     ready: false,
     error: null,
     beginner: true,
   };
 
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps: Props, nextState: State) {
     // force re-render when error occur
     if (nextState.error !== null) return true;
 
@@ -55,27 +66,18 @@ class MDXPreview extends React.Component {
     return true;
   }
 
-  // Fired when an error is caught - this is unfortunately necessary because the preview window hangs
-  // if a component errors out once. Once it hangs there is no way of recovering - so we need to catch
-  // the error and not render the erroring markdown.
-  // Errornous md can be "<S " (when the user is starting to type <Skill ... /> )
-  componentDidCatch(error, _info) {
+  componentDidCatch(error: Error, _info: ErrorInfo) {
     const err = {
       message: error.message,
-      location: error.location,
+      location: (error as any).location,
     };
     this.setState((prevState) => ({ ...prevState, error: err }));
   }
 
   render() {
-    // render has been called - this means either there is new text or there is an error
-    // this.setState({ ...this.state, error: null });
-
-    // Grab the changed text
     const { entry } = this.props;
     const text = entry.getIn(["data", "body"]);
     const profession = entry.getIn(["data", "profession"]);
-    const hasBeginner = entry.getIn(["data", "hasBeginner"]);
 
     const content = text;
 

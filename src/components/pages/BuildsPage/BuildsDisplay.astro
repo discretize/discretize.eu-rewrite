@@ -94,7 +94,7 @@ const { professionBuilds } = Astro.props;
 
   <section class="w-full flex flex-col mt-4">
     {
-      professionBuilds.map(({ profession, builds }) => (
+      professionBuilds.map(({ builds }) => (
         <>
           {builds.map((build) => (
             <BuildCard {...build} />
