@@ -238,7 +238,7 @@ const Component = () => {
     );
 
     testState.optimizer.form.forcedSlots.slots = forcedSlots;
-    const resultGenerator = calculate(testState);
+    const resultGenerator = calculate(testState, 1);
 
     let result: Character[] = [];
 
