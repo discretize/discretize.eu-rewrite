@@ -1,6 +1,6 @@
 import { getImage } from "astro:assets";
 
-type SearchImage = { url: string; urlFull: String; w: number; h: number };
+type SearchImage = { url: string; urlFull: string; w: number; h: number };
 
 const extractParams = (urls: string[]) =>
   urls.reduce<SearchImage[]>((result, url) => {

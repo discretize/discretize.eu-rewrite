@@ -14,11 +14,11 @@ const STORAGE_JOURNALS_ID = 75439;
 const LOCAL_STORAGE_KEY = "discretize:augmentationsCalculator:apiKey";
 
 function findLastIndex(array, predicate) {
-  var length = array == null ? 0 : array.length;
+  const length = array == null ? 0 : array.length;
   if (!length) {
     return -1;
   }
-  var index = length;
+  let index = length;
   while (index--) {
     if (predicate(array[index], index, array)) {
       return index;
