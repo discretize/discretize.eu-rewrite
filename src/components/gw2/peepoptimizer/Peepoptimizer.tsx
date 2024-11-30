@@ -4,7 +4,7 @@ import AffixSelect from "./AffixSelect";
 import ResultCharacter from "./ResultCharacter";
 import type { Character } from "discretize-gear-optimizer/src/state/optimizer/optimizerCore";
 
-const testState = {
+const testState: Parameters<typeof import('discretize-gear-optimizer/src/state/optimizer/optimizer').calculate>[0] = {
   optimizer: {
     userSettings: { expertMode: true, gameMode: "fractals" },
     control: {
@@ -25,6 +25,7 @@ const testState = {
       filterMode: "None",
       displayAttributes: [],
       progress: 0,
+      heuristicsProgress: undefined,
       selectedCharacter: null,
       selectedTemplate: "Condi Virtuoso Dueling",
       status: "WAITING",
