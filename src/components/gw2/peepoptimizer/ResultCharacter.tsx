@@ -62,7 +62,7 @@ export default function ResultCharacter({
     Enhancement: utility,
     Nourishment: food,
     Runes: runeStringId,
-  } = extrasCombination || cachedFormState.extras; // fallback for builds from before extras refactor
+  } = extrasCombination || cachedFormState.extras as any as typeof extrasCombination; // fallback for builds from before extras refactor
 
   const foodId = allExtrasModifiersById[food]?.gw2id;
   const utilityId = allExtrasModifiersById[utility]?.gw2id;
