@@ -19,6 +19,7 @@ export function CalculatorUI(): React.ReactElement {
     sunquaPeak: true,
     shatteredObservatory: true,
     nightmare: true,
+    kinfall: true,
     t4s: true,
     recs: true,
     weekly: true,
@@ -118,6 +119,11 @@ export function CalculatorUI(): React.ReactElement {
       label: "Nightmare CM",
       value: state.nightmare,
       stateName: "nightmare",
+    },
+    {
+      label: "Kinfall CM",
+      value: state.kinfall,
+      stateName: "kinfall",
     },
     {
       label: "Daily T4 Fractals",

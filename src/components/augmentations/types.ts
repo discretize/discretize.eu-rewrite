@@ -48,6 +48,7 @@ export interface CalculatorInput {
   sunquaPeak: boolean;
   shatteredObservatory: boolean;
   nightmare: boolean;
+  kinfall: boolean;
   t4s: boolean;
   recs: boolean;
   weekly: boolean;

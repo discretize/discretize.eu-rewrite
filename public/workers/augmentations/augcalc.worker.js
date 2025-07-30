@@ -55,6 +55,7 @@ const calculate = ({
   sunquaPeak,
   shatteredObservatory,
   nightmare,
+  kinfall,
   t4s,
   recs,
   weekly,
@@ -104,6 +105,13 @@ const calculate = ({
     matricesPerDay += 1;
     pagesPerDay += 1;
   }
+  // THIS NEEDS TO BE VERIFIED. No data on GW2 wiki.
+  if (kinfall) {
+    relicsPerDay += 80 + 19 + augment * 5;
+    pristinesPerDay += 2;
+    matricesPerDay += 1;
+    pagesPerDay += 1;
+  }
 
   if (t4s) {
     relicsPerDay += 3 * 18.2 + 3 * augment * 5;
@@ -127,6 +135,10 @@ const calculate = ({
 
     if (nightmare) {
       relicsPerDay -= (3 * (19 + augment * 5)) / 15;
+    }
+
+    if (kinfall) {
+      relicsPerDay -= (1 * (19 + augment * 5)) / 15;
     }
   }
 
