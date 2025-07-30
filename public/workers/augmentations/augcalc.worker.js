@@ -105,7 +105,7 @@ const calculate = ({
     matricesPerDay += 1;
     pagesPerDay += 1;
   }
-  // THIS NEEDS TO BE VERIFIED. No data on GW2 wiki.
+  // TODO THIS NEEDS TO BE VERIFIED. No data on GW2 wiki.
   if (kinfall) {
     relicsPerDay += 80 + 19 + augment * 5;
     pristinesPerDay += 2;
